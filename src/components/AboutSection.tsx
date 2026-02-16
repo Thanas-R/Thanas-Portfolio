@@ -8,18 +8,18 @@ const skills = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section id="about" className="relative py-24 px-6">
+      <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ y: 40, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
+          initial={{ x: -60, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
           <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
             About
           </h2>
-          <div className="mt-8 grid md:grid-cols-2 gap-12">
+          <div className="mt-8 grid md:grid-cols-2 gap-10">
             <div className="space-y-4">
               <p className="text-muted-foreground leading-relaxed">
                 Passionate about coding and problem-solving. I enjoy simplifying complex challenges and building things that matter.
