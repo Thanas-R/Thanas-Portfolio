@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section id="contact" className="relative py-24 px-6">
+      <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ y: 40, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
+          initial={{ x: 60, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
           className="text-center"
@@ -47,15 +47,6 @@ const ContactSection = () => {
             Discord: darkspacepirate
           </p>
         </motion.div>
-
-        <div className="mt-32 pt-8 border-t border-foreground/5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Thanas R
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Built with care
-          </p>
-        </div>
       </div>
     </section>
   );
