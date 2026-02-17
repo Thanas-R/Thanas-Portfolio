@@ -17,12 +17,28 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const stored = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (stored === 'dark' || (!stored && prefersDark)) {
-      document.documentElement.classList.add('dark');
-      setIsDark(true);
+
+    const applyTheme = (darkMode: boolean) => {
+      document.documentElement.classList.toggle('dark', darkMode);
+      setIsDark(darkMode);
+    };
+
+    if (stored === 'dark' || stored === 'light') {
+      applyTheme(stored === 'dark');
+    } else {
+      applyTheme(mediaQuery.matches);
     }
+
+    const syncWithSystem = (event: MediaQueryListEvent) => {
+      if (!localStorage.getItem('theme')) {
+        applyTheme(event.matches);
+      }
+    };
+
+    mediaQuery.addEventListener('change', syncWithSystem);
+    return () => mediaQuery.removeEventListener('change', syncWithSystem);
   }, []);
 
   const toggleTheme = () => {
