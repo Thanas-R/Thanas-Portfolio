@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Moon, Sun, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import TextRoll from '@/components/TextRoll';
 
 const navItems = [
   { label: 'About', href: '#about' },
@@ -42,7 +43,7 @@ const Navbar = () => {
     >
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <Link to="/" className="font-['Space_Grotesk'] text-lg font-semibold text-foreground tracking-tight">
-          thanas.
+          <TextRoll>thanas.</TextRoll>
         </Link>
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) =>
@@ -52,7 +53,7 @@ const Navbar = () => {
                 to={item.href}
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
-                {item.label}
+                <TextRoll>{item.label}</TextRoll>
               </Link>
             ) : (
               <a
@@ -60,7 +61,7 @@ const Navbar = () => {
                 href={isProjectsPage ? `/${item.href}` : item.href}
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
-                {item.label}
+                <TextRoll>{item.label}</TextRoll>
               </a>
             )
           )}
@@ -71,7 +72,24 @@ const Navbar = () => {
             className="w-8 h-8 flex items-center justify-center rounded-full border border-foreground/15 text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Toggle theme"
           >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {/* Half-moon / half-sun icon like reference */}
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {isDark ? (
+                <>
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2" />
+                  <path d="M12 20v2" />
+                  <path d="m4.93 4.93 1.41 1.41" />
+                  <path d="m17.66 17.66 1.41 1.41" />
+                  <path d="M2 12h2" />
+                  <path d="M20 12h2" />
+                  <path d="m6.34 17.66-1.41 1.41" />
+                  <path d="m19.07 4.93-1.41 1.41" />
+                </>
+              ) : (
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+              )}
+            </svg>
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}

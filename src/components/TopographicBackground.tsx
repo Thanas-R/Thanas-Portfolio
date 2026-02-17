@@ -107,7 +107,9 @@ const TopographicBackground = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
 
-      ctx.fillStyle = '#F5F5F5';
+      const isDark = document.documentElement.classList.contains('dark');
+
+      ctx.fillStyle = isDark ? '#050505' : '#F5F5F5';
       ctx.fillRect(0, 0, width, height);
 
       const isMobile = width < 768;
@@ -135,7 +137,7 @@ const TopographicBackground = () => {
         }
       }
 
-      ctx.strokeStyle = 'rgba(180, 175, 165, 0.45)';
+      ctx.strokeStyle = isDark ? 'rgba(245, 245, 245, 0.20)' : 'rgba(180, 175, 165, 0.45)';
       ctx.lineWidth = 1.5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
@@ -245,9 +247,14 @@ const TopographicBackground = () => {
 
     drawContours();
 
+    // Re-render when theme changes
+    const observer = new MutationObserver(() => {});
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
     return () => {
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animationId);
+      observer.disconnect();
     };
   }, []);
 
