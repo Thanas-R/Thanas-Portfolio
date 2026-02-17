@@ -96,7 +96,7 @@ const HeroSection = () => {
             Thanas{' '}
             <span className="relative inline-block">
               R
-              <TooltipProvider delayDuration={100}>
+              <TooltipProvider delayDuration={150} skipDelayDuration={200}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <span
@@ -104,7 +104,7 @@ const HeroSection = () => {
                       aria-label={statusLabel}
                     />
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="font-['Space_Grotesk']">
+                  <TooltipContent side="top" className="font-['Space_Grotesk'] tracking-normal">
                     {statusLabel}
                   </TooltipContent>
                 </Tooltip>
