@@ -50,9 +50,9 @@ const AboutSection = () => {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}>
 
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight mb-8">
-            About
-          </h2>
+          
+
+
 
           <BentoGrid className="md:auto-rows-[14rem]">
             {/* Top-left: About me — spans 2 cols */}
