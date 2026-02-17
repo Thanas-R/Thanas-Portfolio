@@ -53,8 +53,10 @@ const HeroSection = () => {
     socket: true,
   });
 
-  const discordStatus = lanyard?.discord_status || 'offline';
-  const statusColor = statusColors[discordStatus] || statusColors.offline;
+  const discordStatus =
+    (lanyard?.discord_status as keyof typeof statusColors) || 'offline';
+
+  const statusColor = statusColors[discordStatus];
 
   const statusLabel =
     discordStatus === 'dnd'
@@ -67,21 +69,21 @@ const HeroSection = () => {
         <motion.div
           initial={{ x: -60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.1, 0, 1] }}
+          transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-[0.9] tracking-tight font-['Space_Grotesk']">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tight font-['Space_Grotesk']">
             Thanas{' '}
             <span className="relative inline-block">
               R
 
-              {/* Discord Status Dot + Tooltip */}
+              {/* Discord Status Dot */}
               <div
                 className="absolute bottom-[0.12em] -right-[0.15em]"
                 onMouseEnter={() => setHoveredStatus(true)}
                 onMouseLeave={() => setHoveredStatus(false)}
               >
                 <span
-                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full ring-[5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300`}
+                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full ring-[5px] ring-background ${statusColor} cursor-pointer`}
                 />
 
                 <AnimatePresence>
@@ -91,7 +93,7 @@ const HeroSection = () => {
                       animate={{ x: '-50%', y: 0, opacity: 1, scale: 1 }}
                       exit={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
                       transition={{ duration: 0.1 }}
-                      className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap z-50 shadow-md font-['Space_Grotesk'] origin-bottom"
+                      className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium whitespace-nowrap z-50 shadow-md origin-bottom"
                     >
                       {statusLabel}
                     </motion.div>
@@ -101,19 +103,18 @@ const HeroSection = () => {
             </span>
           </h1>
 
-          <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
+          <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-md">
             Developer & creative problem-solver. Building thoughtful digital experiences with code.
           </p>
 
           <div className="mt-8 flex items-center gap-5">
             {socials.map((s) => (
-              <div key={s.label} className="relative group">
+              <div key={s.label} className="relative">
                 <a
                   href={s.href}
                   target={s.href.startsWith('http') ? '_blank' : undefined}
                   rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                  aria-label={s.label}
                   onMouseEnter={() => setHoveredSocial(s.label)}
                   onMouseLeave={() => setHoveredSocial(null)}
                 >
@@ -127,7 +128,7 @@ const HeroSection = () => {
                       animate={{ x: '-50%', y: 0, opacity: 1, scale: 1 }}
                       exit={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
                       transition={{ duration: 0.1 }}
-                      className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap z-50 shadow-md font-['Space_Grotesk'] origin-bottom"
+                      className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium whitespace-nowrap z-50 shadow-md origin-bottom"
                     >
                       {s.tooltip}
                     </motion.div>
@@ -141,7 +142,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ x: 60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0, 1] }}
+          transition={{ duration: 0.8, delay: 0.15 }}
           className="flex justify-center md:justify-end"
         >
           <div style={{ perspective: '800px' }}>
@@ -159,13 +160,12 @@ const HeroSection = () => {
                 e.currentTarget.style.setProperty('--xRotation', `${xRot}deg`);
                 e.currentTarget.style.setProperty('--yRotation', `${yRot}deg`);
               }}
-              className="relative w-48 h-48 md:w-60 md:h-60 glow-card rounded-2xl transition-transform ease-out hover:[transform:rotateX(var(--xRotation))_rotateY(var(--yRotation))_scale(1.05)] overflow-hidden"
+              className="relative w-48 h-48 md:w-60 md:h-60 rounded-2xl transition-transform ease-out hover:[transform:rotateX(var(--xRotation))_rotateY(var(--yRotation))_scale(1.05)] overflow-hidden"
             >
               <img
                 src={avatar}
                 alt="Thanas R"
                 className="w-full h-full object-cover"
-                style={{ imageRendering: 'pixelated' }}
                 loading="eager"
               />
             </div>
