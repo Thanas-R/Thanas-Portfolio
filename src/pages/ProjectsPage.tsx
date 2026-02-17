@@ -12,8 +12,8 @@ import projectThanasOS from '@/assets/project-thanasOS.png';
 import projectPesuforge from '@/assets/project-pesuforge.png';
 
 const upcoming = [
-  { title: 'Mega Project', description: 'Under active development. Demo, write-up and source code coming soon.' },
-  { title: 'Spheal', description: 'Agentic AI trip planner. Under active development.' },
+  { title: 'Nautilus', description: 'Under active development.' },
+  { title: 'Virdis', description: 'Under active development.' },
 ];
 
 const projects = [
