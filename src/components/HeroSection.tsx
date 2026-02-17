@@ -113,11 +113,11 @@ const HeroSection = () => {
                 <AnimatePresence>
                   {hoveredSocial === s.label && (
                     <motion.div
-                      initial={{ y: 8, opacity: 0, scale: 0 }}
-                      animate={{ y: 0, opacity: 1, scale: 1 }}
-                      exit={{ y: 8, opacity: 0, scale: 0 }}
+                      initial={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
+                      animate={{ x: '-50%', y: 0, opacity: 1, scale: 1 }}
+                      exit={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
                       transition={{ duration: 0.1 }}
-                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md border border-border bg-background/80 backdrop-blur-md text-xs font-medium text-foreground whitespace-nowrap z-50 shadow-md font-['Space_Grotesk'] origin-bottom"
+                      className="absolute bottom-full left-1/2 mb-2 px-2 py-1 rounded-md border border-border bg-background/80 backdrop-blur-md text-xs font-medium text-foreground whitespace-nowrap z-50 shadow-md font-['Space_Grotesk'] origin-bottom"
                     >
                       {s.tooltip}
                     </motion.div>
