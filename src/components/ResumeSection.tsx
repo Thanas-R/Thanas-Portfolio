@@ -1,6 +1,14 @@
 import { motion } from 'framer-motion';
 import { FileText, Download, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 const ResumeSection = () => {
   const [showViewer, setShowViewer] = useState(false);
@@ -32,13 +40,25 @@ const ResumeSection = () => {
                 </div>
               </div>
               <div className="flex gap-3">
-                <button
-                  onClick={() => setShowViewer(!showViewer)}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-medium hover:bg-foreground hover:text-background transition-all duration-300"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  {showViewer ? 'Hide' : 'View'}
-                </button>
+                <Dialog open={showViewer} onOpenChange={setShowViewer}>
+                  <DialogTrigger asChild>
+                    <button className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-medium hover:bg-foreground hover:text-background transition-all duration-300">
+                      <ExternalLink className="w-4 h-4" />
+                      View
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-4 sm:p-6">
+                    <DialogHeader>
+                      <DialogTitle className="font-['Space_Grotesk']">Thanas R — Resume</DialogTitle>
+                      <DialogDescription>
+                        Preview of the uploaded PDF. Use download if your browser blocks embedded PDFs.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="border border-foreground/10 rounded-lg overflow-hidden bg-background h-full">
+                      <iframe src={resumePath} className="w-full h-full min-h-[65vh]" title="Resume PDF Viewer" />
+                    </div>
+                  </DialogContent>
+                </Dialog>
                 <a
                   href={resumePath}
                   download
@@ -49,22 +69,6 @@ const ResumeSection = () => {
                 </a>
               </div>
             </div>
-
-            {showViewer && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                transition={{ duration: 0.4 }}
-                className="mt-6 overflow-hidden"
-              >
-                <div className="border border-foreground/10 rounded-lg overflow-hidden bg-background">
-                  <iframe src={resumePath} className="w-full h-[600px] md:h-[800px]" title="Resume PDF Viewer" />
-                </div>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  If the PDF doesn't load, try downloading it directly.
-                </p>
-              </motion.div>
-            )}
 
             <div className="mt-8 grid md:grid-cols-3 gap-8">
               <div>
