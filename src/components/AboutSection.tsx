@@ -76,14 +76,14 @@ const AboutSection = () => {
               <h3 className="text-base font-semibold text-foreground font-['Space_Grotesk'] mb-3">My Journey</h3>
               <div className="space-y-2 relative">
                 <div className="absolute left-[5px] top-2 bottom-2 w-[1px] bg-border" />
-                {milestones.map((m) =>
-                <div key={m.year} className="flex items-start gap-3 relative">
-                    <div className="w-[11px] h-[11px] rounded-full bg-foreground/30 mt-1 flex-shrink-0 z-10" />
-                    <div>
-                      <span className="text-xs text-muted-foreground">{m.year}</span>
-                      <p className="text-xs text-foreground/80 leading-tight">{m.title}</p>
-                    </div>
-                  </div>
+                {milestones.map((m) => {}
+
+
+
+
+
+
+
                 )}
               </div>
             </div>
