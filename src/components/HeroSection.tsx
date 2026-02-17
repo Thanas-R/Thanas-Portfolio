@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import { useLanyard } from 'react-use-lanyard';
 import avatar from '@/assets/avatar.png';
 import { TbBrandGithubFilled } from "react-icons/tb";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const USER_ID = '677174403859087378';
 
@@ -11,6 +12,13 @@ const statusColors: Record<string, string> = {
   idle: 'bg-[#faa61a]',
   dnd: 'bg-[#f04747]',
   offline: 'bg-[#747f8d]',
+};
+
+const statusLabels: Record<string, string> = {
+  online: 'Online on Discord',
+  idle: 'Idle on Discord',
+  dnd: 'Do Not Disturb',
+  offline: 'Offline',
 };
 
 const socials = [
@@ -74,6 +82,7 @@ const HeroSection = () => {
 
   const discordStatus = lanyard?.discord_status || 'offline';
   const statusColor = statusColors[discordStatus] || statusColors.offline;
+  const statusLabel = statusLabels[discordStatus] || statusLabels.offline;
 
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center px-6">
@@ -87,10 +96,19 @@ const HeroSection = () => {
             Thanas{' '}
             <span className="relative inline-block">
               R
-              <span
-                className={`absolute bottom-[0.12em] -right-[0.15em] w-3 h-3 md:w-4 md:h-4 rounded-full ring-[5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300`}
-                title={discordStatus === 'online' ? 'Online on Discord' : discordStatus === 'idle' ? 'Idle on Discord' : discordStatus === 'dnd' ? 'Do Not Disturb' : 'Offline'}
-              />
+              <TooltipProvider delayDuration={150} skipDelayDuration={200}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span
+                      className={`absolute bottom-[0.12em] -right-[0.15em] w-3 h-3 md:w-4 md:h-4 rounded-full ring-[5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300`}
+                      aria-label={statusLabel}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="font-['Space_Grotesk'] tracking-normal">
+                    {statusLabel}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </span>
           </h1>
           <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
