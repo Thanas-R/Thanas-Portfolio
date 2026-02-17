@@ -25,53 +25,53 @@ const cards = [
 
 
 const AboutSection = () => {
-  return (
-    <section id="about" className="relative px-6 py-12">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ x: -60, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}>
-
-          
+  return;
 
 
 
-          {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {cards.map((card, i) =>
-            <motion.div
-              key={card.name}
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="glow-card p-6 group hover:border-foreground/20 transition-colors">
 
-                <card.Icon className="w-6 h-6 text-muted-foreground mb-3 group-hover:text-foreground transition-colors" />
-                <h3 className="text-lg font-semibold text-foreground font-['Space_Grotesk'] mb-1">
-                  {card.name}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {card.description}
-                </p>
-              </motion.div>
-            )}
-          </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="mt-6 text-muted-foreground leading-relaxed max-w-2xl">
 
-            I value positive & cheerful environments. Open to collaborations, interesting projects, or just a good conversation.
-          </motion.p>
-        </motion.div>
-      </div>
-    </section>);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 };
 
