@@ -25,10 +25,7 @@ const cards = [
 
 
 const AboutSection = () => {
-  return (
-    <section id="about" className="relative px-6 py-12">
-      <div className="max-w-5xl mx-auto">
-        
+  return;
 
 
 
@@ -47,8 +44,11 @@ const AboutSection = () => {
 
 
 
-      </div>
-    </section>);
+
+
+
+
+
 
 };
 
