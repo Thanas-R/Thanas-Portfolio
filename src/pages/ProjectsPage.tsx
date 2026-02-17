@@ -67,6 +67,12 @@ const projects = [
   },
 ];
 
+// Preload all project images
+projects.forEach((p) => {
+  const img = new Image();
+  img.src = p.preview;
+});
+
 const ProjectsPage = () => {
   return (
     <>
@@ -107,10 +113,7 @@ const ProjectsPage = () => {
             <h3 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Coming Soon</h3>
             <div className="grid md:grid-cols-2 gap-4">
               {upcoming.map((project) => (
-                <div
-                  key={project.title}
-                  className="glow-card border-dashed p-5"
-                >
+                <div key={project.title} className="glow-card border-dashed p-5">
                   <h4 className="text-base font-semibold text-foreground/70 font-['Space_Grotesk']">{project.title}</h4>
                   <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
                 </div>
@@ -164,7 +167,7 @@ const ProjectsPage = () => {
                         src={project.preview}
                         alt={`${project.title} preview`}
                         className="w-full h-full object-cover"
-                        loading="lazy"
+                        loading="eager"
                       />
                     </div>
                   </div>

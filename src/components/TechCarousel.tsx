@@ -18,6 +18,12 @@ const techStack: TechItem[] = [
   { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
 ];
 
+// Preload tech icons
+techStack.forEach((t) => {
+  const img = new Image();
+  img.src = t.icon;
+});
+
 function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean; speed: number }) {
   const tripled = [...items, ...items, ...items];
   return (
@@ -37,7 +43,7 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
             onMouseEnter={(e) => { e.currentTarget.style.filter = 'grayscale(0)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.filter = 'grayscale(1)'; }}
           >
-            <img src={tech.icon} alt={tech.name} className="w-8 h-8" loading="lazy" />
+            <img src={tech.icon} alt={tech.name} className="w-8 h-8" loading="eager" />
             <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">{tech.name}</span>
           </div>
         ))}
@@ -49,9 +55,9 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
 const TechCarousel = () => {
   const reversed = [...techStack].reverse();
   return (
-    <section className="relative px-6 py-8">
+    <section className="relative px-6 py-4">
       <div className="max-w-5xl mx-auto">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6 text-center">
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4 text-center">
           Tech Stack
         </h3>
         <div className="space-y-4 overflow-hidden">
