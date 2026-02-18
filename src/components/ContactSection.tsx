@@ -22,14 +22,14 @@ const ContactSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}>
 
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
+            ​  
+          </h2>
           
 
 
-          
 
-
-
-          <div className="mt-10 grid md:grid-cols-5 gap-8">
+          <div className="mt-10 grid md:grid-cols-5 gap-8 py-[24px]">
             {/* Left — contact info */}
             <div className="md:col-span-2 space-y-6">
               <div className="space-y-5">
