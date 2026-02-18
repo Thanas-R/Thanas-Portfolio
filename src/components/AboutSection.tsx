@@ -1,167 +1,169 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code2, Users, Rocket, Github, Linkedin, ArrowRight, FileText, Award, Briefcase } from 'lucide-react';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { GlowingEffect } from '@/components/GlowingEffect';
+import { Github, Linkedin, Mail, FileText, Phone, Globe } from 'lucide-react';
 
 const BentoCard = ({
-  name,
   className,
-  Icon,
   children,
-  href,
-  cta,
-  isRouterLink
-
-
-
-
-
-
-
-
-}: {name: string;className?: string;Icon?: any;children?: ReactNode;href?: string;cta?: string;isRouterLink?: boolean;}) =>
-<div className={cn('glow-card group relative flex flex-col justify-between p-5 overflow-hidden', className)}>
-    <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-foreground/[.03]" />
-    <div className="relative z-10 flex-1">
-      {Icon && (typeof Icon === 'object' && '$$typeof' in Icon ? React.createElement(Icon as any, { className: "w-5 h-5 mb-2 text-muted-foreground" }) : typeof Icon === 'function' ? <Icon className="w-5 h-5 mb-2 text-muted-foreground" /> : Icon)}
-      <h3 className="text-base font-semibold text-foreground font-['Space_Grotesk']">{name}</h3>
-      <div className="mt-1">{children}</div>
-    </div>
-    {href && cta &&
-  <div className="relative z-10 mt-3 opacity-0 translate-y-4 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-        {isRouterLink ?
-    <Link to={href} className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
-            {cta} <ArrowRight className="w-3 h-3" />
-          </Link> :
-
-    <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
-            {cta} <ArrowRight className="w-3 h-3" />
-          </a>
-    }
-      </div>
-  }
-  </div>;
-
+}: {
+  className?: string;
+  children?: ReactNode;
+}) => (
+  <div className={cn('relative group rounded-xl border border-border bg-card overflow-hidden p-5', className)}>
+    <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} disabled={false} />
+    <div className="relative z-10 h-full">{children}</div>
+  </div>
+);
 
 const projectCount = 6;
 
 const AboutSection = () => {
   return (
     <section id="about" className="relative py-12 w-full">
-      <div className="w-full px-0">
+      <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}>
-
-          {/* Bento Grid — edge-to-edge, matching wireframe layout */}
-          {/* Row 1: Journey (tall) | About Me (wide) | Certifications (tall) */}
-          {/* Row 2: Currently | Resume | Stats row */}
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 px-4 md:px-0">
+          transition={{ duration: 0.7 }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
 
             {/* Journey — tall left, spans 2 rows */}
-            <BentoCard
-              name="Journey"
-              Icon={Rocket}
-              className="md:col-span-1 md:row-span-2 min-h-[20rem]">
+            <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem]">
+              <div className="space-y-5">
+                {/* Timeline */}
+                <div className="relative pl-6 space-y-5">
+                  <div className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
 
-              <div className="mt-2 space-y-4 text-sm text-muted-foreground">
-                <div>
-                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2026</span>
-                  <span className="text-xs ml-2 text-muted-foreground">(current)</span>
-                  <p className="mt-0.5 leading-relaxed">Adopted agentic AI tools, refined UI/UX design skills, learned API integration, and elevated prompt engineering — enabling efficient vibe-coded projects.</p>
-                </div>
-                <div>
-                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2025</span>
-                  <p className="mt-0.5 leading-relaxed">Began B.Tech in CSE (AI/ML) at PES University. Started building production-ready projects.</p>
-                </div>
-                <div>
-                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2023</span>
-                  <p className="mt-0.5 leading-relaxed">Focused on C++ and data structures & algorithms, strengthening core CS fundamentals.</p>
-                </div>
-                <div>
-                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2021</span>
-                  <p className="mt-0.5 leading-relaxed">Began learning Java, exploring object-oriented programming and application development.</p>
-                </div>
-                <div>
-                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2020</span>
-                  <p className="mt-0.5 leading-relaxed">First steps in programming with Python — building small applications and scripts.</p>
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-3 h-3 rounded-full bg-foreground ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2026 <span className="text-foreground/40 normal-case">· Present</span></p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      Adopted agentic AI tools, refined <strong className="text-foreground">UI/UX design</strong> skills, and elevated prompt engineering for efficient project delivery.
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/50 ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2025</p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      Began <strong className="text-foreground">B.Tech in CSE (AI/ML)</strong> at PES University. Started building production-ready projects.
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/40 ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2023</p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      Focused on <strong className="text-foreground">C++</strong> and data structures & algorithms, strengthening core CS fundamentals.
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/30 ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2021</p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      Started learning <strong className="text-foreground">Java</strong>, focusing on OOP principles and application development.
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/20 ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2020</p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      First steps in programming with <strong className="text-foreground">Python</strong>, building small applications and scripts.
+                    </p>
+                  </div>
                 </div>
               </div>
             </BentoCard>
 
             {/* About Me — wide center, row 1 */}
-            <BentoCard
-              name="About Me"
-              Icon={Users}
-              className="md:col-span-3 min-h-[14rem]">
-
-              <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+            <BentoCard className="md:col-span-4 min-h-[10rem]">
+              <h3 className="text-xl md:text-2xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">About Me</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3">
                 I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mt-3">
                 While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mt-3">
-                I strive to be honest, supportive, and reliable — taking responsibility or leading when needed while contributing and learning with the team.
+                I strive to be honest, supportive, and reliable, taking responsibility or leading when needed while contributing and learning with the team.
               </p>
             </BentoCard>
 
-            {/* Certifications — tall right, spans 2 rows */}
-            <BentoCard
-              name="Certifications"
-              Icon={Award}
-              className="md:col-span-2 md:row-span-2 min-h-[20rem]">
-
-              <p className="text-sm text-muted-foreground mt-2 italic">Coming soon...</p>
-            </BentoCard>
-
-            {/* Currently — bottom left area */}
-            <BentoCard
-              name="Currently"
-              Icon={Briefcase}
-              className="md:col-span-2 min-h-[10rem]">
-
-              <p className="text-sm text-muted-foreground leading-relaxed mt-1">
-                Most likely working on a personal project. Pursuing B.Tech degree at PES University, 2025–2029, majoring in CSE (AI/ML).
+            {/* Currently */}
+            <BentoCard className="md:col-span-2 min-h-[10rem]">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Currently</p>
+              <p className="text-lg font-bold text-foreground font-['Space_Grotesk'] mt-2">Building & Learning</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-2">
+                Most likely working on a personal project. Pursuing <strong className="text-foreground">B.Tech</strong> at PES University, 2025–2029, majoring in CSE (AI/ML).
               </p>
             </BentoCard>
 
-            {/* Resume — small card */}
-            <BentoCard
-              name="Resume"
-              Icon={FileText}
-              className="md:col-span-1 min-h-[10rem]"
-              href="/resume"
-              cta="View Resume"
-              isRouterLink>
-
-              <p className="text-sm text-muted-foreground mt-1">View & download my resume.</p>
+            {/* Connect — social links card (replaces Resume card) */}
+            <BentoCard className="md:col-span-2 min-h-[10rem]">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Connect</p>
+              <p className="text-lg font-bold text-foreground font-['Space_Grotesk'] mt-2">Find Me Online</p>
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                <a href="https://github.com/Thanas-R" target="_blank" rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Github className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/thanasr/" target="_blank" rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Linkedin className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">LinkedIn</span>
+                </a>
+                <a href="mailto:thanas5.rd@gmail.com"
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Mail className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Email</span>
+                </a>
+                <a href="tel:+919141944808"
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Phone className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Phone</span>
+                </a>
+                <Link to="/resume"
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <FileText className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Resume</span>
+                </Link>
+                <a href="https://thanas.vercel.app" target="_blank" rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Globe className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Website</span>
+                </a>
+              </div>
             </BentoCard>
           </div>
 
-          {/* Stats row — bottom bar, edge-to-edge */}
-          <div className="grid grid-cols-3 gap-4 mt-4 px-4 md:px-0">
-            <div className="glow-card p-5 text-center">
+          {/* Stats row */}
+          <div className="grid grid-cols-3 gap-4 mt-4">
+            <BentoCard className="text-center py-6">
               <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">6+</p>
               <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Years of Coding</p>
-            </div>
-            <div className="glow-card p-5 text-center">
+            </BentoCard>
+            <BentoCard className="text-center py-6">
               <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">{projectCount}</p>
               <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Projects Built</p>
-            </div>
-            <div className="glow-card p-5 text-center">
+            </BentoCard>
+            <BentoCard className="text-center py-6">
               <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">∞</p>
               <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Learning Goals</p>
-            </div>
+            </BentoCard>
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default AboutSection;
