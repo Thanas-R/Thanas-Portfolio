@@ -4,14 +4,13 @@ import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import TechCarousel from '@/components/TechCarousel';
 import ProjectsSection from '@/components/ProjectsSection';
-import ResumeSection from '@/components/ResumeSection';
 import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
   return (
     <>
       <TopographicBackground />
-      <div className="relative z-10">
+      <div className="relative z-10 overflow-x-hidden">
         <Navbar />
         <HeroSection />
         <AboutSection />

@@ -1,113 +1,166 @@
 import { motion } from 'framer-motion';
-import { Code2, Users, Rocket, Github, Linkedin, ArrowRight } from 'lucide-react';
+import { Code2, Users, Rocket, Github, Linkedin, ArrowRight, FileText, Award, Briefcase } from 'lucide-react';
 import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-
-const BentoGrid = ({ children, className }: {children: ReactNode;className?: string;}) =>
-<div className={cn('grid w-full auto-rows-[12rem] grid-cols-3 gap-4', className)}>
-    {children}
-  </div>;
-
 
 const BentoCard = ({
   name,
   className,
   Icon,
-  description,
+  children,
   href,
-  cta
-
-
-
-
-
-
-
-}: {name: string;className?: string;Icon?: any;description: string;href?: string;cta?: string;}) =>
-<div
-  className={cn(
-    'glow-card group relative flex flex-col justify-end p-5 overflow-hidden',
-    className
-  )}>
-
+  cta,
+  isRouterLink,
+}: {
+  name: string;
+  className?: string;
+  Icon?: any;
+  children?: ReactNode;
+  href?: string;
+  cta?: string;
+  isRouterLink?: boolean;
+}) => (
+  <div className={cn('glow-card group relative flex flex-col justify-between p-5 overflow-hidden', className)}>
     <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-foreground/[.03]" />
-    <div className="relative z-10">
-      {Icon && <Icon className="h-8 w-8 text-muted-foreground mb-3 origin-left transition-all duration-300 ease-in-out group-hover:scale-75" />}
+    <div className="relative z-10 flex-1">
+      {Icon && <Icon className="h-7 w-7 text-muted-foreground mb-3 origin-left transition-all duration-300 ease-in-out group-hover:scale-75" />}
       <h3 className="text-base font-semibold text-foreground font-['Space_Grotesk']">{name}</h3>
-      <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{description}</p>
+      <div className="mt-1">{children}</div>
     </div>
-    {href && cta &&
-  <div className="absolute bottom-0 flex w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-        <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
-          {cta} <ArrowRight className="w-3 h-3" />
-        </a>
+    {href && cta && (
+      <div className="relative z-10 mt-3 opacity-0 translate-y-4 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        {isRouterLink ? (
+          <Link to={href} className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
+            {cta} <ArrowRight className="w-3 h-3" />
+          </Link>
+        ) : (
+          <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
+            {cta} <ArrowRight className="w-3 h-3" />
+          </a>
+        )}
       </div>
-  }
-  </div>;
+    )}
+  </div>
+);
 
-
-const projects = 6; // live project count
+const projectCount = 6;
 
 const AboutSection = () => {
   return (
-    <section id="about" className="relative px-6 py-12">
-      <div className="max-w-5xl mx-auto">
+    <section id="about" className="relative py-12 w-full">
+      <div className="w-full px-0">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}>
+          transition={{ duration: 0.7 }}
+        >
+          {/* Bento Grid — edge-to-edge, matching wireframe layout */}
+          {/* Row 1: Journey (tall) | About Me (wide) | Certifications (tall) */}
+          {/* Row 2: Currently | Resume | Stats row */}
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 px-4 md:px-0">
 
-          
-
-
-
-          {/* Bento Grid — 5 cards matching reference image layout */}
-          <BentoGrid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[14rem]">
-            {/* Card 1 — About Me (tall, spans 2 rows on desktop) */}
-            <BentoCard
-              name="About Me"
-              Icon={Users}
-              description="I'm a passionate learner who believes in growing a little every day. I enjoy turning complex challenges into simple, effective solutions. I value creating a positive, cheerful environment — a good laugh goes a long way in building strong teams."
-              className="lg:row-span-2" />
-
-
-            {/* Card 2 — empty/spacer on desktop, visible on mobile */}
-            <BentoCard
-              name="Coding Stats"
-              Icon={Code2}
-              description={`6+ years of coding experience. ${projects} live projects deployed. Infinite goals ahead.`} />
-
-
-            {/* Card 3 — Journey */}
+            {/* Journey — tall left, spans 2 rows */}
             <BentoCard
               name="Journey"
               Icon={Rocket}
-              description="Python (2020) → Java (2021) → C++ & DSA (2023) → B.Tech CSE AI/ML at PES University (2025). Always building, always learning." />
+              className="md:col-span-1 md:row-span-2 min-h-[20rem]"
+            >
+              <div className="mt-2 space-y-4 text-sm text-muted-foreground">
+                <div>
+                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2026</span>
+                  <span className="text-xs ml-2 text-muted-foreground">(current)</span>
+                  <p className="mt-0.5 leading-relaxed">Adopted agentic AI tools, refined UI/UX design skills, learned API integration, and elevated prompt engineering — enabling efficient vibe-coded projects.</p>
+                </div>
+                <div>
+                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2025</span>
+                  <p className="mt-0.5 leading-relaxed">Began B.Tech in CSE (AI/ML) at PES University. Started building production-ready projects.</p>
+                </div>
+                <div>
+                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2023</span>
+                  <p className="mt-0.5 leading-relaxed">Focused on C++ and data structures & algorithms, strengthening core CS fundamentals.</p>
+                </div>
+                <div>
+                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2021</span>
+                  <p className="mt-0.5 leading-relaxed">Began learning Java, exploring object-oriented programming and application development.</p>
+                </div>
+                <div>
+                  <span className="text-foreground font-semibold font-['Space_Grotesk']">2020</span>
+                  <p className="mt-0.5 leading-relaxed">First steps in programming with Python — building small applications and scripts.</p>
+                </div>
+              </div>
+            </BentoCard>
 
-
-            {/* Card 4 — GitHub */}
+            {/* About Me — wide center, row 1 */}
             <BentoCard
-              name="GitHub"
-              Icon={Github}
-              description="Open-source contributions and project repositories."
-              href="https://github.com/Thanas-R"
-              cta="View profile" />
+              name="About Me"
+              Icon={Users}
+              className="md:col-span-3 min-h-[14rem]"
+            >
+              <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+                I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+                While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+                I strive to be honest, supportive, and reliable — taking responsibility or leading when needed while contributing and learning with the team.
+              </p>
+            </BentoCard>
 
-
-            {/* Card 5 — LinkedIn */}
+            {/* Certifications — tall right, spans 2 rows */}
             <BentoCard
-              name="LinkedIn"
-              Icon={Linkedin}
-              description="Professional network and career updates."
-              href="https://www.linkedin.com/in/thanasr/"
-              cta="Connect" />
+              name="Certifications"
+              Icon={Award}
+              className="md:col-span-2 md:row-span-2 min-h-[20rem]"
+            >
+              <p className="text-sm text-muted-foreground mt-2 italic">Coming soon...</p>
+            </BentoCard>
 
-          </BentoGrid>
+            {/* Currently — bottom left area */}
+            <BentoCard
+              name="Currently"
+              Icon={Briefcase}
+              className="md:col-span-2 min-h-[10rem]"
+            >
+              <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+                Most likely working on a personal project. Pursuing B.Tech degree at PES University, 2025–2029, majoring in CSE (AI/ML).
+              </p>
+            </BentoCard>
+
+            {/* Resume — small card */}
+            <BentoCard
+              name="Resume"
+              Icon={FileText}
+              className="md:col-span-1 min-h-[10rem]"
+              href="/resume"
+              cta="View Resume"
+              isRouterLink
+            >
+              <p className="text-sm text-muted-foreground mt-1">View & download my resume.</p>
+            </BentoCard>
+          </div>
+
+          {/* Stats row — bottom bar, edge-to-edge */}
+          <div className="grid grid-cols-3 gap-4 mt-4 px-4 md:px-0">
+            <div className="glow-card p-5 text-center">
+              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">6+</p>
+              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Years of Coding</p>
+            </div>
+            <div className="glow-card p-5 text-center">
+              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">{projectCount}</p>
+              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Projects Built</p>
+            </div>
+            <div className="glow-card p-5 text-center">
+              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">∞</p>
+              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Learning Goals</p>
+            </div>
+          </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default AboutSection;
