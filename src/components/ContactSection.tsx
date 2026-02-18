@@ -65,8 +65,8 @@ const ContactSection = () => {
               </div>
 
               {/* Social links */}
-              <div className="pt-4 border-t border-border">
-                <p className="text-xs text-muted-foreground uppercase tracking-widest mb-3">Socials</p>
+              <div className="border-t border-border pt-0">
+                
                 <div className="flex gap-3">
                   <a href="https://github.com/Thanas-R" target="_blank" rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
