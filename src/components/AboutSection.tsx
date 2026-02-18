@@ -8,16 +8,16 @@ import { Github, Linkedin, Mail, FileText, Phone, Globe } from 'lucide-react';
 
 const BentoCard = ({
   className,
-  children,
-}: {
-  className?: string;
-  children?: ReactNode;
-}) => (
-  <div className={cn('relative group rounded-xl border border-border bg-card overflow-hidden p-5', className)}>
+  children
+
+
+
+}: {className?: string;children?: ReactNode;}) =>
+<div className={cn('relative group rounded-xl border border-border bg-card overflow-hidden p-5', className)}>
     <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} disabled={false} />
     <div className="relative z-10 h-full">{children}</div>
-  </div>
-);
+  </div>;
+
 
 const projectCount = 6;
 
@@ -29,8 +29,8 @@ const AboutSection = () => {
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}
-        >
+          transition={{ duration: 0.7 }}>
+
           <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
 
             {/* Journey — tall left, spans 2 rows */}
@@ -112,32 +112,32 @@ const AboutSection = () => {
               <p className="text-lg font-bold text-foreground font-['Space_Grotesk'] mt-2">Find Me Online</p>
               <div className="mt-4 grid grid-cols-3 gap-3">
                 <a href="https://github.com/Thanas-R" target="_blank" rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
                   <Github className="w-5 h-5" />
                   <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">GitHub</span>
                 </a>
                 <a href="https://www.linkedin.com/in/thanasr/" target="_blank" rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
                   <Linkedin className="w-5 h-5" />
                   <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">LinkedIn</span>
                 </a>
                 <a href="mailto:thanas5.rd@gmail.com"
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
                   <Mail className="w-5 h-5" />
                   <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Email</span>
                 </a>
                 <a href="tel:+919141944808"
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
                   <Phone className="w-5 h-5" />
                   <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Phone</span>
                 </a>
                 <Link to="/resume"
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
                   <FileText className="w-5 h-5" />
                   <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Resume</span>
                 </Link>
                 <a href="https://thanas.vercel.app" target="_blank" rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
                   <Globe className="w-5 h-5" />
                   <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Website</span>
                 </a>
@@ -146,24 +146,24 @@ const AboutSection = () => {
           </div>
 
           {/* Stats row */}
-          <div className="grid grid-cols-3 gap-4 mt-4">
-            <BentoCard className="text-center py-6">
-              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">6+</p>
-              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Years of Coding</p>
-            </BentoCard>
-            <BentoCard className="text-center py-6">
-              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">{projectCount}</p>
-              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Projects Built</p>
-            </BentoCard>
-            <BentoCard className="text-center py-6">
-              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">∞</p>
-              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Learning Goals</p>
-            </BentoCard>
-          </div>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default AboutSection;
