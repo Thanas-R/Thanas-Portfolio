@@ -76,7 +76,7 @@ const GlowingEffect = memo(
 
           const currentAngle =
             parseFloat(element.style.getPropertyValue("--start")) || 0;
-          let targetAngle =
+          const targetAngle =
             (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
               Math.PI +
             90;
@@ -126,29 +126,26 @@ const GlowingEffect = memo(
             "--start": "0",
             "--active": "0",
             "--glowing-border-width": `${borderWidth}px`,
-            "--repeating-conic-gradient-times": "5",
-            "--gradient": variant === "white"
-              ? `repeating-conic-gradient(
-                  from calc(var(--start) * 1deg),
-                  hsl(0 0% 100% / 0.15) 0%,
-                  hsl(0 0% 100% / 0.15) calc(100% / var(--repeating-conic-gradient-times)),
-                  transparent calc(100% / var(--repeating-conic-gradient-times)),
-                  transparent calc(200% / var(--repeating-conic-gradient-times))
-                )`
-              : `repeating-conic-gradient(
-                  from calc(var(--start) * 1deg),
-                  hsl(var(--glow-color) / calc(0.5 * var(--active))) 0%,
-                  hsl(var(--glow-color) / calc(0.3 * var(--active))) calc(100% / var(--repeating-conic-gradient-times)),
-                  transparent calc(100% / var(--repeating-conic-gradient-times)),
-                  transparent calc(200% / var(--repeating-conic-gradient-times))
-                )`,
+            "--edge-glow-color":
+              variant === "white" ? "255 255 255" : "67 181 129",
+            "--gradient": `conic-gradient(
+              from calc((var(--start) - var(--spread)) * 1deg),
+              rgb(var(--edge-glow-color) / 0) 0deg,
+              rgb(var(--edge-glow-color) / calc(0.95 * var(--active))) var(--spread),
+              rgb(var(--edge-glow-color) / 0) calc(var(--spread) * 2deg),
+              rgb(var(--edge-glow-color) / 0) 360deg
+            )`,
           } as React.CSSProperties
         }
         className={cn(
-          "pointer-events-none absolute inset-0 rounded-[inherit]",
-          "after:content-[''] after:absolute after:inset-[var(--glowing-border-width)] after:rounded-[inherit] after:border after:border-transparent",
-          "after:[background:var(--gradient)] after:[background-attachment:fixed] after:[background-size:100%_100%]",
-          glow && "after:opacity-[var(--active)]",
+          "pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300",
+          "after:content-[''] after:absolute after:inset-0 after:rounded-[inherit] after:p-[var(--glowing-border-width)]",
+          "after:[background:var(--gradient)]",
+          "after:[mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)]",
+          "after:[mask-composite:exclude] after:[-webkit-mask-composite:xor]",
+          "after:opacity-[var(--active)]",
+          glow && "opacity-100",
+          !glow && "opacity-0",
           blur > 0 && "after:blur-[var(--blur)]",
           className,
           disabled && "!hidden"
