@@ -131,7 +131,7 @@ const GlowingEffect = memo(
             "--gradient": `conic-gradient(
               from calc((var(--start) - var(--spread)) * 1deg),
               rgb(var(--edge-glow-color) / 0) 0deg,
-              rgb(var(--edge-glow-color) / calc(0.95 * var(--active))) calc(var(--spread) * 1deg),
+              rgb(var(--edge-glow-color) / calc(0.95 * var(--active))) var(--spread),
               rgb(var(--edge-glow-color) / 0) calc(var(--spread) * 2deg),
               rgb(var(--edge-glow-color) / 0) 360deg
             )`,
