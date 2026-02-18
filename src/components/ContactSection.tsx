@@ -14,7 +14,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="relative py-16 px-6 pt-[48px]">
+    <section id="contact" className="relative py-16 px-6 pt-0">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
@@ -23,7 +23,7 @@ const ContactSection = () => {
           transition={{ duration: 0.7 }}>
 
           <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-            Get in Touch
+            ​  
           </h2>
           
 
@@ -67,7 +67,7 @@ const ContactSection = () => {
               {/* Social links */}
               <div className="border-t border-border pt-0">
                 
-                <div className="flex gap-3">
+                <div className="flex gap-3 px-0 py-[16px]">
                   <a href="https://github.com/Thanas-R" target="_blank" rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
                     <Github className="w-4 h-4" />
