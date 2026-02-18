@@ -23,7 +23,7 @@ const projectCount = 6;
 
 const AboutSection = () => {
   return (
-    <section id="about" className="relative py-12 w-full">
+    <section id="about" className="relative py-12 w-full pt-0">
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
