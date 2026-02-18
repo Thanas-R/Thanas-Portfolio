@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Github, Linkedin, FileText, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, FileText } from 'lucide-react';
 import { useState } from 'react';
 import { GlowingEffect } from '@/components/GlowingEffect';
 import { Link } from 'react-router-dom';
@@ -126,7 +126,7 @@ const ContactSection = () => {
                     type="submit"
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity">
 
-                    <Send className="w-4 h-4" />
+                    
                     Send Message
                   </button>
                 </form>
