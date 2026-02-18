@@ -7,7 +7,7 @@ import TextRoll from '@/components/TextRoll';
 const navItems = [
   { label: 'About', href: '#about' },
   { label: 'Projects', href: '/projects', isRoute: true },
-  { label: 'Resume', href: '/resume', isRoute: true },
+  { label: 'Resume', href: '#resume' },
   { label: 'Contact', href: '#contact' },
 ];
 

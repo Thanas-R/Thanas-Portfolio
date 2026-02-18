@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { useLanyard } from 'react-use-lanyard';
 import avatar from '@/assets/avatar.png';
-import { TbBrandGithubFilled } from 'react-icons/tb';
+import { TbBrandGithubFilled } from "react-icons/tb";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const USER_ID = '677174403859087378';
@@ -24,9 +24,9 @@ const statusLabels: Record<string, string> = {
 const socials = [
   {
     label: 'GitHub',
-    href: 'https://github.com/Thanas-R',
-    tooltip: 'Thanas-R',
-    icon: <TbBrandGithubFilled className="w-7 h-7" />,
+  href: 'https://github.com/Thanas-R',
+  tooltip: 'Thanas-R',
+  icon: <TbBrandGithubFilled className="w-7 h-7" />,
   },
   {
     label: 'LinkedIn',
@@ -99,11 +99,8 @@ const HeroSection = () => {
               <TooltipProvider delayDuration={150} skipDelayDuration={200}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    {/* Desktop: overlap with R baseline. Mobile/tablet: original position */}
                     <span
-                      className={`absolute rounded-full ring-[5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300
-                        w-3 h-3 bottom-[-3px] right-[-10px]
-                        md:w-4 md:h-4 md:bottom-[0.12em] md:-right-[0.15em]`}
+                      className={`absolute bottom-[0.12em] -right-[0.15em] w-3 h-3 md:w-4 md:h-4 rounded-full ring-[5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300`}
                       aria-label={statusLabel}
                     />
                   </TooltipTrigger>
@@ -131,10 +128,19 @@ const HeroSection = () => {
                 >
                   {s.icon}
                 </a>
-                {/* Tooltip */}
-                <div className="absolute -mt-9 left-1/2 w-auto min-w-max origin-bottom -translate-x-1/2 scale-0 rounded-md border border-border bg-background/80 px-2 py-1 text-sm text-foreground shadow-md backdrop-blur-md transition-all duration-100 group-hover:scale-100 font-['Space_Grotesk'] whitespace-nowrap pointer-events-none">
-                  {s.tooltip}
-                </div>
+                <AnimatePresence>
+                  {hoveredSocial === s.label && (
+                    <motion.div
+                      initial={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
+                      animate={{ x: '-50%', y: 0, opacity: 1, scale: 1 }}
+                      exit={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
+                      transition={{ duration: 0.1 }}
+                      className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap z-50 shadow-md font-['Space_Grotesk'] origin-bottom"
+                    >
+                      {s.tooltip}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </div>
@@ -167,6 +173,7 @@ const HeroSection = () => {
                 src={avatar}
                 alt="Thanas R"
                 className="w-full h-full object-cover"
+                style={{ imageRendering: 'pixelated' }}
                 loading="eager"
               />
             </div>
