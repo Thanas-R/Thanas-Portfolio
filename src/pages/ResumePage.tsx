@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft, Download, Plus, Minus, Maximize } from 'lucide-react';
+import { useState, useRef } from 'react';
 import TopographicBackground from '@/components/TopographicBackground';
 
 const ResumeIcon = () => (
@@ -12,11 +13,27 @@ const ResumeIcon = () => (
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
+  const [zoom, setZoom] = useState(100);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const zoomIn = () => setZoom((z) => Math.min(z + 20, 300));
+  const zoomOut = () => setZoom((z) => Math.max(z, 100)); // Don't go below 100
+  const zoomOutAction = () => setZoom((z) => Math.max(z - 20, 100));
+
+  const toggleFullscreen = () => {
+    if (containerRef.current) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        containerRef.current.requestFullscreen();
+      }
+    }
+  };
 
   return (
     <>
       <TopographicBackground />
-      <div className="relative z-10 min-h-screen flex flex-col">
+      <div className="relative z-10 min-h-screen flex flex-col overflow-hidden">
         {/* Header */}
         <motion.header
           initial={{ y: -20, opacity: 0 }}
@@ -39,30 +56,73 @@ const ResumePage = () => {
                 <span className="font-semibold font-['Space_Grotesk']">Thanas's Resume</span>
               </div>
             </div>
-            <a
-              href={resumePath}
-              download
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
-            >
-              <Download className="w-4 h-4" />
-              Download
-            </a>
+            <div className="flex items-center gap-2">
+              {/* Zoom controls */}
+              <div className="hidden sm:flex items-center gap-1 mr-2">
+                <button
+                  onClick={zoomOutAction}
+                  disabled={zoom <= 100}
+                  className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30"
+                >
+                  <Minus className="w-4 h-4" />
+                </button>
+                <span className="text-xs text-muted-foreground w-10 text-center font-mono">{zoom}%</span>
+                <button
+                  onClick={zoomIn}
+                  className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={toggleFullscreen}
+                  className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors ml-1"
+                >
+                  <Maximize className="w-4 h-4" />
+                </button>
+              </div>
+              <a
+                href={resumePath}
+                download
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                <Download className="w-4 h-4" />
+                Download
+              </a>
+            </div>
           </div>
         </motion.header>
 
-        {/* PDF Viewer */}
+        {/* PDF Viewer — show full PDF, no iframe scrollbar */}
         <motion.div
+          ref={containerRef}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex-1 max-w-4xl w-full mx-auto px-6 py-8"
+          className="flex-1 max-w-4xl w-full mx-auto px-6 py-8 overflow-auto"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
         >
-          <div className="w-full h-[calc(100vh-8rem)] rounded-2xl border border-border overflow-hidden bg-card shadow-sm">
+          <style>{`.resume-scroll::-webkit-scrollbar { display: none; }`}</style>
+          <div
+            className="resume-scroll w-full rounded-2xl border border-border overflow-auto bg-card shadow-sm"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
             <iframe
-              src={`${resumePath}#toolbar=0&navpanes=0`}
-              className="w-full h-full"
+              src={`${resumePath}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+              className="w-full border-none"
               title="Resume PDF"
-              style={{ border: 'none' }}
+              style={{
+                height: `${Math.max(zoom, 100)}vh`,
+                minHeight: '100vh',
+                transform: `scale(${zoom / 100})`,
+                transformOrigin: 'top center',
+                border: 'none',
+              }}
             />
           </div>
         </motion.div>
