@@ -17,7 +17,6 @@ const Index = () => {
         <AboutSection />
         <TechCarousel />
         <ProjectsSection />
-        <ResumeSection />
         <ContactSection />
       </div>
     </>

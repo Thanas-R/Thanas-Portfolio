@@ -66,8 +66,8 @@ const ProjectsSection = () => {
 
           {/* Card Stack */}
           <div
-            className="relative w-full flex items-end justify-center"
-            style={{ height: 380, perspective: 1100 }}
+            className="relative w-full flex items-end justify-center h-[260px] sm:h-[320px] md:h-[380px]"
+            style={{ perspective: 1100 }}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
           >
@@ -80,7 +80,9 @@ const ProjectsSection = () => {
                 if (abs > maxOffset) return null;
 
                 const isActive = off === 0;
-                const cardWidth = 480;
+                const isMobile = window.innerWidth < 640;
+                const isTablet = window.innerWidth < 1024 && !isMobile;
+                const cardWidth = isMobile ? 280 : isTablet ? 380 : 480;
                 const spacing = cardWidth * 0.52;
                 const x = off * spacing;
                 const rotateZ = off * 18;
@@ -91,7 +93,7 @@ const ProjectsSection = () => {
                   <motion.div
                     key={item.id}
                     className={`absolute bottom-0 rounded-2xl border border-foreground/10 overflow-hidden shadow-xl cursor-pointer select-none ${isActive ? 'z-30' : abs === 1 ? 'z-20' : 'z-10'}`}
-                    style={{ width: cardWidth, height: 300, transformStyle: 'preserve-3d' }}
+                    style={{ width: cardWidth, height: isMobile ? 200 : isTablet ? 250 : 300, transformStyle: 'preserve-3d' }}
                     animate={{ x, y: y + (isActive ? -20 : 0), rotateZ, scale, opacity: 1 }}
                     transition={{ type: 'spring', stiffness: 280, damping: 28 }}
                     onClick={() => {
