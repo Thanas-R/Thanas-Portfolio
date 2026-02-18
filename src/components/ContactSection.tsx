@@ -22,9 +22,9 @@ const ContactSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}>
 
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-            ​  
-          </h2>
+          
+
+
           
 
 
