@@ -14,7 +14,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="relative py-16 px-6 pt-[32px]">
+    <section id="contact" className="relative py-16 px-6 pt-[48px]">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
