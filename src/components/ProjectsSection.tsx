@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState, useEffect, useCallback } from 'react';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import projectPesuMC from '@/assets/project-pesumc.png';
@@ -27,116 +27,112 @@ const projects: CardItem[] = [
   { id: 6, title: 'PESU Forge', description: 'AI-powered study platform for interactive quizzes', imageSrc: projectPesuforge, href: 'https://pesu-forge.vercel.app/' },
 ];
 
-// Preload all project images
-projects.forEach((p) => {
-  const img = new Image();
-  img.src = p.imageSrc;
-});
+// Preload
+projects.forEach((p) => { const img = new Image(); img.src = p.imageSrc; });
 
 const ProjectsSection = () => {
   const [active, setActive] = useState(0);
   const [hovering, setHovering] = useState(false);
-  const maxOffset = 2;
 
   const next = useCallback(() => setActive((a) => (a + 1) % projects.length), []);
 
-  // Auto-advance every 3.5s, pause on hover
   useEffect(() => {
     if (hovering) return;
     const id = setInterval(next, 3500);
     return () => clearInterval(id);
   }, [hovering, next]);
 
-  const prev = () => setActive((a) => (a - 1 + projects.length) % projects.length);
+  // Fan-out card positions like the Pallet Ross reference
+  const getCardStyle = (index: number) => {
+    const total = projects.length;
+    const mid = (total - 1) / 2;
+    const offset = index - mid;
+    const isActive = index === active;
+
+    // Spread cards in a fan from center
+    const rotate = offset * 8;
+    const x = offset * 85;
+    const y = Math.abs(offset) * 18;
+    const scale = isActive ? 1.08 : 0.95 - Math.abs(offset) * 0.02;
+    const zIndex = total - Math.abs(Math.round(offset));
+
+    return {
+      transform: `translateX(${x}px) translateY(${y}px) rotate(${rotate}deg) scale(${scale})`,
+      zIndex: isActive ? 50 : zIndex,
+      transition: 'all 0.5s cubic-bezier(0.25, 0.1, 0, 1)',
+    };
+  };
 
   return (
-    <section id="projects" className="relative px-6 py-12">
+    <section id="projects" className="relative px-6 py-16">
       <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ x: 60, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          <div className="flex items-end justify-between mb-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-              Projects
-            </h2>
-          </div>
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight text-center mb-4">
+            Projects
+          </h2>
+          <p className="text-center text-muted-foreground text-sm mb-12 max-w-md mx-auto">
+            A collection of things I've built and shipped.
+          </p>
 
-          {/* Card Stack */}
+          {/* Fan-out card stack */}
           <div
-            className="relative w-full flex items-end justify-center"
-            style={{ height: 380, perspective: 1100 }}
+            className="relative w-full flex items-center justify-center mx-auto"
+            style={{ height: 340, perspective: 1200 }}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
           >
-            <AnimatePresence initial={false}>
-              {projects.map((item, i) => {
-                const raw = i - active;
-                const alt = raw > 0 ? raw - projects.length : raw + projects.length;
-                const off = Math.abs(alt) < Math.abs(raw) ? alt : raw;
-                const abs = Math.abs(off);
-                if (abs > maxOffset) return null;
-
-                const isActive = off === 0;
-                const cardWidth = 480;
-                const spacing = cardWidth * 0.52;
-                const x = off * spacing;
-                const rotateZ = off * 18;
-                const y = abs * 10;
-                const scale = isActive ? 1.03 : 0.92;
-
-                return (
-                  <motion.div
-                    key={item.id}
-                    className={`absolute bottom-0 rounded-2xl border border-foreground/10 overflow-hidden shadow-xl cursor-pointer select-none ${isActive ? 'z-30' : abs === 1 ? 'z-20' : 'z-10'}`}
-                    style={{ width: cardWidth, height: 300, transformStyle: 'preserve-3d' }}
-                    animate={{ x, y: y + (isActive ? -20 : 0), rotateZ, scale, opacity: 1 }}
-                    transition={{ type: 'spring', stiffness: 280, damping: 28 }}
-                    onClick={() => {
-                      if (isActive && item.href) {
-                        window.open(item.href, '_blank');
-                      } else {
-                        setActive(i);
-                      }
-                    }}
-                  >
-                    <div className="relative h-full w-full">
-                      <img src={item.imageSrc} alt={item.title} className="h-full w-full object-cover" draggable={false} loading="eager" />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg font-semibold text-white truncate">{item.title}</span>
-                          {isActive && item.href && <ExternalLink className="w-3.5 h-3.5 text-white/70" />}
-                        </div>
-                        <p className="mt-1 text-sm text-white/80 line-clamp-1">{item.description}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+            {projects.map((item, i) => (
+              <div
+                key={item.id}
+                className="absolute cursor-pointer rounded-2xl overflow-hidden shadow-lg border border-border/50 hover:shadow-2xl"
+                style={{
+                  width: 220,
+                  height: 280,
+                  ...getCardStyle(i),
+                }}
+                onClick={() => {
+                  if (i === active && item.href) {
+                    window.open(item.href, '_blank');
+                  } else {
+                    setActive(i);
+                  }
+                }}
+              >
+                <img
+                  src={item.imageSrc}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                  draggable={false}
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <span className="text-sm font-semibold text-white truncate block">{item.title}</span>
+                  <p className="text-xs text-white/70 line-clamp-1 mt-0.5">{item.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Dots */}
-          <div className="mt-6 flex items-center justify-center gap-2">
-            <button onClick={prev} className="text-muted-foreground hover:text-foreground transition-colors p-1">
-              <ArrowRight className="w-4 h-4 rotate-180" />
-            </button>
+          <div className="mt-8 flex items-center justify-center gap-2">
             {projects.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setActive(idx)}
-                className={`h-2 w-2 rounded-full transition ${idx === active ? 'bg-foreground' : 'bg-foreground/30 hover:bg-foreground/50'}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  idx === active ? 'w-6 bg-foreground' : 'w-1.5 bg-foreground/25 hover:bg-foreground/40'
+                }`}
               />
             ))}
-            <button onClick={() => next()} className="text-muted-foreground hover:text-foreground transition-colors p-1">
-              <ArrowRight className="w-4 h-4" />
-            </button>
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="mt-8 text-center">
             <Link
               to="/projects"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-foreground/20 text-foreground text-sm font-medium hover:bg-foreground hover:text-background transition-all duration-300"
