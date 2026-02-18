@@ -1,109 +1,165 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Code2, Users, Rocket, Github, Linkedin, ArrowRight } from 'lucide-react';
 import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-
-const BentoGrid = ({ children, className }: {children: ReactNode;className?: string;}) =>
-<div className={cn('grid w-full auto-rows-[12rem] grid-cols-3 gap-4', className)}>
-    {children}
-  </div>;
-
+import { GlowingEffect } from '@/components/GlowingEffect';
+import { Github, Linkedin, Mail, FileText, Phone, Globe } from 'lucide-react';
 
 const BentoCard = ({
-  name,
   className,
-  Icon,
-  description,
-  href,
-  cta
+  children
 
 
 
-
-
-
-
-}: {name: string;className?: string;Icon?: any;description: string;href?: string;cta?: string;}) =>
-<div
-  className={cn(
-    'glow-card group relative flex flex-col justify-end p-5 overflow-hidden',
-    className
-  )}>
-
-    <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-foreground/[.03]" />
-    <div className="relative z-10">
-      {Icon && <Icon className="h-8 w-8 text-muted-foreground mb-3 origin-left transition-all duration-300 ease-in-out group-hover:scale-75" />}
-      <h3 className="text-base font-semibold text-foreground font-['Space_Grotesk']">{name}</h3>
-      <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{description}</p>
-    </div>
-    {href && cta &&
-  <div className="absolute bottom-0 flex w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-        <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
-          {cta} <ArrowRight className="w-3 h-3" />
-        </a>
-      </div>
-  }
+}: {className?: string;children?: ReactNode;}) =>
+<div className={cn('relative group rounded-xl border border-border bg-card overflow-hidden p-5', className)}>
+    <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} disabled={false} />
+    <div className="relative z-10 h-full">{children}</div>
   </div>;
 
 
-const projects = 6; // live project count
+const projectCount = 6;
 
 const AboutSection = () => {
   return (
-    <section id="about" className="relative px-6 py-12">
-      <div className="max-w-5xl mx-auto">
+    <section id="about" className="relative py-12 w-full pt-0">
+      <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}>
 
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+
+            {/* Journey — tall left, spans 2 rows */}
+            <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem]">
+              <div className="space-y-5">
+                {/* Timeline */}
+                <div className="relative pl-6 space-y-5">
+                  <div className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-3 h-3 rounded-full bg-foreground ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2026 <span className="text-foreground/40 normal-case">· Present</span></p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      Adopted agentic AI tools, refined <strong className="text-foreground">UI/UX design</strong> skills, and elevated prompt engineering for efficient project delivery.
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/50 ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2025</p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      Began <strong className="text-foreground">B.Tech in CSE (AI/ML)</strong> at PES University. Started building production-ready projects.
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/40 ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2023</p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      Focused on <strong className="text-foreground">C++</strong> and data structures & algorithms, strengthening core CS fundamentals.
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/30 ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2021</p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      Started learning <strong className="text-foreground">Java</strong>, focusing on OOP principles and application development.
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/20 ring-4 ring-card" />
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">2020</p>
+                    <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+                      First steps in programming with <strong className="text-foreground">Python</strong>, building small applications and scripts.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </BentoCard>
+
+            {/* About Me — wide center, row 1 */}
+            <BentoCard className="md:col-span-4 min-h-[10rem]">
+              <h3 className="text-xl md:text-2xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">About Me</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+                I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+                While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+                I strive to be honest, supportive, and reliable, taking responsibility or leading when needed while contributing and learning with the team.
+              </p>
+            </BentoCard>
+
+            {/* Currently */}
+            <BentoCard className="md:col-span-2 min-h-[10rem]">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Currently</p>
+              <p className="text-lg font-bold text-foreground font-['Space_Grotesk'] mt-2">Building & Learning</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-2">
+                Most likely working on a personal project. Pursuing <strong className="text-foreground">B.Tech</strong> at PES University, 2025–2029, majoring in CSE (AI/ML).
+              </p>
+            </BentoCard>
+
+            {/* Connect — social links card (replaces Resume card) */}
+            <BentoCard className="md:col-span-2 min-h-[10rem]">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Connect</p>
+              <p className="text-lg font-bold text-foreground font-['Space_Grotesk'] mt-2">Find Me Online</p>
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                <a href="https://github.com/Thanas-R" target="_blank" rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Github className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/thanasr/" target="_blank" rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Linkedin className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">LinkedIn</span>
+                </a>
+                <a href="mailto:thanas5.rd@gmail.com"
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Mail className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Email</span>
+                </a>
+                <a href="tel:+919141944808"
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Phone className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Phone</span>
+                </a>
+                <Link to="/resume"
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <FileText className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Resume</span>
+                </Link>
+                <a href="https://thanas.vercel.app" target="_blank" rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all duration-300 group/icon">
+                  <Globe className="w-5 h-5" />
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover/icon:text-background">Website</span>
+                </a>
+              </div>
+            </BentoCard>
+          </div>
+
+          {/* Stats row */}
           
 
 
 
-          {/* Bento Grid — 5 cards matching reference image layout */}
-          <BentoGrid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[14rem]">
-            {/* Card 1 — About Me (tall, spans 2 rows on desktop) */}
-            <BentoCard
-              name="About Me"
-              Icon={Users}
-              description="I'm a passionate learner who believes in growing a little every day. I enjoy turning complex challenges into simple, effective solutions. I value creating a positive, cheerful environment — a good laugh goes a long way in building strong teams."
-              className="lg:row-span-2" />
 
 
-            {/* Card 2 — empty/spacer on desktop, visible on mobile */}
-            <BentoCard
-              name="Coding Stats"
-              Icon={Code2}
-              description={`6+ years of coding experience. ${projects} live projects deployed. Infinite goals ahead.`} />
 
 
-            {/* Card 3 — Journey */}
-            <BentoCard
-              name="Journey"
-              Icon={Rocket}
-              description="Python (2020) → Java (2021) → C++ & DSA (2023) → B.Tech CSE AI/ML at PES University (2025). Always building, always learning." />
 
 
-            {/* Card 4 — GitHub */}
-            <BentoCard
-              name="GitHub"
-              Icon={Github}
-              description="Open-source contributions and project repositories."
-              href="https://github.com/Thanas-R"
-              cta="View profile" />
 
 
-            {/* Card 5 — LinkedIn */}
-            <BentoCard
-              name="LinkedIn"
-              Icon={Linkedin}
-              description="Professional network and career updates."
-              href="https://www.linkedin.com/in/thanasr/"
-              cta="Connect" />
 
-          </BentoGrid>
+
         </motion.div>
       </div>
     </section>);
