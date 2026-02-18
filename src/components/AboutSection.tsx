@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Code2, Users, Rocket, Github, Linkedin, ArrowRight, FileText, Award, Briefcase } from 'lucide-react';
 import { ReactNode } from 'react';
@@ -24,7 +25,7 @@ const BentoCard = ({
 <div className={cn('glow-card group relative flex flex-col justify-between p-5 overflow-hidden', className)}>
     <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-foreground/[.03]" />
     <div className="relative z-10 flex-1">
-      {Icon && (typeof Icon === 'function' ? <Icon className="w-5 h-5 mb-2 text-muted-foreground" /> : Icon)}
+      {Icon && (typeof Icon === 'object' && '$$typeof' in Icon ? React.createElement(Icon as any, { className: "w-5 h-5 mb-2 text-muted-foreground" }) : typeof Icon === 'function' ? <Icon className="w-5 h-5 mb-2 text-muted-foreground" /> : Icon)}
       <h3 className="text-base font-semibold text-foreground font-['Space_Grotesk']">{name}</h3>
       <div className="mt-1">{children}</div>
     </div>
