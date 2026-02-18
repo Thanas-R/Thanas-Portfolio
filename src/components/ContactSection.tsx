@@ -14,20 +14,20 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="relative py-16 px-6">
+    <section id="contact" className="relative py-16 px-6 pt-[32px]">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}
-        >
+          transition={{ duration: 0.7 }}>
+
           <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
             Get in Touch
           </h2>
-          <p className="mt-2 text-muted-foreground max-w-md">
-            Have a question or want to work together? I'd love to hear from you.
-          </p>
+          
+
+
 
           <div className="mt-10 grid md:grid-cols-5 gap-8">
             {/* Left — contact info */}
@@ -69,15 +69,15 @@ const ContactSection = () => {
                 <p className="text-xs text-muted-foreground uppercase tracking-widest mb-3">Socials</p>
                 <div className="flex gap-3">
                   <a href="https://github.com/Thanas-R" target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
+                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
                     <Github className="w-4 h-4" />
                   </a>
                   <a href="https://www.linkedin.com/in/thanasr/" target="_blank" rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
+                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
                     <Linkedin className="w-4 h-4" />
                   </a>
                   <Link to="/resume"
-                    className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
+                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
                     <FileText className="w-4 h-4" />
                   </Link>
                 </div>
@@ -97,8 +97,8 @@ const ContactSection = () => {
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className="mt-1.5 w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring"
-                      required
-                    />
+                      required />
+
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-foreground font-['Space_Grotesk']">Email</label>
@@ -108,8 +108,8 @@ const ContactSection = () => {
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       className="mt-1.5 w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring"
-                      required
-                    />
+                      required />
+
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-foreground font-['Space_Grotesk']">Message</label>
@@ -119,13 +119,13 @@ const ContactSection = () => {
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       className="mt-1.5 w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring resize-y"
-                      required
-                    />
+                      required />
+
                   </div>
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
-                  >
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity">
+
                     <Send className="w-4 h-4" />
                     Send Message
                   </button>
@@ -135,8 +135,8 @@ const ContactSection = () => {
           </div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default ContactSection;
