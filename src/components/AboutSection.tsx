@@ -24,7 +24,7 @@ const BentoCard = ({
 <div className={cn('glow-card group relative flex flex-col justify-between p-5 overflow-hidden', className)}>
     <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-foreground/[.03]" />
     <div className="relative z-10 flex-1">
-      {Icon && <Icon className="h-7 w-7 text-muted-foreground mb-3 origin-left transition-all duration-300 ease-in-out group-hover:scale-75" />}
+      {Icon}
       <h3 className="text-base font-semibold text-foreground font-['Space_Grotesk']">{name}</h3>
       <div className="mt-1">{children}</div>
     </div>
@@ -143,20 +143,20 @@ const AboutSection = () => {
           </div>
 
           {/* Stats row — bottom bar, edge-to-edge */}
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
+          <div className="grid grid-cols-3 gap-4 mt-4 px-4 md:px-0">
+            <div className="glow-card p-5 text-center">
+              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">6+</p>
+              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Years of Coding</p>
+            </div>
+            <div className="glow-card p-5 text-center">
+              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">{projectCount}</p>
+              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Projects Built</p>
+            </div>
+            <div className="glow-card p-5 text-center">
+              <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk']">∞</p>
+              <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">Learning Goals</p>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>);
