@@ -16,7 +16,7 @@ const BentoCard = ({ className, children, delay = 0 }: {className?: string;child
     <motion.div
       ref={ref}
       style={{ y }}
-      className={cn("relative group rounded-xl border border-border bg-card overflow-hidden p-4 py-[20px] pb-[20px] pt-[18px]", className)}>
+      className={cn("relative group rounded-xl border border-border bg-card overflow-hidden p-4 py-[20px]", className)}>
 
       <GlowingEffect spread={40} glow proximity={64} borderWidth={2} disabled={false} />
       <div className="relative z-10 h-full flex flex-col">{children}</div>
