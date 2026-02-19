@@ -94,8 +94,8 @@ const AboutSection = () => {
           {/* Currently */}
           <BentoCard className="md:col-span-2" delay={2}>
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Currently</p>
-            <p className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] mt-2 leading-tight">Building & Learning</p>
-            <p className="text-base text-muted-foreground leading-relaxed mt-2 flex-1">
+            
+            <p className="text-base text-muted-foreground leading-relaxed mt-2 flex-1 my-[4px]">
               Most likely working on a personal project. Pursuing <strong className="text-foreground">B.Tech</strong> at PES University, 2025–2029, majoring in CSE (AI/ML).
             </p>
           </BentoCard>
