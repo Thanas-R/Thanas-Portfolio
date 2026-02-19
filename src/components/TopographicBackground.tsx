@@ -137,7 +137,7 @@ const TopographicBackground = () => {
         }
       }
 
-      ctx.strokeStyle = isDark ? 'rgba(245, 245, 245, 0.20)' : 'rgba(67, 181, 129, 0.45)';
+      ctx.strokeStyle = isDark ? 'rgba(245, 245, 245, 0.20)' : 'rgba(180, 175, 165, 0.45)';
       ctx.lineWidth = 1.5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
