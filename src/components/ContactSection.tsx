@@ -3,13 +3,33 @@ import { Mail, Phone, MapPin, Github, Linkedin, FileText } from 'lucide-react';
 import { useState } from 'react';
 import { GlowingEffect } from '@/components/GlowingEffect';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.href = `mailto:thanas5.rd@gmail.com?subject=Message from ${form.name}&body=${encodeURIComponent(form.message)}%0A%0AFrom: ${form.email}`;
+    setSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: form,
+      });
+      if (error) throw error;
+      if (data?.success) {
+        toast.success('Message sent successfully!');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        throw new Error(data?.error || 'Failed to send');
+      }
+    } catch (err: any) {
+      console.error(err);
+      toast.error('Failed to send message. Please try again.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -56,7 +76,6 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              {/* Social links */}
               <div className="border-t border-border pt-0">
                 <div className="flex gap-3 py-4">
                   <a href="https://github.com/Thanas-R" target="_blank" rel="noopener noreferrer"
@@ -115,9 +134,10 @@ const ContactSection = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
+                    disabled={sending}
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
-                    Send Message
+                    {sending ? 'Sending...' : 'Send Message'}
                   </button>
                 </form>
               </div>
