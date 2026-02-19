@@ -9,7 +9,6 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Will be connected to Resend API later
     window.location.href = `mailto:thanas5.rd@gmail.com?subject=Message from ${form.name}&body=${encodeURIComponent(form.message)}%0A%0AFrom: ${form.email}`;
   };
 
@@ -20,16 +19,9 @@ const ContactSection = () => {
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}>
-
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-            ​  
-          </h2>
-          
-
-
-
-          <div className="mt-10 grid md:grid-cols-5 gap-8 py-[24px]">
+          transition={{ duration: 0.7 }}
+        >
+          <div className="mt-10 grid md:grid-cols-5 gap-8 py-6">
             {/* Left — contact info */}
             <div className="md:col-span-2 space-y-6">
               <div className="space-y-5">
@@ -66,18 +58,17 @@ const ContactSection = () => {
 
               {/* Social links */}
               <div className="border-t border-border pt-0">
-                
-                <div className="flex gap-3 px-0 py-[16px]">
+                <div className="flex gap-3 py-4">
                   <a href="https://github.com/Thanas-R" target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
+                    className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
                     <Github className="w-4 h-4" />
                   </a>
                   <a href="https://www.linkedin.com/in/thanasr/" target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
+                    className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
                     <Linkedin className="w-4 h-4" />
                   </a>
                   <Link to="/resume"
-                  className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
+                    className="w-10 h-10 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background transition-all">
                     <FileText className="w-4 h-4" />
                   </Link>
                 </div>
@@ -97,8 +88,8 @@ const ContactSection = () => {
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className="mt-1.5 w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring"
-                      required />
-
+                      required
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-foreground font-['Space_Grotesk']">Email</label>
@@ -108,8 +99,8 @@ const ContactSection = () => {
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       className="mt-1.5 w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring"
-                      required />
-
+                      required
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-foreground font-['Space_Grotesk']">Message</label>
@@ -119,14 +110,13 @@ const ContactSection = () => {
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       className="mt-1.5 w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring resize-y"
-                      required />
-
+                      required
+                    />
                   </div>
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity">
-
-                    
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
+                  >
                     Send Message
                   </button>
                 </form>
@@ -135,8 +125,8 @@ const ContactSection = () => {
           </div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default ContactSection;
