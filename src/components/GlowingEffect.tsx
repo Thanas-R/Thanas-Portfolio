@@ -1,11 +1,10 @@
-import { useRef, useCallback, useEffect, memo } from "react";
+import { useRef, useCallback, useEffect, memo, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface GlowingEffectProps {
   blur?: number;
   proximity?: number;
   spread?: number;
-  glow?: boolean;
   className?: string;
   disabled?: boolean;
   borderWidth?: number;
@@ -21,6 +20,25 @@ const GlowingEffect = memo(
     borderWidth = 2,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isDark, setIsDark] = useState(false);
+
+    // Detect dark mode properly
+    useEffect(() => {
+      const checkTheme = () => {
+        const dark = document.documentElement.classList.contains("dark");
+        setIsDark(dark);
+      };
+
+      checkTheme();
+
+      const observer = new MutationObserver(checkTheme);
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+
+      return () => observer.disconnect();
+    }, []);
 
     const handleMove = useCallback(
       (e: PointerEvent) => {
@@ -69,6 +87,11 @@ const GlowingEffect = memo(
 
     if (disabled) return null;
 
+    // ✅ COLOR SWITCH HERE
+    const glowColor = isDark
+      ? "rgba(255,255,255,0.15)"       // dark mode → white
+      : "rgba(67,181,129,0.25)";       // light mode → #43B581
+
     return (
       <div
         ref={containerRef}
@@ -85,26 +108,16 @@ const GlowingEffect = memo(
         }
       >
         <div
-          className="
-            absolute inset-0 rounded-[inherit]
-            opacity-[var(--glow-opacity)]
-            transition-opacity duration-300
-
-            bg-[radial-gradient(var(--glow-size)_circle_at_var(--glow-x)_var(--glow-y),rgba(67,181,129,0.20),transparent_70%)]
-            dark:bg-[radial-gradient(var(--glow-size)_circle_at_var(--glow-x)_var(--glow-y),rgba(255,255,255,0.15),transparent_70%)]
-          "
-          style={
-            {
-              "--glow-size": `${spread * 4}px`,
-              mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-              WebkitMask:
-                "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-              maskComposite: "exclude",
-              WebkitMaskComposite: "xor",
-              padding: `${borderWidth}px`,
-              filter: `blur(${blur}px)`,
-            } as React.CSSProperties
-          }
+          className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(${spread * 4}px circle at var(--glow-x) var(--glow-y), ${glowColor}, transparent 70%)`,
+            mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+            WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+            maskComposite: "exclude",
+            WebkitMaskComposite: "xor",
+            padding: `${borderWidth}px`,
+            filter: `blur(${blur}px)`,
+          }}
         />
       </div>
     );
