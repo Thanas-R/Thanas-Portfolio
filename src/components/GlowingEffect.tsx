@@ -90,7 +90,7 @@ const GlowingEffect = memo(
     // ✅ COLOR SWITCH HERE
     const glowColor = isDark
       ? "rgba(255,255,255,0.55)"     // stronger white
-      : "rgba(0,0,0,0.65)";      // light mode → #43B581
+      : "rgba(0,0,0,0.55)";      // light mode → #43B581
 
     return (
       <div
