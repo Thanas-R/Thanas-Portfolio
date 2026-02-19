@@ -134,21 +134,25 @@ html {
   border-radius: var(--radius);
   border: 1px solid hsl(var(--border));
   background: hsl(var(--card));
+  --glow-x: 50%;
+  --glow-y: 50%;
 }
 
 .glow-card::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--glow-angle, 0deg), transparent 60%, hsl(var(--glow-color) / 0.4) 80%, transparent 100%);
+  background:
+    radial-gradient(140px circle at var(--glow-x) var(--glow-y), hsl(var(--glow-color) / 0.75), transparent 70%) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity 0.3s;
+  pointer-events: none;
 }
 
 .glow-card:hover::before {

@@ -1,17 +1,13 @@
-import { useRef, useCallback, useEffect, memo } from "react";
+import { useRef, useCallback, useEffect, memo, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface GlowingEffectProps {
   blur?: number;
   proximity?: number;
   spread?: number;
-  glow?: boolean;
   className?: string;
   disabled?: boolean;
   borderWidth?: number;
-  inactiveZone?: number;
-  variant?: "default" | "white";
-  movementDuration?: number;
 }
 
 const GlowingEffect = memo(
@@ -19,17 +15,36 @@ const GlowingEffect = memo(
     proximity = 64,
     spread = 40,
     blur = 0,
-    glow = false,
     className,
     disabled = false,
     borderWidth = 2,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isDark, setIsDark] = useState(false);
+
+    // Detect dark mode properly
+    useEffect(() => {
+      const checkTheme = () => {
+        const dark = document.documentElement.classList.contains("dark");
+        setIsDark(dark);
+      };
+
+      checkTheme();
+
+      const observer = new MutationObserver(checkTheme);
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+
+      return () => observer.disconnect();
+    }, []);
 
     const handleMove = useCallback(
       (e: PointerEvent) => {
         const el = containerRef.current;
         if (!el) return;
+
         const rect = el.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
@@ -58,8 +73,12 @@ const GlowingEffect = memo(
 
     useEffect(() => {
       if (disabled) return;
-      document.body.addEventListener("pointermove", handleMove, { passive: true });
+
+      document.body.addEventListener("pointermove", handleMove, {
+        passive: true,
+      });
       document.body.addEventListener("pointerleave", handleLeave);
+
       return () => {
         document.body.removeEventListener("pointermove", handleMove);
         document.body.removeEventListener("pointerleave", handleLeave);
@@ -68,11 +87,16 @@ const GlowingEffect = memo(
 
     if (disabled) return null;
 
+    // ✅ COLOR SWITCH HERE
+    const glowColor = isDark
+      ? "rgba(255,255,255,0.55)"     // stronger white
+      : "rgba(0,0,0,0.55)";      // light mode → #43B581
+
     return (
       <div
         ref={containerRef}
         className={cn(
-          "pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300",
+          "pointer-events-none absolute inset-0 rounded-[inherit]",
           className
         )}
         style={
@@ -80,22 +104,19 @@ const GlowingEffect = memo(
             "--glow-x": "0px",
             "--glow-y": "0px",
             "--glow-opacity": "0",
-            "--glow-spread": `${spread}px`,
-            "--glow-blur": `${blur}px`,
-            "--glow-border-width": `${borderWidth}px`,
           } as React.CSSProperties
         }
       >
-        {/* Edge glow overlay */}
         <div
           className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
           style={{
-            background: `radial-gradient(${spread * 4}px circle at var(--glow-x) var(--glow-y), rgba(255,255,255,0.15), transparent 70%)`,
-            mask: `linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)`,
-            WebkitMask: `linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)`,
+            background: `radial-gradient(${spread * 4}px circle at var(--glow-x) var(--glow-y), ${glowColor}, transparent 70%)`,
+            mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+            WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
             maskComposite: "exclude",
             WebkitMaskComposite: "xor",
             padding: `${borderWidth}px`,
+            filter: `blur(${blur}px)`,
           }}
         />
       </div>

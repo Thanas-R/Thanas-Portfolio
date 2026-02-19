@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Index from "./pages/Index";
@@ -10,6 +11,39 @@ import ResumePage from "./pages/ResumePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+const GlowCardPointerTracker = () => {
+  useEffect(() => {
+    const handlePointerMove = (event: PointerEvent) => {
+      const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('.glow-card');
+      if (!target) return;
+
+      const bounds = target.getBoundingClientRect();
+      const x = event.clientX - bounds.left;
+      const y = event.clientY - bounds.top;
+      target.style.setProperty('--glow-x', `${x}px`);
+      target.style.setProperty('--glow-y', `${y}px`);
+    };
+
+    const handlePointerLeave = (event: PointerEvent) => {
+      const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('.glow-card');
+      if (!target) return;
+
+      target.style.removeProperty('--glow-x');
+      target.style.removeProperty('--glow-y');
+    };
+
+    document.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('pointerleave', handlePointerLeave, true);
+
+    return () => {
+      document.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerleave', handlePointerLeave, true);
+    };
+  }, []);
+
+  return null;
+};
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -38,6 +72,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <GlowCardPointerTracker />
       <BrowserRouter>
         <AnimatedRoutes />
       </BrowserRouter>
