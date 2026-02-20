@@ -93,7 +93,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 h-[calc(100dvh-148px)] md:h-[calc(100dvh-156px)] pb-0 my-0 mb-0">
+        className="relative z-10 max-w-5xl mx-auto px-6 h-[calc(100dvh-148px)] md:h-[calc(100dvh-156px)] pb-0 my-0 mb-0 mt-[5px]">
 
         <style>{`
           .resume-frame-wrap {
