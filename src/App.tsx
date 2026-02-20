@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Index from "./pages/Index";
+import PageLoader from "./components/PageLoader";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ResumePage from "./pages/ResumePage";
@@ -46,6 +47,26 @@ const GlowCardPointerTracker = () => {
   return null;
 };
 
+
+const HashScrollHandler = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const id = location.hash.replace('#', '');
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location.pathname, location.hash]);
+
+  return null;
+};
+
 const AnimatedRoutes = () => {
   const location = useLocation();
   return (
@@ -72,10 +93,12 @@ const AnimatedRoutes = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <PageLoader />
       <Toaster />
       <Sonner />
       <GlowCardPointerTracker />
       <BrowserRouter>
+        <HashScrollHandler />
         <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>
