@@ -42,7 +42,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 pb-3 flex items-end justify-between">
+        className="relative z-10 max-w-5xl mx-auto pb-3 flex items-end justify-between px-[20px]">
 
         <div>
           
@@ -93,7 +93,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 h-[calc(100dvh-148px)] md:h-[calc(100dvh-156px)] pb-0 my-0 mb-0 mt-[5px]">
+        className="relative z-10 max-w-5xl mx-auto px-6 h-[calc(100dvh-148px)] md:h-[calc(100dvh-156px)] pb-0 mb-0 mt-[5px] pt-0 my-[10px] border-0">
 
         <style>{`
           .resume-frame-wrap {
