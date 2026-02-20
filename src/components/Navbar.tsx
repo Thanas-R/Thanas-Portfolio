@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TextRoll from '@/components/TextRoll';
 import { cn } from '@/lib/utils';
 import { useMotionValue, useTransform } from 'framer-motion';
 
 const navItems = [
-  { label: 'Home', href: '/', isRoute: true },
-  { label: 'Projects', href: '/projects', isRoute: true },
-  { label: 'Resume', href: '/resume', isRoute: true },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Resume', href: '/resume' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 const MenuToggleIcon = ({ open, className }: { open: boolean; className?: string }) => (
@@ -72,8 +72,6 @@ const SolarSwitch = ({ isDark }: { isDark: boolean }) => {
 const Navbar = () => {
   const [isDark, setIsDark] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const location = useLocation();
-
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const stored = localStorage.getItem('theme');
@@ -100,8 +98,6 @@ const Navbar = () => {
     localStorage.setItem('theme', next ? 'dark' : 'light');
   };
 
-  const isSubPage = location.pathname !== '/';
-
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -114,25 +110,15 @@ const Navbar = () => {
           <TextRoll>thanas.</TextRoll>
         </Link>
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) =>
-            item.isRoute ? (
-              <Link
-                key={item.label}
-                to={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-              >
-                <TextRoll>{item.label}</TextRoll>
-              </Link>
-            ) : (
-              <a
-                key={item.label}
-                href={isSubPage ? `/${item.href}` : item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-              >
-                <TextRoll>{item.label}</TextRoll>
-              </a>
-            )
-          )}
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+            >
+              <TextRoll>{item.label}</TextRoll>
+            </Link>
+          ))}
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -160,27 +146,16 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden mt-4 mx-auto max-w-5xl border border-border rounded-xl bg-background/90 backdrop-blur-md p-6 space-y-4"
         >
-          {navItems.map((item) =>
-            item.isRoute ? (
-              <Link
-                key={item.label}
-                to={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="block text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="block text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {item.label}
-              </a>
-            )
-          )}
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
+              onClick={() => setMobileOpen(false)}
+              className="block text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {item.label}
+            </Link>
+          ))}
         </motion.div>
       )}
     </motion.nav>

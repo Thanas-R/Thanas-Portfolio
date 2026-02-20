@@ -47,6 +47,26 @@ const GlowCardPointerTracker = () => {
   return null;
 };
 
+
+const HashScrollHandler = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const id = location.hash.replace('#', '');
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location.pathname, location.hash]);
+
+  return null;
+};
+
 const AnimatedRoutes = () => {
   const location = useLocation();
   return (
@@ -78,6 +98,7 @@ const App = () => (
       <Sonner />
       <GlowCardPointerTracker />
       <BrowserRouter>
+        <HashScrollHandler />
         <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>
