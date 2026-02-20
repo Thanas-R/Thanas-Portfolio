@@ -153,11 +153,11 @@ const ProjectsPage = () => {
 
 
               <div className="grid sm:grid-cols-2 gap-4">
-                {upcoming.map((p) =>
-                <div key={p.title} className="border border-dashed border-foreground/10 rounded-xl p-5">
-                    <h4 className="text-base font-semibold text-foreground/40 font-['Space_Grotesk']">{p.title}</h4>
-                    <p className="text-sm text-muted-foreground mt-1">{p.description}</p>
-                  </div>
+                {upcoming.map((p) => {}
+
+
+
+
                 )}
               </div>
             </motion.div>
