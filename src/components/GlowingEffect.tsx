@@ -17,7 +17,7 @@ const GlowingEffect = memo(
     blur = 0,
     className,
     disabled = false,
-    borderWidth = 1,
+    borderWidth = 0.5,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDark, setIsDark] = useState(false);
