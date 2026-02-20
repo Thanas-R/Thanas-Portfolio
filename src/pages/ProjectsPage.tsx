@@ -20,7 +20,7 @@ const ProjectsPage = () => {
       <GridBackground />
       <div className="relative z-10 min-h-screen flex flex-col">
         <Navbar />
-        <div className="flex-1 flex flex-col md:flex-row max-w-6xl mx-auto w-full px-6 pb-20 gap-8 pt-4">
+        <div className="flex-1 flex flex-col md:flex-row max-w-6xl mx-auto w-full px-6 gap-8 pt-4 pb-[40px]">
 
           {/* LEFT — sticky image preview */}
           <div className="hidden md:flex md:w-[45%] md:sticky md:top-24 md:self-start">
