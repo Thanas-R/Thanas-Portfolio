@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Download, Maximize, Minimize } from 'lucide-react';
+import { Download, Maximize, Minimize, ZoomIn, ZoomOut } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
@@ -7,7 +7,11 @@ import Navbar from '@/components/Navbar';
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(120);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const zoomIn = () => setZoomLevel((prev) => Math.min(prev + 10, 200));
+  const zoomOut = () => setZoomLevel((prev) => Math.max(prev - 10, 70));
 
   const toggleFullscreen = () => {
     if (document.fullscreenElement) {
@@ -24,7 +28,7 @@ const ResumePage = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-background overflow-hidden" ref={containerRef}>
+    <div className="relative h-screen bg-background overflow-hidden" ref={containerRef}>
       {/* WebGL light rays background */}
       <LightRays className="opacity-60" />
 
@@ -51,9 +55,25 @@ const ResumePage = () => {
         </div>
         <div className="flex items-center gap-2 pb-1">
           <button
+            onClick={zoomOut}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
+            title="Zoom out"
+            aria-label="Zoom out"
+          >
+            <ZoomOut className="w-4 h-4" />
+          </button>
+          <button
+            onClick={zoomIn}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
+            title="Zoom in"
+            aria-label="Zoom in"
+          >
+            <ZoomIn className="w-4 h-4" />
+          </button>
+          <button
             onClick={toggleFullscreen}
             className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
-            title={isFullscreen ? 'Exit fit-to-page' : 'Fit to page'}>
+            title={isFullscreen ? 'Exit full page view' : 'Full page view'}>
 
             {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
           </button>
@@ -73,10 +93,11 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 pb-[2px]">
+        className="relative z-10 max-w-5xl mx-auto px-6 pb-4 h-[calc(100dvh-148px)] md:h-[calc(100dvh-156px)]">
 
         <style>{`
           .resume-frame-wrap {
+            height: 100%;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid hsl(var(--border));
@@ -94,10 +115,9 @@ const ResumePage = () => {
             padding: 24px;
           }
           :fullscreen .resume-frame-wrap {
-            width: auto;
+            width: min(100%, calc((100vh - 48px) * 0.707));
             height: 100%;
             max-height: 100%;
-            aspect-ratio: 210 / 297;
           }
           :fullscreen .resume-frame-wrap iframe {
             width: 100%;
@@ -111,19 +131,11 @@ const ResumePage = () => {
         `}</style>
 
         <div className="resume-frame-wrap">
-          {/*
-              view=Fit makes the PDF zoom to fit the full page in view.
-              We size the iframe to match A4 aspect ratio (210:297) so the whole PDF is visible without scrolling.
-             */}
           <iframe
-            src={`${resumePath}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`}
+            src={`${resumePath}#toolbar=0&navpanes=0&view=Fit&zoom=${zoomLevel}`}
             title="Resume PDF"
-            className="block w-full border-none"
-            style={{
-              /* A4 aspect ratio so the whole page is visible */
-              height: isFullscreen ? '100%' : 'min(90vh, calc(100vw * 1.414 * 0.7))',
-              minHeight: 500
-            }} />
+            className="block w-full h-full border-none"
+          />
 
         </div>
       </motion.div>
