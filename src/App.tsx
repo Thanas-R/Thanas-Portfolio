@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Index from "./pages/Index";
 import ProjectsPage from "./pages/ProjectsPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ResumePage from "./pages/ResumePage";
 import NotFound from "./pages/NotFound";
 
@@ -56,12 +57,13 @@ const AnimatedRoutes = () => {
         exit={{ opacity: 0, y: -12 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
-        <Routes location={location}>
-          <Route path="/" element={<Index />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/resume" element={<ResumePage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+          <Routes location={location}>
+            <Route path="/" element={<Index />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+            <Route path="/resume" element={<ResumePage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
       </motion.div>
     </AnimatePresence>
   );
