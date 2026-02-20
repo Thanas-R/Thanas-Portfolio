@@ -74,14 +74,14 @@ const ResumePage = () => {
 
             <ZoomIn className="w-4 h-4" />
           </button>
-          
+          <button
+            onClick={toggleFullscreen}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
+            title={isFullscreen ? 'Exit PDF fullscreen' : 'PDF fullscreen'}
+            aria-label={isFullscreen ? 'Exit PDF fullscreen' : 'PDF fullscreen'}>
 
-
-
-
-
-
-
+            {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+          </button>
           <a
             href={resumePath}
             download
