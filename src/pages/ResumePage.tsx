@@ -1,17 +1,13 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Download, Plus, Minus, Maximize, Minimize } from 'lucide-react';
+import { ArrowLeft, Download, Maximize, Minimize } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import TopographicBackground from '@/components/TopographicBackground';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
-  const [zoom, setZoom] = useState(100);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const zoomIn = () => setZoom((z) => Math.min(z + 20, 300));
-  const zoomOut = () => setZoom((z) => Math.max(z - 20, 100));
 
   const toggleFullscreen = () => {
     if (containerRef.current) {
@@ -32,7 +28,7 @@ const ResumePage = () => {
   return (
     <>
       <TopographicBackground />
-      <div className="relative z-10 min-h-screen flex flex-col overflow-hidden">
+      <div className="relative z-10 min-h-screen flex flex-col">
         {/* Header */}
         <motion.header
           initial={{ y: -20, opacity: 0 }}
@@ -50,23 +46,18 @@ const ResumePage = () => {
               <span className="font-semibold font-['Space_Grotesk'] text-foreground">Thanas's Resume</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="hidden sm:flex items-center gap-1 mr-2">
-                <button
-                  onClick={zoomOut}
-                  disabled={zoom <= 100}
-                  className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30"
-                >
-                  <Minus className="w-4 h-4" />
-                </button>
-                <span className="text-xs text-muted-foreground w-10 text-center font-mono">{zoom}%</span>
-                <button onClick={zoomIn} className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors">
-                  <Plus className="w-4 h-4" />
-                </button>
-                <button onClick={toggleFullscreen} className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors ml-1">
-                  {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
-                </button>
-              </div>
-              <a href={resumePath} download className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity">
+              <button
+                onClick={toggleFullscreen}
+                className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
+                title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+              >
+                {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+              </button>
+              <a
+                href={resumePath}
+                download
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
+              >
                 <Download className="w-4 h-4" />
                 Download
               </a>
@@ -80,29 +71,58 @@ const ResumePage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex-1 w-full mx-auto px-6 py-8 overflow-auto bg-background"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          className="flex-1 flex flex-col bg-background"
         >
           <style>{`
-            .resume-viewer::-webkit-scrollbar { display: none; }
-            :fullscreen { background: hsl(var(--background)); }
-            :fullscreen .resume-viewer { max-width: 100%; height: 100%; }
+            /* Custom thin scrollbar for the PDF container */
+            .resume-scroll::-webkit-scrollbar {
+              width: 6px;
+              height: 6px;
+            }
+            .resume-scroll::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            .resume-scroll::-webkit-scrollbar-thumb {
+              background: hsl(var(--border));
+              border-radius: 999px;
+            }
+            .resume-scroll::-webkit-scrollbar-thumb:hover {
+              background: hsl(var(--muted-foreground) / 0.5);
+            }
+            .resume-scroll {
+              scrollbar-width: thin;
+              scrollbar-color: hsl(var(--border)) transparent;
+            }
+
+            /* Fullscreen styles */
+            :fullscreen {
+              background: hsl(var(--background));
+              display: flex;
+              flex-direction: column;
+            }
+            :fullscreen .resume-scroll {
+              flex: 1;
+              overflow-y: auto;
+            }
+            :fullscreen iframe {
+              min-height: 100%;
+              height: auto !important;
+            }
           `}</style>
-          <div
-            className="resume-viewer max-w-4xl mx-auto w-full rounded-2xl border border-border overflow-auto bg-card shadow-sm"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            <iframe
-              src={`${resumePath}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-              className="w-full border-none"
-              title="Resume PDF"
-              style={{
-                height: `${Math.max(zoom, 100)}vh`,
-                minHeight: '100vh',
-                transform: `scale(${zoom / 100})`,
-                transformOrigin: 'top center',
-              }}
-            />
+
+          <div className="resume-scroll flex-1 overflow-y-auto px-4 py-6 md:px-8">
+            <div className="max-w-4xl mx-auto w-full rounded-2xl border border-border overflow-hidden bg-card shadow-sm">
+              {/*
+                Use FitV to fit the full page height visible at once.
+                When in fullscreen the height:100vh will fill the screen fully.
+              */}
+              <iframe
+                src={`${resumePath}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`}
+                className="w-full border-none block"
+                title="Resume PDF"
+                style={{ height: '85vh', minHeight: 600 }}
+              />
+            </div>
           </div>
         </motion.div>
       </div>
