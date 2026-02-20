@@ -38,14 +38,14 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 pb-3 flex items-end justify-between"
-      >
+        className="relative z-10 max-w-5xl mx-auto px-6 pb-3 flex items-end justify-between">
+
         <div>
-          <p className="text-xs uppercase tracking-widest text-muted-foreground font-semibold mb-1">Thanas R</p>
+          
           <h1
             className="text-4xl md:text-5xl font-black text-foreground uppercase leading-none"
-            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-          >
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+
             Resume
           </h1>
         </div>
@@ -53,15 +53,15 @@ const ResumePage = () => {
           <button
             onClick={toggleFullscreen}
             className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
-            title={isFullscreen ? 'Exit fit-to-page' : 'Fit to page'}
-          >
+            title={isFullscreen ? 'Exit fit-to-page' : 'Fit to page'}>
+
             {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
           </button>
           <a
             href={resumePath}
             download
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
-          >
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity">
+
             <Download className="w-4 h-4" />
             Download
           </a>
@@ -73,8 +73,8 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 pb-12"
-      >
+        className="relative z-10 max-w-5xl mx-auto px-6 pb-12">
+
         <style>{`
           .resume-frame-wrap {
             border-radius: 16px;
@@ -112,9 +112,9 @@ const ResumePage = () => {
 
         <div className="resume-frame-wrap">
           {/*
-            view=Fit makes the PDF zoom to fit the full page in view.
-            We size the iframe to match A4 aspect ratio (210:297) so the whole PDF is visible without scrolling.
-          */}
+             view=Fit makes the PDF zoom to fit the full page in view.
+             We size the iframe to match A4 aspect ratio (210:297) so the whole PDF is visible without scrolling.
+            */}
           <iframe
             src={`${resumePath}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`}
             title="Resume PDF"
@@ -122,13 +122,13 @@ const ResumePage = () => {
             style={{
               /* A4 aspect ratio so the whole page is visible */
               height: isFullscreen ? '100%' : 'min(90vh, calc(100vw * 1.414 * 0.7))',
-              minHeight: 500,
-            }}
-          />
+              minHeight: 500
+            }} />
+
         </div>
       </motion.div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default ResumePage;
