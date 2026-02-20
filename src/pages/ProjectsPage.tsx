@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
-import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
@@ -11,124 +12,156 @@ const upcoming = [
 ];
 
 const ProjectsPage = () => {
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const activeProject = hoveredId ? projects.find((p) => p.id === hoveredId) : projects[0];
+
   return (
     <>
       <GridBackground />
-      <div className="relative z-10 min-h-screen">
+      <div className="relative z-10 min-h-screen flex flex-col">
         <Navbar />
-        <div className="max-w-4xl mx-auto px-6 pt-28 pb-20">
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mb-12"
-          >
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back
-            </Link>
-            <div className="flex items-end justify-between">
-              <h1 className="text-4xl md:text-6xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-                Projects
-              </h1>
-              <span className="text-2xl md:text-4xl font-bold text-muted-foreground/40 font-['Space_Grotesk']">
-                {projects.length}
-              </span>
-            </div>
-          </motion.div>
+        <div className="flex-1 flex flex-col md:flex-row max-w-6xl mx-auto w-full px-6 pb-20 gap-8 pt-4">
 
-          {/* Project list */}
-          <div className="border-t border-foreground/10">
-            {projects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
-                className="border-b border-foreground/10"
-              >
-                <div className="grid md:grid-cols-[1fr_300px] gap-6 items-start py-6 group">
-                  <div>
-                    <div className="flex items-start justify-between mb-2">
-                      <Link
-                        to={`/projects/${project.id}`}
-                        className="text-xl md:text-2xl font-bold text-foreground font-['Space_Grotesk'] hover:translate-x-1 transition-transform inline-block"
-                      >
-                        → {project.title}
-                      </Link>
-                      <div className="flex gap-3 mt-1 ml-4 flex-shrink-0">
-                        {project.live && (
-                          <a href={project.live} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        )}
-                        {project.github && (
-                          <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                            <Github className="w-4 h-4" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                    {project.role && (
-                      <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">{project.role}</p>
-                    )}
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                      {project.longDescription}
-                    </p>
-                    <div className="flex flex-wrap gap-2 items-center">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="text-xs px-2 py-0.5 rounded-full border border-foreground/10 text-muted-foreground">
-                          {tag}
-                        </span>
-                      ))}
-                      <span className="ml-auto text-xs text-muted-foreground/40 font-mono">{project.year}</span>
-                    </div>
-                    <div className="mt-4">
-                      <Link
-                        to={`/projects/${project.id}`}
-                        className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        View details <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="hidden md:block">
-                    <Link to={`/projects/${project.id}`}>
-                      <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-video hover:border-foreground/25 transition-colors">
-                        <img
-                          src={project.imageSrc}
-                          alt={`${project.title} preview`}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                          loading="eager"
-                        />
-                      </div>
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          {/* LEFT — sticky image preview */}
+          <div className="hidden md:flex md:w-[45%] md:sticky md:top-24 md:self-start">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="w-full"
+            >
+              {/* Header above image */}
+              <div className="mb-6">
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">
+                  Thanas R
+                </p>
+                <h1
+                  className="text-5xl font-black text-foreground uppercase leading-none"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  Projects
+                </h1>
+                <p className="text-muted-foreground/40 font-mono text-sm mt-1">{projects.length} total</p>
+              </div>
+
+              {/* Preview image */}
+              <div className="relative rounded-2xl overflow-hidden border border-foreground/10 aspect-[4/3] bg-muted">
+                <AnimatePresence mode="wait">
+                  {activeProject && (
+                    <motion.img
+                      key={activeProject.id}
+                      src={activeProject.imageSrc}
+                      alt={activeProject.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      initial={{ opacity: 0, scale: 1.04 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.97 }}
+                      transition={{ duration: 0.35, ease: 'easeInOut' }}
+                    />
+                  )}
+                </AnimatePresence>
+                {/* overlay label */}
+                {activeProject && (
+                  <motion.div
+                    className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-black/70 to-transparent"
+                    key={activeProject.id + '-label'}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                  >
+                    <p className="text-xs text-white/60 uppercase tracking-widest mb-1">{activeProject.year}</p>
+                    <p className="text-white font-semibold text-lg leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{activeProject.title}</p>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
           </div>
 
-          {/* Upcoming — moved to bottom */}
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="mt-16"
-          >
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Coming Soon</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              {upcoming.map((project) => (
-                <div key={project.title} className="border border-dashed border-foreground/10 rounded-xl p-5">
-                  <h4 className="text-base font-semibold text-foreground/50 font-['Space_Grotesk']">{project.title}</h4>
-                  <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
-                </div>
+          {/* RIGHT — scrollable list */}
+          <div className="flex-1 md:pt-2">
+            {/* Mobile header */}
+            <div className="md:hidden mb-8">
+              <h1 className="text-4xl font-black text-foreground uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                Projects <span className="text-muted-foreground/30 font-mono text-2xl">{projects.length}</span>
+              </h1>
+            </div>
+
+            <div className="border-t border-foreground/10">
+              {projects.map((project, i) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.45, delay: i * 0.07 }}
+                  className="border-b border-foreground/10 group"
+                  onMouseEnter={() => setHoveredId(project.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                >
+                  <Link to={`/projects/${project.id}`} className="flex items-center justify-between py-5 gap-4">
+                    <div className="flex items-baseline gap-4 min-w-0">
+                      <span className="text-xs text-muted-foreground/40 font-mono w-5 shrink-0">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <div className="min-w-0">
+                        <p
+                          className="text-xl md:text-2xl font-bold text-foreground group-hover:translate-x-1.5 transition-transform duration-200 truncate"
+                          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                        >
+                          {project.title}
+                        </p>
+                        {project.role && (
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider mt-0.5">{project.role}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <div className="flex gap-2">
+                        {project.tags.slice(0, 2).map((tag) => (
+                          <span key={tag} className="hidden sm:block text-xs px-2 py-0.5 rounded-full border border-foreground/10 text-muted-foreground">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="text-xs text-muted-foreground/40 font-mono">{project.year}</span>
+                      <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all duration-200" />
+                    </div>
+                  </Link>
+
+                  {/* Mobile preview image */}
+                  <div className="md:hidden pb-4">
+                    <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-video">
+                      <img
+                        src={project.imageSrc}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                      />
+                    </div>
+                  </div>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
+
+            {/* Upcoming */}
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="mt-16"
+            >
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+                Coming Soon
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {upcoming.map((p) => (
+                  <div key={p.title} className="border border-dashed border-foreground/10 rounded-xl p-5">
+                    <h4 className="text-base font-semibold text-foreground/40 font-['Space_Grotesk']">{p.title}</h4>
+                    <p className="text-sm text-muted-foreground mt-1">{p.description}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </>

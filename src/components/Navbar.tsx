@@ -140,7 +140,9 @@ const Navbar = () => {
             className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Toggle theme"
           >
-            <SolarSwitch isDark={isDark} />
+            <span className="flex items-center justify-center w-[18px] h-[18px]">
+              <SolarSwitch isDark={isDark} />
+            </span>
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
