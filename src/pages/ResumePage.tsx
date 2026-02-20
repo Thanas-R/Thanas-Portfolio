@@ -33,7 +33,7 @@ const ResumePage = () => {
 
   const pdfSrc = useMemo(
     () => `${resumePath}#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=${zoomLevel}`,
-    [resumePath, zoomLevel],
+    [resumePath, zoomLevel]
   );
 
   return (
@@ -48,12 +48,12 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 pb-3 flex items-end justify-between gap-4"
-      >
+        className="relative z-10 max-w-6xl px-4 md:px-6 pb-3 flex items-end justify-between gap-4 mx-[45px]">
+
         <h1
           className="text-4xl md:text-5xl font-black text-foreground uppercase leading-none"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-        >
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+
           Resume
         </h1>
 
@@ -62,31 +62,31 @@ const ResumePage = () => {
             onClick={zoomOut}
             className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
             title="Zoom out"
-            aria-label="Zoom out"
-          >
+            aria-label="Zoom out">
+
             <ZoomOut className="w-4 h-4" />
           </button>
           <button
             onClick={zoomIn}
             className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
             title="Zoom in"
-            aria-label="Zoom in"
-          >
+            aria-label="Zoom in">
+
             <ZoomIn className="w-4 h-4" />
           </button>
           <button
             onClick={toggleFullscreen}
             className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
             title={isFullscreen ? 'Exit PDF fullscreen' : 'PDF fullscreen'}
-            aria-label={isFullscreen ? 'Exit PDF fullscreen' : 'PDF fullscreen'}
-          >
+            aria-label={isFullscreen ? 'Exit PDF fullscreen' : 'PDF fullscreen'}>
+
             {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
           </button>
           <a
             href={resumePath}
             download
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
-          >
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity">
+
             <Download className="w-4 h-4" />
             Download
           </a>
@@ -97,8 +97,8 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 pb-6"
-      >
+        className="relative z-10 max-w-6xl px-4 md:px-6 pb-6 mx-[45px]">
+
         <style>{`
           .resume-frame-wrap {
             position: relative;
@@ -139,27 +139,27 @@ const ResumePage = () => {
         `}</style>
 
         <div ref={fullscreenTargetRef} className="resume-frame-wrap">
-          {isFullscreen && (
-            <button
-              onClick={toggleFullscreen}
-              className="absolute top-4 left-4 z-30 flex items-center gap-2 rounded-full bg-black/70 text-white px-4 py-2 text-sm hover:bg-black/80 transition-colors"
-              aria-label="Exit PDF fullscreen"
-            >
+          {isFullscreen &&
+          <button
+            onClick={toggleFullscreen}
+            className="absolute top-4 left-4 z-30 flex items-center gap-2 rounded-full bg-black/70 text-white px-4 py-2 text-sm hover:bg-black/80 transition-colors"
+            aria-label="Exit PDF fullscreen">
+
               <X className="w-4 h-4" />
               Exit
             </button>
-          )}
+          }
 
           <iframe
             key={zoomLevel}
             src={pdfSrc}
             title="Resume PDF"
-            loading="lazy"
-          />
+            loading="lazy" />
+
         </div>
       </motion.div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default ResumePage;
