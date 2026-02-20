@@ -73,7 +73,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 pb-12">
+        className="relative z-10 max-w-5xl mx-auto px-6 pb-[2px]">
 
         <style>{`
           .resume-frame-wrap {
@@ -112,9 +112,9 @@ const ResumePage = () => {
 
         <div className="resume-frame-wrap">
           {/*
-             view=Fit makes the PDF zoom to fit the full page in view.
-             We size the iframe to match A4 aspect ratio (210:297) so the whole PDF is visible without scrolling.
-            */}
+              view=Fit makes the PDF zoom to fit the full page in view.
+              We size the iframe to match A4 aspect ratio (210:297) so the whole PDF is visible without scrolling.
+             */}
           <iframe
             src={`${resumePath}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`}
             title="Resume PDF"
