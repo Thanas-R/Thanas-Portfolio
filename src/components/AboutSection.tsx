@@ -7,7 +7,7 @@ import { GlowingEffect } from '@/components/GlowingEffect';
 
 const BentoCard = ({ className, children }: {className?: string;children?: ReactNode;}) =>
 <div className={cn('relative group rounded-xl border border-border bg-card overflow-hidden p-5', className)}>
-    <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} disabled={false} />
+    <GlowingEffect spread={40} proximity={64} borderWidth={2} disabled={false} />
     <div className="relative z-10 h-full">{children}</div>
   </div>;
 

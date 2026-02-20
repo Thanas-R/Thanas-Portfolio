@@ -97,7 +97,7 @@ const ContactSection = () => {
             {/* Right — contact form */}
             <div className="md:col-span-3">
               <div className="relative rounded-xl border border-border bg-card overflow-hidden">
-                <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} borderWidth={2} disabled={false} />
+                <GlowingEffect spread={40} proximity={64} borderWidth={2} disabled={false} />
                 <form onSubmit={handleSubmit} className="relative z-10 p-6 space-y-5">
                   <div>
                     <label className="text-sm font-semibold text-foreground font-['Space_Grotesk']">Name</label>
