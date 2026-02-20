@@ -58,16 +58,16 @@ const ResumePage = () => {
             onClick={zoomOut}
             className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
             title="Zoom out"
-            aria-label="Zoom out"
-          >
+            aria-label="Zoom out">
+
             <ZoomOut className="w-4 h-4" />
           </button>
           <button
             onClick={zoomIn}
             className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
             title="Zoom in"
-            aria-label="Zoom in"
-          >
+            aria-label="Zoom in">
+
             <ZoomIn className="w-4 h-4" />
           </button>
           <button
@@ -93,7 +93,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 pb-4 h-[calc(100dvh-148px)] md:h-[calc(100dvh-156px)]">
+        className="relative z-10 max-w-5xl mx-auto px-6 h-[calc(100dvh-148px)] md:h-[calc(100dvh-156px)] pb-0 my-0 mb-0">
 
         <style>{`
           .resume-frame-wrap {
@@ -134,8 +134,8 @@ const ResumePage = () => {
           <iframe
             src={`${resumePath}#toolbar=0&navpanes=0&view=Fit&zoom=${zoomLevel}`}
             title="Resume PDF"
-            className="block w-full h-full border-none"
-          />
+            className="block w-full h-full border-none" />
+
 
         </div>
       </motion.div>
