@@ -110,7 +110,7 @@ const GlowingEffect = memo(
         <div
           className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
           style={{
-            background: `radial-gradient(${spread * 4}px circle at var(--glow-x) var(--glow-y), ${glowColor}, transparent 70%)`,
+            background: `radial-gradient(${spread * 6}px circle at var(--glow-x) var(--glow-y), ${glowColor}, transparent 70%)`,
             mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
             WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
             maskComposite: "exclude",
