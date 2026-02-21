@@ -4,11 +4,12 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import projectPesuMC from '@/assets/project-pesumc.png';
-import projectContour from '@/assets/project-contour.png';
 import projectAskbookie from '@/assets/project-askbookie.png';
 import projectSmartchef from '@/assets/project-smartchef.png';
 import projectThanasOS from '@/assets/project-thanasOS.png';
-import projectPesuforge from '@/assets/project-pesuforge.png';
+import projectNautilus from '@/assets/project-nautilus.png';
+import projectVirdis from '@/assets/project-virdis.png';
+import projectSpheal from '@/assets/project-spheal.png';
 
 export interface Project {
   id: string;
@@ -17,34 +18,37 @@ export interface Project {
   longDescription: string;
   imageSrc: string;
   tags: string[];
-  year: string;
-  role?: string;
   live?: string;
   github?: string;
 }
 
 export const projects: Project[] = [
   {
-    id: 'pesu-mc',
-    title: 'PESU Minecraft S2',
-    description: 'Official website for PESU Minecraft Server – Season 2',
-    longDescription: 'A fully responsive website built to showcase and manage the PESU Minecraft Server Season 2 community. Features a live server status widget, player leaderboards, season recap, and event announcements. Designed with a dark blocky aesthetic to match the Minecraft theme.',
-    imageSrc: projectPesuMC,
-    tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
-    year: '2024',
-    role: 'Lead Developer',
-    live: 'https://pesu-mc.vercel.app',
+    id: 'nautilus',
+    title: 'Nautilus',
+    description: 'AI knowledge tool with mindmaps, flowcharts & concept cards',
+    longDescription: 'A canvas-based AI knowledge tool that lets users create interconnected mindmaps, flowcharts, and auto-linked concept cards forming dynamic knowledge graphs. Powered by AI, Nautilus automatically identifies relationships between concepts, generates summaries, and builds visual representations of complex topics. Features include real-time collaboration, export to multiple formats, and a natural language interface for creating structured knowledge from unstructured text.',
+    imageSrc: projectNautilus,
+    tags: ['React', 'Canvas', 'AI', 'TypeScript', 'Graph'],
+    live: 'https://nautilus-build.vercel.app',
   },
   {
-    id: 'contour-flow',
-    title: 'Contour Flow Demo',
-    description: 'Lightweight animated topographic background',
-    longDescription: 'An open-source WebGL-powered topographic contour background component built for modern React apps. Uses a custom GLSL shader to render smooth, looping contour lines with configurable speed, density, and color. Zero dependencies beyond OGL.',
-    imageSrc: projectContour,
-    tags: ['WebGL', 'GLSL', 'React', 'OGL'],
-    year: '2024',
-    role: 'Creator',
-    live: 'https://contour-flow-test.vercel.app/',
+    id: 'virdis',
+    title: 'Virdis',
+    description: 'AI-powered farm boundary mapping & crop health analysis',
+    longDescription: 'An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data. Virdis processes multispectral imagery to calculate vegetation indices like NDVI, detect anomalies in crop growth patterns, and provide actionable insights for precision agriculture. The platform features an intuitive map-based UI with field management, historical analytics, and automated boundary detection using computer vision.',
+    imageSrc: projectVirdis,
+    tags: ['React', 'Mapbox', 'Python', 'Satellite', 'AI'],
+    live: 'https://virdis.vercel.app',
+  },
+  {
+    id: 'spheal',
+    title: 'Spheal',
+    description: 'Smart AI travel planner with interactive map visualization',
+    longDescription: 'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences — then the AI designs the itinerary, optimizes daily activities, suggests hotel areas, and generates routes. It replaces traditional travel research with a guided, visual, AI-driven experience.',
+    imageSrc: projectSpheal,
+    tags: ['React', 'Mapbox', 'AI', 'TypeScript'],
+    live: 'https://spheal.vercel.app',
   },
   {
     id: 'askbookie',
@@ -53,9 +57,16 @@ export const projects: Project[] = [
     longDescription: 'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API. Features streaming responses, citation highlighting, and multi-document support.',
     imageSrc: projectAskbookie,
     tags: ['Next.js', 'RAG', 'AI', 'TypeScript', 'FastAPI'],
-    year: '2024',
-    role: 'Full-Stack Developer',
     live: 'https://askbookie.vercel.app',
+  },
+  {
+    id: 'pesu-mc',
+    title: 'PESU Minecraft S2',
+    description: 'Official website for PESU Minecraft Server – Season 2',
+    longDescription: 'A fully responsive website built to showcase and manage the PESU Minecraft Server Season 2 community. Features a live server status widget, player leaderboards, season recap, and event announcements. Designed with a dark blocky aesthetic to match the Minecraft theme.',
+    imageSrc: projectPesuMC,
+    tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
+    live: 'https://pesu-mc.vercel.app',
   },
   {
     id: 'smart-chef',
@@ -64,8 +75,6 @@ export const projects: Project[] = [
     longDescription: 'A recipe recommendation engine built entirely in-memory using a Vector Space Model and TF-IDF scoring. Enter ingredients you have on hand and the system ranks recipes by relevance using cosine similarity — no external APIs or databases required.',
     imageSrc: projectSmartchef,
     tags: ['Python', 'TF-IDF', 'NLP', 'VSM'],
-    year: '2023',
-    role: 'ML Engineer',
     github: 'https://github.com/Thanas-R/Smart-Chef',
   },
   {
@@ -75,42 +84,32 @@ export const projects: Project[] = [
     longDescription: 'An earlier iteration of my portfolio, styled as a full macOS desktop environment in the browser. Features a working dock, draggable windows, a simulated Finder, and interactive apps including a code editor, terminal, and photo viewer.',
     imageSrc: projectThanasOS,
     tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
-    year: '2023',
-    role: 'Designer & Developer',
     live: 'https://thanasr-old.vercel.app',
-  },
-  {
-    id: 'pesu-forge',
-    title: 'PESU Forge',
-    description: 'AI-powered study platform for interactive quizzes',
-    longDescription: 'An AI-powered study platform built for PESU students. Upload notes or select a subject and generate dynamic multiple-choice quizzes, flashcards, and summaries. The backend uses GPT-4 to parse and contextualise academic content with PESU-specific syllabi.',
-    imageSrc: projectPesuforge,
-    tags: ['React', 'GPT-4', 'Supabase', 'AI', 'Education'],
-    year: '2024',
-    role: 'Full-Stack Developer',
-    live: 'https://pesu-forge.vercel.app/',
   },
 ];
 
-// Preload all project images immediately
+// Subset shown on home page
+const homeProjects = projects.filter(p =>
+  ['nautilus', 'virdis', 'askbookie', 'pesu-mc', 'smart-chef', 'thanas-os'].includes(p.id)
+);
+
+// Preload ALL project images at module load
 const preloadedImages: HTMLImageElement[] = projects.map((p) => {
   const img = new Image();
   img.src = p.imageSrc;
   return img;
 });
-
-// Keep reference so GC doesn't collect them
 void preloadedImages;
 
 const ProjectsSection = () => {
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
   const [hovering, setHovering] = useState(false);
-  const maxOffset = 2;
-  const len = projects.length;
+  const touchStartX = useRef(0);
+  const len = homeProjects.length;
 
   const next = useCallback(() => setActive((a) => (a + 1) % len), [len]);
-  const prev = () => setActive((a) => (a - 1 + len) % len);
+  const prev = useCallback(() => setActive((a) => (a - 1 + len) % len), [len]);
 
   useEffect(() => {
     if (hovering || reduceMotion) return;
@@ -121,6 +120,16 @@ const ProjectsSection = () => {
   const cardWidth = 400;
   const cardHeight = 250;
   const spacing = cardWidth * 0.48;
+  const maxOffset = 2;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    if (diff > 50) prev();
+    else if (diff < -50) next();
+  };
 
   return (
     <section id="projects" className="relative px-6 py-12 overflow-hidden pt-[64px]">
@@ -139,13 +148,15 @@ const ProjectsSection = () => {
 
           {/* Card Stack */}
           <div
-            className="relative w-full flex items-end justify-center"
+            className="relative w-full flex items-end justify-center touch-pan-y"
             style={{ height: 320, perspective: 1100 }}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <AnimatePresence initial={false}>
-              {projects.map((item, i) => {
+              {homeProjects.map((item, i) => {
                 const raw = i - active;
                 const alt = raw > 0 ? raw - len : raw + len;
                 const off = Math.abs(alt) < Math.abs(raw) ? alt : raw;
@@ -195,7 +206,7 @@ const ProjectsSection = () => {
             <button onClick={prev} className="text-muted-foreground hover:text-foreground transition-colors p-1">
               <ArrowRight className="w-4 h-4 rotate-180" />
             </button>
-            {projects.map((_, idx) => (
+            {homeProjects.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setActive(idx)}
