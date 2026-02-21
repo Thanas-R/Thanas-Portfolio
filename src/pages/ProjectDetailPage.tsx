@@ -39,7 +39,6 @@ const ProjectDetailPage = () => {
         </div>
 
         <div className="max-w-4xl mx-auto px-6 pb-24 -mt-32 relative z-10">
-          {/* Back link */}
           <motion.div {...fadeUp(0)}>
             <Link
               to="/projects"
@@ -50,23 +49,18 @@ const ProjectDetailPage = () => {
             </Link>
           </motion.div>
 
-          {/* Title block */}
           <motion.div {...fadeUp(0.08)} className="mb-8">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-              {project.year}{project.role ? ` · ${project.role}` : ''}
-            </p>
             <h1
               className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-4 uppercase"
               style={{ fontFamily: "'Space Grotesk', sans-serif" }}
             >
               {project.title}
             </h1>
-            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
               {project.description}
             </p>
           </motion.div>
 
-          {/* Action buttons */}
           <motion.div {...fadeUp(0.15)} className="flex gap-3 mb-10">
             {project.live && (
               <a
@@ -92,44 +86,32 @@ const ProjectDetailPage = () => {
             )}
           </motion.div>
 
-          {/* Tags */}
           <motion.div {...fadeUp(0.2)} className="flex flex-wrap gap-2 mb-14">
             {project.tags.map((tag) => (
               <span
                 key={tag}
                 className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider"
-                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 {tag}
               </span>
             ))}
           </motion.div>
 
-          {/* Content grid */}
-          <motion.div {...fadeUp(0.25)} className="grid md:grid-cols-3 gap-6 border-t border-foreground/10 pt-10 mb-10">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Role</p>
-              <p className="text-foreground/80 text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
-                {project.role ?? 'Developer'}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Year</p>
-              <p className="text-foreground/80 text-sm" style={{ fontFamily: "'Inter', sans-serif" }}>{project.year}</p>
-            </div>
+          <motion.div {...fadeUp(0.25)} className="grid md:grid-cols-2 gap-6 border-t border-foreground/10 pt-10 mb-10">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Stack</p>
-              <p className="text-foreground/80 text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <p className="text-foreground/80 text-sm leading-relaxed">
                 {project.tags.join(', ')}
               </p>
             </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Type</p>
+              <p className="text-foreground/80 text-sm">Personal Project</p>
+            </div>
           </motion.div>
 
-          {/* Long description */}
           <motion.div {...fadeUp(0.3)} className="mb-16">
-            <h2
-              className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5"
-            >
+            <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
               About this project
             </h2>
             <p
@@ -140,7 +122,6 @@ const ProjectDetailPage = () => {
             </p>
           </motion.div>
 
-          {/* Feature image — re-display project image in full width */}
           <motion.div {...fadeUp(0.35)} className="mb-16 rounded-2xl overflow-hidden border border-foreground/10">
             <img
               src={project.imageSrc}
@@ -150,7 +131,6 @@ const ProjectDetailPage = () => {
             />
           </motion.div>
 
-          {/* Prev / Next */}
           <motion.div {...fadeUp(0.4)} className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4">
             {prevProject ? (
               <Link
@@ -172,7 +152,7 @@ const ProjectDetailPage = () => {
                 className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 hover:border-foreground/25 transition-colors text-right ml-auto w-full"
               >
                 <span className="text-xs text-muted-foreground uppercase tracking-widest flex items-center justify-end gap-1">
-                  Next <ArrowLeft className="w-3 h-3 rotate-180" />
+                  Next <ArrowRight className="w-3 h-3" />
                 </span>
                 <span className="text-sm font-bold text-foreground font-['Space_Grotesk'] group-hover:-translate-x-0.5 transition-transform">
                   {nextProject.title}

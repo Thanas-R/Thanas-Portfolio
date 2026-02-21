@@ -1,6 +1,6 @@
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from 'next-themes';
 import TextRoll from '@/components/TextRoll';
 import { cn } from '@/lib/utils';
@@ -73,8 +73,14 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const location = useLocation();
 
   useEffect(() => setMounted(true), []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   const isDark = mounted && resolvedTheme === 'dark';
 
@@ -106,9 +112,7 @@ const Navbar = () => {
             className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Toggle theme"
           >
-            <span className="flex items-center justify-center w-[18px] h-[18px]">
-              <SolarSwitch isDark={isDark} />
-            </span>
+            <SolarSwitch isDark={isDark} />
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -119,25 +123,47 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden mt-4 mx-auto max-w-5xl border border-border rounded-xl bg-background/90 backdrop-blur-md p-6 space-y-4"
-        >
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.href}
+      {/* Mobile menu — full overlay with blur */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden fixed inset-0 z-40 bg-background/60 backdrop-blur-xl"
               onClick={() => setMobileOpen(false)}
-              className="block text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
+            />
+            {/* Menu panel */}
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+              className="md:hidden fixed top-20 left-4 right-4 z-50 rounded-2xl border border-border bg-card/95 backdrop-blur-2xl p-6 space-y-1 shadow-2xl"
             >
-              {item.label}
-            </Link>
-          ))}
-        </motion.div>
-      )}
+              {navItems.map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 + 0.1 }}
+                >
+                  <Link
+                    to={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-3 px-3 rounded-xl text-lg font-medium text-foreground hover:bg-muted/50 transition-colors font-['Space_Grotesk']"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

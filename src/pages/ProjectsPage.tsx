@@ -1,19 +1,17 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
-
-const upcoming = [
-{ title: 'Nautilus', description: 'Under active development.' },
-{ title: 'Virdis', description: 'Under active development.' }];
-
+import defaultPreview from '@/assets/projects-default.png';
 
 const ProjectsPage = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const activeProject = hoveredId ? projects.find((p) => p.id === hoveredId) : projects[0];
+  const activeProject = hoveredId ? projects.find((p) => p.id === hoveredId) : null;
+  const previewImage = activeProject ? activeProject.imageSrc : defaultPreview;
+  const previewLabel = activeProject ? activeProject.title : '';
 
   return (
     <>
@@ -23,14 +21,13 @@ const ProjectsPage = () => {
         <div className="flex-1 flex flex-col md:flex-row max-w-6xl mx-auto w-full px-6 gap-8 pt-4 pb-[40px]">
 
           {/* LEFT — sticky image preview */}
-          <div className="hidden md:flex md:w-[45%] md:sticky md:top-24 md:self-start">
+          <div className="hidden md:flex md:w-[50%] md:sticky md:top-24 md:self-start">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               className="w-full">
 
-              {/* Header above image */}
               <div className="mb-6">
                 <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">
                   Thanas R
@@ -45,31 +42,27 @@ const ProjectsPage = () => {
               </div>
 
               {/* Preview image */}
-              <div className="relative rounded-2xl overflow-hidden border border-foreground/10 aspect-[4/3] bg-muted">
+              <div className="relative rounded-2xl overflow-hidden border border-foreground/10 aspect-[16/10] bg-muted">
                 <AnimatePresence mode="wait">
-                  {activeProject &&
                   <motion.img
-                    key={activeProject.id}
-                    src={activeProject.imageSrc}
-                    alt={activeProject.title}
+                    key={previewImage}
+                    src={previewImage}
+                    alt={previewLabel || 'Projects'}
                     className="absolute inset-0 w-full h-full object-cover"
                     initial={{ opacity: 0, scale: 1.04 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.97 }}
-                    transition={{ duration: 0.35, ease: 'easeInOut' }} />
+                    transition={{ duration: 0.25, ease: 'easeInOut' }} />
 
-                  }
                 </AnimatePresence>
-                {/* overlay label */}
                 {activeProject &&
                 <motion.div
                   className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-black/70 to-transparent"
                   key={activeProject.id + '-label'}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}>
+                  transition={{ duration: 0.2, delay: 0.05 }}>
 
-                    <p className="text-xs text-white/60 uppercase tracking-widest mb-1">{activeProject.year}</p>
                     <p className="text-white font-semibold text-lg leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{activeProject.title}</p>
                   </motion.div>
                 }
@@ -109,9 +102,6 @@ const ProjectsPage = () => {
 
                           {project.title}
                         </p>
-                        {project.role &&
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mt-0.5">{project.role}</p>
-                      }
                       </div>
                     </div>
                     <div className="flex items-center gap-3 shrink-0">
@@ -122,7 +112,6 @@ const ProjectsPage = () => {
                           </span>
                       )}
                       </div>
-                      <span className="text-xs text-muted-foreground/40 font-mono">{project.year}</span>
                       <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all duration-200" />
                     </div>
                   </Link>
@@ -143,24 +132,24 @@ const ProjectsPage = () => {
             </div>
 
             {/* Upcoming */}
-            <motion.div
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="mt-16">
-
-              
-
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                {upcoming.map((p) => {}
+            
 
 
 
 
-                )}
-              </div>
-            </motion.div>
+
+
+
+
+
+
+
+
+
+
+
+
+
           </div>
         </div>
       </div>
