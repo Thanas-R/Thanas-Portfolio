@@ -147,7 +147,7 @@ const ContactSection = () => {
           </form>
 
           {/* Social links list */}
-          <div className="pt-4 space-y-2">
+          <div className="pt-4 space-y-1">
             {contactLinks.map((link) => (
               <a
                 key={link.label}
