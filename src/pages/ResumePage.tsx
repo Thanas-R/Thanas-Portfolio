@@ -1,64 +1,70 @@
 import { motion } from 'framer-motion';
 import { Download, ZoomIn, ZoomOut } from 'lucide-react';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
-
-const MIN_ZOOM = 100;
-const MAX_ZOOM = 200;
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
-  const [zoomLevel, setZoomLevel] = useState(MIN_ZOOM);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [scale, setScale] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const zoomIn = useCallback(() => setZoomLevel((prev) => Math.min(prev + 15, MAX_ZOOM)), []);
-  const zoomOut = useCallback(() => setZoomLevel((prev) => Math.max(prev - 15, MIN_ZOOM)), []);
+  const zoomIn = () => setScale((s) => Math.min(s + 0.15, 2));
+  const zoomOut = () => setScale((s) => Math.max(s - 0.15, 1));
 
   return (
     <div className="relative h-screen bg-background overflow-hidden">
-      {/* WebGL light rays background */}
       <LightRays className="opacity-60" />
 
-      {/* Navbar */}
       <div className="relative z-20">
         <Navbar />
       </div>
 
-      {/* Page title */}
+      {/* Header row */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
         className="relative z-10 max-w-5xl mx-auto pb-3 flex items-end justify-between px-[20px]"
       >
-        <div>
-          <h1
-            className="text-4xl md:text-5xl font-black text-foreground uppercase leading-none"
-            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-          >
-            Resume
-          </h1>
-        </div>
+        <h1
+          className="text-4xl md:text-5xl font-black text-foreground uppercase leading-none"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+        >
+          Resume
+        </h1>
         <div className="flex items-center gap-2 pb-1">
-          <button
-            onClick={zoomOut}
-            disabled={zoomLevel <= MIN_ZOOM}
-            className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            title="Zoom out"
-            aria-label="Zoom out"
-          >
-            <ZoomOut className="w-4 h-4" />
-          </button>
-          <button
-            onClick={zoomIn}
-            disabled={zoomLevel >= MAX_ZOOM}
-            className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            title="Zoom in"
-            aria-label="Zoom in"
-          >
-            <ZoomIn className="w-4 h-4" />
-          </button>
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={zoomOut}
+                  disabled={scale <= 1}
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="Zoom out"
+                >
+                  <ZoomOut className="w-4 h-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Zoom out</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={zoomIn}
+                  disabled={scale >= 2}
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="Zoom in"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Zoom in</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <a
             href={resumePath}
             download
@@ -70,7 +76,7 @@ const ResumePage = () => {
         </div>
       </motion.div>
 
-      {/* PDF Viewer */}
+      {/* PDF Viewer — uses img-like approach: embed the PDF as an object fitting the container */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -78,36 +84,39 @@ const ResumePage = () => {
         className="relative z-10 max-w-5xl mx-auto px-6 mt-1"
         style={{ height: 'calc(100dvh - 148px)' }}
       >
-        <style>{`
-          .resume-scroll-area {
-            height: 100%;
-            border-radius: 16px;
-            overflow: auto;
-            border: 1px solid hsl(var(--border));
-            background: hsl(var(--card));
-            box-shadow: 0 8px 40px hsl(var(--foreground) / 0.06);
-          }
-          .resume-scroll-area::-webkit-scrollbar { width: 4px; height: 4px; }
-          .resume-scroll-area::-webkit-scrollbar-track { background: transparent; }
-          .resume-scroll-area::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 999px; }
-          @media (max-width: 768px) {
-            .resume-scroll-area { border-radius: 12px; }
-          }
-        `}</style>
-
-        <div className="resume-scroll-area">
-          <iframe
-            ref={iframeRef}
-            src={`${resumePath}#toolbar=0&navpanes=0&view=FitH&zoom=${zoomLevel}`}
-            key={zoomLevel}
-            title="Resume PDF"
-            className="block border-none"
+        <div
+          ref={containerRef}
+          className="h-full rounded-2xl overflow-auto border border-border bg-card"
+          style={{
+            boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'hsl(var(--border)) transparent',
+          }}
+        >
+          <style>{`
+            .resume-viewer::-webkit-scrollbar { width: 4px; height: 4px; }
+            .resume-viewer::-webkit-scrollbar-track { background: transparent; }
+            .resume-viewer::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 999px; }
+            @media (max-width: 768px) {
+              .resume-viewer { border-radius: 12px; }
+            }
+          `}</style>
+          <div
+            className="resume-viewer"
             style={{
-              width: `${zoomLevel}%`,
-              height: zoomLevel === MIN_ZOOM ? '100%' : `${zoomLevel}%`,
-              minHeight: '100%',
+              transform: `scale(${scale})`,
+              transformOrigin: 'top center',
+              width: '100%',
+              height: scale > 1 ? `${scale * 100}%` : '100%',
             }}
-          />
+          >
+            <iframe
+              src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
+              title="Resume PDF"
+              className="block border-none w-full h-full"
+              style={{ minHeight: '100%' }}
+            />
+          </div>
         </div>
       </motion.div>
     </div>

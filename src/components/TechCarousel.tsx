@@ -1,28 +1,29 @@
 import { cn } from '@/lib/utils';
+import {
+  SiC, SiCplusplus, SiPython, SiJavascript, SiTypescript,
+  SiHtml5, SiReact, SiGit,
+} from 'react-icons/si';
+import { VscCode } from 'react-icons/vsc';
+import { FaJava } from 'react-icons/fa';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface TechItem {
   name: string;
-  icon: string;
+  icon: React.ReactNode;
 }
 
 const techStack: TechItem[] = [
-  { name: 'C', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg' },
-  { name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
-  { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-  { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-  { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
-  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-  { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-  { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-  { name: 'VS Code', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg' },
-  { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+  { name: 'C', icon: <SiC /> },
+  { name: 'C++', icon: <SiCplusplus /> },
+  { name: 'Python', icon: <SiPython /> },
+  { name: 'Java', icon: <FaJava /> },
+  { name: 'TypeScript', icon: <SiTypescript /> },
+  { name: 'JavaScript', icon: <SiJavascript /> },
+  { name: 'HTML', icon: <SiHtml5 /> },
+  { name: 'React', icon: <SiReact /> },
+  { name: 'VS Code', icon: <VscCode /> },
+  { name: 'Git', icon: <SiGit /> },
 ];
-
-// Preload tech icons
-techStack.forEach((t) => {
-  const img = new Image();
-  img.src = t.icon;
-});
 
 function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean; speed: number }) {
   const tripled = [...items, ...items, ...items];
@@ -36,12 +37,18 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
         }}
       >
         {tripled.map((tech, i) => (
-          <div
-            key={`${tech.name}-${i}`}
-            className="flex-shrink-0 px-5 flex items-center transition-transform duration-300 hover:scale-110"
-          >
-            <img src={tech.icon} alt={tech.name} className="w-10 h-10" loading="eager" title={tech.name} />
-          </div>
+          <TooltipProvider key={`${tech.name}-${i}`} delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex-shrink-0 px-6 flex items-center transition-transform duration-300 hover:scale-110 text-foreground/70 hover:text-foreground text-[28px]">
+                  {tech.icon}
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="text-xs">
+                {tech.name}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         ))}
       </div>
     </div>
