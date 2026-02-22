@@ -81,12 +81,12 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="relative py-16 px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-[105px]">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }} className="px-[100px]">
+          transition={{ duration: 0.7 }} className="px-0 mx-0">
 
           <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
             Contact
