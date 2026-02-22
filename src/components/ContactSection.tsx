@@ -80,8 +80,8 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="relative py-16 px-6">
-      <div className="max-w-5xl mx-[105px]">
+    <section id="contact" className="relative py-16 px-[140px]">
+      <div className="max-w-5xl mx-0">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
