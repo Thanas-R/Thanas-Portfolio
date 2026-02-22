@@ -1,7 +1,6 @@
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 import projectPesuMC from '@/assets/project-pesumc.png';
 import projectAskbookie from '@/assets/project-askbookie.png';
@@ -10,6 +9,8 @@ import projectThanasOS from '@/assets/project-thanasOS.png';
 import projectNautilus from '@/assets/project-nautilus.png';
 import projectVirdis from '@/assets/project-virdis.png';
 import projectSpheal from '@/assets/project-spheal.png';
+import projectPesuForge from '@/assets/project-pesuforge.png';
+import projectContour from '@/assets/project-contour.png';
 
 export interface Project {
   id: string;
@@ -51,15 +52,6 @@ export const projects: Project[] = [
     live: 'https://spheal.vercel.app',
   },
   {
-    id: 'askbookie',
-    title: 'AskBookie_',
-    description: 'Production-ready RAG API frontend for document Q&A',
-    longDescription: 'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API. Features streaming responses, citation highlighting, and multi-document support.',
-    imageSrc: projectAskbookie,
-    tags: ['Next.js', 'RAG', 'AI', 'TypeScript', 'FastAPI'],
-    live: 'https://askbookie.vercel.app',
-  },
-  {
     id: 'pesu-mc',
     title: 'PESU Minecraft S2',
     description: 'Official website for PESU Minecraft Server – Season 2',
@@ -67,6 +59,15 @@ export const projects: Project[] = [
     imageSrc: projectPesuMC,
     tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
     live: 'https://pesu-mc.vercel.app',
+  },
+  {
+    id: 'askbookie',
+    title: 'AskBookie_',
+    description: 'Production-ready RAG API frontend for document Q&A',
+    longDescription: 'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API. Features streaming responses, citation highlighting, and multi-document support.',
+    imageSrc: projectAskbookie,
+    tags: ['Next.js', 'RAG', 'AI', 'TypeScript', 'FastAPI'],
+    live: 'https://askbookie.vercel.app',
   },
   {
     id: 'smart-chef',
@@ -86,11 +87,20 @@ export const projects: Project[] = [
     tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
     live: 'https://thanasr-old.vercel.app',
   },
+  {
+    id: 'pesu-forge',
+    title: 'PESU Forge',
+    description: 'Collaborative academic resource platform for PES University',
+    longDescription: 'A community-driven platform for sharing notes, assignments, and academic resources across PES University departments. Features include file uploads, tagging system, search functionality, and a voting mechanism for quality content curation.',
+    imageSrc: projectPesuForge,
+    tags: ['React', 'Supabase', 'Tailwind', 'TypeScript'],
+    live: 'https://pesuforge.vercel.app',
+  },
 ];
 
-// Subset shown on home page
+// 4 projects shown on home page in grid
 const homeProjects = projects.filter(p =>
-  ['nautilus', 'virdis', 'askbookie', 'pesu-mc', 'smart-chef', 'thanas-os'].includes(p.id)
+  ['nautilus', 'virdis', 'pesu-mc', 'askbookie'].includes(p.id)
 );
 
 // Preload ALL project images at module load
@@ -102,132 +112,60 @@ const preloadedImages: HTMLImageElement[] = projects.map((p) => {
 void preloadedImages;
 
 const ProjectsSection = () => {
-  const reduceMotion = useReducedMotion();
-  const [active, setActive] = useState(0);
-  const [hovering, setHovering] = useState(false);
-  const touchStartX = useRef(0);
-  const len = homeProjects.length;
-
-  const next = useCallback(() => setActive((a) => (a + 1) % len), [len]);
-  const prev = useCallback(() => setActive((a) => (a - 1 + len) % len), [len]);
-
-  useEffect(() => {
-    if (hovering || reduceMotion) return;
-    const id = setInterval(next, 3500);
-    return () => clearInterval(id);
-  }, [hovering, next, reduceMotion]);
-
-  const cardWidth = 400;
-  const cardHeight = 250;
-  const spacing = cardWidth * 0.48;
-  const maxOffset = 2;
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const diff = e.changedTouches[0].clientX - touchStartX.current;
-    if (diff > 50) prev();
-    else if (diff < -50) next();
-  };
-
   return (
-    <section id="projects" className="relative px-6 py-12 overflow-hidden pt-[64px]">
-      <div className="max-w-4xl mx-auto">
+    <section id="projects" className="relative py-16 overflow-hidden pt-[64px]">
+      <div className="dotted-bg absolute inset-0" />
+      <div className="relative z-10 max-w-5xl mx-auto px-6">
         <motion.div
-          initial={{ x: 60, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          <div className="flex items-end justify-between mb-8">
+          <div className="flex items-end justify-between mb-10">
             <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
               Projects
             </h2>
-          </div>
-
-          {/* Card Stack */}
-          <div
-            className="relative w-full flex items-end justify-center touch-pan-y"
-            style={{ height: 320, perspective: 1100 }}
-            onMouseEnter={() => setHovering(true)}
-            onMouseLeave={() => setHovering(false)}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            <AnimatePresence initial={false}>
-              {homeProjects.map((item, i) => {
-                const raw = i - active;
-                const alt = raw > 0 ? raw - len : raw + len;
-                const off = Math.abs(alt) < Math.abs(raw) ? alt : raw;
-                const abs = Math.abs(off);
-                if (abs > maxOffset) return null;
-
-                const isActive = off === 0;
-                const x = off * spacing;
-                const rotateZ = off * 18;
-                const y = abs * 10;
-                const scale = isActive ? 1.03 : 0.92;
-
-                return (
-                  <motion.div
-                    key={item.id}
-                    className={`absolute bottom-0 rounded-2xl border border-foreground/10 overflow-hidden shadow-xl cursor-pointer select-none ${
-                      isActive ? 'z-30' : abs === 1 ? 'z-20' : 'z-10'
-                    }`}
-                    style={{ width: cardWidth, height: cardHeight, transformStyle: 'preserve-3d' }}
-                    animate={{ x, y: y + (isActive ? -20 : 0), rotateZ, scale, opacity: 1 }}
-                    transition={{ type: 'spring', stiffness: 280, damping: 28 }}
-                    onClick={() => {
-                      if (!isActive) setActive(i);
-                    }}
-                  >
-                    <div className="relative h-full w-full">
-                      <img
-                        src={item.imageSrc}
-                        alt={item.title}
-                        className="h-full w-full object-cover"
-                        draggable={false}
-                        loading="eager"
-                      />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-                        <span className="text-lg font-semibold text-white truncate block">{item.title}</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </div>
-
-          {/* Dots */}
-          <div className="mt-6 flex items-center justify-center gap-2">
-            <button onClick={prev} className="text-muted-foreground hover:text-foreground transition-colors p-1">
-              <ArrowRight className="w-4 h-4 rotate-180" />
-            </button>
-            {homeProjects.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActive(idx)}
-                className={`h-2 w-2 rounded-full transition ${
-                  idx === active ? 'bg-foreground' : 'bg-foreground/30 hover:bg-foreground/50'
-                }`}
-              />
-            ))}
-            <button onClick={next} className="text-muted-foreground hover:text-foreground transition-colors p-1">
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          <div className="mt-6 text-center">
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-foreground/20 text-foreground text-sm font-medium hover:bg-foreground hover:text-background transition-all duration-300"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              View All Projects
+              View all
               <ArrowRight className="w-4 h-4" />
             </Link>
+          </div>
+
+          {/* 2x2 Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {homeProjects.map((project, i) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <Link
+                  to={`/projects/${project.id}`}
+                  className="group block rounded-xl overflow-hidden border border-foreground/10 bg-card hover:border-foreground/20 transition-all duration-300"
+                >
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img
+                      src={project.imageSrc}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      loading="eager"
+                      draggable={false}
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold text-foreground font-['Space_Grotesk']">
+                      {project.title}
+                    </h3>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>

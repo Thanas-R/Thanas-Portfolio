@@ -38,13 +38,9 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
         {tripled.map((tech, i) => (
           <div
             key={`${tech.name}-${i}`}
-            className="flex-shrink-0 pl-8 flex items-center gap-3 transition-transform duration-300 hover:scale-105"
-            style={{ filter: 'grayscale(1)', transition: 'filter 0.3s, transform 0.3s' }}
-            onMouseEnter={(e) => { e.currentTarget.style.filter = 'grayscale(0)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.filter = 'grayscale(1)'; }}
+            className="flex-shrink-0 px-5 flex items-center transition-transform duration-300 hover:scale-110"
           >
-            <img src={tech.icon} alt={tech.name} className="w-8 h-8" loading="eager" />
-            <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">{tech.name}</span>
+            <img src={tech.icon} alt={tech.name} className="w-10 h-10" loading="eager" title={tech.name} />
           </div>
         ))}
       </div>
@@ -55,14 +51,14 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
 const TechCarousel = () => {
   const reversed = [...techStack].reverse();
   return (
-    <section className="relative px-6 py-4">
+    <section className="relative px-6 py-6">
       <div className="max-w-5xl mx-auto">
         <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4 text-center">
-          Tech Stack
+          Stack
         </h3>
-        <div className="space-y-4 overflow-hidden">
-          <Ribbon items={techStack} reverse={false} speed={30} />
-          <Ribbon items={reversed} reverse={true} speed={35} />
+        <div className="space-y-3 overflow-hidden">
+          <Ribbon items={techStack} reverse={false} speed={25} />
+          <Ribbon items={reversed} reverse={true} speed={30} />
         </div>
       </div>
     </section>
