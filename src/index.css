@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,32 +6,32 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96%;
+    --background: 0 0% 100%;
     --foreground: 0 0% 5.5%;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 5.5%;
 
-    --popover: 0 0% 96%;
+    --popover: 0 0% 100%;
     --popover-foreground: 0 0% 5.5%;
 
     --primary: 0 0% 5.5%;
-    --primary-foreground: 0 0% 96%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 90%;
+    --secondary: 0 0% 93%;
     --secondary-foreground: 0 0% 5.5%;
 
-    --muted: 0 0% 90%;
+    --muted: 0 0% 93%;
     --muted-foreground: 0 0% 40%;
 
-    --accent: 0 0% 85%;
+    --accent: 0 0% 88%;
     --accent-foreground: 0 0% 5.5%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 96%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 82%;
-    --input: 0 0% 82%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
     --ring: 0 0% 5.5%;
 
     --radius: 0.5rem;
@@ -163,4 +163,10 @@ html {
 @keyframes auto-scroll-ribbon {
   from { transform: translateX(0); }
   to { transform: translateX(calc(-100% / 3)); }
+}
+
+/* Dotted background for projects section */
+.dotted-bg {
+  background-image: radial-gradient(circle, hsl(var(--foreground) / 0.12) 1px, transparent 1px);
+  background-size: 16px 16px;
 }
