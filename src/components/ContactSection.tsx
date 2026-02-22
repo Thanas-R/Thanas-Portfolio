@@ -117,7 +117,7 @@ const ContactSection = () => {
             </div>
             <textarea
               placeholder="Message"
-              rows={5}
+              rows={8}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
