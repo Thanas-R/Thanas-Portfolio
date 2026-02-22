@@ -18,13 +18,13 @@ const contactLinks = [
   },
   {
     label: 'GitHub',
-    value: '@Thanas-R',
+    value: 'Thanas-R',
     href: 'https://github.com/Thanas-R',
     icon: <TbBrandGithubFilled className="w-5 h-5" />,
   },
   {
     label: 'LinkedIn',
-    value: '/in/thanasr',
+    value: 'thanasr',
     href: 'https://www.linkedin.com/in/thanasr/',
     icon: (
       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -35,7 +35,7 @@ const contactLinks = [
   },
   {
     label: 'Discord',
-    value: 'darkspacepirate',
+    value: '@darkspacepirate',
     href: '#',
     icon: (
       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
