@@ -28,7 +28,7 @@ export const projects: Project[] = [
     id: 'nautilus',
     title: 'Nautilus',
     description: 'AI knowledge tool with mindmaps, flowcharts & concept cards',
-    longDescription: 'A canvas-based AI knowledge tool that lets users create interconnected mindmaps, flowcharts, and auto-linked concept cards forming dynamic knowledge graphs. Powered by AI, Nautilus automatically identifies relationships between concepts, generates summaries, and builds visual representations of complex topics. Features include real-time collaboration, export to multiple formats, and a natural language interface for creating structured knowledge from unstructured text.',
+    longDescription: 'A canvas-based AI knowledge tool that lets users create interconnected mindmaps, flowcharts, and auto-linked concept cards forming dynamic knowledge graphs. Powered by AI, Nautilus automatically identifies relationships between concepts, generates summaries, and builds visual representations of complex topics.',
     imageSrc: projectNautilus,
     tags: ['React', 'Canvas', 'AI', 'TypeScript', 'Graph'],
     live: 'https://nautilus-build.vercel.app',
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     id: 'virdis',
     title: 'Virdis',
     description: 'AI-powered farm boundary mapping & crop health analysis',
-    longDescription: 'An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data. Virdis processes multispectral imagery to calculate vegetation indices like NDVI, detect anomalies in crop growth patterns, and provide actionable insights for precision agriculture. The platform features an intuitive map-based UI with field management, historical analytics, and automated boundary detection using computer vision.',
+    longDescription: 'An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data. Virdis processes multispectral imagery to calculate vegetation indices, detect anomalies, and provide actionable insights for precision agriculture.',
     imageSrc: projectVirdis,
     tags: ['React', 'Mapbox', 'Python', 'Satellite', 'AI'],
     live: 'https://virdis.vercel.app',
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     id: 'spheal',
     title: 'Spheal',
     description: 'Smart AI travel planner with interactive map visualization',
-    longDescription: 'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences — then the AI designs the itinerary, optimizes daily activities, suggests hotel areas, and generates routes. It replaces traditional travel research with a guided, visual, AI-driven experience.',
+    longDescription: 'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences — then the AI designs the full itinerary.',
     imageSrc: projectSpheal,
     tags: ['React', 'Mapbox', 'AI', 'TypeScript'],
     live: 'https://spheal.vercel.app',
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     id: 'pesu-mc',
     title: 'PESU Minecraft S2',
     description: 'Official website for PESU Minecraft Server – Season 2',
-    longDescription: 'A fully responsive website built to showcase and manage the PESU Minecraft Server Season 2 community. Features a live server status widget, player leaderboards, season recap, and event announcements. Designed with a dark blocky aesthetic to match the Minecraft theme.',
+    longDescription: 'A fully responsive website built to showcase and manage the PESU Minecraft Server Season 2 community. Features a live server status widget, player leaderboards, season recap, and event announcements.',
     imageSrc: projectPesuMC,
     tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
     live: 'https://pesu-mc.vercel.app',
@@ -64,16 +64,24 @@ export const projects: Project[] = [
     id: 'askbookie',
     title: 'AskBookie_',
     description: 'Production-ready RAG API frontend for document Q&A',
-    longDescription: 'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API. Features streaming responses, citation highlighting, and multi-document support.',
+    longDescription: 'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API.',
     imageSrc: projectAskbookie,
     tags: ['Next.js', 'RAG', 'AI', 'TypeScript', 'FastAPI'],
     live: 'https://askbookie.vercel.app',
   },
   {
+    id: 'contour-flow',
+    title: 'Contour Flow Demo',
+    description: 'Interactive animated topographic contour flow visualization',
+    longDescription: 'An interactive WebGL-based animation showcasing flowing topographic contour lines. Built as a creative coding experiment exploring generative art with real-time shader effects and smooth gradient transitions.',
+    imageSrc: projectContour,
+    tags: ['WebGL', 'Canvas', 'Shaders', 'Creative Coding'],
+  },
+  {
     id: 'smart-chef',
     title: 'Smart Chef',
     description: 'In-memory Vector Space Model using TF-IDF',
-    longDescription: 'A recipe recommendation engine built entirely in-memory using a Vector Space Model and TF-IDF scoring. Enter ingredients you have on hand and the system ranks recipes by relevance using cosine similarity — no external APIs or databases required.',
+    longDescription: 'A recipe recommendation engine built entirely in-memory using a Vector Space Model and TF-IDF scoring. Enter ingredients you have on hand and the system ranks recipes by relevance using cosine similarity.',
     imageSrc: projectSmartchef,
     tags: ['Python', 'TF-IDF', 'NLP', 'VSM'],
     github: 'https://github.com/Thanas-R/Smart-Chef',
@@ -82,7 +90,7 @@ export const projects: Project[] = [
     id: 'thanas-os',
     title: 'ThanasOS',
     description: 'macOS-themed interactive portfolio',
-    longDescription: 'An earlier iteration of my portfolio, styled as a full macOS desktop environment in the browser. Features a working dock, draggable windows, a simulated Finder, and interactive apps including a code editor, terminal, and photo viewer.',
+    longDescription: 'An earlier iteration of my portfolio, styled as a full macOS desktop environment in the browser. Features a working dock, draggable windows, a simulated Finder, and interactive apps.',
     imageSrc: projectThanasOS,
     tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
     live: 'https://thanasr-old.vercel.app',
@@ -91,14 +99,14 @@ export const projects: Project[] = [
     id: 'pesu-forge',
     title: 'PESU Forge',
     description: 'Collaborative academic resource platform for PES University',
-    longDescription: 'A community-driven platform for sharing notes, assignments, and academic resources across PES University departments. Features include file uploads, tagging system, search functionality, and a voting mechanism for quality content curation.',
+    longDescription: 'A community-driven platform for sharing notes, assignments, and academic resources across PES University departments.',
     imageSrc: projectPesuForge,
     tags: ['React', 'Supabase', 'Tailwind', 'TypeScript'],
     live: 'https://pesuforge.vercel.app',
   },
 ];
 
-// 4 projects shown on home page in grid
+// 4 projects shown on home page — scattered layout
 const homeProjects = projects.filter(p =>
   ['nautilus', 'virdis', 'pesu-mc', 'askbookie'].includes(p.id)
 );
@@ -113,7 +121,7 @@ void preloadedImages;
 
 const ProjectsSection = () => {
   return (
-    <section id="projects" className="relative py-16 overflow-hidden pt-[64px]">
+    <section id="projects" className="relative py-20 overflow-hidden">
       <div className="dotted-bg absolute inset-0" />
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         <motion.div
@@ -122,10 +130,13 @@ const ProjectsSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          <div className="flex items-end justify-between mb-10">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-              Projects
-            </h2>
+          <div className="flex items-end justify-between mb-6">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">Work</p>
+              <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
+                Projects
+              </h2>
+            </div>
             <Link
               to="/projects"
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -134,38 +145,56 @@ const ProjectsSection = () => {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+          <p className="text-muted-foreground text-sm mb-10 max-w-md">
+            Below are some select projects, full walkthroughs on request
+          </p>
 
-          {/* 2x2 Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {homeProjects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-              >
-                <Link
-                  to={`/projects/${project.id}`}
-                  className="group block rounded-xl overflow-hidden border border-foreground/10 bg-card hover:border-foreground/20 transition-all duration-300"
+          {/* Scattered overlapping layout */}
+          <div className="relative w-full" style={{ height: 'clamp(400px, 55vw, 620px)' }}>
+            {homeProjects.map((project, i) => {
+              const positions = [
+                { top: '0%', left: '0%', width: '52%', rotate: -2, zIndex: 2 },
+                { top: '5%', left: '48%', width: '54%', rotate: 1.5, zIndex: 3 },
+                { top: '45%', left: '2%', width: '50%', rotate: 1, zIndex: 1 },
+                { top: '42%', left: '46%', width: '52%', rotate: -1.5, zIndex: 4 },
+              ];
+              const pos = positions[i];
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.12 }}
+                  className="absolute group"
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    width: pos.width,
+                    zIndex: pos.zIndex,
+                  }}
                 >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={project.imageSrc}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                      loading="eager"
-                      draggable={false}
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold text-foreground font-['Space_Grotesk']">
-                      {project.title}
-                    </h3>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                  <Link to={`/projects/${project.id}`}>
+                    <div className="rounded-xl overflow-hidden border border-foreground/10 bg-card shadow-lg hover:shadow-xl transition-shadow duration-300 hover:scale-[1.02] transform transition-transform">
+                      <div className="aspect-[16/10] overflow-hidden">
+                        <img
+                          src={project.imageSrc}
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                          loading="eager"
+                          draggable={false}
+                        />
+                      </div>
+                      <div className="px-4 py-3 bg-card">
+                        <p className="text-sm font-bold text-foreground font-['Space_Grotesk'] truncate">
+                          {project.title}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       </div>
