@@ -80,7 +80,12 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="relative py-16 px-6">
+    <section
+      id="contact"
+      className="relative py-16 px-6"
+      // inline font so this component renders correctly without Tailwind font config
+      style={{ fontFamily: "'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial" }}
+    >
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
@@ -91,7 +96,9 @@ const ContactSection = () => {
           <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
             Contact
           </p>
-          <p className="text-muted-foreground text-base mb-8 max-w-md">
+
+          {/* Adjusted paragraph text size/weight to look like your image */}
+          <p className="text-muted-foreground text-lg font-light mb-8 max-w-md">
             You can contact me using the form or via the links below.
           </p>
 
@@ -103,7 +110,8 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-border bg-secondary/40 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring"
+                // removed border, added subtle text / weight / placeholder styling
+                className="w-full px-4 py-3 rounded-xl bg-secondary/40 text-foreground text-sm font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -111,19 +119,22 @@ const ContactSection = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-border bg-secondary/40 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/40 text-foreground text-sm font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
             </div>
+
             <textarea
               placeholder="Message"
-              rows={8}
+              rows={10}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-4 py-3 rounded-xl border border-border bg-secondary/40 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-4"
+              // removed border, made text look nicer and kept focus ring + resize
+              className="w-full px-4 py-3 rounded-xl bg-secondary/40 text-foreground text-sm font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-4"
               required
             />
+
             <div className="flex items-center gap-4">
               <button
                 type="submit"
