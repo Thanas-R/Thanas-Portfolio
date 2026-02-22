@@ -124,7 +124,7 @@ const ContactSection = () => {
 
             <textarea
               placeholder="Message"
-              rows={6}
+              rows={5}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
@@ -147,7 +147,7 @@ const ContactSection = () => {
           </form>
 
           {/* Social links list */}
-          <div className="border-t border-border pt-6 space-y-3">
+          <div className="pt-4 space-y-2">
             {contactLinks.map((link) => (
               <a
                 key={link.label}
