@@ -150,24 +150,24 @@ const ContactSection = () => {
     required
   />
 
-            {/* Button LEFT + Enter hint RIGHT */}
-            <div className="flex items-center justify-between gap-4">
-              <button
-                type="submit"
-                disabled={sending}
-                className="px-6 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
-              >
-                {sending ? 'Sending...' : 'Send message'}
-              </button>
+{/* Button LEFT + Enter hint RIGHT */}
+<div className="flex items-center justify-between gap-4">
+  <button
+    type="submit"
+    disabled={sending}
+    className="px-6 py-3 rounded-xl bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+  >
+    {sending ? 'Sending...' : 'Send message'}
+  </button>
 
-              {/* Enter guide stays on the right; visible on all sizes but compact on mobile */}
-              <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
-                <span className="hidden sm:inline">Press</span>
-                <kbd className="px-2.5 py-1 rounded-md border border-border text-sm font-mono bg-secondary/40">
-                  ↵ Enter
-                </kbd>
-              </span>
-            </div>
+  {/* Enter guide stays on the right */}
+  <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
+    <span className="hidden sm:inline">Press</span>
+    <kbd className="px-2.5 py-1 rounded-md border border-border text-sm font-mono bg-secondary/40">
+      ↵ Enter
+    </kbd>
+  </span>
+</div>
           </form>
 
           {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
