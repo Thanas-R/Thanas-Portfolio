@@ -11,7 +11,7 @@ const contactLinks = [
     value: 'thanas5.rd@gmail.com',
     href: 'mailto:thanas5.rd@gmail.com',
     icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
         <path d="m18.73 5.41-1.28 1L12 10.46 6.55 6.37l-1.28-1A2 2 0 0 0 2 7.05v11.59A1.36 1.36 0 0 0 3.36 20h3.19v-7.72L12 16.37l5.45-4.09V20h3.19A1.36 1.36 0 0 0 22 18.64V7.05a2 2 0 0 0-3.27-1.64z" />
       </svg>
     ),
@@ -20,14 +20,14 @@ const contactLinks = [
     label: 'GitHub',
     value: 'Thanas-R',
     href: 'https://github.com/Thanas-R',
-    icon: <TbBrandGithubFilled className="w-6 h-6" aria-hidden />,
+    icon: <TbBrandGithubFilled className="w-5 h-5" aria-hidden />,
   },
   {
     label: 'LinkedIn',
     value: 'thanasr',
     href: 'https://www.linkedin.com/in/thanasr/',
     icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
         <circle cx="4.983" cy="5.009" r="2.188" />
         <path d="M9.237 8.855v12.139h3.769v-6.003c0-1.584.298-3.118 2.262-3.118 1.937 0 1.961 1.811 1.961 3.218v5.904H21v-6.657c0-3.27-.704-5.783-4.526-5.783-1.835 0-3.065 1.007-3.568 1.96h-.051v-1.66H9.237zm-6.142 0H6.87v12.139H3.095z" />
       </svg>
@@ -38,7 +38,7 @@ const contactLinks = [
     value: '@darkspacepirate',
     href: '#',
     icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
         <path d="M14.82 4.26a10.14 10.14 0 0 0-.53 1.1 14.66 14.66 0 0 0-4.58 0 10.14 10.14 0 0 0-.53-1.1 16 16 0 0 0-4.13 1.3 17.33 17.22 0 0 0-3 11.59 16.6 16.6 0 0 0 5.07 2.59A12.89 12.89 0 0 0 8.23 18a9.65 9.65 0 0 1-1.71-.83 3.39 3.39 0 0 0 .42-.33 11.66 11.66 0 0 0 10.12 0q.21.18.42.33a10.84 10.84 0 0 1-1.71.84 12.41 12.41 0 0 0 1.08 1.78 16.44 16.44 0 0 0 5.06-2.59 17.22 17.22 0 0 0-3-11.59 16.09 16.09 0 0 0-4.09-1.35zM8.68 14.81a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.93 1.93 0 0 1 1.8 2 1.93 1.93 0 0 1-1.8 2zm6.64 0a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.92 1.92 0 0 1 1.8 2 1.92 1.92 0 0 1-1.8 2z" />
       </svg>
     ),
@@ -98,12 +98,12 @@ const ContactSection = () => {
             Contact
           </p>
 
-          {/* responsive paragraph: 1-line desktop, wraps on small screens */}
-          <p className="text-lg md:text-xl font-light text-foreground/80 dark:text-foreground/80 mb-8 md:whitespace-nowrap">
+          {/* paragraph — made bolder */}
+          <p className="text-lg md:text-xl font-semibold text-foreground/80 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
-          {/* Reduced spacing here (controls gap between form and socials) */}
+          {/* form */}
           <form onSubmit={handleSubmit} className="mb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <input
@@ -111,7 +111,7 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/70 placeholder:font-semibold focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -119,7 +119,7 @@ const ContactSection = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/70 placeholder:font-semibold focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
             </div>
@@ -129,7 +129,7 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/70 placeholder:font-semibold focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[180px] overflow-auto scrollbar-hide"
+              className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[180px] overflow-auto scrollbar-hide"
               required
             />
 
@@ -153,8 +153,8 @@ const ContactSection = () => {
             </div>
           </form>
 
-          {/* socials — slightly bigger, bolder and higher contrast in dark mode */}
-          <div className="pt-2 space-y-0">
+          {/* socials — circular icon box, gray text for both modes, bolder labels */}
+          <div className="pt-2 space-y-1">
             {contactLinks.map((link) => (
               <a
                 key={link.label}
@@ -163,20 +163,24 @@ const ContactSection = () => {
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="flex items-center justify-between py-3 group"
               >
-                <div className="flex items-center gap-3 text-foreground/70 dark:text-foreground group-hover:text-foreground transition-colors">
-                  <div className="flex items-center justify-center text-foreground/70 dark:text-foreground">
-                    {link.icon}
+                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-secondary/60 dark:bg-secondary/40 flex items-center justify-center">
+                    {/* icon color inherits from parent (muted) */}
+                    <div className="text-muted-foreground">
+                      {link.icon}
+                    </div>
                   </div>
-                  <span className="text-base md:text-base font-semibold">
+
+                  <span className="text-base font-semibold text-muted-foreground">
                     {link.label}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-foreground/60 dark:text-foreground group-hover:text-foreground transition-colors">
-                  <span className="text-base md:text-base font-medium text-foreground/60 dark:text-foreground">
+                <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
+                  <span className="text-base font-medium text-muted-foreground">
                     {link.value}
                   </span>
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </div>
               </a>
             ))}
