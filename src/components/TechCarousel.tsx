@@ -40,7 +40,7 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
           <TooltipProvider key={`${tech.name}-${i}`} delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex-shrink-0 px-6 flex items-center transition-transform duration-300 hover:scale-110 text-foreground/70 hover:text-foreground text-[28px]">
+                <div className="flex-shrink-0 px-7 flex items-center transition-transform duration-300 hover:scale-110 text-foreground/70 hover:text-foreground text-[38px]">
                   {tech.icon}
                 </div>
               </TooltipTrigger>

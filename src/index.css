@@ -96,7 +96,7 @@
   }
 
   html {
-    font-size: 90%;
+    font-size: 81%;
   }
 
   body {
@@ -145,7 +145,7 @@ html {
   border-radius: inherit;
   padding: 1px;
   background:
-    radial-gradient(140px circle at var(--glow-x) var(--glow-y), hsl(var(--glow-color) / 0.75), transparent 70%) border-box;
+    radial-gradient(100px circle at var(--glow-x) var(--glow-y), hsl(var(--glow-color) / 0.75), transparent 70%) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -167,8 +167,8 @@ html {
 
 /* Dotted background for projects section */
 .dotted-bg {
-  background-image: radial-gradient(circle, hsl(var(--foreground) / 0.12) 1px, transparent 1px);
-  background-size: 16px 16px;
+  background-image: radial-gradient(circle, hsl(var(--foreground) / 0.15) 1px, transparent 1px);
+  background-size: 10px 10px;
 }
 
 /* Hide scrollbar but allow scrolling (used for textarea) */
