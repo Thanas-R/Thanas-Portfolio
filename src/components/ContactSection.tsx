@@ -146,7 +146,7 @@ const ContactSection = () => {
               {/* Enter guide stays on the right; visible on all sizes but compact on mobile */}
               <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
                 <span className="hidden sm:inline">Press</span>
-                <kbd className="px-2.5 py-1 rounded-md border border-border text-base font-mono bg-secondary/40">
+                <kbd className="px-2.5 py-1 rounded-md border border-border text-sm font-mono bg-secondary/40">
                   ↵ Enter
                 </kbd>
               </span>
