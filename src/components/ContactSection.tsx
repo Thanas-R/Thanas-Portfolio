@@ -146,7 +146,7 @@ const ContactSection = () => {
     text-foreground text-lg font-medium dark:font-semibold 
     placeholder:text-muted-foreground/70 placeholder:font-medium 
     focus:outline-none focus:ring-1 focus:ring-ring 
-    resize-y mb-6 min-h-[235px] overflow-auto scrollbar-hide"
+    resize-y mb-6 min-h-[222px] overflow-auto scrollbar-hide"
     required
   />
 
