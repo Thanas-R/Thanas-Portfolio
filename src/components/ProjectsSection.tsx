@@ -108,7 +108,7 @@ export const projects: Project[] = [
 
 // 4 projects shown on home page — scattered layout
 const homeProjects = projects.filter(p =>
-  ['nautilus', 'virdis', 'pesu-mc', 'askbookie'].includes(p.id)
+  ['nautilus', 'virdis', 'spheal', 'pesu-mc', 'askbookie', 'contour-flow'].includes(p.id)
 );
 
 // Preload ALL project images at module load
@@ -130,13 +130,10 @@ const ProjectsSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          <div className="flex items-end justify-between mb-6">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">Work</p>
-              <h2 className="text-3xl md:text-5xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
-                Projects
-              </h2>
-            </div>
+          <div className="flex items-end justify-between mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
+              Projects
+            </h2>
             <Link
               to="/projects"
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -145,56 +142,36 @@ const ProjectsSection = () => {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <p className="text-muted-foreground text-sm mb-10 max-w-md">
-            Below are some select projects, full walkthroughs on request
-          </p>
 
-          {/* Scattered overlapping layout */}
-          <div className="relative w-full" style={{ height: 'clamp(400px, 55vw, 620px)' }}>
-            {homeProjects.map((project, i) => {
-              const positions = [
-                { top: '0%', left: '0%', width: '52%', rotate: -2, zIndex: 2 },
-                { top: '5%', left: '48%', width: '54%', rotate: 1.5, zIndex: 3 },
-                { top: '45%', left: '2%', width: '50%', rotate: 1, zIndex: 1 },
-                { top: '42%', left: '46%', width: '52%', rotate: -1.5, zIndex: 4 },
-              ];
-              const pos = positions[i];
-              return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 30, rotate: 0 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.12 }}
-                  className="absolute group"
-                  style={{
-                    top: pos.top,
-                    left: pos.left,
-                    width: pos.width,
-                    zIndex: pos.zIndex,
-                  }}
-                >
-                  <Link to={`/projects/${project.id}`}>
-                    <div className="rounded-xl overflow-hidden border border-foreground/10 bg-card shadow-lg hover:shadow-xl transition-shadow duration-300 hover:scale-[1.02] transform transition-transform">
-                      <div className="aspect-[16/10] overflow-hidden">
-                        <img
-                          src={project.imageSrc}
-                          alt={project.title}
-                          className="w-full h-full object-cover"
-                          loading="eager"
-                          draggable={false}
-                        />
-                      </div>
-                      <div className="px-4 py-3 bg-card">
-                        <p className="text-sm font-bold text-foreground font-['Space_Grotesk'] truncate">
-                          {project.title}
-                        </p>
-                      </div>
+          {/* 3x2 grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {homeProjects.map((project, i) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+              >
+                <Link to={`/projects/${project.id}`}>
+                  <div className="rounded-xl overflow-hidden border border-foreground/10 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] relative group">
+                    <div className="aspect-[16/10] overflow-hidden relative">
+                      <img
+                        src={project.imageSrc}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                        draggable={false}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <p className="absolute bottom-2 left-3 text-sm font-bold font-['Space_Grotesk'] text-white dark:text-foreground drop-shadow-md">
+                        {project.title}
+                      </p>
                     </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
