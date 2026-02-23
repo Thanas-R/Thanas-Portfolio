@@ -111,7 +111,7 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 rounded-xl bg-[#F8F8F8] dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -169,13 +169,13 @@ const ContactSection = () => {
                     {link.icon}
                   </div>
 
-                  <span className="text-base font-semibold text-muted-foreground">
+                  <span className="text-lg font-semibold text-muted-foreground">
                     {link.label}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  <span className="text-base font-medium text-muted-foreground">
+                  <span className="text-lg font-medium text-muted-foreground">
                     {link.value}
                   </span>
                   <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
