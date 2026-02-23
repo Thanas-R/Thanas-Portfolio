@@ -106,20 +106,29 @@ export const projects: Project[] = [
   },
 ];
 
-// 6 projects shown on home page — scattered browser-frame layout
+// 6 projects on homepage — scattered overlapping layout like the reference
 const homeProjects = projects.filter(p =>
-  ['nautilus', 'virdis', 'pesu-mc', 'askbookie', 'spheal', 'contour-flow'].includes(p.id)
+  ['nautilus', 'virdis', 'pesu-mc', 'askbookie', 'thanas-os', 'smart-chef'].includes(p.id)
 );
 
-// Scattered positions for pairs in each row (left card, right card)
-const scatterStyles = [
-  { rotate: -2, translateY: 0, marginTop: 0 },
-  { rotate: 1.5, translateY: 14, marginTop: 8 },
-  { rotate: 1, translateY: -6, marginTop: 0 },
-  { rotate: -1, translateY: 10, marginTop: 12 },
-  { rotate: -1.5, translateY: 4, marginTop: 0 },
-  { rotate: 2, translateY: -8, marginTop: 6 },
+// Absolute positions for scattered overlapping 2-col, 3-row layout
+// Each card: top, left, width, rotate, zIndex
+const cardPositions = [
+  { top: '0%', left: '0%', width: '54%', rotate: -2, zIndex: 2 },
+  { top: '3%', left: '46%', width: '56%', rotate: 1.5, zIndex: 3 },
+  { top: '34%', left: '-2%', width: '52%', rotate: 1.2, zIndex: 1 },
+  { top: '32%', left: '48%', width: '54%', rotate: -1, zIndex: 4 },
+  { top: '64%', left: '2%', width: '50%', rotate: -1.5, zIndex: 2 },
+  { top: '66%', left: '50%', width: '52%', rotate: 1.8, zIndex: 3 },
 ];
+
+// Preload ALL project images at module load
+const preloadedImages: HTMLImageElement[] = projects.map((p) => {
+  const img = new Image();
+  img.src = p.imageSrc;
+  return img;
+});
+void preloadedImages;
 
 const ProjectsSection = () => {
   return (
@@ -145,35 +154,27 @@ const ProjectsSection = () => {
             </Link>
           </div>
 
-          {/* 2-col scattered browser-frame cards, 3 rows */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+          {/* Scattered overlapping layout */}
+          <div className="relative w-full" style={{ height: 'clamp(680px, 90vw, 960px)' }}>
             {homeProjects.map((project, i) => {
-              const style = scatterStyles[i];
+              const pos = cardPositions[i];
               return (
                 <motion.div
                   key={project.id}
-                  initial={{ opacity: 0, y: 30, rotate: 0 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: style.rotate }}
+                  initial={{ opacity: 0, y: 40, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: i * 0.1 }}
-                  style={{ marginTop: style.marginTop }}
+                  className="absolute"
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    width: pos.width,
+                    zIndex: pos.zIndex,
+                  }}
                 >
                   <Link to={`/projects/${project.id}`} className="block group">
-                    {/* Browser frame */}
-                    <div
-                      className="rounded-xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]"
-                      style={{ transform: `translateY(${style.translateY}px)` }}
-                    >
-                      {/* Browser chrome bar */}
-                      <div className="flex items-center gap-1.5 px-3 py-2 bg-muted/60 border-b border-foreground/5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
-                        <span className="ml-2 text-[10px] text-muted-foreground/50 truncate flex-1">
-                          {project.live || project.github || project.title.toLowerCase()}
-                        </span>
-                      </div>
-                      {/* Screenshot */}
+                    <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
                       <div className="aspect-[16/10] overflow-hidden">
                         <img
                           src={project.imageSrc}
@@ -184,8 +185,7 @@ const ProjectsSection = () => {
                         />
                       </div>
                     </div>
-                    {/* Title below card */}
-                    <p className="mt-3 text-sm font-semibold text-foreground font-['Space_Grotesk']">
+                    <p className="mt-2.5 text-sm font-semibold text-foreground font-['Space_Grotesk']">
                       {project.title}
                     </p>
                   </Link>
