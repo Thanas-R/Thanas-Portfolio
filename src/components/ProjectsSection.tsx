@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 import projectPesuMC from '@/assets/project-pesumc.png';
 import projectAskbookie from '@/assets/project-askbookie.png';
@@ -106,23 +107,11 @@ export const projects: Project[] = [
   },
 ];
 
-// 6 projects on homepage — scattered overlapping layout like the reference
 const homeProjects = projects.filter(p =>
   ['nautilus', 'virdis', 'pesu-mc', 'askbookie', 'thanas-os', 'smart-chef'].includes(p.id)
 );
 
-// Absolute positions for scattered overlapping 2-col, 3-row layout
-// Each card: top, left, width, rotate, zIndex
-const cardPositions = [
-  { top: '0%', left: '0%', width: '54%', rotate: -2, zIndex: 2 },
-  { top: '3%', left: '46%', width: '56%', rotate: 1.5, zIndex: 3 },
-  { top: '34%', left: '-2%', width: '52%', rotate: 1.2, zIndex: 1 },
-  { top: '32%', left: '48%', width: '54%', rotate: -1, zIndex: 4 },
-  { top: '64%', left: '2%', width: '50%', rotate: -1.5, zIndex: 2 },
-  { top: '66%', left: '50%', width: '52%', rotate: 1.8, zIndex: 3 },
-];
-
-// Preload ALL project images at module load
+// Preload images
 const preloadedImages: HTMLImageElement[] = projects.map((p) => {
   const img = new Image();
   img.src = p.imageSrc;
@@ -130,7 +119,141 @@ const preloadedImages: HTMLImageElement[] = projects.map((p) => {
 });
 void preloadedImages;
 
+// Scattered card config for desktop (2-col overlapping album style)
+// rotate, x offset %, y offset px, zIndex
+const scatterConfig = [
+  { rotate: -6, xOff: '-8%', yOff: 0, z: 3 },
+  { rotate: 4, xOff: '8%', yOff: 20, z: 2 },
+  { rotate: 3, xOff: '-4%', yOff: -10, z: 4 },
+  { rotate: -5, xOff: '6%', yOff: 30, z: 1 },
+  { rotate: -3, xOff: '-6%', yOff: 0, z: 5 },
+  { rotate: 7, xOff: '10%', yOff: 15, z: 2 },
+];
+
+const cardVariants: Variants = {
+  initial: { opacity: 0, y: 50, rotate: 0 },
+  animate: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotate: scatterConfig[i].rotate,
+    transition: {
+      type: 'spring',
+      stiffness: 120,
+      damping: 14,
+      delay: i * 0.12,
+    },
+  }),
+};
+
+const getProjectLink = (project: Project) => project.live || project.github || `/projects/${project.id}`;
+const isExternal = (project: Project) => !!(project.live || project.github);
+
+const ProjectCard = ({ project, index, isMobile }: { project: Project; index: number; isMobile: boolean }) => {
+  const link = getProjectLink(project);
+  const external = isExternal(project);
+
+  if (isMobile) {
+    // Simple tile on mobile
+    const linkProps = external
+      ? { as: 'a' as const, href: link, target: '_blank', rel: 'noopener noreferrer' }
+      : {};
+
+    const Wrapper = external ? 'a' : Link;
+    const wrapperProps = external
+      ? { href: link, target: '_blank', rel: 'noopener noreferrer' }
+      : { to: `/projects/${project.id}` };
+
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: index * 0.08 }}
+      >
+        {/* @ts-ignore */}
+        <Wrapper {...wrapperProps} className="block group">
+          <div className="rounded-xl overflow-hidden bg-card border border-foreground/10 shadow-lg">
+            <div className="aspect-[16/10] overflow-hidden relative">
+              <img
+                src={project.imageSrc}
+                alt={project.title}
+                className="w-full h-full object-cover"
+                loading="eager"
+                draggable={false}
+              />
+              {/* Title overlay */}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-3 pt-8">
+                <p className="text-white text-sm font-semibold font-['Space_Grotesk']">
+                  {project.title}
+                </p>
+              </div>
+            </div>
+          </div>
+        </Wrapper>
+      </motion.div>
+    );
+  }
+
+  // Desktop: scattered album card
+  const scatter = scatterConfig[index];
+
+  return (
+    <motion.div
+      custom={index}
+      variants={cardVariants}
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, margin: '-60px' }}
+      whileHover={{
+        rotate: 0,
+        y: -8,
+        scale: 1.04,
+        zIndex: 50,
+        transition: { type: 'spring', stiffness: 200, damping: 15 },
+      }}
+      style={{
+        zIndex: scatter.z,
+        marginLeft: scatter.xOff,
+        marginTop: scatter.yOff,
+      }}
+      className="cursor-pointer"
+    >
+      {external ? (
+        <a href={link} target="_blank" rel="noopener noreferrer" className="block group">
+          <CardInner project={project} />
+        </a>
+      ) : (
+        <Link to={`/projects/${project.id}`} className="block group">
+          <CardInner project={project} />
+        </Link>
+      )}
+    </motion.div>
+  );
+};
+
+const CardInner = ({ project }: { project: Project }) => (
+  <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-2xl transition-shadow duration-300 group-hover:shadow-[0_20px_60px_-10px_rgba(0,0,0,0.35)]">
+    <div className="aspect-[16/10] overflow-hidden relative">
+      <img
+        src={project.imageSrc}
+        alt={project.title}
+        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+        loading="eager"
+        draggable={false}
+      />
+      {/* Title overlay on image */}
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent p-4 pt-10">
+        <p className="text-white text-base font-semibold font-['Space_Grotesk'] drop-shadow-md">
+          {project.title}
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
 const ProjectsSection = () => {
+  const isMobile = useIsMobile();
+
   return (
     <section id="projects" className="relative py-20 overflow-hidden">
       <div className="dotted-bg absolute inset-0" />
@@ -154,45 +277,21 @@ const ProjectsSection = () => {
             </Link>
           </div>
 
-          {/* Scattered overlapping layout */}
-          <div className="relative w-full" style={{ height: 'clamp(680px, 90vw, 960px)' }}>
-            {homeProjects.map((project, i) => {
-              const pos = cardPositions[i];
-              return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 40, rotate: 0 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="absolute"
-                  style={{
-                    top: pos.top,
-                    left: pos.left,
-                    width: pos.width,
-                    zIndex: pos.zIndex,
-                  }}
-                >
-                  <Link to={`/projects/${project.id}`} className="block group">
-                    <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
-                      <div className="aspect-[16/10] overflow-hidden">
-                        <img
-                          src={project.imageSrc}
-                          alt={project.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          loading="eager"
-                          draggable={false}
-                        />
-                      </div>
-                    </div>
-                    <p className="mt-2.5 text-sm font-semibold text-foreground font-['Space_Grotesk']">
-                      {project.title}
-                    </p>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
+          {isMobile ? (
+            /* Mobile: simple 2-col grid tiles */
+            <div className="grid grid-cols-2 gap-3">
+              {homeProjects.map((project, i) => (
+                <ProjectCard key={project.id} project={project} index={i} isMobile />
+              ))}
+            </div>
+          ) : (
+            /* Desktop: scattered album overlapping layout */
+            <div className="grid grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-8">
+              {homeProjects.map((project, i) => (
+                <ProjectCard key={project.id} project={project} index={i} isMobile={false} />
+              ))}
+            </div>
+          )}
         </motion.div>
       </div>
     </section>
