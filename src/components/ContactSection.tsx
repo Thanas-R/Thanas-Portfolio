@@ -103,51 +103,52 @@ const ContactSection = () => {
             You can contact me using the form or via the links below.
           </p>
 
-          {/* form */}
-          <form onSubmit={handleSubmit} className="mb-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <input
-                type="text"
-                placeholder="Name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-className="w-full px-5 py-4 rounded-xl 
-bg-[#F8F8F8] dark:bg-secondary/30 
-border border-[#F8F8F8] dark:border-border
-text-foreground text-lg font-medium dark:font-semibold 
-placeholder:text-muted-foreground/70 placeholder:font-medium 
-focus:outline-none focus:ring-1 focus:ring-ring"                
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-className="w-full px-5 py-4 rounded-xl 
-bg-secondary/50 dark:bg-secondary/30 
-border border-secondary/50 dark:border-border
-text-foreground text-lg font-medium dark:font-semibold 
-placeholder:text-muted-foreground/70 placeholder:font-medium 
-focus:outline-none focus:ring-1 focus:ring-ring"                
-                required
-              />
-            </div>
+{/* form */}
+<form onSubmit={handleSubmit} className="mb-10">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <input
+      type="text"
+      placeholder="Name"
+      value={form.name}
+      onChange={(e) => setForm({ ...form, name: e.target.value })}
+      className="w-full px-5 py-4 rounded-xl 
+      bg-[#F8F8F8] dark:bg-secondary/30 
+      border border-[#F6F6F6] dark:border-border
+      text-foreground text-lg font-medium dark:font-semibold 
+      placeholder:text-muted-foreground/70 placeholder:font-medium 
+      focus:outline-none focus:ring-1 focus:ring-ring"
+      required
+    />
 
-            <textarea
-              placeholder="Message"
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              onKeyDown={handleKeyDown}
-className="w-full px-5 py-5 rounded-xl 
-bg-secondary/50 dark:bg-secondary/30 
-border border-secondary/50 dark:border-border
-text-foreground text-lg font-medium dark:font-semibold 
-placeholder:text-muted-foreground/70 placeholder:font-medium 
-focus:outline-none focus:ring-1 focus:ring-ring 
-resize-y mb-6 min-h-[235px] overflow-auto scrollbar-hide"              
-              required
-            />
+    <input
+      type="email"
+      placeholder="Email"
+      value={form.email}
+      onChange={(e) => setForm({ ...form, email: e.target.value })}
+      className="w-full px-5 py-4 rounded-xl 
+      bg-secondary/50 dark:bg-secondary/30 
+      border border-[#F6F6F6] dark:border-border
+      text-foreground text-lg font-medium dark:font-semibold 
+      placeholder:text-muted-foreground/70 placeholder:font-medium 
+      focus:outline-none focus:ring-1 focus:ring-ring"
+      required
+    />
+  </div>
+
+  <textarea
+    placeholder="Message"
+    value={form.message}
+    onChange={(e) => setForm({ ...form, message: e.target.value })}
+    onKeyDown={handleKeyDown}
+    className="w-full px-5 py-5 rounded-xl 
+    bg-secondary/50 dark:bg-secondary/30 
+    border border-[#F6F6F6] dark:border-border
+    text-foreground text-lg font-medium dark:font-semibold 
+    placeholder:text-muted-foreground/70 placeholder:font-medium 
+    focus:outline-none focus:ring-1 focus:ring-ring 
+    resize-y mb-6 min-h-[235px] overflow-auto scrollbar-hide"
+    required
+  />
 
             {/* Button LEFT + Enter hint RIGHT */}
             <div className="flex items-center justify-between gap-4">
