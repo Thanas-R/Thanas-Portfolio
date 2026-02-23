@@ -104,7 +104,7 @@ const ContactSection = () => {
           </p>
 
 {/* form */}
-<form onSubmit={handleSubmit} className="mb-8">
+<form onSubmit={handleSubmit} className="mb-7">
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
     <input
       type="text"
