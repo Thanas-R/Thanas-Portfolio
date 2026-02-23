@@ -111,7 +111,7 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-5 py-5 rounded-xl bg-[#F8F8F8] dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-5 py-6 rounded-xl bg-[#F8F8F8] dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -138,7 +138,7 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={sending}
-                className="px-8 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="px-6 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {sending ? 'Sending...' : 'Send message'}
               </button>
