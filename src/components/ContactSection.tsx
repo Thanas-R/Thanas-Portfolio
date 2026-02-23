@@ -93,13 +93,13 @@ const ContactSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          {/* slightly reduced heading size */}
+          {/* heading slightly smaller */}
           <p className="text-sm md:text-base font-semibold uppercase tracking-widest text-muted-foreground mb-3">
             Contact
           </p>
 
-          {/* bold but a bit lighter in color */}
-          <p className="text-lg md:text-xl font-semibold text-foreground/60 mb-8 md:whitespace-nowrap">
+          {/* paragraph — bold but a bit lighter in color */}
+          <p className="text-lg md:text-xl font-semibold text-foreground/70 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
@@ -111,7 +111,7 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -119,7 +119,7 @@ const ContactSection = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
             </div>
@@ -129,7 +129,7 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
+              className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[160px] overflow-auto scrollbar-hide"
               required
             />
 
@@ -138,12 +138,12 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={sending}
-                className="px-8 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="px-6 py-2 rounded-full bg-foreground text-background text-sm md:text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {sending ? 'Sending...' : 'Send message'}
               </button>
 
-              {/* Enter guide stays on the right; visible on all sizes but compact on mobile */}
+              {/* Enter guide stays on the right */}
               <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
                 <span className="hidden sm:inline">Press</span>
                 <kbd className="px-2.5 py-1 rounded-md border border-border text-xs font-mono bg-secondary/40">
@@ -153,8 +153,8 @@ const ContactSection = () => {
             </div>
           </form>
 
-          {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
-          <div className="pt-2 space-y-1">
+          {/* socials — plain icons, tightened spacing, matching text sizes */}
+          <div className="pt-2 space-y-0">
             {contactLinks.map((link) => (
               <a
                 key={link.label}
@@ -175,7 +175,7 @@ const ContactSection = () => {
                 </div>
 
                 <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  <span className="text-lg font-medium text-muted-foreground">
+                  <span className="text-base font-medium text-muted-foreground">
                     {link.value}
                   </span>
                   <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
