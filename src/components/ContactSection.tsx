@@ -111,7 +111,12 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-[#F8F8F8] dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+className="w-full px-5 py-4 rounded-xl 
+bg-[#F8F8F8] dark:bg-secondary/30 
+border border-[#F8F8F8] dark:border-border
+text-foreground text-lg font-medium dark:font-semibold 
+placeholder:text-muted-foreground/70 placeholder:font-medium 
+focus:outline-none focus:ring-1 focus:ring-ring"                
                 required
               />
               <input
@@ -119,7 +124,12 @@ const ContactSection = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+className="w-full px-5 py-4 rounded-xl 
+bg-secondary/50 dark:bg-secondary/30 
+border border-secondary/50 dark:border-border
+text-foreground text-lg font-medium dark:font-semibold 
+placeholder:text-muted-foreground/70 placeholder:font-medium 
+focus:outline-none focus:ring-1 focus:ring-ring"                
                 required
               />
             </div>
@@ -129,7 +139,13 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[235px] overflow-auto scrollbar-hide"
+className="w-full px-5 py-5 rounded-xl 
+bg-secondary/50 dark:bg-secondary/30 
+border border-secondary/50 dark:border-border
+text-foreground text-lg font-medium dark:font-semibold 
+placeholder:text-muted-foreground/70 placeholder:font-medium 
+focus:outline-none focus:ring-1 focus:ring-ring 
+resize-y mb-6 min-h-[235px] overflow-auto scrollbar-hide"              
               required
             />
 
