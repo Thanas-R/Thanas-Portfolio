@@ -154,7 +154,7 @@ const ContactSection = () => {
           </form>
 
           {/* socials — increased size, contrast and spacing */}
-          <div className="pt-4 space-y-2">
+          <div className="pt-4 space-y-1.2">
             {contactLinks.map((link) => (
               <a
                 key={link.label}
