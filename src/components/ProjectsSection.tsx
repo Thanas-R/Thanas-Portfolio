@@ -142,18 +142,15 @@ void preloadedImages;
 const ProjectsSection = () => {
   return (
     <section id="projects" className="relative py-20 overflow-hidden">
-      {/* FULL-WIDTH dotted background (edge-to-edge) */}
-      <div className="absolute left-0 right-0 inset-y-0 dotted-bg pointer-events-none z-0" />
-
+      {/* Header container (centered). Dots are intentionally NOT covering this */}
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         <motion.div
-          initial={{ y: 40, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, margin: '-120px' }}
+          transition={{ duration: 0.6 }}
         >
-          {/* Header */}
-          <div className="flex items-end justify-between mb-12">
+          <div className="flex items-end justify-between mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
               Projects
             </h2>
@@ -166,86 +163,100 @@ const ProjectsSection = () => {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-
-          {/* ========================= */}
-          {/* MOBILE LAYOUT (Stacked cards) */}
-          {/* ========================= */}
-          <div className="md:hidden flex flex-col gap-6">
-            {homeProjects.map((project) => (
-              <Link
-                key={project.id}
-                to={`/projects/${project.id}`}
-                className="block group"
-                aria-label={`View ${project.title} project`}
-              >
-                <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={project.imageSrc}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="eager"
-                      draggable={false}
-                    />
-                  </div>
-
-                  <div className="p-4">
-                    <p className="text-sm font-medium text-foreground">
-                      {project.description}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          {/* ========================= */}
-          {/* DESKTOP SCATTERED LAYOUT */}
-          {/* ========================= */}
-          <div
-            className="hidden md:block relative w-full"
-            style={{ height: 'clamp(680px, 90vw, 960px)' }}
-          >
-            {homeProjects.map((project, i) => {
-              const pos = cardPositions[i];
-
-              return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 40, rotate: 0 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="absolute"
-                  style={{
-                    top: pos.top,
-                    left: pos.left,
-                    width: pos.width,
-                    zIndex: pos.zIndex,
-                  }}
-                >
-                  <Link
-                    to={`/projects/${project.id}`}
-                    className="block group"
-                    aria-label={`View ${project.title} project`}
-                  >
-                    <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
-                      <div className="aspect-[16/10] overflow-hidden">
-                        <img
-                          src={project.imageSrc}
-                          alt={project.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          loading="eager"
-                          draggable={false}
-                        />
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
         </motion.div>
+      </div>
+
+      {/* FULL-WIDTH dotted area that starts AFTER the header.
+          It spans edge-to-edge, but the visible cards/content will be centered inside the max-w container below.
+      */}
+      <div className="w-full relative">
+        {/* dotted background spans full width of page but is placed in this block so it doesn't cover the header */}
+        <div className="absolute inset-0 dotted-bg pointer-events-none z-0" />
+
+        {/* content centered above dots */}
+        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-6">
+          <motion.div
+            initial={{ y: 12, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* MOBILE: stacked card layout */}
+            <div className="md:hidden flex flex-col gap-6">
+              {homeProjects.map((project) => (
+                <Link
+                  key={project.id}
+                  to={`/projects/${project.id}`}
+                  className="block group"
+                  aria-label={`View ${project.title} project`}
+                >
+                  <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div className="aspect-[16/10] overflow-hidden">
+                      <img
+                        src={project.imageSrc}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="eager"
+                        draggable={false}
+                      />
+                    </div>
+
+                    {/* Mobile "chin": only project NAME, using Quicksand */}
+                    <div className="p-4">
+                      <p className="text-sm font-medium text-foreground font-['Quicksand']">
+                        {project.title}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* DESKTOP: scattered overlapping layout (keeps centered) */}
+            <div
+              className="hidden md:block relative w-full"
+              style={{ height: 'clamp(680px, 90vw, 960px)' }}
+            >
+              {homeProjects.map((project, i) => {
+                const pos = cardPositions[i];
+                return (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 40, rotate: 0 }}
+                    whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.08 }}
+                    className="absolute"
+                    style={{
+                      top: pos.top,
+                      left: pos.left,
+                      width: pos.width,
+                      zIndex: pos.zIndex,
+                    }}
+                  >
+                    <Link
+                      to={`/projects/${project.id}`}
+                      className="block group"
+                      aria-label={`View ${project.title} project`}
+                    >
+                      <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
+                        <div className="aspect-[16/10] overflow-hidden">
+                          <img
+                            src={project.imageSrc}
+                            alt={project.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="eager"
+                            draggable={false}
+                          />
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
