@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 import projectPesuMC from '@/assets/project-pesumc.png';
 import projectAskbookie from '@/assets/project-askbookie.png';
@@ -107,11 +106,23 @@ export const projects: Project[] = [
   },
 ];
 
+// 6 projects on homepage — scattered overlapping layout like the reference
 const homeProjects = projects.filter(p =>
   ['nautilus', 'virdis', 'pesu-mc', 'askbookie', 'thanas-os', 'smart-chef'].includes(p.id)
 );
 
-// Preload images
+// Absolute positions for scattered overlapping 2-col, 3-row layout
+// Each card: top, left, width, rotate, zIndex
+const cardPositions = [
+  { top: '0%', left: '0%', width: '54%', rotate: -2, zIndex: 2 },
+  { top: '3%', left: '46%', width: '56%', rotate: 1.5, zIndex: 3 },
+  { top: '34%', left: '-2%', width: '52%', rotate: 1.2, zIndex: 1 },
+  { top: '32%', left: '48%', width: '54%', rotate: -1, zIndex: 4 },
+  { top: '64%', left: '2%', width: '50%', rotate: -1.5, zIndex: 2 },
+  { top: '66%', left: '50%', width: '52%', rotate: 1.8, zIndex: 3 },
+];
+
+// Preload ALL project images at module load
 const preloadedImages: HTMLImageElement[] = projects.map((p) => {
   const img = new Image();
   img.src = p.imageSrc;
@@ -119,39 +130,18 @@ const preloadedImages: HTMLImageElement[] = projects.map((p) => {
 });
 void preloadedImages;
 
-// Scattered positions for the 6 cards in absolute layout (2 per row, 3 rows)
-// Each card is ~48% wide. We offset x/y and rotate for the album overlap feel.
-// Cards overlap vertically between rows.
-const cardLayout = [
-  // Row 1
-  { left: '1%',  top: '0px',   rotate: -6,  z: 3 },
-  { left: '48%', top: '30px',  rotate: 4,   z: 2 },
-  // Row 2
-  { left: '3%',  top: '260px', rotate: 5,   z: 4 },
-  { left: '46%', top: '240px', rotate: -4,  z: 5 },
-  // Row 3
-  { left: '0%',  top: '490px', rotate: -3,  z: 2 },
-  { left: '50%', top: '510px', rotate: 6,   z: 3 },
-];
-
-const getProjectLink = (project: Project) => project.live || project.github || `/projects/${project.id}`;
-const isExternal = (project: Project) => !!(project.live || project.github);
-
 const ProjectsSection = () => {
-  const isMobile = useIsMobile();
-
   return (
-    <section id="projects" className="relative py-16 overflow-hidden">
+    <section id="projects" className="relative py-20 overflow-hidden">
+      <div className="dotted-bg absolute inset-0" />
       <div className="relative z-10 max-w-5xl mx-auto px-6">
-        {/* Header — outside dotted bg */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="mb-8"
         >
-          <div className="flex items-end justify-between">
+          <div className="flex items-end justify-between mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
               Projects
             </h2>
@@ -163,133 +153,50 @@ const ProjectsSection = () => {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+
+          {/* Scattered overlapping layout */}
+          <div className="relative w-full" style={{ height: 'clamp(680px, 90vw, 960px)' }}>
+            {homeProjects.map((project, i) => {
+              const pos = cardPositions[i];
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 40, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="absolute"
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    width: pos.width,
+                    zIndex: pos.zIndex,
+                  }}
+                >
+                  <Link to={`/projects/${project.id}`} className="block group">
+                    <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
+                      <div className="aspect-[16/10] overflow-hidden">
+                        <img
+                          src={project.imageSrc}
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="eager"
+                          draggable={false}
+                        />
+                      </div>
+                    </div>
+                    <p className="mt-2.5 text-sm font-semibold text-foreground font-['Space_Grotesk']">
+                      {project.title}
+                    </p>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
         </motion.div>
-
-        {/* Cards area — dotted bg wraps only this */}
-        <div className="relative">
-          {/* Dotted background — only behind cards */}
-          <div className="dotted-bg absolute inset-0 -mx-6 rounded-2xl" style={{ top: '-16px', bottom: '-16px' }} />
-
-          {isMobile ? (
-            /* ── MOBILE: simple single-column tiles, no effects ── */
-            <div className="relative z-10 flex flex-col gap-4">
-              {homeProjects.map((project, i) => {
-                const link = getProjectLink(project);
-                const ext = isExternal(project);
-                return (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.06 }}
-                  >
-                    {ext ? (
-                      <a href={link} target="_blank" rel="noopener noreferrer" className="block">
-                        <MobileCard project={project} />
-                      </a>
-                    ) : (
-                      <Link to={`/projects/${project.id}`} className="block">
-                        <MobileCard project={project} />
-                      </Link>
-                    )}
-                  </motion.div>
-                );
-              })}
-            </div>
-          ) : (
-            /* ── DESKTOP: scattered overlapping album ── */
-            <div className="relative z-10" style={{ height: '780px' }}>
-              {homeProjects.map((project, i) => {
-                const pos = cardLayout[i];
-                const link = getProjectLink(project);
-                const ext = isExternal(project);
-
-                return (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 50, rotate: 0 }}
-                    whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
-                    viewport={{ once: true, margin: '-40px' }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 110,
-                      damping: 14,
-                      delay: i * 0.1,
-                    }}
-                    whileHover={{
-                      rotate: 0,
-                      scale: 1.05,
-                      zIndex: 50,
-                      transition: { type: 'spring', stiffness: 200, damping: 15 },
-                    }}
-                    className="absolute cursor-pointer"
-                    style={{
-                      left: pos.left,
-                      top: pos.top,
-                      width: '48%',
-                      zIndex: pos.z,
-                    }}
-                  >
-                    {ext ? (
-                      <a href={link} target="_blank" rel="noopener noreferrer" className="block group">
-                        <DesktopCard project={project} />
-                      </a>
-                    ) : (
-                      <Link to={`/projects/${project.id}`} className="block group">
-                        <DesktopCard project={project} />
-                      </Link>
-                    )}
-                  </motion.div>
-                );
-              })}
-            </div>
-          )}
-        </div>
       </div>
     </section>
   );
 };
-
-/* ── Desktop album card ── */
-const DesktopCard = ({ project }: { project: Project }) => (
-  <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-2xl group-hover:shadow-[0_25px_60px_-12px_rgba(0,0,0,0.4)] transition-shadow duration-300">
-    <div className="aspect-[16/10] overflow-hidden relative">
-      <img
-        src={project.imageSrc}
-        alt={project.title}
-        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
-        loading="eager"
-        draggable={false}
-      />
-      {/* Title inside image */}
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 via-black/30 to-transparent px-4 pb-3 pt-10">
-        <p className="text-white text-sm font-bold font-['Space_Grotesk'] drop-shadow-lg">
-          {project.title}
-        </p>
-      </div>
-    </div>
-  </div>
-);
-
-/* ── Mobile simple card ── */
-const MobileCard = ({ project }: { project: Project }) => (
-  <div className="rounded-xl overflow-hidden bg-card border border-foreground/10 shadow-md">
-    <div className="aspect-[16/10] overflow-hidden relative">
-      <img
-        src={project.imageSrc}
-        alt={project.title}
-        className="w-full h-full object-cover"
-        loading="eager"
-        draggable={false}
-      />
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 via-black/25 to-transparent px-3 pb-2.5 pt-8">
-        <p className="text-white text-sm font-semibold font-['Space_Grotesk']">
-          {project.title}
-        </p>
-      </div>
-    </div>
-  </div>
-);
 
 export default ProjectsSection;
