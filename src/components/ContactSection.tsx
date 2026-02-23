@@ -100,7 +100,7 @@ const ContactSection = () => {
             You can contact me using the form or via the links below.
           </p>
 
-          {/* Reduced space here */}
+          {/* Reduced spacing here */}
           <form onSubmit={handleSubmit} className="mb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <input
@@ -130,7 +130,8 @@ const ContactSection = () => {
               required
             />
 
-            <div className="flex justify-end">
+            {/* Button LEFT + Enter hint RIGHT */}
+            <div className="flex items-center justify-between">
               <button
                 type="submit"
                 disabled={sending}
@@ -138,6 +139,13 @@ const ContactSection = () => {
               >
                 {sending ? 'Sending...' : 'Send message'}
               </button>
+
+              <span className="hidden sm:flex text-sm text-foreground/60 items-center gap-2">
+                Press
+                <kbd className="px-3 py-1.5 rounded-md border border-border text-xs font-mono bg-secondary/40">
+                  ↵ Enter
+                </kbd>
+              </span>
             </div>
           </form>
 
