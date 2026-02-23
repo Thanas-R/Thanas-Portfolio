@@ -93,8 +93,8 @@ const ContactSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          {/* bigger heading */}
-          <p className="text-base md:text-lg font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+          {/* slightly reduced heading size */}
+          <p className="text-sm md:text-base font-semibold uppercase tracking-widest text-muted-foreground mb-3">
             Contact
           </p>
 
@@ -111,7 +111,7 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/70 placeholder:font-semibold focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -119,7 +119,7 @@ const ContactSection = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/70 placeholder:font-semibold focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
             </div>
@@ -129,7 +129,7 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
+              className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/70 placeholder:font-semibold focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[180px] overflow-auto scrollbar-hide"
               required
             />
 
@@ -138,7 +138,7 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={sending}
-                className="px-7 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="px-6 py-3 rounded-xl bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {sending ? 'Sending...' : 'Send message'}
               </button>
@@ -153,7 +153,7 @@ const ContactSection = () => {
             </div>
           </form>
 
-          {/* socials — reduced vertical gap, arrow changed to up-right */}
+          {/* socials — slightly bigger, bolder and higher contrast in dark mode */}
           <div className="pt-2 space-y-0">
             {contactLinks.map((link) => (
               <a
@@ -163,13 +163,19 @@ const ContactSection = () => {
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="flex items-center justify-between py-3 group"
               >
-                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  {link.icon}
-                  <span className="text-base font-medium">{link.label}</span>
+                <div className="flex items-center gap-3 text-foreground/70 dark:text-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center justify-center text-foreground/70 dark:text-foreground">
+                    {link.icon}
+                  </div>
+                  <span className="text-base md:text-base font-semibold">
+                    {link.label}
+                  </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
-                  <span className="text-base">{link.value}</span>
+                <div className="flex items-center gap-2 text-foreground/60 dark:text-foreground group-hover:text-foreground transition-colors">
+                  <span className="text-base md:text-base font-medium text-foreground/60 dark:text-foreground">
+                    {link.value}
+                  </span>
                   <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </div>
               </a>
