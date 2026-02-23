@@ -106,18 +106,20 @@ export const projects: Project[] = [
   },
 ];
 
-// 4 projects shown on home page — scattered layout
+// 6 projects shown on home page — scattered browser-frame layout
 const homeProjects = projects.filter(p =>
-  ['nautilus', 'virdis', 'spheal', 'pesu-mc', 'askbookie', 'contour-flow'].includes(p.id)
+  ['nautilus', 'virdis', 'pesu-mc', 'askbookie', 'spheal', 'contour-flow'].includes(p.id)
 );
 
-// Preload ALL project images at module load
-const preloadedImages: HTMLImageElement[] = projects.map((p) => {
-  const img = new Image();
-  img.src = p.imageSrc;
-  return img;
-});
-void preloadedImages;
+// Scattered positions for pairs in each row (left card, right card)
+const scatterStyles = [
+  { rotate: -2, translateY: 0, marginTop: 0 },
+  { rotate: 1.5, translateY: 14, marginTop: 8 },
+  { rotate: 1, translateY: -6, marginTop: 0 },
+  { rotate: -1, translateY: 10, marginTop: 12 },
+  { rotate: -1.5, translateY: 4, marginTop: 0 },
+  { rotate: 2, translateY: -8, marginTop: 6 },
+];
 
 const ProjectsSection = () => {
   return (
@@ -130,7 +132,7 @@ const ProjectsSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          <div className="flex items-end justify-between mb-8">
+          <div className="flex items-end justify-between mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
               Projects
             </h2>
@@ -143,35 +145,53 @@ const ProjectsSection = () => {
             </Link>
           </div>
 
-          {/* 3x2 grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {homeProjects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-              >
-                <Link to={`/projects/${project.id}`}>
-                  <div className="rounded-xl overflow-hidden border border-foreground/10 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] relative group">
-                    <div className="aspect-[16/10] overflow-hidden relative">
-                      <img
-                        src={project.imageSrc}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                        loading="eager"
-                        draggable={false}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      <p className="absolute bottom-2 left-3 text-sm font-bold font-['Space_Grotesk'] text-white dark:text-foreground drop-shadow-md">
-                        {project.title}
-                      </p>
+          {/* 2-col scattered browser-frame cards, 3 rows */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+            {homeProjects.map((project, i) => {
+              const style = scatterStyles[i];
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: style.rotate }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  style={{ marginTop: style.marginTop }}
+                >
+                  <Link to={`/projects/${project.id}`} className="block group">
+                    {/* Browser frame */}
+                    <div
+                      className="rounded-xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]"
+                      style={{ transform: `translateY(${style.translateY}px)` }}
+                    >
+                      {/* Browser chrome bar */}
+                      <div className="flex items-center gap-1.5 px-3 py-2 bg-muted/60 border-b border-foreground/5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+                        <span className="ml-2 text-[10px] text-muted-foreground/50 truncate flex-1">
+                          {project.live || project.github || project.title.toLowerCase()}
+                        </span>
+                      </div>
+                      {/* Screenshot */}
+                      <div className="aspect-[16/10] overflow-hidden">
+                        <img
+                          src={project.imageSrc}
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="eager"
+                          draggable={false}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                    {/* Title below card */}
+                    <p className="mt-3 text-sm font-semibold text-foreground font-['Space_Grotesk']">
+                      {project.title}
+                    </p>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       </div>
