@@ -129,7 +129,7 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[250px] overflow-auto scrollbar-hide"
+              className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[235px] overflow-auto scrollbar-hide"
               required
             />
 
