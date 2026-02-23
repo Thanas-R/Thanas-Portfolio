@@ -133,6 +133,10 @@ void preloadedImages;
 const ProjectsSection = () => {
   return (
     <section id="projects" className="relative py-20 overflow-hidden">
+      
+      {/* FULL WIDTH dotted background */}
+      <div className="absolute inset-0 dotted-bg pointer-events-none z-0" />
+
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
@@ -141,7 +145,7 @@ const ProjectsSection = () => {
           transition={{ duration: 0.7 }}
         >
           {/* Header */}
-          <div className="flex items-end justify-between mb-10">
+          <div className="flex items-end justify-between mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
               Projects
             </h2>
@@ -155,60 +159,91 @@ const ProjectsSection = () => {
             </Link>
           </div>
 
-          {/* Cards Wrapper */}
+          {/* ========================= */}
+          {/* MOBILE LAYOUT (Stacked)  */}
+          {/* ========================= */}
+          <div className="md:hidden flex flex-col gap-6">
+            {homeProjects.map((project) => (
+              <Link
+                key={project.id}
+                to={`/projects/${project.id}`}
+                className="block group"
+                aria-label={`View ${project.title} project`}
+              >
+                <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img
+                      src={project.imageSrc}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="eager"
+                      draggable={false}
+                    />
+                  </div>
+
+                  {/* Optional subtle info strip */}
+                  <div className="p-4">
+                    <p className="text-sm font-medium text-foreground">
+                      {project.description}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* ========================= */}
+          {/* DESKTOP SCATTERED LAYOUT */}
+          {/* ========================= */}
           <div
-            className="relative w-full"
+            className="hidden md:block relative w-full"
             style={{ height: 'clamp(680px, 90vw, 960px)' }}
           >
-            {/* Dotted background ONLY for content area */}
-            <div className="absolute inset-0 dotted-bg pointer-events-none z-0" />
+            {homeProjects.map((project, i) => {
+              const pos = cardPositions[i];
 
-            {/* Cards container (above dots) */}
-            <div className="relative z-10 w-full h-full">
-              {homeProjects.map((project, i) => {
-                const pos = cardPositions[i];
-
-                return (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 40, rotate: 0 }}
-                    whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.1 }}
-                    className="absolute"
-                    style={{
-                      top: pos.top,
-                      left: pos.left,
-                      width: pos.width,
-                      zIndex: pos.zIndex,
-                    }}
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 40, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="absolute"
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    width: pos.width,
+                    zIndex: pos.zIndex,
+                  }}
+                >
+                  <Link
+                    to={`/projects/${project.id}`}
+                    className="block group"
+                    aria-label={`View ${project.title} project`}
                   >
-                    <Link
-                      to={`/projects/${project.id}`}
-                      className="block group"
-                      aria-label={`View ${project.title} project`}
-                    >
-                      <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
-                        <div className="aspect-[16/10] overflow-hidden">
-                          <img
-                            src={project.imageSrc}
-                            alt={project.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            loading="eager"
-                            draggable={false}
-                          />
-                        </div>
+                    <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
+                      <div className="aspect-[16/10] overflow-hidden">
+                        <img
+                          src={project.imageSrc}
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="eager"
+                          draggable={false}
+                        />
                       </div>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       </div>
     </section>
   );
 };
+
+export default ProjectsSection;
 
 export default ProjectsSection;
