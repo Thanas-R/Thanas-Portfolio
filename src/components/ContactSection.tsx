@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { TbBrandGithubFilled } from "react-icons/tb";
-import { ExternalLink } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 const contactLinks = [
   {
@@ -96,18 +96,19 @@ const ContactSection = () => {
             Contact
           </p>
 
-          <p className="text-lg md:text-xl font-light text-foreground/80 dark:text-foreground/70 mb-8 whitespace-nowrap md:whitespace-nowrap whitespace-normal">
+          <p className="text-lg md:text-xl font-light text-foreground/80 dark:text-foreground/80 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
-          <form onSubmit={handleSubmit} className="mb-10">
+          {/* Reduced space here */}
+          <form onSubmit={handleSubmit} className="mb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <input
                 type="text"
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-secondary/40 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -115,7 +116,7 @@ const ContactSection = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-secondary/40 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
             </div>
@@ -125,51 +126,43 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-5 py-4 rounded-xl bg-secondary/40 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[220px]"
+              className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[200px]"
               required
             />
 
-            <div className="flex items-center justify-between">
+            <div className="flex justify-end">
               <button
                 type="submit"
                 disabled={sending}
-                className="px-8 py-3.5 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="px-10 py-4 rounded-full bg-foreground text-background text-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {sending ? 'Sending...' : 'Send message'}
               </button>
-
-              <span className="text-lg text-foreground/70 dark:text-foreground/60 flex items-center gap-2">
-                <span>Press</span>
-                <kbd className="px-3 py-1.5 rounded-md border border-border text-sm font-mono bg-secondary/40">
-                  ↵ Enter
-                </kbd>
-              </span>
             </div>
           </form>
 
-          <div className="pt-4 space-y-1">
+          <div className="pt-2 space-y-0">
             {contactLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="flex items-center justify-between py-4 group"
+                className="flex items-center justify-between py-3 group"
               >
-                <div className="flex items-center gap-4 text-muted-foreground group-hover:text-foreground transition-colors">
-                  <div className="flex items-center gap-3">
-                    {link.icon}
-                    <span className="text-base font-medium">{link.label}</span>
-                  </div>
+                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                  {link.icon}
+                  <span className="text-base font-medium">{link.label}</span>
                 </div>
 
-                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
                   <span className="text-base">{link.value}</span>
-                  <ExternalLink className="w-5 h-5" />
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </div>
               </a>
             ))}
           </div>
+
         </motion.div>
       </div>
     </section>
