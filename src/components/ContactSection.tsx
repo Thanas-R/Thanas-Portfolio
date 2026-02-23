@@ -98,8 +98,8 @@ const ContactSection = () => {
             Contact
           </p>
 
-          {/* paragraph — bold but a bit lighter in color */}
-          <p className="text-lg md:text-xl font-semibold text-foreground/70 mb-8 md:whitespace-nowrap">
+          {/* bold but a bit lighter in color */}
+          <p className="text-lg md:text-xl font-semibold text-foreground/60 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
@@ -138,7 +138,7 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={sending}
-                className="px-6 py-3 rounded-xl bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="px-8 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {sending ? 'Sending...' : 'Send message'}
               </button>
@@ -153,7 +153,7 @@ const ContactSection = () => {
             </div>
           </form>
 
-          {/* socials — pill outline for icon (no filled bg), reduced spacing, slightly larger value text, labels bolder */}
+          {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
           <div className="pt-2 space-y-1">
             {contactLinks.map((link) => (
               <a
@@ -164,11 +164,9 @@ const ContactSection = () => {
                 className="flex items-center justify-between py-2 group"
               >
                 <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  {/* pill outline for icon only (no filled background) */}
-                  <div className="px-3 py-2 rounded-full border border-border flex items-center justify-center">
-                    <div className="text-muted-foreground">
-                      {link.icon}
-                    </div>
+                  {/* icon (no bg/pill) */}
+                  <div className="flex items-center justify-center text-muted-foreground group-hover:text-foreground">
+                    {link.icon}
                   </div>
 
                   <span className="text-base font-semibold text-muted-foreground">
@@ -176,7 +174,7 @@ const ContactSection = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
+                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
                   <span className="text-lg font-medium text-muted-foreground">
                     {link.value}
                   </span>
