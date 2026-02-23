@@ -72,7 +72,6 @@ const ContactSection = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // allow shift+enter for new line, plain enter submits
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       const formEl = e.currentTarget.closest('form');
@@ -81,11 +80,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section
-      id="contact"
-      className="relative py-16 px-6"
-      style={{ fontFamily: "'Quicksand', ui-sans-serif, system-ui" }}
-    >
+    <section id="contact" className="relative py-16 px-6">
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
@@ -93,17 +88,14 @@ const ContactSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          {/* bigger heading */}
-          <p className="text-base md:text-lg font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+          <p className="text-sm md:text-base font-semibold uppercase tracking-widest text-muted-foreground mb-3">
             Contact
           </p>
 
-          {/* responsive paragraph: 1-line desktop, wraps on small screens */}
-          <p className="text-lg md:text-xl font-light text-foreground/80 dark:text-foreground/80 mb-8 md:whitespace-nowrap">
+          <p className="text-lg md:text-xl font-light text-foreground/80 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
-          {/* Reduced spacing here (controls gap between form and socials) */}
           <form onSubmit={handleSubmit} className="mb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <input
@@ -111,7 +103,7 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-5 py-4 rounded-xl bg-secondary/60 dark:bg-secondary/40 text-foreground text-base font-medium placeholder:text-muted-foreground/70 focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -119,7 +111,7 @@ const ContactSection = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-5 py-4 rounded-xl bg-secondary/60 dark:bg-secondary/40 text-foreground text-base font-medium placeholder:text-muted-foreground/70 focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
             </div>
@@ -129,11 +121,10 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
+              className="w-full px-5 py-4 rounded-xl bg-secondary/60 dark:bg-secondary/40 text-foreground text-base font-medium placeholder:text-muted-foreground/70 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[190px] overflow-auto scrollbar-hide"
               required
             />
 
-            {/* Button LEFT + Enter hint RIGHT */}
             <div className="flex items-center justify-between gap-4">
               <button
                 type="submit"
@@ -143,18 +134,16 @@ const ContactSection = () => {
                 {sending ? 'Sending...' : 'Send message'}
               </button>
 
-              {/* Enter guide stays on the right; visible on all sizes but compact on mobile */}
-              <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
+              <span className="text-sm text-foreground/60 flex items-center gap-2 whitespace-nowrap">
                 <span className="hidden sm:inline">Press</span>
-                <kbd className="px-2.5 py-1 rounded-md border border-border text-xs font-mono bg-secondary/40">
+                <kbd className="px-2 py-1 rounded-md border border-border text-xs font-mono bg-secondary/40">
                   ↵ Enter
                 </kbd>
               </span>
             </div>
           </form>
 
-          {/* socials — reduced vertical gap, arrow changed to up-right */}
-          <div className="pt-2 space-y-0">
+          <div className="pt-4 space-y-1">
             {contactLinks.map((link) => (
               <a
                 key={link.label}
@@ -163,12 +152,14 @@ const ContactSection = () => {
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="flex items-center justify-between py-3 group"
               >
-                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                <div className="flex items-center gap-3 text-foreground/80 dark:text-foreground/90 group-hover:text-foreground transition-colors">
                   {link.icon}
-                  <span className="text-base font-medium">{link.label}</span>
+                  <span className="text-base font-medium">
+                    {link.label}
+                  </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
+                <div className="flex items-center gap-2 text-foreground/70 dark:text-foreground/80 group-hover:text-foreground transition-colors">
                   <span className="text-base">{link.value}</span>
                   <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </div>
