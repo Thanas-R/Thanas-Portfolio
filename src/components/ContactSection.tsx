@@ -103,86 +103,106 @@ const ContactSection = () => {
             You can contact me using the form or via the links below.
           </p>
 
-          {/* form */}
-          <form onSubmit={handleSubmit} className="mb-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <input
-                type="text"
-                placeholder="Name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-[#F8F8F8] dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
-                required
-              />
-            </div>
+{/* form */}
+<form onSubmit={handleSubmit} className="mb-7">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <input
+      type="text"
+      placeholder="Name"
+      value={form.name}
+      onChange={(e) => setForm({ ...form, name: e.target.value })}
+      className="w-full px-5 py-4 rounded-xl 
+      bg-[#F8F8F8] dark:bg-secondary/30 
+      border border-[#F6F6F6] dark:border-border
+      text-foreground text-lg font-medium dark:font-semibold 
+      placeholder:text-muted-foreground/70 placeholder:font-medium 
+      focus:outline-none focus:ring-1 focus:ring-ring"
+      required
+    />
 
-            <textarea
-              placeholder="Message"
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              onKeyDown={handleKeyDown}
-              className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-lg font-medium dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[235px] overflow-auto scrollbar-hide"
-              required
-            />
+    <input
+      type="email"
+      placeholder="Email"
+      value={form.email}
+      onChange={(e) => setForm({ ...form, email: e.target.value })}
+      className="w-full px-5 py-4 rounded-xl 
+      bg-secondary/50 dark:bg-secondary/30 
+      border border-[#F6F6F6] dark:border-border
+      text-foreground text-lg font-medium dark:font-semibold 
+      placeholder:text-muted-foreground/70 placeholder:font-medium 
+      focus:outline-none focus:ring-1 focus:ring-ring"
+      required
+    />
+  </div>
 
-            {/* Button LEFT + Enter hint RIGHT */}
-            <div className="flex items-center justify-between gap-4">
-              <button
-                type="submit"
-                disabled={sending}
-                className="px-6 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
-              >
-                {sending ? 'Sending...' : 'Send message'}
-              </button>
+  <textarea
+    placeholder="Message"
+    value={form.message}
+    onChange={(e) => setForm({ ...form, message: e.target.value })}
+    onKeyDown={handleKeyDown}
+    className="w-full px-5 py-5 rounded-xl 
+    bg-secondary/50 dark:bg-secondary/30 
+    border border-[#F6F6F6] dark:border-border
+    text-foreground text-lg font-medium dark:font-semibold 
+    placeholder:text-muted-foreground/70 placeholder:font-medium 
+    focus:outline-none focus:ring-1 focus:ring-ring 
+    resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
+    required
+  />
 
-              {/* Enter guide stays on the right; visible on all sizes but compact on mobile */}
-              <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
-                <span className="hidden sm:inline">Press</span>
-                <kbd className="px-2.5 py-1 rounded-md border border-border text-sm font-mono bg-secondary/40">
-                  ↵ Enter
-                </kbd>
-              </span>
-            </div>
+{/* Button LEFT + Enter hint RIGHT */}
+<div className="flex items-center justify-between gap-4">
+  <button
+    type="submit"
+    disabled={sending}
+    className="px-6 py-3 rounded-xl bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+  >
+    {sending ? 'Sending...' : 'Send message'}
+  </button>
+
+  {/* Enter guide stays on the right */}
+  <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
+    <span className="hidden sm:inline">Press</span>
+    <kbd className="px-2.5 py-1 rounded-md border border-border text-sm font-mono bg-secondary/40">
+      ↵ Enter
+    </kbd>
+  </span>
+</div>
           </form>
 
           {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
-          <div className="pt-2 space-y-1">
-            {contactLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="flex items-center justify-between py-2 group"
-              >
-                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  {/* icon (no bg/pill) */}
-                  <div className="flex items-center justify-center text-muted-foreground group-hover:text-foreground">
-                    {link.icon}
-                  </div>
+<div className="pt-2 space-y-1">
+  {contactLinks.map((link) => (
+    <a
+      key={link.label}
+      href={link.href}
+      target={link.href.startsWith('http') ? '_blank' : undefined}
+      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+      className="flex items-center justify-between py-2 group"
+    >
+      <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+        {/* icon */}
+        <div className="flex items-center justify-center text-muted-foreground group-hover:text-foreground">
+          {link.icon}
+        </div>
 
-                  <span className="text-lg font-medium text-muted-foreground">
-                    {link.label}
-                  </span>
-                </div>
+        {/* removed text-muted-foreground here */}
+        <span className="text-lg font-medium">
+          {link.label}
+        </span>
+      </div>
 
-                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  <span className="text-lg font-medium text-muted-foreground">
-                    {link.value}
-                  </span>
-                  <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </div>
-              </a>
-            ))}
-          </div>
+      <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+        {/* removed text-muted-foreground here */}
+        <span className="text-lg font-medium">
+          {link.value}
+        </span>
+
+        <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </div>
+    </a>
+  ))}
+</div>
 
         </motion.div>
       </div>
