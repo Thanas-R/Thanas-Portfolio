@@ -1,8 +1,6 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { useRef } from 'react';
 
 import projectPesuMC from '@/assets/project-pesumc.png';
 import projectAskbookie from '@/assets/project-askbookie.png';
@@ -108,11 +106,23 @@ export const projects: Project[] = [
   },
 ];
 
+// 6 projects on homepage — scattered overlapping layout like the reference
 const homeProjects = projects.filter(p =>
   ['nautilus', 'virdis', 'pesu-mc', 'askbookie', 'thanas-os', 'smart-chef'].includes(p.id)
 );
 
-// Preload images
+// Absolute positions for scattered overlapping 2-col, 3-row layout
+// Each card: top, left, width, rotate, zIndex
+const cardPositions = [
+  { top: '0%', left: '0%', width: '54%', rotate: -2, zIndex: 2 },
+  { top: '3%', left: '46%', width: '56%', rotate: 1.5, zIndex: 3 },
+  { top: '34%', left: '-2%', width: '52%', rotate: 1.2, zIndex: 1 },
+  { top: '32%', left: '48%', width: '54%', rotate: -1, zIndex: 4 },
+  { top: '64%', left: '2%', width: '50%', rotate: -1.5, zIndex: 2 },
+  { top: '66%', left: '50%', width: '52%', rotate: 1.8, zIndex: 3 },
+];
+
+// Preload ALL project images at module load
 const preloadedImages: HTMLImageElement[] = projects.map((p) => {
   const img = new Image();
   img.src = p.imageSrc;
@@ -120,32 +130,18 @@ const preloadedImages: HTMLImageElement[] = projects.map((p) => {
 });
 void preloadedImages;
 
-// 2-col scattered layout: [left, top, rotate, zIndex]
-// Row 3 (smart-chef, thanas-os) moved up to overlap more
-const cardLayout = [
-  { left: '1%',  top: '0px',   rotate: -5,  z: 3 },
-  { left: '50%', top: '40px',  rotate: 4,   z: 2 },
-  { left: '2%',  top: '280px', rotate: 4,   z: 4 },
-  { left: '48%', top: '260px', rotate: -3,  z: 5 },
-  { left: '1%',  top: '500px', rotate: -4,  z: 2 },
-  { left: '51%', top: '480px', rotate: 5,   z: 3 },
-];
-
 const ProjectsSection = () => {
-  const isMobile = useIsMobile();
-
   return (
-    <section id="projects" className="relative pt-10 pb-16 overflow-visible">
+    <section id="projects" className="relative py-20 overflow-hidden">
+      <div className="dotted-bg absolute inset-0" />
       <div className="relative z-10 max-w-5xl mx-auto px-6">
-        {/* Header */}
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="mb-6"
         >
-          <div className="flex items-end justify-between">
+          <div className="flex items-end justify-between mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
               Projects
             </h2>
@@ -157,151 +153,49 @@ const ProjectsSection = () => {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-        </motion.div>
 
-        {/* Cards area with dotted bg */}
-        <div className="relative">
-          {/* Dotted background — full width, only behind cards */}
-          <div
-            className="dotted-bg absolute pointer-events-none"
-            style={{
-              top: '-12px',
-              bottom: '-12px',
-              left: 'calc(-50vw + 50%)',
-              right: 'calc(-50vw + 50%)',
-            }}
-          />
-
-          {isMobile ? (
-            /* MOBILE: simple 2-col grid tiles */
-            <motion.div
-              className="relative z-10 grid grid-cols-2 gap-3"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              {homeProjects.map((project) => (
-                <Link key={project.id} to={`/projects/${project.id}`} className="block">
-                  <div className="rounded-xl overflow-hidden bg-card border border-foreground/10 shadow-md">
-                    <div className="aspect-[16/10] overflow-hidden">
-                      <img
-                        src={project.imageSrc}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                        loading="eager"
-                        draggable={false}
-                      />
+          {/* Scattered overlapping layout */}
+          <div className="relative w-full" style={{ height: 'clamp(680px, 90vw, 960px)' }}>
+            {homeProjects.map((project, i) => {
+              const pos = cardPositions[i];
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 40, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: pos.rotate }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="absolute"
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    width: pos.width,
+                    zIndex: pos.zIndex,
+                  }}
+                >
+                  <Link to={`/projects/${project.id}`} className="block group">
+                    <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
+                      <div className="aspect-[16/10] overflow-hidden">
+                        <img
+                          src={project.imageSrc}
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="eager"
+                          draggable={false}
+                        />
+                      </div>
                     </div>
-                    <p className="px-2.5 py-2 text-xs font-semibold text-foreground font-['Quicksand']">
+                    <p className="mt-2.5 text-sm font-semibold text-foreground font-['Space_Grotesk']">
                       {project.title}
                     </p>
-                  </div>
-                </Link>
-              ))}
-            </motion.div>
-          ) : (
-            /* DESKTOP: scattered overlapping album */
-            <motion.div
-              className="relative z-10"
-              style={{ height: '760px' }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6 }}
-            >
-              {homeProjects.map((project, i) => {
-                const pos = cardLayout[i];
-                return (
-                  <TiltCard
-                    key={project.id}
-                    project={project}
-                    left={pos.left}
-                    top={pos.top}
-                    rotate={pos.rotate}
-                    z={pos.z}
-                  />
-                );
-              })}
-            </motion.div>
-          )}
-        </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
       </div>
     </section>
-  );
-};
-
-/* ── Desktop card with 3D tilt on hover ── */
-const TiltCard = ({
-  project,
-  left,
-  top,
-  rotate,
-  z,
-}: {
-  project: Project;
-  left: string;
-  top: string;
-  rotate: number;
-  z: number;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
-
-  const rotateX = useSpring(useTransform(mouseY, [0, 1], [8, -8]), { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-8, 8]), { stiffness: 200, damping: 20 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set((e.clientX - rect.left) / rect.width);
-    mouseY.set((e.clientY - rect.top) / rect.height);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0.5);
-    mouseY.set(0.5);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      className="absolute cursor-pointer"
-      style={{
-        left,
-        top,
-        width: '48%',
-        zIndex: z,
-        perspective: 800,
-        rotate,
-      }}
-      whileHover={{ zIndex: 50 }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <motion.div style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}>
-        <Link to={`/projects/${project.id}`} className="block group">
-          <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-2xl group-hover:shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-300">
-            <div className="aspect-[16/10] overflow-hidden relative">
-              <img
-                src={project.imageSrc}
-                alt={project.title}
-                className="w-full h-full object-cover"
-                loading="eager"
-                draggable={false}
-              />
-              {/* Title overlay inside image */}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-4 pb-3 pt-10">
-                <p className="text-white text-sm font-bold font-['Quicksand'] drop-shadow-lg">
-                  {project.title}
-                </p>
-              </div>
-            </div>
-          </div>
-        </Link>
-      </motion.div>
-    </motion.div>
   );
 };
 
