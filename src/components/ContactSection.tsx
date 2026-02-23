@@ -98,8 +98,8 @@ const ContactSection = () => {
             Contact
           </p>
 
-          {/* paragraph — made bolder */}
-          <p className="text-lg md:text-xl font-semibold text-foreground/80 mb-8 md:whitespace-nowrap">
+          {/* paragraph — bold but a bit lighter in color */}
+          <p className="text-lg md:text-xl font-semibold text-foreground/70 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
@@ -111,7 +111,7 @@ const ContactSection = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
               <input
@@ -119,7 +119,7 @@ const ContactSection = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring"
                 required
               />
             </div>
@@ -129,7 +129,7 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-4 py-3 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[180px] overflow-auto scrollbar-hide"
+              className="w-full px-5 py-5 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-normal dark:font-semibold placeholder:text-muted-foreground/70 placeholder:font-medium focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
               required
             />
 
@@ -153,7 +153,7 @@ const ContactSection = () => {
             </div>
           </form>
 
-          {/* socials — circular icon box, gray text for both modes, bolder labels */}
+          {/* socials — pill outline for icon (no filled bg), reduced spacing, slightly larger value text, labels bolder */}
           <div className="pt-2 space-y-1">
             {contactLinks.map((link) => (
               <a
@@ -161,11 +161,11 @@ const ContactSection = () => {
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="flex items-center justify-between py-3 group"
+                className="flex items-center justify-between py-2 group"
               >
                 <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  <div className="w-10 h-10 rounded-full bg-secondary/60 dark:bg-secondary/40 flex items-center justify-center">
-                    {/* icon color inherits from parent (muted) */}
+                  {/* pill outline for icon only (no filled background) */}
+                  <div className="px-3 py-2 rounded-full border border-border flex items-center justify-center">
                     <div className="text-muted-foreground">
                       {link.icon}
                     </div>
@@ -177,7 +177,7 @@ const ContactSection = () => {
                 </div>
 
                 <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
-                  <span className="text-base font-medium text-muted-foreground">
+                  <span className="text-lg font-medium text-muted-foreground">
                     {link.value}
                   </span>
                   <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
