@@ -169,36 +169,51 @@ resize-y mb-6 min-h-[235px] overflow-auto scrollbar-hide"
             </div>
           </form>
 
-          {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
-          <div className="pt-2 space-y-1">
-            {contactLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="flex items-center justify-between py-2 group"
-              >
-                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  {/* icon (no bg/pill) */}
-                  <div className="flex items-center justify-center text-muted-foreground group-hover:text-foreground">
-                    {link.icon}
-                  </div>
+{/* socials */}
+<div className="pt-2 space-y-1">
+  {contactLinks.map((link) => (
+    <a
+      key={link.label}
+      href={link.href}
+      target={link.href.startsWith('http') ? '_blank' : undefined}
+      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+      className="flex items-center justify-between py-3 px-2 rounded-lg 
+                 border border-[#F6F6F6] dark:border-border
+                 group transition-all duration-200"
+    >
+      {/* Left side */}
+      <div className="flex items-center gap-3 
+                      text-muted-foreground 
+                      group-hover:text-foreground 
+                      transition-colors duration-200">
+        
+        <div className="flex items-center justify-center">
+          {link.icon}
+        </div>
 
-                  <span className="text-lg font-medium text-muted-foreground">
-                    {link.label}
-                  </span>
-                </div>
+        <span className="text-lg font-medium">
+          {link.label}
+        </span>
+      </div>
 
-                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-                  <span className="text-lg font-medium text-muted-foreground">
-                    {link.value}
-                  </span>
-                  <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </div>
-              </a>
-            ))}
-          </div>
+      {/* Right side */}
+      <div className="flex items-center gap-3 
+                      text-muted-foreground 
+                      group-hover:text-foreground 
+                      transition-colors duration-200">
+        
+        <span className="text-lg font-medium">
+          {link.value}
+        </span>
+
+        <ArrowUpRight className="w-4 h-4 
+                                 transition-transform duration-200
+                                 group-hover:-translate-y-0.5 
+                                 group-hover:translate-x-0.5" />
+      </div>
+    </a>
+  ))}
+</div>
 
         </motion.div>
       </div>
