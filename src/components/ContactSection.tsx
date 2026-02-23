@@ -39,7 +39,7 @@ const contactLinks = [
     href: '#',
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-        <path d="M14.82 4.26a10.14 10.14 0 0 0-.53 1.1 14.66 14.66 0 0 0-4.58 0 10.14 10.14 0 0 0-.53-1.1 16 16 0 0 0-4.13 1.3 17.33 17.33 0 0 0-3 11.59 16.6 16.6 0 0 0 5.07 2.59A12.89 12.89 0 0 0 8.23 18a9.65 9.65 0 0 1-1.71-.83 3.39 3.39 0 0 0 .42-.33 11.66 11.66 0 0 0 10.12 0q.21.18.42.33a10.84 10.84 0 0 1-1.71.84 12.41 12.41 0 0 0 1.08 1.78 16.44 16.44 0 0 0 5.06-2.59 17.22 17.22 0 0 0-3-11.59 16.09 16.09 0 0 0-4.09-1.35zM8.68 14.81a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.93 1.93 0 0 1 1.8 2 1.93 1.93 0 0 1-1.8 2zm6.64 0a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.92 1.92 0 0 1 1.8 2 1.92 1.92 0 0 1-1.8 2z" />
+        <path d="M14.82 4.26a10.14 10.14 0 0 0-.53 1.1 14.66 14.66 0 0 0-4.58 0 10.14 10.14 0 0 0-.53-1.1 16 16 0 0 0-4.13 1.3 17.33 17.22 0 0 0-3 11.59 16.6 16.6 0 0 0 5.07 2.59A12.89 12.89 0 0 0 8.23 18a9.65 9.65 0 0 1-1.71-.83 3.39 3.39 0 0 0 .42-.33 11.66 11.66 0 0 0 10.12 0q.21.18.42.33a10.84 10.84 0 0 1-1.71.84 12.41 12.41 0 0 0 1.08 1.78 16.44 16.44 0 0 0 5.06-2.59 17.22 17.22 0 0 0-3-11.59 16.09 16.09 0 0 0-4.09-1.35zM8.68 14.81a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.93 1.93 0 0 1 1.8 2 1.93 1.93 0 0 1-1.8 2zm6.64 0a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.92 1.92 0 0 1 1.8 2 1.92 1.92 0 0 1-1.8 2z" />
       </svg>
     ),
   },
@@ -83,7 +83,7 @@ const ContactSection = () => {
     <section
       id="contact"
       className="relative py-16 px-6"
-      style={{ fontFamily: "'Quicksand', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial" }}
+      style={{ fontFamily: "'Quicksand', ui-sans-serif, system-ui" }}
     >
       <div className="max-w-3xl mx-auto">
         <motion.div
@@ -96,12 +96,10 @@ const ContactSection = () => {
             Contact
           </p>
 
-          {/* paragraph styled to match reference */}
-          <p className="text-lg md:text-xl font-light text-muted-foreground mb-8 max-w-md">
+          <p className="text-lg md:text-xl font-light text-foreground/80 dark:text-foreground/70 mb-8 whitespace-nowrap md:whitespace-nowrap whitespace-normal">
             You can contact me using the form or via the links below.
           </p>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="mb-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <input
@@ -124,29 +122,31 @@ const ContactSection = () => {
 
             <textarea
               placeholder="Message"
-              rows={4}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-5 py-4 rounded-xl bg-secondary/40 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-4 min-h-[220px]"
+              className="w-full px-5 py-4 rounded-xl bg-secondary/40 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[220px]"
               required
             />
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between">
               <button
                 type="submit"
                 disabled={sending}
-                className="px-6 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="px-8 py-3.5 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {sending ? 'Sending...' : 'Send message'}
               </button>
-              <span className="text-base text-muted-foreground">
-                or <kbd className="px-2 py-1 rounded border border-border text-xs font-mono">↵ Enter</kbd> to send
+
+              <span className="text-lg text-foreground/70 dark:text-foreground/60 flex items-center gap-2">
+                <span>Press</span>
+                <kbd className="px-3 py-1.5 rounded-md border border-border text-sm font-mono bg-secondary/40">
+                  ↵ Enter
+                </kbd>
               </span>
             </div>
           </form>
 
-          {/* Social links list */}
           <div className="pt-4 space-y-1">
             {contactLinks.map((link) => (
               <a
@@ -157,7 +157,6 @@ const ContactSection = () => {
                 className="flex items-center justify-between py-4 group"
               >
                 <div className="flex items-center gap-4 text-muted-foreground group-hover:text-foreground transition-colors">
-                  {/** icons + label */}
                   <div className="flex items-center gap-3">
                     {link.icon}
                     <span className="text-base font-medium">{link.label}</span>
