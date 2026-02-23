@@ -72,6 +72,7 @@ const ContactSection = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // allow shift+enter for new line, plain enter submits
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       const formEl = e.currentTarget.closest('form');
@@ -92,15 +93,17 @@ const ContactSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+          {/* bigger heading */}
+          <p className="text-base md:text-lg font-semibold uppercase tracking-widest text-muted-foreground mb-3">
             Contact
           </p>
 
+          {/* responsive paragraph: 1-line desktop, wraps on small screens */}
           <p className="text-lg md:text-xl font-light text-foreground/80 dark:text-foreground/80 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
-          {/* Reduced spacing here */}
+          {/* Reduced spacing here (controls gap between form and socials) */}
           <form onSubmit={handleSubmit} className="mb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <input
@@ -126,29 +129,31 @@ const ContactSection = () => {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               onKeyDown={handleKeyDown}
-              className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[200px]"
+              className="w-full px-5 py-4 rounded-xl bg-secondary/50 dark:bg-secondary/30 text-foreground text-base font-medium placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-ring resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
               required
             />
 
             {/* Button LEFT + Enter hint RIGHT */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <button
                 type="submit"
                 disabled={sending}
-                className="px-10 py-4 rounded-full bg-foreground text-background text-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="px-7 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {sending ? 'Sending...' : 'Send message'}
               </button>
 
-              <span className="hidden sm:flex text-sm text-foreground/60 items-center gap-2">
-                Press
-                <kbd className="px-3 py-1.5 rounded-md border border-border text-xs font-mono bg-secondary/40">
+              {/* Enter guide stays on the right; visible on all sizes but compact on mobile */}
+              <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
+                <span className="hidden sm:inline">Press</span>
+                <kbd className="px-2.5 py-1 rounded-md border border-border text-xs font-mono bg-secondary/40">
                   ↵ Enter
                 </kbd>
               </span>
             </div>
           </form>
 
+          {/* socials — reduced vertical gap, arrow changed to up-right */}
           <div className="pt-2 space-y-0">
             {contactLinks.map((link) => (
               <a
