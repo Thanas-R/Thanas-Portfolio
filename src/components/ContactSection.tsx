@@ -152,22 +152,30 @@ const ContactSection = () => {
 
             {/* Button LEFT + Enter hint RIGHT */}
             <div className="flex items-center justify-between gap-4">
-              <button
-                type="submit"
-                disabled={sending}
-                className="px-6 py-3 rounded-full bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
-              >
-                {sending ? 'Sending...' : 'Send message'}
-              </button>
+  <button
+    type="submit"
+    disabled={sending}
+    className="inline-flex items-center gap-2 
+               px-5 py-2.5 
+               rounded-lg 
+               bg-foreground text-background 
+               text-[15px] font-medium tracking-tight
+               hover:opacity-90 transition-all duration-200 
+               disabled:opacity-50 group"
+  >
+    {sending ? 'Sending...' : 'Send message'}
+    {!sending && (
+      <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+    )}
+  </button>
 
-              {/* Enter guide stays on the right; visible on all sizes but compact on mobile */}
-              <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap flex">
-                <span className="hidden sm:inline">Press</span>
-                <kbd className="px-2.5 py-1 rounded-md border border-border text-sm font-mono bg-secondary/40">
-                  ↵ Enter
-                </kbd>
-              </span>
-            </div>
+  <span className="text-xs text-muted-foreground flex items-center gap-2 whitespace-nowrap">
+    <span className="hidden sm:inline">Press</span>
+    <kbd className="px-2 py-0.5 rounded-md border border-border text-xs font-mono bg-secondary/40">
+      ↵ Enter
+    </kbd>
+  </span>
+</div>
           </form>
 
           {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
