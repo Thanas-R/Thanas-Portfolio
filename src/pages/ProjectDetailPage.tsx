@@ -23,6 +23,7 @@ const ProjectDetailPage = () => {
   const prevProject = projects[currentIndex - 1] ?? null;
   const nextProject = projects[currentIndex + 1] ?? null;
   const isThanasOS = project.id === 'thanas-os';
+  const isSmartChef = project.id === 'smart-chef';
 
   return (
     <>
@@ -119,6 +120,175 @@ const ProjectDetailPage = () => {
                 />
               </motion.div>
             </div>
+          </div>
+        ) : isSmartChef ? (
+          /* ── Smart Chef: stylized serif typography layout ── */
+          <div className="max-w-4xl mx-auto px-6 pt-28 pb-24">
+            <motion.div {...fadeUp(0)}>
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                All Projects
+              </Link>
+            </motion.div>
+
+            {/* Hero title with Playfair Display serif + orange accent */}
+            <motion.div {...fadeUp(0.08)} className="mb-10 mt-4">
+              <h1
+                className="text-5xl md:text-7xl font-bold text-foreground leading-[1.05]"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Find Your Perfect{' '}
+                <span className="italic" style={{ color: '#FA8638' }}>
+                  Recipe
+                </span>
+              </h1>
+              <p className="text-lg text-muted-foreground mt-5 max-w-xl leading-relaxed">
+                A full-stack recipe matching system powered by TF-IDF vectors, fuzzy ingredient mapping, and AI-generated cooking steps.
+              </p>
+            </motion.div>
+
+            {/* Links */}
+            <motion.div {...fadeUp(0.15)} className="flex gap-3 mb-12">
+              {project.live && (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
+                  style={{ backgroundColor: '#FA8638' }}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Live Demo
+                </a>
+              )}
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all"
+                >
+                  <Github className="w-4 h-4" />
+                  GitHub
+                </a>
+              )}
+            </motion.div>
+
+            {/* Tags */}
+            <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-14">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider"
+                >
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
+
+            {/* Content sections */}
+            <motion.div {...fadeUp(0.22)} className="space-y-14">
+              {/* Overview */}
+              <div>
+                <h2
+                  className="text-2xl md:text-3xl font-bold mb-4"
+                  style={{ fontFamily: "'Playfair Display', serif", color: '#FA8638' }}
+                >
+                  Overview
+                </h2>
+                <p className="text-lg text-foreground/80 leading-relaxed">
+                  SmartChef combines a lightweight frontend with a FastAPI backend to deliver intelligent recipe suggestions. 
+                  Enter the ingredients you have on hand, and the system ranks recipes by relevance using cosine similarity 
+                  over TF-IDF vectors — then generates step-by-step cooking instructions with Google Gemini AI.
+                </p>
+              </div>
+
+              {/* How It Works */}
+              <div>
+                <h2
+                  className="text-2xl md:text-3xl font-bold mb-6"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                >
+                  How It{' '}
+                  <span className="italic" style={{ color: '#FA8638' }}>
+                    Works
+                  </span>
+                </h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {[
+                    { num: '01', title: 'Enter Ingredients', desc: 'Input what you have on hand — the system normalizes and maps them using fuzzy matching.' },
+                    { num: '02', title: 'Match Recipes', desc: 'TF-IDF vectorization and cosine similarity rank the best recipe matches instantly.' },
+                    { num: '03', title: 'Get Instructions', desc: 'Google Gemini generates tailored cooking steps based on the matched recipe and your ingredients.' },
+                  ].map((step) => (
+                    <div key={step.num} className="p-6 rounded-2xl border border-foreground/10 bg-card">
+                      <span
+                        className="text-3xl font-bold"
+                        style={{ fontFamily: "'Playfair Display', serif", color: '#FA8638' }}
+                      >
+                        {step.num}
+                      </span>
+                      <h3 className="font-bold text-foreground mt-3 mb-2 font-['Space_Grotesk']">{step.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Architecture */}
+              <div>
+                <h2
+                  className="text-2xl md:text-3xl font-bold mb-4"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                >
+                  Architecture
+                </h2>
+                <div className="p-6 rounded-2xl border border-foreground/10 bg-card font-mono text-sm text-foreground/70 leading-loose">
+                  <span className="text-foreground font-semibold">User Input</span> → Frontend (HTML + CSS + JS)<br />
+                  → <span style={{ color: '#FA8638' }} className="font-semibold">FastAPI Backend</span> (TF-IDF + Cosine Similarity)<br />
+                  → Recipe Matches + <span style={{ color: '#FA8638' }} className="font-semibold">AI Cooking Instructions</span>
+                </div>
+              </div>
+
+              {/* Tech Stack */}
+              <div>
+                <h2
+                  className="text-2xl md:text-3xl font-bold mb-6"
+                  style={{ fontFamily: "'Playfair Display', serif", color: '#FA8638' }}
+                >
+                  Tech Stack
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { label: 'Framework', value: 'FastAPI' },
+                    { label: 'Vectorization', value: 'TF-IDF' },
+                    { label: 'Similarity', value: 'Cosine' },
+                    { label: 'AI Model', value: 'Gemini 2.5 Flash' },
+                    { label: 'Frontend', value: 'HTML / CSS / JS' },
+                    { label: 'API', value: 'Fetch API' },
+                    { label: 'Server', value: 'Uvicorn' },
+                    { label: 'Hosting', value: 'Render + Vercel' },
+                  ].map((item) => (
+                    <div key={item.label} className="p-4 rounded-xl border border-foreground/10 bg-card">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
+                      <p className="text-sm font-semibold text-foreground font-['Space_Grotesk']">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Project image */}
+            <motion.div {...fadeUp(0.3)} className="mt-14 rounded-2xl overflow-hidden border border-foreground/10">
+              <img
+                src={project.imageSrc}
+                alt={`${project.title} preview`}
+                className="w-full object-cover"
+                style={{ maxHeight: 480 }}
+              />
+            </motion.div>
           </div>
         ) : (
           /* ── Default layout for all other projects ── */
