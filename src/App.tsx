@@ -58,10 +58,14 @@ const HashScrollHandler = () => {
     }
 
     const id = location.hash.replace('#', '');
-    const target = document.getElementById(id);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    // Delay to allow page transition animation to complete
+    const timer = setTimeout(() => {
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 400);
+    return () => clearTimeout(timer);
   }, [location.pathname, location.hash]);
 
   return null;
