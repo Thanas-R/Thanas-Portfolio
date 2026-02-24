@@ -4,7 +4,7 @@ import { Link, useParams, Navigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
-import { MacbookPro } from '@/components/Mac';
+import { Mac } from '@/components/Mac';
 import thanasOsMac from '@/assets/thanasos-mac.png';
 
 const fadeUp = (delay = 0) => ({
@@ -113,9 +113,9 @@ const ProjectDetailPage = () => {
                 {...fadeUp(0.2)}
                 className="flex-shrink-0 w-full md:w-auto flex justify-center"
               >
-                <MacbookPro
+                <Mac
                   src={thanasOsMac}
-                  className="w-full max-w-[560px] h-auto text-background"
+                  className="w-full max-w-[520px] h-auto text-background"
                 />
               </motion.div>
             </div>

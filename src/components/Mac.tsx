@@ -1,17 +1,12 @@
 import type { SVGProps } from 'react';
 
-export interface MacbookProProps extends SVGProps<SVGSVGElement> {
+export interface MacProps extends SVGProps<SVGSVGElement> {
   width?: number;
   height?: number;
   src?: string;
 }
 
-export function MacbookPro({
-  width = 650,
-  height = 400,
-  src,
-  ...props
-}: MacbookProProps) {
+export function Mac({ width = 600, height = 500, src, ...props }: MacProps) {
   return (
     <svg
       width={width}
@@ -21,86 +16,59 @@ export function MacbookPro({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <rect fill="url(#linear-gradient)" x="232.4" y="401.32" width="135.19" height="83.37" />
+      <rect fill="#dedfe2" x="234.32" y="489.39" width="17.21" height="1.9" rx=".15" ry=".15" />
+      <rect fill="#dedfe2" x="348.45" y="489.39" width="17.21" height="1.9" rx=".15" ry=".15" />
+      <rect fill="#dedfe1" x="232.4" y="484.69" width="135.19" height="5.61" />
       <path
-        fill="#a4a5a7"
-        d="M79.56,13.18h491.32c7.23,0,13.1,5.87,13.1,13.1v336.61H66.46V26.28c0-7.23,5.87-13.1,13.1-13.1Z"
+        fill="#eeeeef"
+        d="M23.83,10.99h552.03c4.92,0,8.91,3.99,8.91,8.91v324.18H14.92V19.9c0-4.92,3.99-8.91,8.91-8.91Z"
       />
       <path
-        fill="#222"
-        d="M79.96,14.24h490.45c6.83,0,12.37,5.54,12.37,12.37v336.28H67.59V26.6c0-6.83,5.54-12.37,12.37-12.37Z"
+        fill="#d9d9db"
+        d="M23.83,343.94h552.03c4.92,0,8.91,3.99,8.91,8.91v48.47H14.92v-48.47c0-4.92,3.99-8.91,8.91-8.91Z"
+        transform="translate(599.69 745.26) rotate(180)"
       />
       <path
-        fill="#000"
-        d="M570.25,15.74H80.34c-6.12,0-11.08,4.96-11.08,11.08v336.07h512.08V26.82c0-6.12-4.96-11.08-11.08-11.08ZM575.74,345.17H74.52V27.31c0-3.31,2.68-5.99,5.99-5.99h489.24c3.31,0,5.99,2.68,5.99,5.99v317.86Z"
+        fill="#231f20"
+        d="M570.43,330.43H29.57c-.44,0-.79-.36-.79-.79V25.47c0-.44.36-.79.79-.79h540.87c.44,0,.79.36.79.79v304.17c0,.44-.36.79-.79.79ZM29.57,25.37c-.05,0-.1.04-.1.09v304.17c0,.05.04.1.1.1h540.87c.05,0,.09-.04.09-.1V25.47c0-.05-.04-.09-.09-.09H29.57Z"
       />
-      <rect
-        fill="currentColor"
-        x="74.52"
-        y="21.32"
-        width="501.22"
-        rx="5"
-        ry="5"
-        height="323.85"
-      />
+      <rect fill="#fff" x="29.12" y="25.02" width="541.76" height="305.06" rx=".44" ry=".44" />
+      <circle fill="#414042" cx="300" cy="17.7" r="2.11" />
+      <circle fill="#262262" cx="300" cy="17.7" r=".85" />
+      <rect fill="currentColor" x="29.12" y="25.02" width="541.76" height="305.06" rx=".44" ry=".44" />
       {src && (
         <image
           href={src}
-          x="74.52"
-          y="21.32"
-          width="501.22"
-          height="323.85"
+          x="29.12"
+          y="25.02"
+          width="541.76"
+          height="305.06"
           preserveAspectRatio="xMidYMid slice"
           clipPath="url(#roundedCorners)"
         />
       )}
-      <rect fill="#1d1d1d" x="69.09" y="350.51" width="512.11" height="12.48" />
-      <path
-        fill="#000"
-        d="M298.14,21.02h54.07v6.5c0,1.56-1.27,2.82-2.82,2.82h-48.42c-1.56,0-2.82-1.27-2.82-2.82v-6.5h0Z"
-      />
-      <path
-        fill="#acadaf"
-        d="M19.04,362.77h611.92v10.39c0,5.95-4.83,10.79-10.79,10.79H29.83c-5.95,0-10.79-4.83-10.79-10.79v-10.39h0Z"
-      />
-      <path
-        fill="#080d4c"
-        d="M325.11,25.14c-1.99.03-1.99-3.09,0-3.06,1.99-.03,1.99,3.09,0,3.06Z"
-      />
-      <polygon
-        fill="#b9b9bb"
-        points="600.06 385.39 567.29 385.39 565.84 383.95 601.82 383.95 600.06 385.39"
-      />
-      <polygon
-        fill="#292929"
-        points="598.73 386.82 568.64 386.82 567.32 385.39 600.35 385.39 598.73 386.82"
-      />
-      <polygon
-        fill="#b9b9bb"
-        points="82.64 385.39 49.87 385.39 48.43 383.95 84.41 383.95 82.64 385.39"
-      />
-      <polygon
-        fill="#292929"
-        points="81.31 386.82 51.23 386.82 49.9 385.39 82.93 385.39 81.31 386.82"
-      />
-      <path
-        fill="#8f9091"
-        d="M278.11,362.6h94.05c0,3.63-2.95,6.58-6.58,6.58h-80.89c-3.63,0-6.58-2.95-6.58-6.58h0Z"
-      />
       <defs>
         <clipPath id="roundedCorners">
-          <rect
-            fill="#ffffff"
-            x="74.52"
-            y="21.32"
-            width="501.22"
-            height="323.85"
-            rx="5"
-            ry="5"
-          />
+          <rect fill="#ffffff" x="29.12" y="25.02" width="541.76" height="305.06" rx=".44" ry=".44" />
         </clipPath>
       </defs>
+      <linearGradient
+        id="linear-gradient"
+        x1="300"
+        y1="484.69"
+        x2="300"
+        y2="401.32"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" stopColor="#a7a9ac" />
+        <stop offset=".1" stopColor="#d1d3d4" />
+        <stop offset=".41" stopColor="#e6e7e8" />
+        <stop offset=".73" stopColor="#e6e7e8" />
+        <stop offset="1" stopColor="#d1d3d4" />
+      </linearGradient>
     </svg>
   );
 }
 
-export default MacbookPro;
+export default Mac;
