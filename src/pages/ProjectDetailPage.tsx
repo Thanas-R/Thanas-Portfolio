@@ -140,9 +140,9 @@ const ProjectDetailPage = () => {
                 className="text-5xl md:text-7xl font-bold text-foreground leading-[1.05]"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                Find Your Perfect{' '}
+                Smart{' '}
                 <span className="italic" style={{ color: '#FA8638' }}>
-                  Recipe
+                  Chef
                 </span>
               </h1>
               <p className="text-lg text-muted-foreground mt-5 max-w-xl leading-relaxed">
