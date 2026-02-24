@@ -102,7 +102,7 @@ export const projects: Project[] = [
       'An earlier iteration of my portfolio, styled as a full macOS desktop environment in the browser. Features a working dock, draggable windows, a simulated Finder, and interactive apps.',
     imageSrc: projectThanasOS,
     tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
-    live: 'https://thanasos.vercel.app/',
+    live: 'https://thanas-os.vercel.app/',
   },
   {
     id: 'pesu-forge',
