@@ -90,13 +90,13 @@ const AboutSection = () => {
 
             {/* Journey — timeline, spans 2 rows */}
             <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem]">
-              <div className="relative pl-8 space-y-5">
-                {/* vertical line */}
-                <div className="absolute left-6 top-2 bottom-2 w-px bg-border" />
+              <div className="relative pl-10 pr-4 space-y-6">
+                {/* vertical line (aligned to grid gutter) */}
+                <div className="absolute left-8 top-4 bottom-4 w-px bg-border" />
 
                 <div className="relative">
                   {/* dot centered on the line */}
-                  <div className="absolute left-6 transform -translate-x-1/2 top-1.5 w-3 h-3 rounded-full bg-foreground ring-2 ring-card" />
+                  <div className="absolute left-8 transform -translate-x-1/2 top-4 w-3 h-3 rounded-full bg-foreground ring-1 ring-card" />
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-quicksand">2026 <span className="text-foreground/40 normal-case font-quicksand">· Present</span></p>
                   <p className="mt-1 text-lg text-foreground/80 leading-relaxed font-quicksand">
                     Adopted agentic AI tools, refined <strong className="text-foreground">UI/UX</strong> skills, and elevated prompt engineering for efficient project delivery.
@@ -104,7 +104,7 @@ const AboutSection = () => {
                 </div>
 
                 <div className="relative">
-                  <div className="absolute left-6 transform -translate-x-1/2 top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/50 ring-2 ring-card" />
+                  <div className="absolute left-8 transform -translate-x-1/2 top-3 w-2.5 h-2.5 rounded-full bg-muted-foreground/50 ring-1 ring-card" />
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-quicksand">2025</p>
                   <p className="mt-1 text-lg text-foreground/80 leading-relaxed font-quicksand">
                     Began <strong className="text-foreground">B.Tech in CSE (AI/ML)</strong> at PES University. Started building production-ready projects.
@@ -112,7 +112,7 @@ const AboutSection = () => {
                 </div>
 
                 <div className="relative">
-                  <div className="absolute left-6 transform -translate-x-1/2 top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/40 ring-2 ring-card" />
+                  <div className="absolute left-8 transform -translate-x-1/2 top-3 w-2.5 h-2.5 rounded-full bg-muted-foreground/40 ring-1 ring-card" />
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-quicksand">2023</p>
                   <p className="mt-1 text-lg text-foreground/80 leading-relaxed font-quicksand">
                     Focused on <strong className="text-foreground">C++</strong> and data structures & algorithms, strengthening core CS fundamentals.
@@ -120,7 +120,7 @@ const AboutSection = () => {
                 </div>
 
                 <div className="relative">
-                  <div className="absolute left-6 transform -translate-x-1/2 top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/30 ring-2 ring-card" />
+                  <div className="absolute left-8 transform -translate-x-1/2 top-3 w-2.5 h-2.5 rounded-full bg-muted-foreground/30 ring-1 ring-card" />
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-quicksand">2021</p>
                   <p className="mt-1 text-lg text-foreground/80 leading-relaxed font-quicksand">
                     Started learning <strong className="text-foreground">Java</strong>, focusing on OOP principles and application development.
@@ -128,7 +128,7 @@ const AboutSection = () => {
                 </div>
 
                 <div className="relative">
-                  <div className="absolute left-6 transform -translate-x-1/2 top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/20 ring-2 ring-card" />
+                  <div className="absolute left-8 transform -translate-x-1/2 top-3 w-2.5 h-2.5 rounded-full bg-muted-foreground/20 ring-1 ring-card" />
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-quicksand">2020</p>
                   <p className="mt-1 text-lg text-foreground/80 leading-relaxed font-quicksand">
                     First steps in programming with <strong className="text-foreground">Python</strong>, building small applications and scripts.
@@ -137,8 +137,8 @@ const AboutSection = () => {
               </div>
             </BentoCard>
 
-            {/* About Me — wide center */}
-            <BentoCard className="md:col-span-4 min-h-[10rem]">
+            {/* About Me — wide center (increased height to match timeline) */}
+            <BentoCard className="md:col-span-4 md:min-h-[22rem] min-h-[16rem]">
               <h3 className="text-2xl md:text-3xl font-bold text-foreground font-poppins tracking-tight">About Me</h3>
               <p className="text-muted-foreground leading-relaxed mt-3 text-lg md:text-xl font-quicksand">
                 I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
@@ -151,13 +151,13 @@ const AboutSection = () => {
               </p>
             </BentoCard>
 
-            {/* Currently */}
+            {/* Currently (smaller) */}
             <BentoCard className="md:col-span-2 min-h-[6rem]">
               <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-quicksand">Currently</p>
               <p className="text-lg font-bold text-foreground font-quicksand mt-2">PESU · vibing & coding</p>
             </BentoCard>
 
-            {/* Connect — bigger icons, no boxes, with tooltips */}
+            {/* Connect — smaller */}
             <BentoCard className="md:col-span-2 min-h-[6rem]">
               <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-quicksand">Connect</p>
               <p className="text-lg font-bold text-foreground font-quicksand mt-2">Find Me Online</p>
