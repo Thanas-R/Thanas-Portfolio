@@ -8,7 +8,7 @@ import { TbBrandGithubFilled } from 'react-icons/tb';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const BentoCard = ({ className, children }: { className?: string; children?: ReactNode }) => (
-  <div className={cn('relative group rounded-xl border-[0.65px] border-border bg-card overflow-hidden p-5', className)}>
+  <div className={cn('relative group rounded-xl border-[0.75px] border-border bg-card overflow-hidden p-5', className)}>
     {/* reduced glow borderWidth -> 1 */}
     <GlowingEffect spread={40} proximity={64} borderWidth={1} disabled={false} />
     <div className="relative z-10 h-full">{children}</div>
