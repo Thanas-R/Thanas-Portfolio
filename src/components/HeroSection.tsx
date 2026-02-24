@@ -92,7 +92,7 @@ const HeroSection = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0, 1] }}
         >
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-[0.9] tracking-tight font-['Space_Grotesk']">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-foreground leading-[0.9] tracking-tight font-['Space_Grotesk']">
             Thanas{' '}
             <span className="relative inline-block">
               R

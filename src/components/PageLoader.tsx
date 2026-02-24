@@ -5,8 +5,41 @@ const PageLoader = () => {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 1200);
-    return () => clearTimeout(t);
+    let minTimePassed = false;
+    let assetsLoaded = false;
+
+    const tryFinish = () => {
+      if (minTimePassed && assetsLoaded) setDone(true);
+    };
+
+    // Minimum display time for branding
+    const minTimer = setTimeout(() => {
+      minTimePassed = true;
+      tryFinish();
+    }, 800);
+
+    // Wait for all assets (images, fonts, etc.)
+    if (document.readyState === 'complete') {
+      assetsLoaded = true;
+      tryFinish();
+    } else {
+      const onLoad = () => {
+        assetsLoaded = true;
+        tryFinish();
+      };
+      window.addEventListener('load', onLoad);
+      // Cleanup
+      var removeLoadListener = () => window.removeEventListener('load', onLoad);
+    }
+
+    // Fallback: never wait more than 5s
+    const fallback = setTimeout(() => setDone(true), 5000);
+
+    return () => {
+      clearTimeout(minTimer);
+      clearTimeout(fallback);
+      if (removeLoadListener) removeLoadListener();
+    };
   }, []);
 
   return (

@@ -5,14 +5,17 @@ import AboutSection from '@/components/AboutSection';
 import TechCarousel from '@/components/TechCarousel';
 import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
+import ExpandingHeroLayout from '@/components/ExpandingHeroLayout';
 
 const Index = () => {
   return (
     <>
       <TopographicBackground />
       <div className="relative z-10 overflow-x-hidden">
-        <Navbar />
-        <HeroSection />
+        <ExpandingHeroLayout>
+          <Navbar />
+          <HeroSection />
+        </ExpandingHeroLayout>
         <AboutSection />
         <TechCarousel />
         <ProjectsSection />
