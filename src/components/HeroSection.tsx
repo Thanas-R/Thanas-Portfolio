@@ -92,7 +92,7 @@ const HeroSection = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0, 1] }}
         >
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white leading-[0.9] tracking-tight font-['Space_Grotesk']">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white leading-[0.9] tracking-tight font-['Space_Grotesk'] whitespace-nowrap">
             Thanas{' '}
             <span className="relative inline-block">
               R
@@ -100,7 +100,7 @@ const HeroSection = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                      <span
-                      className={`absolute bottom-[-3px] right-[-10px] w-3 h-3 md:bottom-[0.12em] md:-right-[0.15em] md:w-4 md:h-4 rounded-full ring-[5px] ring-black/30 ${statusColor} cursor-pointer transition-colors duration-300`}
+                      className={`absolute bottom-[0.05em] right-[-0.08em] w-3 h-3 md:w-4 md:h-4 rounded-full ring-[4px] ring-black/30 ${statusColor} cursor-pointer transition-colors duration-300`}
                       aria-label={statusLabel}
                     />
                   </TooltipTrigger>
