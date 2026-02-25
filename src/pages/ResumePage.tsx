@@ -11,7 +11,7 @@ const ResumePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const zoomIn = () => setScale((s) => Math.min(s + 0.15, 2));
-  const zoomOut = () => setScale((s) => Math.max(s - 0.15, 1));
+  const zoomOut = () => setScale((s) => Math.max(s - 0.15, 0.5));
 
   return (
     <div className="relative h-screen bg-background overflow-hidden">
@@ -40,7 +40,7 @@ const ResumePage = () => {
               <TooltipTrigger asChild>
                 <button
                   onClick={zoomOut}
-                  disabled={scale <= 1}
+                  disabled={scale <= 0.5}
                   className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="Zoom out"
                 >
@@ -76,7 +76,7 @@ const ResumePage = () => {
         </div>
       </motion.div>
 
-      {/* PDF Viewer — uses img-like approach: embed the PDF as an object fitting the container */}
+      {/* PDF Viewer — full-page visible on load (no scrolling) */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -86,35 +86,48 @@ const ResumePage = () => {
       >
         <div
           ref={containerRef}
-          className="h-full rounded-2xl overflow-auto border border-border bg-card"
+          className="h-full rounded-2xl border border-border bg-card"
           style={{
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
-            scrollbarWidth: 'thin',
-            scrollbarColor: 'hsl(var(--border)) transparent',
+            // hide scrollbars and prevent inner scrolling; we want the PDF fit into this area
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <style>{`
-            .resume-viewer::-webkit-scrollbar { width: 4px; height: 4px; }
-            .resume-viewer::-webkit-scrollbar-track { background: transparent; }
-            .resume-viewer::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 999px; }
             @media (max-width: 768px) {
-              .resume-viewer { border-radius: 12px; }
+              .resume-embed { border-radius: 12px; }
             }
           `}</style>
+
+          {/* 
+            Use <embed type="application/pdf"> here:
+            - height: 100% ensures the PDF page height fills the container,
+            - width: auto + maxWidth: 100% keeps aspect ratio and prevents horizontal overflow.
+            - the `#view=Fit` hash requests a full-page fit from the browser viewer.
+          */}
           <div
-            className="resume-viewer"
+            // wrapper allows us to apply zoom via CSS transform while keeping center alignment
+            className="w-full h-full flex items-center justify-center"
             style={{
               transform: `scale(${scale})`,
-              transformOrigin: 'top center',
-              width: '100%',
-              height: scale > 1 ? `${scale * 100}%` : '100%',
+              transformOrigin: 'center center',
             }}
           >
-            <iframe
-              src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
-              title="Resume PDF"
-              className="block border-none w-full h-full"
-              style={{ minHeight: '100%' }}
+            <embed
+              className="resume-embed"
+              src={`${resumePath}#toolbar=0&navpanes=0&view=Fit`}
+              type="application/pdf"
+              aria-label="Resume PDF"
+              style={{
+                height: '100%',
+                width: 'auto',
+                maxWidth: '100%',
+                border: 'none',
+                display: 'block',
+              }}
             />
           </div>
         </div>
