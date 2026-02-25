@@ -10,13 +10,15 @@ const Index = () => {
   return (
     <>
       {/* Hero area with cloud background */}
-      <section className="relative min-h-screen overflow-hidden">
-        <img
-          src="/hero-clouds.png"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="eager"
-        />
+      <section
+        className="relative min-h-screen overflow-hidden"
+        style={{
+          backgroundImage: 'url(/hero-clouds.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         <div className="relative z-10">
           <Navbar forceLightMode />
           <HeroSection />
