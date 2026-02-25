@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Download, Maximize, Minimize, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { Download, ZoomIn, ZoomOut, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
@@ -7,19 +7,22 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
-
-  // Zoom is expressed as percent (100 = 1x). Adjust increment/min/max to taste.
-  const [zoomPercent, setZoomPercent] = useState(100);
-  const minZoom = 60;
-  const maxZoom = 200;
-  const zoomStep = 15;
-
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const fullscreenTargetRef = useRef<HTMLDivElement | null>(null);
+  const [scale, setScale] = useState(1);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const fullscreenTargetRef = useRef<HTMLDivElement | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const zoomIn = () => setZoomPercent((z) => Math.min(z + zoomStep, maxZoom));
-  const zoomOut = () => setZoomPercent((z) => Math.max(z - zoomStep, minZoom));
+  const zoomIn = () => setScale((s) => Math.min(s + 0.15, 2));
+  const zoomOut = () => setScale((s) => Math.max(s - 0.15, 1));
+
+  // fullscreen change handler (to update UI if user enters/exits fullscreen)
+  useEffect(() => {
+    const handler = () => {
+      setIsFullscreen(document.fullscreenElement === fullscreenTargetRef.current);
+    };
+    document.addEventListener('fullscreenchange', handler);
+    return () => document.removeEventListener('fullscreenchange', handler);
+  }, []);
 
   const toggleFullscreen = async () => {
     try {
@@ -29,21 +32,9 @@ const ResumePage = () => {
       }
       await fullscreenTargetRef.current?.requestFullscreen();
     } catch (e) {
-      // ignore silently; full screen may be blocked by browser or user gesture rules
-      // you could add a toast here if desired
+      // ignore - some browsers restrict fullscreen without user gesture
     }
   };
-
-  useEffect(() => {
-    const handler = () => {
-      setIsFullscreen(document.fullscreenElement === fullscreenTargetRef.current);
-    };
-
-    document.addEventListener('fullscreenchange', handler);
-    return () => document.removeEventListener('fullscreenchange', handler);
-  }, []);
-
-  const scale = zoomPercent / 100;
 
   return (
     <div className="relative h-screen bg-background overflow-hidden">
@@ -66,14 +57,13 @@ const ResumePage = () => {
         >
           Resume
         </h1>
-
         <div className="flex items-center gap-2 pb-1">
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
                   onClick={zoomOut}
-                  disabled={zoomPercent <= minZoom}
+                  disabled={scale <= 1}
                   className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="Zoom out"
                 >
@@ -89,7 +79,7 @@ const ResumePage = () => {
               <TooltipTrigger asChild>
                 <button
                   onClick={zoomIn}
-                  disabled={zoomPercent >= maxZoom}
+                  disabled={scale >= 2}
                   className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="Zoom in"
                 >
@@ -97,22 +87,6 @@ const ResumePage = () => {
                 </button>
               </TooltipTrigger>
               <TooltipContent>Zoom in</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={toggleFullscreen}
-                  className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
-                  title={isFullscreen ? 'Exit PDF fullscreen' : 'PDF fullscreen'}
-                  aria-label={isFullscreen ? 'Exit PDF fullscreen' : 'PDF fullscreen'}
-                >
-                  {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>{isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
 
@@ -127,7 +101,7 @@ const ResumePage = () => {
         </div>
       </motion.div>
 
-      {/* PDF Viewer (upgraded loader/wrapper, preserves current layout feel) */}
+      {/* ---------- UPDATED PDF VIEWER SECTION (replace only this part) ---------- */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -147,7 +121,7 @@ const ResumePage = () => {
             border: 1px solid hsl(var(--border));
             background: hsl(var(--card));
             box-shadow: 0 8px 40px hsl(var(--foreground) / 0.06);
-            aspect-ratio: 1 / 1.414; /* approximate A4-ish */
+            aspect-ratio: 1 / 1.414; /* approx A4 */
             display: block;
           }
 
@@ -158,7 +132,6 @@ const ResumePage = () => {
             display: block;
           }
 
-          /* fullscreen styles for the wrapper */
           .resume-frame-wrap:fullscreen {
             width: 100vw;
             height: 100vh;
@@ -176,7 +149,6 @@ const ResumePage = () => {
             height: 100%;
           }
 
-          /* inner viewer that we scale */
           .resume-viewer {
             width: 100%;
             height: 100%;
@@ -184,12 +156,12 @@ const ResumePage = () => {
             will-change: transform;
           }
 
-          /* custom scrollbars (works in modern browsers) */
           .resume-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
           .resume-scroll::-webkit-scrollbar-track { background: transparent; }
           .resume-scroll::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 999px; }
+
           @media (max-width: 768px) {
-            .resume-frame-wrap { border-radius: 12px; }
+            .resume-frame-wrap { border-radius: 12px; aspect-ratio: auto; min-height: 480px; }
           }
         `}</style>
 
@@ -208,11 +180,10 @@ const ResumePage = () => {
           <div
             ref={fullscreenTargetRef}
             className="resume-frame-wrap"
-            aria-hidden={false}
-            /* keep a sensible minHeight so scaling works nicely */
+            onDoubleClick={toggleFullscreen}
             style={{ minHeight: 640 }}
           >
-            {/* When in fullscreen we show an explicit exit button for clarity */}
+            {/* show exit button when in fullscreen for clarity */}
             {isFullscreen && (
               <button
                 onClick={toggleFullscreen}
@@ -224,7 +195,7 @@ const ResumePage = () => {
               </button>
             )}
 
-            {/* The scaled viewer wraps the iframe to allow smooth UI-level zooming */}
+            {/* scaled viewer wrapper — uses your existing `scale` state */}
             <div
               className="resume-viewer"
               style={{
@@ -234,17 +205,18 @@ const ResumePage = () => {
                 transformOrigin: 'top center',
               }}
             >
-              {/* embed PDF — toolbar hidden for cleaner UI */}
               <iframe
                 src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
                 title="Resume PDF"
+                className="block border-none w-full h-full"
+                style={{ minHeight: '100%' }}
                 loading="lazy"
-                aria-label="Resume PDF"
               />
             </div>
           </div>
         </div>
       </motion.div>
+      {/* ------------------ end updated viewer ------------------ */}
     </div>
   );
 };
