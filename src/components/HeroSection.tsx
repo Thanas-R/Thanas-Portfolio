@@ -24,9 +24,9 @@ const statusLabels: Record<string, string> = {
 const socials = [
   {
     label: 'GitHub',
-    href: 'https://github.com/Thanas-R',
-    tooltip: 'Thanas-R',
-    icon: <TbBrandGithubFilled className="w-7 h-7" />,
+  href: 'https://github.com/Thanas-R',
+  tooltip: 'Thanas-R',
+  icon: <TbBrandGithubFilled className="w-7 h-7" />,
   },
   {
     label: 'LinkedIn',
@@ -85,14 +85,14 @@ const HeroSection = () => {
   const statusLabel = statusLabels[discordStatus] || statusLabels.offline;
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center px-6">
+    <section className="relative min-h-[85vh] flex items-center justify-center px-6">
       <div className="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
         <motion.div
           initial={{ x: -60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0, 1] }}
         >
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white leading-[0.9] tracking-tight font-['Space_Grotesk'] whitespace-nowrap">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-[0.9] tracking-tight font-['Space_Grotesk']">
             Thanas{' '}
             <span className="relative inline-block">
               R
@@ -100,7 +100,7 @@ const HeroSection = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                      <span
-                      className={`absolute bottom-[0.05em] right-[-0.08em] w-3 h-3 md:w-4 md:h-4 rounded-full ring-[4px] ring-black/30 ${statusColor} cursor-pointer transition-colors duration-300`}
+                      className={`absolute bottom-[-3px] right-[-10px] w-3 h-3 md:bottom-[0.12em] md:-right-[0.15em] md:w-4 md:h-4 rounded-full ring-[5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300`}
                       aria-label={statusLabel}
                     />
                   </TooltipTrigger>
@@ -111,7 +111,7 @@ const HeroSection = () => {
               </TooltipProvider>
             </span>
           </h1>
-          <p className="mt-6 text-base md:text-lg text-white/70 max-w-md leading-relaxed">
+          <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
             Developer & creative problem-solver. Building thoughtful digital experiences with code.
           </p>
           <div className="mt-8 flex items-center gap-5">
@@ -121,7 +121,7 @@ const HeroSection = () => {
                   href={s.href}
                   target={s.href.startsWith('http') ? '_blank' : undefined}
                   rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="text-white/50 hover:text-white transition-colors duration-200"
+                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                   aria-label={s.label}
                   onMouseEnter={() => setHoveredSocial(s.label)}
                   onMouseLeave={() => setHoveredSocial(null)}
@@ -135,7 +135,7 @@ const HeroSection = () => {
                       animate={{ x: '-50%', y: 0, opacity: 1, scale: 1 }}
                       exit={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
                       transition={{ duration: 0.1 }}
-                      className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-white/20 bg-black/60 backdrop-blur-md text-sm font-medium text-white whitespace-nowrap z-50 shadow-md font-['Space_Grotesk'] origin-bottom"
+                      className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap z-50 shadow-md font-['Space_Grotesk'] origin-bottom"
                     >
                       {s.tooltip}
                     </motion.div>
@@ -167,7 +167,7 @@ const HeroSection = () => {
                 e.currentTarget.style.setProperty('--xRotation', `${xRot}deg`);
                 e.currentTarget.style.setProperty('--yRotation', `${yRot}deg`);
               }}
-              className="relative w-48 h-48 md:w-60 md:h-60 rounded-2xl transition-transform ease-out hover:[transform:rotateX(var(--xRotation))_rotateY(var(--yRotation))_scale(1.05)] overflow-hidden border border-white/10 shadow-2xl"
+              className="relative w-48 h-48 md:w-60 md:h-60 glow-card rounded-2xl transition-transform ease-out hover:[transform:rotateX(var(--xRotation))_rotateY(var(--yRotation))_scale(1.05)] overflow-hidden"
             >
               <img
                 src={avatar}
