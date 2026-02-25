@@ -1,41 +1,17 @@
 import { motion } from 'framer-motion';
 import { Download, ZoomIn, ZoomOut } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState, useRef } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
-  const minScale = 1;
   const [scale, setScale] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const zoomIn = () => setScale((s) => Math.min(s + 0.15, 2));
-  const zoomOut = () => setScale((s) => Math.max(s - 0.15, minScale));
-
-  useEffect(() => {
-    const blockBrowserZoom = (event: WheelEvent) => {
-      if (event.ctrlKey) {
-        event.preventDefault();
-      }
-    };
-
-    const blockGestureZoom = (event: Event) => {
-      event.preventDefault();
-    };
-
-    window.addEventListener('wheel', blockBrowserZoom, { passive: false });
-    window.addEventListener('gesturestart', blockGestureZoom, { passive: false });
-    window.addEventListener('gesturechange', blockGestureZoom, { passive: false });
-    window.addEventListener('gestureend', blockGestureZoom, { passive: false });
-
-    return () => {
-      window.removeEventListener('wheel', blockBrowserZoom);
-      window.removeEventListener('gesturestart', blockGestureZoom);
-      window.removeEventListener('gesturechange', blockGestureZoom);
-      window.removeEventListener('gestureend', blockGestureZoom);
-    };
-  }, []);
+  const zoomOut = () => setScale((s) => Math.max(s - 0.15, 1));
 
   return (
     <div className="relative h-screen bg-background overflow-hidden">
@@ -64,7 +40,7 @@ const ResumePage = () => {
               <TooltipTrigger asChild>
                 <button
                   onClick={zoomOut}
-                  disabled={scale <= minScale}
+                  disabled={scale <= 1}
                   className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="Zoom out"
                 >
@@ -109,30 +85,18 @@ const ResumePage = () => {
         style={{ height: 'calc(100dvh - 148px)' }}
       >
         <div
-          className="h-full rounded-2xl overflow-auto border border-border bg-card resume-shell"
-          onWheel={(event) => {
-            if (event.ctrlKey) {
-              event.preventDefault();
-            }
-          }}
+          ref={containerRef}
+          className="h-full rounded-2xl overflow-auto border border-border bg-card"
           style={{
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
-            scrollbarWidth: 'none',
-            touchAction: 'pan-x pan-y',
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'hsl(var(--border)) transparent',
           }}
         >
           <style>{`
-            .resume-shell::-webkit-scrollbar,
-            .resume-viewer::-webkit-scrollbar {
-              width: 0;
-              height: 0;
-              display: none;
-            }
-            .resume-shell,
-            .resume-viewer {
-              -ms-overflow-style: none;
-              scrollbar-width: none;
-            }
+            .resume-viewer::-webkit-scrollbar { width: 4px; height: 4px; }
+            .resume-viewer::-webkit-scrollbar-track { background: transparent; }
+            .resume-viewer::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 999px; }
             @media (max-width: 768px) {
               .resume-viewer { border-radius: 12px; }
             }
@@ -143,11 +107,11 @@ const ResumePage = () => {
               transform: `scale(${scale})`,
               transformOrigin: 'top center',
               width: '100%',
-              height: `${Math.max(scale, minScale) * 100}%`,
+              height: scale > 1 ? `${scale * 100}%` : '100%',
             }}
           >
             <iframe
-              src={`${resumePath}#toolbar=0&navpanes=0&pagemode=none&view=Fit&zoom=page-fit`}
+              src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
               title="Resume PDF"
               className="block border-none w-full h-full"
               style={{ minHeight: '100%' }}
