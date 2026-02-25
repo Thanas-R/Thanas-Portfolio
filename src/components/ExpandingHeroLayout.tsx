@@ -36,7 +36,7 @@ const ExpandingHeroLayout = ({ children }: Props) => {
   }
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: '150vh' }}>
+    <div ref={containerRef} className="relative" style={{ height: '105vh' }}>
       {/* Background image visible around the edges of the inner container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <img
