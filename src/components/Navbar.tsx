@@ -69,7 +69,7 @@ const SolarSwitch = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-const Navbar = () => {
+const Navbar = ({ forceLightMode = false }: { forceLightMode?: boolean }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -84,6 +84,11 @@ const Navbar = () => {
 
   const isDark = mounted && resolvedTheme === 'dark';
 
+  // When forceLightMode is on (hero with dark bg), text should be white
+  const textColor = forceLightMode ? 'text-white' : 'text-foreground';
+  const mutedTextColor = forceLightMode ? 'text-white/60 hover:text-white' : 'text-muted-foreground hover:text-foreground';
+  const borderColor = forceLightMode ? 'border-white/20 text-white/70 hover:text-white' : 'border-border text-muted-foreground hover:text-foreground';
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -92,7 +97,7 @@ const Navbar = () => {
       className="relative z-50 px-6 py-4 md:px-12"
     >
       <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <Link to="/" className="font-['Space_Grotesk'] text-lg font-semibold text-foreground tracking-tight">
+        <Link to="/" className={`font-['Space_Grotesk'] text-lg font-semibold ${textColor} tracking-tight`}>
           <TextRoll>thanas.</TextRoll>
         </Link>
         <div className="hidden md:flex items-center gap-8">
@@ -100,7 +105,7 @@ const Navbar = () => {
             <Link
               key={item.label}
               to={item.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+              className={`text-sm font-medium ${mutedTextColor} transition-colors duration-200`}
             >
               <TextRoll>{item.label}</TextRoll>
             </Link>
@@ -109,14 +114,14 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
+            className={`w-8 h-8 flex items-center justify-center rounded-full border ${borderColor} transition-colors`}
             aria-label="Toggle theme"
           >
             <SolarSwitch isDark={isDark} />
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden w-8 h-8 flex items-center justify-center text-foreground"
+            className={`md:hidden w-8 h-8 flex items-center justify-center ${textColor}`}
           >
             <MenuToggleIcon open={mobileOpen} />
           </button>
