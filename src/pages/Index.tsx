@@ -5,7 +5,6 @@ import TechCarousel from '@/components/TechCarousel';
 import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
 import TopographicBackground from '@/components/TopographicBackground';
-import heroClouds from '@/assets/hero-clouds.png';
 
 const Index = () => {
   return (
@@ -13,7 +12,7 @@ const Index = () => {
       {/* Hero area with cloud background */}
       <section className="relative min-h-screen overflow-hidden">
         <img
-          src={heroClouds}
+          src="/hero-clouds.png"
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
           loading="eager"
