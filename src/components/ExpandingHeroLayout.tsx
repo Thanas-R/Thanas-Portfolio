@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import heroBg from '@/assets/hero-bg.png';
+import darkClouds from '@/assets/dark-clouds.png';
 import LightRays from '@/components/LightRays';
 
 interface Props {
@@ -53,6 +54,12 @@ const ExpandingHeroLayout = ({ children }: Props) => {
           }}
           className="absolute inset-0 bg-background overflow-hidden origin-center"
         >
+          <img
+            src={darkClouds}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="eager"
+          />
           <LightRays />
           <div className="relative z-10">
             {children}
