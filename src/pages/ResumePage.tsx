@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Download, ZoomIn, ZoomOut } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -12,6 +12,30 @@ const ResumePage = () => {
 
   const zoomIn = () => setScale((s) => Math.min(s + 0.15, 2));
   const zoomOut = () => setScale((s) => Math.max(s - 0.15, minScale));
+
+  useEffect(() => {
+    const blockBrowserZoom = (event: WheelEvent) => {
+      if (event.ctrlKey) {
+        event.preventDefault();
+      }
+    };
+
+    const blockGestureZoom = (event: Event) => {
+      event.preventDefault();
+    };
+
+    window.addEventListener('wheel', blockBrowserZoom, { passive: false });
+    window.addEventListener('gesturestart', blockGestureZoom, { passive: false });
+    window.addEventListener('gesturechange', blockGestureZoom, { passive: false });
+    window.addEventListener('gestureend', blockGestureZoom, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', blockBrowserZoom);
+      window.removeEventListener('gesturestart', blockGestureZoom);
+      window.removeEventListener('gesturechange', blockGestureZoom);
+      window.removeEventListener('gestureend', blockGestureZoom);
+    };
+  }, []);
 
   return (
     <div className="relative h-screen bg-background overflow-hidden">
@@ -86,9 +110,15 @@ const ResumePage = () => {
       >
         <div
           className="h-full rounded-2xl overflow-auto border border-border bg-card resume-shell"
+          onWheel={(event) => {
+            if (event.ctrlKey) {
+              event.preventDefault();
+            }
+          }}
           style={{
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
             scrollbarWidth: 'none',
+            touchAction: 'pan-x pan-y',
           }}
         >
           <style>{`
