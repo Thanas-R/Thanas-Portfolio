@@ -60,7 +60,6 @@ const ExpandingHeroLayout = ({ children }: Props) => {
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-background/75" />
           <LightRays />
           <div className="relative z-10">
             {children}
