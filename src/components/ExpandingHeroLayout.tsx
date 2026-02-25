@@ -25,11 +25,6 @@ const ExpandingHeroLayout = ({ children }: Props) => {
 
   const scale = useTransform(scrollYProgress, [0, 1], [0.88, 1]);
   const borderRadius = useTransform(scrollYProgress, [0, 1], [24, 0]);
-  const shadow = useTransform(scrollYProgress, [0, 0.8, 1], [
-    '0 25px 80px -12px rgba(0,0,0,0.3)',
-    '0 10px 40px -8px rgba(0,0,0,0.15)',
-    'none',
-  ]);
 
   if (!isDesktop) {
     return <>{children}</>;
@@ -49,9 +44,8 @@ const ExpandingHeroLayout = ({ children }: Props) => {
           style={{
             scale,
             borderRadius,
-            boxShadow: shadow,
           }}
-          className="absolute inset-0 bg-background overflow-hidden origin-center"
+          className="absolute inset-0 overflow-hidden origin-center"
         >
           <LightRays />
           <div className="relative z-10">
