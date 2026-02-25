@@ -52,14 +52,14 @@ const ExpandingHeroLayout = ({ children }: Props) => {
             borderRadius,
             boxShadow: shadow,
           }}
-          className="className="absolute inset-0 bg-transparent overflow-hidden origin-center""
+          className="absolute inset-0 bg-transparent overflow-hidden origin-center"
         >
-          <img
-            src={darkClouds}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="eager"
-          />
+<img
+  src={darkClouds}
+  alt=""
+  className="absolute inset-0 w-full h-full object-cover opacity-75"
+  loading="eager"
+/>
           <LightRays />
           <div className="relative z-10">
             {children}
