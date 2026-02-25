@@ -52,7 +52,7 @@ const ExpandingHeroLayout = ({ children }: Props) => {
             borderRadius,
             boxShadow: shadow,
           }}
-          className="absolute inset-0 bg-background/70 overflow-hidden origin-center"
+          className="className="absolute inset-0 bg-transparent overflow-hidden origin-center""
         >
           <img
             src={darkClouds}
