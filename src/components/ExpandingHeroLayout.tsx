@@ -1,7 +1,6 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, type CSSProperties } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import heroBg from '@/assets/hero-bg.png';
-import darkClouds from '@/assets/dark-clouds.png';
 import LightRays from '@/components/LightRays';
 
 interface Props {
@@ -32,6 +31,27 @@ const ExpandingHeroLayout = ({ children }: Props) => {
     'none',
   ]);
 
+  const heroDarkTheme = {
+    '--background': '0 0% 1.5%',
+    '--foreground': '0 0% 96%',
+    '--card': '0 0% 6%',
+    '--card-foreground': '0 0% 96%',
+    '--popover': '0 0% 6%',
+    '--popover-foreground': '0 0% 96%',
+    '--primary': '0 0% 96%',
+    '--primary-foreground': '0 0% 2%',
+    '--secondary': '0 0% 10%',
+    '--secondary-foreground': '0 0% 96%',
+    '--muted': '0 0% 12%',
+    '--muted-foreground': '0 0% 55%',
+    '--accent': '0 0% 12%',
+    '--accent-foreground': '0 0% 96%',
+    '--border': '0 0% 15%',
+    '--input': '0 0% 15%',
+    '--ring': '0 0% 83.1%',
+    '--glow-color': '0 0% 100%',
+  } as CSSProperties;
+
   if (!isDesktop) {
     return <>{children}</>;
   }
@@ -51,6 +71,7 @@ const ExpandingHeroLayout = ({ children }: Props) => {
             scale,
             borderRadius,
             boxShadow: shadow,
+            ...heroDarkTheme,
           }}
           className="absolute inset-0 bg-background/75 overflow-hidden origin-center"
         >
