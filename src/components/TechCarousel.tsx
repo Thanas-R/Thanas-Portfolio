@@ -1,22 +1,9 @@
 import { cn } from '@/lib/utils';
 import {
-  SiC,
-  SiCplusplus,
-  SiPython,
-  SiJavascript,
-  SiTypescript,
-  SiHtml5,
-  SiCss3,
-  SiReact,
-  SiGit,
-  SiPycharm,
-  SiVercel,
-  SiVite,
-  SiTailwindcss,
-  SiNextdotjs,
-  SiNodedotjs,
+  SiC, SiCplusplus, SiPython, SiJavascript, SiTypescript,
+  SiHtml5, SiReact, SiGit, SiPycharm,
 } from 'react-icons/si';
-import { VscCode } from 'react-icons/vsc';
+import { BiLogoVisualStudio } from 'react-icons/bi';
 import { FaJava, FaFigma } from 'react-icons/fa';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
@@ -30,23 +17,17 @@ const techStack: TechItem[] = [
   { name: 'C++', icon: <SiCplusplus /> },
   { name: 'Python', icon: <SiPython /> },
   { name: 'Java', icon: <FaJava /> },
-
   { name: 'TypeScript', icon: <SiTypescript /> },
   { name: 'JavaScript', icon: <SiJavascript /> },
-  { name: 'HTML5', icon: <SiHtml5 /> },
-  { name: 'CSS3', icon: <SiCss3 /> },
+  { name: 'HTML', icon: <SiHtml5 /> },
 
+  // Framework / Library
   { name: 'React', icon: <SiReact /> },
-  { name: 'Node.js', icon: <SiNodedotjs /> },
-  { name: 'Next.js', icon: <SiNextdotjs /> },
-  { name: 'Tailwind CSS', icon: <SiTailwindcss /> },
 
-  { name: 'Git', icon: <SiGit /> },
-  { name: 'Vite', icon: <SiVite /> },
-  { name: 'Vercel', icon: <SiVercel /> },
-
-  { name: 'VS Code', icon: <VscCode /> },
+  // Development Tools / IDEs & Tools
+  { name: 'VS Code', icon: <BiLogoVisualStudio /> },
   { name: 'PyCharm', icon: <SiPycharm /> },
+  { name: 'Git', icon: <SiGit /> },
   { name: 'Figma', icon: <FaFigma /> },
 ];
 
@@ -65,10 +46,7 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
           <TooltipProvider key={`${tech.name}-${i}`} delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div
-                  className="flex-shrink-0 px-7 flex items-center transition-transform duration-300 hover:scale-110 text-foreground/70 hover:text-foreground text-[38px]"
-                  aria-label={tech.name}
-                >
+                <div className="flex-shrink-0 px-7 flex items-center transition-transform duration-300 hover:scale-110 text-foreground/70 hover:text-foreground text-[38px]">
                   {tech.icon}
                 </div>
               </TooltipTrigger>
