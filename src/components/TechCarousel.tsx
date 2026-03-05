@@ -61,13 +61,12 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
               <TooltipTrigger asChild>
                 {/* anchor is clickable and opens the official site in a new tab */}
                 <a
-                  href={tech.url ?? '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={tech.name}
-                  className="flex-shrink-0 px-7 flex items-center transition-filter duration-200 filter hover:brightness-125 focus:brightness-125 text-foreground/70 hover:text-foreground text-[38px] no-underline"
-                  aria-label={tech.name}
-                >
+  href={tech.url ?? '#'}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex-shrink-0 px-7 flex items-center transition-filter duration-200 filter hover:brightness-125 focus:brightness-125 text-foreground/70 hover:text-foreground text-[38px] no-underline"
+  aria-label={tech.name}
+>
                   {tech.icon}
                 </a>
               </TooltipTrigger>
