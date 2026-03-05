@@ -1,7 +1,15 @@
 import { cn } from '@/lib/utils';
 import {
-  SiC, SiCplusplus, SiPython, SiJavascript, SiTypescript,
-  SiHtml5, SiReact, SiGit, SiPycharm,
+  SiC,
+  SiCplusplus,
+  SiPython,
+  SiJavascript,
+  SiTypescript,
+  SiHtml5,
+  SiReact,
+  SiGit,
+  SiPycharm,
+  SiVercel,
 } from 'react-icons/si';
 import { BiLogoVisualStudio } from 'react-icons/bi';
 import { FaJava, FaFigma } from 'react-icons/fa';
@@ -10,25 +18,30 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 interface TechItem {
   name: string;
   icon: React.ReactNode;
+  url?: string;
 }
 
 const techStack: TechItem[] = [
-  { name: 'C', icon: <SiC /> },
-  { name: 'C++', icon: <SiCplusplus /> },
-  { name: 'Python', icon: <SiPython /> },
-  { name: 'Java', icon: <FaJava /> },
-  { name: 'TypeScript', icon: <SiTypescript /> },
-  { name: 'JavaScript', icon: <SiJavascript /> },
-  { name: 'HTML', icon: <SiHtml5 /> },
+  { name: 'C', icon: <SiC />, url: 'https://en.cppreference.com/w/c' },
+  { name: 'C++', icon: <SiCplusplus />, url: 'https://en.cppreference.com/w/cpp' },
+  { name: 'Python', icon: <SiPython />, url: 'https://www.python.org/' },
+  { name: 'Java', icon: <FaJava />, url: 'https://www.oracle.com/java/' },
+
+  { name: 'TypeScript', icon: <SiTypescript />, url: 'https://www.typescriptlang.org/' },
+  { name: 'JavaScript', icon: <SiJavascript />, url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+  { name: 'HTML', icon: <SiHtml5 />, url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
 
   // Framework / Library
-  { name: 'React', icon: <SiReact /> },
+  { name: 'React', icon: <SiReact />, url: 'https://reactjs.org/' },
 
   // Development Tools / IDEs & Tools
-  { name: 'VS Code', icon: <BiLogoVisualStudio /> },
-  { name: 'PyCharm', icon: <SiPycharm /> },
-  { name: 'Git', icon: <SiGit /> },
-  { name: 'Figma', icon: <FaFigma /> },
+  { name: 'VS Code', icon: <BiLogoVisualStudio />, url: 'https://code.visualstudio.com/' },
+  { name: 'PyCharm', icon: <SiPycharm />, url: 'https://www.jetbrains.com/pycharm/' },
+  { name: 'Git', icon: <SiGit />, url: 'https://git-scm.com/' },
+  { name: 'Figma', icon: <FaFigma />, url: 'https://www.figma.com/' },
+
+  // Deployment / Platform
+  { name: 'Vercel', icon: <SiVercel />, url: 'https://vercel.com/' },
 ];
 
 function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean; speed: number }) {
@@ -46,9 +59,17 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
           <TooltipProvider key={`${tech.name}-${i}`} delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex-shrink-0 px-7 flex items-center transition-transform duration-300 hover:scale-110 text-foreground/70 hover:text-foreground text-[38px]">
+                {/* anchor is clickable and opens the official site in a new tab */}
+                <a
+                  href={tech.url ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={tech.name}
+                  className="flex-shrink-0 px-7 flex items-center transition-filter duration-200 filter hover:brightness-125 focus:brightness-125 text-foreground/70 hover:text-foreground text-[38px] no-underline"
+                  aria-label={tech.name}
+                >
                   {tech.icon}
-                </div>
+                </a>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
                 {tech.name}
