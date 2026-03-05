@@ -38,7 +38,6 @@ const techStack: TechItem[] = [
   { name: 'VS Code', icon: <BiLogoVisualStudio />, url: 'https://code.visualstudio.com/' },
   { name: 'PyCharm', icon: <SiPycharm />, url: 'https://www.jetbrains.com/pycharm/' },
   { name: 'Git', icon: <SiGit />, url: 'https://git-scm.com/' },
-  { name: 'Figma', icon: <FaFigma />, url: 'https://www.figma.com/' },
 
   // Deployment / Platform
   { name: 'Vercel', icon: <SiVercel />, url: 'https://vercel.com/' },
