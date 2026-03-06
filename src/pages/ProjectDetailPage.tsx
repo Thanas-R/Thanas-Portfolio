@@ -17,8 +17,7 @@ const fadeUp = (delay = 0) => ({
 const ProjectDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const project = projects.find((p) => p.id === slug);
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
+  const { isDark } = useTheme();
 
   if (!project) return <Navigate to="/projects" replace />;
 
