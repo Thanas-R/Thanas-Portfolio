@@ -96,10 +96,10 @@ const ProjectDetailPage = () => {
               {/* Hero title */}
               <motion.div {...fadeUp(0.08)} className="mb-10 mt-4">
                 <h1
-                  className="text-6xl md:text-8xl leading-none tracking-tight uppercase"
+                  className="text-6xl md:text-8xl leading-none tracking-tight"
                   style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, color: ab.textHeading }}
                 >
-                  AskBookie
+                  AskBookie_
                 </h1>
                 <p
                   className="text-base mt-5 max-w-xl leading-relaxed"
