@@ -10,7 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 const BentoCard = ({ className, children }: {className?: string;children?: ReactNode;}) =>
 <div className={cn('relative group rounded-xl border-[0.9px] border-border bg-card overflow-hidden p-5', className)}>
     {/* reduced glow borderWidth -> 1 */}
-    <GlowingEffect spread={40} proximity={64} borderWidth={1} disabled={false} />
+    <GlowingEffect spread={40} proximity={64} borderWidth={2} disabled={false} />
     <div className="relative z-10 h-full">{children}</div>
   </div>;
 
