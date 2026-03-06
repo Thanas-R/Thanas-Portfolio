@@ -1,17 +1,10 @@
 import { motion } from 'framer-motion';
-import { Download, ZoomIn, ZoomOut } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { Download } from 'lucide-react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
-  const [scale, setScale] = useState(1);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const zoomIn = () => setScale((s) => Math.min(s + 0.15, 2));
-  const zoomOut = () => setScale((s) => Math.max(s - 0.15, 1));
 
   return (
     <div className="relative h-screen bg-background overflow-hidden">
@@ -35,36 +28,6 @@ const ResumePage = () => {
           Resume
         </h1>
         <div className="flex items-center gap-2 pb-1">
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={zoomOut}
-                  disabled={scale <= 1}
-                  className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                  aria-label="Zoom out"
-                >
-                  <ZoomOut className="w-4 h-4" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>Zoom out</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={zoomIn}
-                  disabled={scale >= 2}
-                  className="w-9 h-9 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                  aria-label="Zoom in"
-                >
-                  <ZoomIn className="w-4 h-4" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>Zoom in</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
           <a
             href={resumePath}
             download
@@ -76,7 +39,7 @@ const ResumePage = () => {
         </div>
       </motion.div>
 
-      {/* PDF Viewer — uses img-like approach: embed the PDF as an object fitting the container */}
+      {/* PDF Viewer */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -85,38 +48,16 @@ const ResumePage = () => {
         style={{ height: 'calc(100dvh - 148px)' }}
       >
         <div
-          ref={containerRef}
-          className="h-full rounded-2xl overflow-auto border border-border bg-card"
+          className="h-full rounded-2xl overflow-hidden border border-border bg-card"
           style={{
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
-            scrollbarWidth: 'thin',
-            scrollbarColor: 'hsl(var(--border)) transparent',
           }}
         >
-          <style>{`
-            .resume-viewer::-webkit-scrollbar { width: 4px; height: 4px; }
-            .resume-viewer::-webkit-scrollbar-track { background: transparent; }
-            .resume-viewer::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 999px; }
-            @media (max-width: 768px) {
-              .resume-viewer { border-radius: 12px; }
-            }
-          `}</style>
-          <div
-            className="resume-viewer"
-            style={{
-              transform: `scale(${scale})`,
-              transformOrigin: 'top center',
-              width: '100%',
-              height: scale > 1 ? `${scale * 100}%` : '100%',
-            }}
-          >
-            <iframe
-              src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
-              title="Resume PDF"
-              className="block border-none w-full h-full"
-              style={{ minHeight: '100%' }}
-            />
-          </div>
+          <iframe
+            src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
+            title="Resume PDF"
+            className="block border-none w-full h-full"
+          />
         </div>
       </motion.div>
     </div>
