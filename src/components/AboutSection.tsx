@@ -93,6 +93,30 @@ const socialIcons = [
   }
 ];
 
+const journeyData = [
+  {
+    year: '2026',
+    suffix: '· Present',
+    description: 'Adopted agentic AI tools, refined UI/UX design skills, and elevated prompt engineering for efficient project delivery.',
+  },
+  {
+    year: '2025',
+    description: 'Began B.Tech in CSE (AI/ML) at PES University. Started building production-ready projects.',
+  },
+  {
+    year: '2023',
+    description: 'Focused on C++ and data structures & algorithms, strengthening core CS fundamentals.',
+  },
+  {
+    year: '2021',
+    description: 'Started learning Java, focusing on OOP principles and application development.',
+  },
+  {
+    year: '2020',
+    description: 'First steps in programming with Python, building small applications and scripts.',
+  },
+];
+
 const educationData = [
   {
     institution: 'PES University',
@@ -111,6 +135,37 @@ const educationData = [
   },
 ];
 
+const certifications = [
+  { label: 'Certificate 1' },
+  { label: 'Certificate 2' },
+  { label: 'Certificate 3' },
+  { label: 'Certificate 4' },
+  { label: 'Certificate 5' },
+  { label: 'Certificate 6' },
+  { label: 'Certificate 7' },
+];
+
+const TimelineItem = ({ year, suffix, description, isFirst, isLast }: { year: string; suffix?: string; description: string; isFirst?: boolean; isLast?: boolean }) => (
+  <div className="flex items-start gap-3">
+    <div className="flex flex-col items-center mt-1.5">
+      <div className={cn(
+        'w-2.5 h-2.5 rounded-full ring-2 ring-card',
+        isFirst ? 'bg-foreground' : 'bg-muted-foreground/40'
+      )} />
+      {!isLast && <div className="w-px h-8 bg-border mt-1" />}
+    </div>
+    <div className="flex-1 -mt-0.5">
+      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter']">
+        {year}
+        {suffix && <span className="text-foreground/40 normal-case font-['Averia_Serif_Libre']"> {suffix}</span>}
+      </p>
+      <p className="mt-1 text-sm text-foreground/80 leading-relaxed font-['Inter']">
+        {description}
+      </p>
+    </div>
+  </div>
+);
+
 const AboutSection = () => {
   return (
     <section id="about" className="relative py-12 w-full pt-0">
@@ -125,69 +180,39 @@ const AboutSection = () => {
 
             {/* Journey — timeline, spans 2 rows */}
             <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem]">
-              <div className="relative pl-6 space-y-5">
-                <div className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-3 h-3 rounded-full bg-foreground ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "'Roboto', sans-serif" }}>2026 <span className="text-foreground/40 normal-case" style={{ fontFamily: "'Averia Serif Libre', serif" }}>· Present</span></p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
-                    Adopted agentic AI tools, refined <strong className="text-foreground">UI/UX design</strong> skills, and elevated prompt engineering for efficient project delivery.
-                  </p>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/50 ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "'Roboto', sans-serif" }}>2025</p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
-                    Began <strong className="text-foreground">B.Tech in CSE (AI/ML)</strong> at PES University. Started building production-ready projects.
-                  </p>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/40 ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "'Roboto', sans-serif" }}>2023</p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
-                    Focused on <strong className="text-foreground">C++</strong> and data structures & algorithms, strengthening core CS fundamentals.
-                  </p>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/30 ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "'Roboto', sans-serif" }}>2021</p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
-                    Started learning <strong className="text-foreground">Java</strong>, focusing on OOP principles and application development.
-                  </p>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/20 ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "'Roboto', sans-serif" }}>2020</p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
-                    First steps in programming with <strong className="text-foreground">Python</strong>, building small applications and scripts.
-                  </p>
-                </div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Journey</p>
+              <div className="space-y-4">
+                {journeyData.map((item, idx) => (
+                  <TimelineItem
+                    key={item.year}
+                    year={item.year}
+                    suffix={item.suffix}
+                    description={item.description}
+                    isFirst={idx === 0}
+                    isLast={idx === journeyData.length - 1}
+                  />
+                ))}
               </div>
             </BentoCard>
 
             {/* About Me — wide center */}
             <BentoCard className="md:col-span-4 min-h-[10rem]">
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>About Me</h3>
-              <p className="text-muted-foreground leading-relaxed mt-3 text-base" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">About Me</h3>
+              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
                 I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
               </p>
-              <p className="text-muted-foreground leading-relaxed mt-3 text-base" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
+              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
                 While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
               </p>
-              <p className="text-muted-foreground leading-relaxed mt-3 text-base" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
+              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
                 I strive to be honest, supportive, and reliable, taking responsibility or leading when needed while contributing and learning with the team.
               </p>
             </BentoCard>
 
-            {/* Education — right-aligned timeline */}
+            {/* Education */}
             <BentoCard className="md:col-span-2 min-h-[10rem]">
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "'Roboto', sans-serif" }}>Education</p>
-              <div className="mt-4 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Education</p>
+              <div className="space-y-4">
                 {educationData.map((edu, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <div className="flex flex-col items-center mt-1.5">
@@ -200,37 +225,34 @@ const AboutSection = () => {
                       )}
                     </div>
                     <div className="flex-1 -mt-0.5">
-                      <p className="text-sm font-semibold text-foreground" style={{ fontFamily: "'Roboto', sans-serif" }}>{edu.institution}</p>
-                      <p className="text-xs text-muted-foreground" style={{ fontFamily: "'Averia Serif Libre', serif" }}>{edu.detail}</p>
-                      <p className="text-xs text-muted-foreground/70" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{edu.years}</p>
+                      <p className="text-sm font-semibold text-foreground font-['Inter']">{edu.institution}</p>
+                      <p className="text-xs text-muted-foreground font-['Inter']">{edu.detail}</p>
+                      <p className="text-xs text-muted-foreground/70 font-['JetBrains_Mono']">{edu.years}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </BentoCard>
 
-            {/* Freelancing + Connect */}
+            {/* Certifications */}
             <BentoCard className="md:col-span-2 min-h-[10rem]">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                </span>
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground" style={{ fontFamily: "'Roboto', sans-serif" }}>Open for Freelancing</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Certifications</p>
+              <div className="grid grid-cols-4 gap-2">
+                {certifications.map((cert, idx) => (
+                  <div
+                    key={idx}
+                    className="aspect-square rounded-lg border border-border bg-muted/30 flex items-center justify-center"
+                  >
+                    <span className="text-muted-foreground text-lg font-medium">—</span>
+                  </div>
+                ))}
+                <a
+                  href="#"
+                  className="aspect-square rounded-lg border border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors font-['Inter'] text-center px-1"
+                >
+                  View All
+                </a>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed" style={{ fontFamily: "'Averia Serif Libre', serif" }}>
-                Happy to gain experience and collaborate on interesting projects. Let's build something great together.
-              </p>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-foreground text-background text-sm font-medium transition-opacity hover:opacity-80"
-                style={{ fontFamily: "'Roboto', sans-serif" }}
-              >
-                Get in Touch
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
 
               <TooltipProvider delayDuration={100}>
                 <div className="mt-5 flex items-center flex-wrap gap-[24px]">
@@ -257,7 +279,7 @@ const AboutSection = () => {
                           </a>
                         )}
                       </TooltipTrigger>
-                      <TooltipContent side="top" className="text-sm" style={{ fontFamily: "'Roboto', sans-serif" }}>
+                      <TooltipContent side="top" className="text-sm font-['Inter']">
                         {s.tooltip}
                       </TooltipContent>
                     </Tooltip>
