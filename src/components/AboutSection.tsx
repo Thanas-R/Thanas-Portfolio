@@ -131,7 +131,7 @@ const educationData = [
 {
   institution: 'Sri Vani Education Centre',
   detail: '1st – 10th',
-  years: '2012 – 2023'
+  years: '2013 – 2023'
 }];
 
 
