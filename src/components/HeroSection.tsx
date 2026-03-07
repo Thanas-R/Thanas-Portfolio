@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { useLanyard } from 'react-use-lanyard';
@@ -85,16 +86,16 @@ const HeroSection = () => {
   const statusLabel = statusLabels[discordStatus] || statusLabels.offline;
 
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center px-6">
+    <section className="relative min-h-[80vh] flex items-center justify-center px-6 pt-16">
       <div className="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
         <motion.div
           initial={{ x: -60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0, 1] }}
         >
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-[0.9] tracking-tight font-['Space_Grotesk']">
-            Thanas{' '}
-            <span className="relative inline-block">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-[0.9] tracking-tight">
+            <span style={{ fontFamily: "'League Gothic', sans-serif", fontSize: '1.15em', letterSpacing: '0.02em' }}>Thanas</span>{' '}
+            <span className="relative inline-block" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.1em' }}>
               R
               <TooltipProvider delayDuration={150} skipDelayDuration={200}>
                 <Tooltip>
@@ -126,7 +127,7 @@ const HeroSection = () => {
                   onMouseEnter={() => setHoveredSocial(s.label)}
                   onMouseLeave={() => setHoveredSocial(null)}
                 >
-                  {s.icon}
+                  {React.cloneElement(s.icon as React.ReactElement, { className: 'w-9 h-9' })}
                 </a>
                 <AnimatePresence>
                   {hoveredSocial === s.label && (
@@ -167,7 +168,7 @@ const HeroSection = () => {
                 e.currentTarget.style.setProperty('--xRotation', `${xRot}deg`);
                 e.currentTarget.style.setProperty('--yRotation', `${yRot}deg`);
               }}
-              className="relative w-48 h-48 md:w-60 md:h-60 glow-card rounded-2xl transition-transform ease-out hover:[transform:rotateX(var(--xRotation))_rotateY(var(--yRotation))_scale(1.05)] overflow-hidden"
+              className="relative w-60 h-60 md:w-[300px] md:h-[300px] glow-card rounded-2xl transition-transform ease-out hover:[transform:rotateX(var(--xRotation))_rotateY(var(--yRotation))_scale(1.05)] overflow-hidden"
             >
               <img
                 src={avatar}
