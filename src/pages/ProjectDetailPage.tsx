@@ -408,8 +408,8 @@ const ProjectDetailPage = () => {
               <div className="flex-1 min-w-0">
                 <motion.div {...fadeUp(0.08)} className="mb-6">
                   <h1
-                  className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-4 uppercase"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-4"
+                  style={{ fontFamily: "'Inter', sans-serif" }}>
                   
                     {project.title}
                   </h1>
