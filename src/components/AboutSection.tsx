@@ -215,15 +215,15 @@ const AboutSection = () => {
               <div className="space-y-4">
                 {educationData.map((edu, idx) =>
                 <div key={idx} className="flex items-start gap-3">
-                    <div className="flex flex-col items-center mt-1.5">
-                      <div className={cn(
-                      'w-2.5 h-2.5 rounded-full ring-2 ring-card',
-                      idx === 0 ? 'bg-foreground' : 'bg-muted-foreground/40'
-                    )} />
-                      {idx < educationData.length - 1 &&
-                    <div className="w-px h-8 bg-border mt-1" />
-                    }
-                    </div>
+                    
+
+
+
+
+
+
+
+                  
                     <div className="flex-1 -mt-0.5">
                       <p className="text-sm font-semibold text-foreground font-['Inter']">{edu.institution}</p>
                       <p className="text-xs text-muted-foreground font-['Inter']">{edu.detail}</p>
