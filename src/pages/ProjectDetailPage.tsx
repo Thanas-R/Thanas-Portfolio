@@ -61,8 +61,8 @@ const ProjectDetailPage = () => {
     navLabel: isDark ? '#888888' : '#999999'
   };
 
-  // Smart Chef background for light mode
-  const smartChefBg = isSmartChef && !isDark ? '#F4F0EB' : undefined;
+  // Smart Chef background removed per user request
+  const smartChefBg = undefined;
 
   return (
     <>

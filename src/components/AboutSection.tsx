@@ -3,16 +3,33 @@ import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { GlowingEffect } from '@/components/GlowingEffect';
 import { TbBrandGithubFilled } from 'react-icons/tb';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    filter: "blur(10px)"
+  },
+  visible: {
+    opacity: 1,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.3
+    }
+  }
+};
+
 const BentoCard = ({ className, children }: {className?: string;children?: ReactNode;}) =>
-<div className={cn('relative group rounded-xl border-[0.9px] border-border bg-card overflow-hidden p-5', className)}>
-    {/* reduced glow borderWidth -> 1 */}
-    <GlowingEffect spread={40} proximity={64} borderWidth={2} disabled={false} />
+<motion.div
+  variants={cardVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, margin: '-50px' }}
+  className={cn('relative group rounded-xl border-[0.9px] border-border bg-card overflow-hidden p-5', className)}>
+  
     <div className="relative z-10 h-full">{children}</div>
-  </div>;
+  </motion.div>;
 
 
 const socialIcons = [
@@ -76,6 +93,79 @@ const socialIcons = [
 }];
 
 
+const journeyData = [
+{
+  year: '2026',
+  suffix: '· Present',
+  description: 'Adopted agentic AI tools, refined UI/UX design skills, and elevated prompt engineering for efficient project delivery.'
+},
+{
+  year: '2025',
+  description: 'Began B.Tech in CSE (AI/ML) at PES University. Started building production-ready projects.'
+},
+{
+  year: '2023',
+  description: 'Focused on C++ and data structures & algorithms, strengthening core CS fundamentals.'
+},
+{
+  year: '2021',
+  description: 'Started learning Java, focusing on OOP principles and application development.'
+},
+{
+  year: '2020',
+  description: 'First steps in programming with Python, building small applications and scripts.'
+}];
+
+
+const educationData = [
+{
+  institution: 'PES University',
+  detail: 'B.Tech CSE (AIML)',
+  years: '2025 – 2029'
+},
+{
+  institution: 'Allen Career Institute',
+  detail: '11th – 12th',
+  years: '2023 – 2025'
+},
+{
+  institution: 'Sri Vani Education Centre',
+  detail: '1st – 10th',
+  years: '2012 – 2023'
+}];
+
+
+const certifications = [
+{ label: 'Certificate 1' },
+{ label: 'Certificate 2' },
+{ label: 'Certificate 3' },
+{ label: 'Certificate 4' },
+{ label: 'Certificate 5' },
+{ label: 'Certificate 6' },
+{ label: 'Certificate 7' }];
+
+
+const TimelineItem = ({ year, suffix, description, isFirst, isLast }: {year: string;suffix?: string;description: string;isFirst?: boolean;isLast?: boolean;}) =>
+<div className="flex items-start gap-3">
+    <div className="flex flex-col items-center mt-1.5">
+      <div className={cn(
+      'w-2.5 h-2.5 rounded-full ring-2 ring-card',
+      isFirst ? 'bg-foreground' : 'bg-muted-foreground/40'
+    )} />
+      {!isLast && <div className="w-px h-8 bg-border mt-1" />}
+    </div>
+    <div className="flex-1 -mt-0.5">
+      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter']">
+        {year}
+        {suffix && <span className="text-foreground/40 normal-case font-['Averia_Serif_Libre']"> {suffix}</span>}
+      </p>
+      <p className="mt-1 text-sm text-foreground/80 leading-relaxed font-['Inter']">
+        {description}
+      </p>
+    </div>
+  </div>;
+
+
 const AboutSection = () => {
   return (
     <section id="about" className="relative py-12 w-full pt-0">
@@ -85,114 +175,116 @@ const AboutSection = () => {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
 
             {/* Journey — timeline, spans 2 rows */}
             <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem]">
-              <div className="relative pl-6 space-y-5">
-                <div className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Journey</p>
+              <div className="space-y-4">
+                {journeyData.map((item, idx) =>
+                <TimelineItem
+                  key={item.year}
+                  year={item.year}
+                  suffix={item.suffix}
+                  description={item.description}
+                  isFirst={idx === 0}
+                  isLast={idx === journeyData.length - 1} />
 
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-3 h-3 rounded-full bg-foreground ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-poppins">2026 <span className="text-foreground/40 normal-case font-quicksand">· Present</span></p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed font-quicksand">
-                    Adopted agentic AI tools, refined <strong className="text-foreground">UI/UX design</strong> skills, and elevated prompt engineering for efficient project delivery.
-                  </p>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/50 ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-poppins">2025</p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed font-quicksand">
-                    Began <strong className="text-foreground">B.Tech in CSE (AI/ML)</strong> at PES University. Started building production-ready projects.
-                  </p>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/40 ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-poppins">2023</p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed font-quicksand">
-                    Focused on <strong className="text-foreground">C++</strong> and data structures & algorithms, strengthening core CS fundamentals.
-                  </p>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/30 ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-poppins">2021</p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed font-quicksand">
-                    Started learning <strong className="text-foreground">Java</strong>, focusing on OOP principles and application development.
-                  </p>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute left-[-22px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground/20 ring-2 ring-card" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-poppins">2020</p>
-                  <p className="mt-1 text-sm text-foreground/80 leading-relaxed font-quicksand">
-                    First steps in programming with <strong className="text-foreground">Python</strong>, building small applications and scripts.
-                  </p>
-                </div>
+                )}
               </div>
             </BentoCard>
 
             {/* About Me — wide center */}
             <BentoCard className="md:col-span-4 min-h-[10rem]">
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground font-poppins tracking-tight">About Me</h3>
-              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-quicksand">
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">About Me</h3>
+              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
                 I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
               </p>
-              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-quicksand">
+              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
                 While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
               </p>
-              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-quicksand">
+              <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
                 I strive to be honest, supportive, and reliable, taking responsibility or leading when needed while contributing and learning with the team.
               </p>
             </BentoCard>
 
-            {/* Currently */}
+            {/* Education */}
             <BentoCard className="md:col-span-2 min-h-[10rem]">
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-poppins">Currently</p>
-              <p className="text-xl font-bold text-foreground font-quicksand mt-2">Building & Learning</p>
-              <p className="text-muted-foreground leading-relaxed mt-2 text-lg font-quicksand">
-                Most likely working on a personal project. Pursuing <strong className="text-foreground">B.Tech</strong> at PES University, 2025–2029, majoring in CSE (AI/ML).
-              </p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Education</p>
+              <div className="space-y-4">
+                {educationData.map((edu, idx) =>
+                <div key={idx} className="flex items-start gap-3">
+                    
+
+
+
+
+
+
+
+                  
+                    <div className="flex-1 -mt-0.5">
+                      <p className="text-sm font-semibold text-foreground font-['Inter']">{edu.institution}</p>
+                      <p className="text-xs text-muted-foreground font-['Inter']">{edu.detail}</p>
+                      <p className="text-xs text-muted-foreground/70 font-['JetBrains_Mono']">{edu.years}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </BentoCard>
 
-            {/* Connect — bigger icons, no boxes, with tooltips */}
+            {/* Certifications */}
             <BentoCard className="md:col-span-2 min-h-[10rem]">
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-poppins">Connect</p>
-              <p className="text-xl font-bold text-foreground font-poppins mt-2">Find Me Online</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Certifications</p>
+              <div className="grid grid-cols-4 gap-2">
+                {certifications.map((cert, idx) =>
+                <div
+                  key={idx}
+                  className="aspect-square rounded-lg border border-border bg-muted/30 flex items-center justify-center">
+                  
+                    <span className="text-muted-foreground text-lg font-medium">—</span>
+                  </div>
+                )}
+                <a
+                  href="#"
+                  className="aspect-square rounded-lg border border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors font-['Inter'] text-center px-1">
+                  
+                  View All
+                </a>
+              </div>
+
               <TooltipProvider delayDuration={100}>
-                <div className="mt-4 flex items-center flex-wrap gap-[30px]">
-                  {socialIcons.map((s) =>
-                  <Tooltip key={s.label}>
-                      <TooltipTrigger asChild>
-                        {s.isInternal ?
-                      <Link
-                        to={s.href}
-                        className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                        aria-label={s.label}>
+                
 
-                            {s.icon}
-                          </Link> :
 
-                      <a
-                        href={s.href}
-                        target={s.href.startsWith('http') ? '_blank' : undefined}
-                        rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                        aria-label={s.label}>
 
-                            {s.icon}
-                          </a>
-                      }
-                      </TooltipTrigger>
-                      <TooltipContent side="top" className="font-poppins text-sm">
-                        {s.tooltip}
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </TooltipProvider>
             </BentoCard>
           </div>

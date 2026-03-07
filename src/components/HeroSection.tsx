@@ -167,7 +167,7 @@ const HeroSection = () => {
                 e.currentTarget.style.setProperty('--xRotation', `${xRot}deg`);
                 e.currentTarget.style.setProperty('--yRotation', `${yRot}deg`);
               }}
-              className="relative w-48 h-48 md:w-60 md:h-60 glow-card rounded-2xl transition-transform ease-out hover:[transform:rotateX(var(--xRotation))_rotateY(var(--yRotation))_scale(1.05)] overflow-hidden"
+              className="relative w-56 h-56 md:w-72 md:h-72 glow-card rounded-2xl transition-transform ease-out hover:[transform:rotateX(var(--xRotation))_rotateY(var(--yRotation))_scale(1.05)] overflow-hidden"
             >
               <img
                 src={avatar}
