@@ -26,7 +26,7 @@ const socials = [
     label: 'GitHub',
   href: 'https://github.com/Thanas-R',
   tooltip: 'Thanas-R',
-  icon: <TbBrandGithubFilled className="w-7 h-7" />,
+  icon: <TbBrandGithubFilled className="w-9 h-9" />,
   },
   {
     label: 'LinkedIn',
