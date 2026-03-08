@@ -69,21 +69,32 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           }}
         >
           {/* Header */}
-          <div className="flex items-center gap-3 mb-1">
-            <Leaf className="w-6 h-6" style={{ color: green }} />
-            <h1
-              className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
-              style={{ fontFamily: font, color: heading }}
-            >
-              Virdis
-            </h1>
-          </div>
-          <p
-            className="text-xs uppercase tracking-[0.2em] font-medium mb-6 ml-9"
-            style={{ color: accent, fontFamily: font }}
+          <h1
+            className="text-4xl md:text-6xl font-bold leading-none tracking-tight mb-2"
+            style={{ fontFamily: font, color: heading }}
           >
-            Precision Agriculture Platform
-          </p>
+            Virdis
+          </h1>
+          <div className="flex items-center gap-4 mb-6">
+            <p
+              className="text-xs uppercase tracking-[0.2em] font-medium"
+              style={{ color: accent, fontFamily: font }}
+            >
+              Precision Agriculture Platform
+            </p>
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold hover:opacity-85 transition-opacity"
+                style={{ backgroundColor: text, color: panelBg, fontFamily: font }}
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                Live Demo
+              </a>
+            )}
+          </div>
           <p
             className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
             style={{ color: textMuted, fontFamily: font }}
