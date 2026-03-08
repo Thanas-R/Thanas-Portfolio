@@ -275,7 +275,50 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailProps) => {
+const MERMAID_CHART = `graph TD
+    A["App.tsx"] --> B["QueryClientProvider + CanvasStoreProvider"]
+    B --> C["Index.tsx"]
+    C --> D["KnowledgeCanvas\n(React Flow)"]
+    C --> E["LeftSidebar\n(Chat Sessions)"]
+    C --> F["SettingsPanel\n(Theme, Layout)"]
+    C --> G["CommandPalette\n(Ctrl+K)"]
+    D --> H["10 Node Types\n(TopicCard, ConceptBlock,\nBuildingCard, KnowledgeNode,\nTextNode, ImageNode...)"]
+    D --> I["Custom Edge Types\n(BezierLabeledEdge)"]
+    D --> J["FloatingChatInput\n(AI Prompt Bar)"]
+    D --> K["Toolbar +\nDrawingToolbar +\nDrawingCanvas"]
+    D --> L["CanvasControls\n(Zoom, Undo/Redo)"]
+    D --> M["PathExplainPanel"]
+`;
+
+const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [svg, setSvg] = useState('');
+
+  useEffect(() => {
+    const id = 'nautilus-arch-' + Date.now();
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDark ? 'dark' : 'default',
+      themeVariables: isDark
+        ? { primaryColor: '#1a1a1a', primaryBorderColor: '#333', primaryTextColor: '#e5e5e5', lineColor: '#444', secondaryColor: '#111' }
+        : { primaryColor: '#f5f5f5', primaryBorderColor: '#ddd', primaryTextColor: '#1a1a1a', lineColor: '#bbb', secondaryColor: '#fafafa' },
+      flowchart: { curve: 'basis', padding: 16 },
+    });
+    mermaid.render(id, MERMAID_CHART).then(({ svg: renderedSvg }) => {
+      setSvg(renderedSvg);
+    });
+  }, [isDark]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="w-full flex justify-center [&_svg]:max-w-full [&_svg]:h-auto"
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  );
+};
+
+
   const { isDark } = useTheme();
 
   const textColor = isDark ? 'hsl(0 0% 65%)' : 'hsl(0 0% 40%)';
