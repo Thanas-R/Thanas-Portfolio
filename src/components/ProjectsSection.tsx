@@ -27,11 +27,11 @@ export const projects: Project[] = [
   {
     id: 'nautilus',
     title: 'Nautilus',
-    description: 'AI knowledge tool with mindmaps, flowcharts & concept cards',
+    description: 'AI-powered canvas for knowledge maps, flowcharts & concept cards',
     longDescription:
-      'A canvas-based AI knowledge tool that lets users create interconnected mindmaps, flowcharts, and auto-linked concept cards forming dynamic knowledge graphs. Powered by AI, Nautilus automatically identifies relationships between concepts, generates summaries, and builds visual representations of complex topics.',
+      'An AI-powered canvas-based knowledge management and visual thinking platform. Nautilus generates interconnected knowledge maps, flowcharts, and concept cards from a simple prompt, all rendered on an infinite zoomable canvas.',
     imageSrc: projectNautilus,
-    tags: ['React', 'Canvas', 'AI', 'TypeScript', 'Graph'],
+    tags: ['React Flow', 'AI', 'TypeScript', 'Supabase', 'Dagre'],
     live: 'https://nautilus-build.vercel.app',
   },
   {
