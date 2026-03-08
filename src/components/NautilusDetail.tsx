@@ -194,32 +194,24 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
         }}
         className="relative"
       >
-        {/* Dot grid background */}
-        <svg className="absolute inset-0" width={canvasW} height={canvasH}>
-          <defs>
-            <pattern id="nautilus-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="10" cy="10" r="1" fill={dotColor} />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#nautilus-dots)" />
-
-          {/* Edges */}
-          {EDGES.map((edge) => {
+        {/* Edges SVG */}
+        <svg className="absolute inset-0 pointer-events-none" width={canvasW} height={canvasH}>
+          {EDGES.map((edge, edgeIdx) => {
             const fromNode = FEATURES.find(n => n.id === edge.from)!;
             const toNode = FEATURES.find(n => n.id === edge.to)!;
-            const { path, labelX, labelY } = getEdgePath(fromNode, toNode);
+            const { path } = getEdgePath(fromNode, toNode);
             return (
-              <g key={`${edge.from}-${edge.to}`}>
-                <path
-                  d={path}
-                  fill="none"
-                  stroke={edgeColor}
-                  strokeWidth="1.5"
-                  strokeDasharray="6 4"
-                />
-                {/* Arrow */}
-                <circle cx={labelX} cy={labelY} r="3" fill={edgeColor} />
-              </g>
+              <motion.path
+                key={`${edge.from}-${edge.to}`}
+                d={path}
+                fill="none"
+                stroke={edgeColor}
+                strokeWidth="1.5"
+                strokeDasharray="6 4"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 + edgeIdx * 0.15, ease: 'easeOut' }}
+              />
             );
           })}
         </svg>
