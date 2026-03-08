@@ -194,6 +194,18 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
       >
         {/* Edges SVG */}
         <svg className="absolute inset-0 pointer-events-none" width={canvasW} height={canvasH}>
+          <defs>
+            <marker
+              id="arrowhead"
+              markerWidth="8"
+              markerHeight="6"
+              refX="7"
+              refY="3"
+              orient="auto"
+            >
+              <polygon points="0 0, 8 3, 0 6" fill={edgeColor} />
+            </marker>
+          </defs>
           {EDGES.map((edge, edgeIdx) => {
             const fromNode = FEATURES.find(n => n.id === edge.from)!;
             const toNode = FEATURES.find(n => n.id === edge.to)!;
@@ -205,10 +217,10 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 fill="none"
                 stroke={edgeColor}
                 strokeWidth="1.5"
-                strokeDasharray="6 4"
+                markerEnd="url(#arrowhead)"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 + edgeIdx * 0.15, ease: 'easeOut' }}
+                transition={{ duration: 0.6, delay: 0.3 + edgeIdx * 0.12, ease: 'easeOut' }}
               />
             );
           })}
