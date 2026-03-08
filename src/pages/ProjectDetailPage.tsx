@@ -28,14 +28,27 @@ const fadeUp = (delay = 0) => ({
 
 const ProjectDetailPage = () => {
   const { slug } = useParams<{slug: string;}>();
+  const navigate = useNavigate();
   const project = projects.find((p) => p.id === slug);
   const { isDark } = useTheme();
-
-  if (!project) return <Navigate to="/projects" replace />;
 
   const currentIndex = projects.findIndex((p) => p.id === slug);
   const prevProject = projects[currentIndex - 1] ?? null;
   const nextProject = projects[currentIndex + 1] ?? null;
+
+  // Arrow key navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'ArrowLeft' && prevProject) {
+        navigate(`/projects/${prevProject.id}`);
+      } else if (e.key === 'ArrowRight' && nextProject) {
+        navigate(`/projects/${nextProject.id}`);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [prevProject, nextProject, navigate]);
   const isThanasOS = project.id === 'thanas-os';
   const isSmartChef = project.id === 'smart-chef';
   const isAskBookie = project.id === 'askbookie';
