@@ -49,7 +49,7 @@ const ResumeSection = () => {
                   </DialogTrigger>
                   <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-4 sm:p-6">
                     <DialogHeader>
-                      <DialogTitle className="font-['Space_Grotesk']">Thanas R — Resume</DialogTitle>
+                      <DialogTitle className="font-['Space_Grotesk']">Thanas R - Resume</DialogTitle>
                       <DialogDescription>
                         Preview of the uploaded PDF. Use download if your browser blocks embedded PDFs.
                       </DialogDescription>

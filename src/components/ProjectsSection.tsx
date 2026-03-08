@@ -80,7 +80,7 @@ export const projects: Project[] = [
     title: 'Contour Flow',
     description: 'Real-time procedural topographic map generator rendered to canvas',
     longDescription:
-      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares — no images, no SVGs, pure math.',
+      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares - no images, no SVGs, pure math.',
     imageSrc: projectContour,
     tags: ['React', 'Canvas', 'TypeScript', 'Simplex Noise', 'Creative Coding'],
   },
