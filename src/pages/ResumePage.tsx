@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Download, Printer } from 'lucide-react';
+import { Download, ExternalLink, Printer } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
