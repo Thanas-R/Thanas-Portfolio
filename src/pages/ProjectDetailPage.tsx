@@ -640,7 +640,7 @@ const ProjectDetailPage = () => {
                 </Link> :
             <div />}
             </motion.div>
-        ) : isPesuForge ? (
+          </div>) : isPesuForge ? (
         /* ── PESU Forge — backdrop landscape with floating cards ── */
         <div className="min-h-screen relative">
           {/* Fixed backdrop image */}
