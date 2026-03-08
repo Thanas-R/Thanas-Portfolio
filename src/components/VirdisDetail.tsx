@@ -75,9 +75,9 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           >
             Virdis
           </h1>
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center justify-between mb-6">
             <p
-              className="text-xs uppercase tracking-[0.2em] font-medium"
+              className="text-sm uppercase tracking-[0.2em] font-medium"
               style={{ color: accent, fontFamily: font }}
             >
               Precision Agriculture Platform
@@ -87,10 +87,10 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold hover:opacity-85 transition-opacity"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold hover:opacity-85 transition-opacity"
                 style={{ backgroundColor: text, color: panelBg, fontFamily: font }}
               >
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-4 h-4" />
                 Live Demo
               </a>
             )}
