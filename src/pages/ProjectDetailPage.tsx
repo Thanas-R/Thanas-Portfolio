@@ -893,7 +893,7 @@ const ProjectDetailPage = () => {
                   Contour Flow
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-                  A real-time procedural topographic map generator — no images, no SVGs, pure math rendered to canvas.
+                  A real-time procedural topographic map generator - no images, no SVGs, pure math rendered to canvas.
                 </p>
               </motion.div>
 
