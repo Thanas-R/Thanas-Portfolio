@@ -93,23 +93,37 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             >
               Satellite-Powered Precision Agriculture Platform
             </p>
-            {project.live && (
+            <div className="flex items-center gap-3 shrink-0">
               <a
-                href={project.live}
+                href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:scale-[1.03] active:scale-[0.98] transition-all"
                 style={{
-                  backgroundColor: text,
-                  color: panelBg,
-                  fontFamily: font,
-                  boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                  backgroundColor: 'rgba(255,251,235,0.08)',
+                  border: '1px solid rgba(255,251,235,0.15)',
                 }}
               >
-                <ExternalLink className="w-4 h-4" />
-                Live Demo
+                <Github className="w-4 h-4" style={{ color: text }} />
               </a>
-            )}
+              {project.live && (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+                  style={{
+                    backgroundColor: text,
+                    color: panelBg,
+                    fontFamily: font,
+                    boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                  }}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Live Demo
+                </a>
+              )}
+            </div>
           </div>
 
           {/* Description */}
