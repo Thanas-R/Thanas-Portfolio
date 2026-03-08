@@ -714,7 +714,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Tags between hero and about */}
-              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-8">
+              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-8 justify-center">
                 {project.tags.map((tag, i) => (
                   <span
                     key={tag}
