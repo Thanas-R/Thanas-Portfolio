@@ -409,7 +409,15 @@ const ProjectDetailPage = () => {
                 <h1 className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {project.title}
                 </h1>
-                <AppleHelloEffect className="h-8 md:h-12 text-foreground mb-4" speed={0.7} />
+                <div className="flex items-center gap-4 mb-4">
+                  <AppleHelloEffect className="h-8 md:h-12 text-foreground" speed={0.7} />
+                  {project.live && (
+                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
+                      <ExternalLink className="w-4 h-4" />
+                      Live Site
+                    </a>
+                  )}
+                </div>
                 <p className="text-sm text-muted-foreground mb-6">
                   macOS-themed interactive portfolio
                 </p>
@@ -428,13 +436,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Right: Mac mockup */}
-              <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex flex-col items-center mt-8 md:mt-0">
-                {project.live && (
-                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity mb-6">
-                    <ExternalLink className="w-4 h-4" />
-                    Live Site
-                  </a>
-                )}
+              <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex items-start justify-center mt-8 md:mt-0">
                 <Mac src={thanasOsMac} className="w-full max-w-[650px] h-auto text-background" />
               </motion.div>
             </div>
