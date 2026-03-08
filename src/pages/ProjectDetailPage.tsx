@@ -676,21 +676,6 @@ const ProjectDetailPage = () => {
                   border: '1px solid rgba(255,255,255,0.08)',
                 }}
               >
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {project.tags.map((tag, i) => (
-                    <span
-                      key={tag}
-                      className={`text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider ${
-                        i === 0
-                          ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                          : 'bg-white/5 text-white/50 border border-white/10'
-                      }`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
                 <h1
                   className="text-5xl md:text-7xl font-black text-white leading-none tracking-tight mb-5 uppercase"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
@@ -726,6 +711,22 @@ const ProjectDetailPage = () => {
                     </a>
                   )}
                 </div>
+              </motion.div>
+
+              {/* Tags between hero and about */}
+              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-8">
+                {project.tags.map((tag, i) => (
+                  <span
+                    key={tag}
+                    className={`text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider ${
+                      i === 0
+                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        : 'bg-white/5 text-white/50 border border-white/10'
+                    }`}
+                  >
+                    {tag}
+                  </span>
+                ))}
               </motion.div>
 
               {/* About card */}
