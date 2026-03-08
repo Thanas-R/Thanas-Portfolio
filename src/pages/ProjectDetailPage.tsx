@@ -33,6 +33,7 @@ const ProjectDetailPage = () => {
   const isAskBookie = project.id === 'askbookie';
   const isPesuForge = project.id === 'pesu-forge';
   const isContourFlow = project.id === 'contour-flow';
+  const isVirdis = project.id === 'virdis';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
