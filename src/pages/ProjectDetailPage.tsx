@@ -42,6 +42,7 @@ const ProjectDetailPage = () => {
   const isContourFlow = project.id === 'contour-flow';
   const isVirdis = project.id === 'virdis';
   const isPesuMC = project.id === 'pesu-mc';
+  const isNautilus = project.id === 'nautilus';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
