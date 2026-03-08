@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Leaf, BarChart3, Crosshair, Cpu, Satellite } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, BarChart3, Crosshair, Cpu, Satellite } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
