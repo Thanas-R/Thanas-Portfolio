@@ -26,7 +26,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
   const outsideBorder = isDark ? 'hsl(150 15% 22%)' : 'hsl(0 0% 90%)';
   const outsideCardBg = isDark ? 'hsl(150 18% 14%)' : 'hsl(0 0% 97%)';
 
-  const panelBorder = isDark ? '#FFFBEB' : '#041009';
+  const panelBorder = '#041009';
   const panelBg = '#1D2A23';
   const cardBg = '#24322C';
   const cardBorder = '#2E3F37';
