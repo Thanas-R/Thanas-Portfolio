@@ -61,6 +61,7 @@ const ProjectDetailPage = () => {
   const isVirdis = project.id === 'virdis';
   const isPesuMC = project.id === 'pesu-mc';
   const isNautilus = project.id === 'nautilus';
+  const isSpheal = project.id === 'spheal';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
