@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud, Crosshair } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
@@ -80,25 +80,19 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           />
           <div className="relative z-10">
           {/* Header */}
-          <h1
-            className="text-4xl md:text-6xl font-bold leading-none tracking-tight mb-2"
-            style={{ fontFamily: font, color: heading }}
-          >
-            Virdis
-          </h1>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-            <p
-              className="text-sm uppercase tracking-[0.2em] font-medium"
-              style={{ color: accent, fontFamily: font }}
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-2">
+            <h1
+              className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
+              style={{ fontFamily: font, color: heading }}
             >
-              Satellite-Powered Precision Agriculture Platform
-            </p>
+              Virdis
+            </h1>
             {project.live && (
               <a
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+                className="inline-flex items-center gap-2.5 px-7 py-3 rounded-xl text-base font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0 order-last md:order-none"
                 style={{
                   backgroundColor: text,
                   color: panelBg,
@@ -106,11 +100,17 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                   boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
                 }}
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-5 h-5" />
                 Live Demo
               </a>
             )}
           </div>
+          <p
+            className="text-sm uppercase tracking-[0.2em] font-medium mb-6"
+            style={{ color: accent, fontFamily: font }}
+          >
+            Satellite-Powered Precision Agriculture Platform
+          </p>
 
           {/* Description */}
           <p
@@ -146,7 +146,6 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             {[
               { icon: Map, title: 'Satellite Map', desc: 'Mapbox basemap with polygon drawing, field editing, and NDVI layer overlays.' },
               { icon: BarChart3, title: 'NDVI Analysis', desc: 'Sentinel-2 imagery via Google Earth Engine to calculate vegetation health indices.' },
-              { icon: Crosshair, title: 'Auto Detection', desc: 'One-click field detection using region-growing segmentation via GEE computePixels.' },
               { icon: Cpu, title: 'AI Insights', desc: 'Gemini 2.5 Flash powered crop health assessments and irrigation recommendations.' },
               { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
             ].map((item) => (
