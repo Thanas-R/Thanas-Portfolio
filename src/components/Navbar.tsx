@@ -149,7 +149,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden fixed inset-0 z-40 bg-background/60 backdrop-blur-xl"
+               className={`md:hidden fixed inset-0 z-40 backdrop-blur-xl ${forceDark ? 'bg-black/60' : 'bg-background/60'}`}
               onClick={() => setMobileOpen(false)}
             />
             {/* Menu panel */}
@@ -158,7 +158,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
-              className="md:hidden fixed top-20 left-4 right-4 z-50 rounded-2xl border border-border bg-card/95 backdrop-blur-2xl p-6 space-y-1 shadow-2xl"
+              className={`md:hidden fixed top-20 left-4 right-4 z-50 rounded-2xl border backdrop-blur-2xl p-6 space-y-1 shadow-2xl ${forceDark ? 'border-white/15 bg-black/80' : 'border-border bg-card/95'}`}
             >
               {navItems.map((item, i) => (
                 <motion.div
@@ -170,7 +170,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
                   <Link
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block py-3 px-3 rounded-xl text-lg font-medium text-foreground hover:bg-muted/50 transition-colors font-['Space_Grotesk']"
+                    className={`block py-3 px-3 rounded-xl text-lg font-medium transition-colors font-['Space_Grotesk'] ${forceDark ? 'text-white hover:bg-white/10' : 'text-foreground hover:bg-muted/50'}`}
                   >
                     {item.label}
                   </Link>
