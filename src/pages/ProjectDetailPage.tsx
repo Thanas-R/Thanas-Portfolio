@@ -447,7 +447,9 @@ const ProjectDetailPage = () => {
 
               {/* Right: Mac mockup */}
               <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex items-start justify-center mt-8 md:mt-0">
-                <Mac src={thanasOsMac} className="w-full max-w-[650px] h-auto text-background" />
+                <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer w-full max-w-[650px]">
+                  <Mac src={thanasOsMac} className="w-full h-auto text-background" />
+                </a>
               </motion.div>
             </div>
 

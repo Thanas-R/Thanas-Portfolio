@@ -91,7 +91,7 @@ export const projects: Project[] = [
   longDescription:
     'A recipe recommendation engine built entirely in-memory using a Vector Space Model and TF-IDF scoring. Enter ingredients you have on hand and the system ranks recipes by relevance using cosine similarity.',
   imageSrc: projectSmartchef,
-  tags: ['Python', 'TF-IDF', 'NLP', 'VSM'],
+  tags: ['Python', 'TF-IDF', 'VSM'],
   live: 'https://smart-chef-pesu.vercel.app/',   // ← ADD THIS
   github: 'https://github.com/Thanas-R/Smart-Chef',
 },

@@ -43,6 +43,9 @@ const techStack: TechItem[] = [
 
   // Deployment / Platform
   { name: 'Vercel', icon: <SiVercel />, url: 'https://vercel.com/' },
+
+  // Design
+  { name: 'Figma', icon: <SiFigma />, url: 'https://www.figma.com/' },
 ];
 
 function Ribbon({ items, reverse, speed, tooltipSide }: { items: TechItem[]; reverse: boolean; speed: number; tooltipSide: 'top' | 'bottom' }) {
