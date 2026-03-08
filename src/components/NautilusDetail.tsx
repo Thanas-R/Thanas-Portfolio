@@ -166,7 +166,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   }, []);
 
   const canvasW = 580;
-  const canvasH = 555;
+  const canvasH = 600;
 
   const highlightText = (text: string, highlights?: { text: string; color: string }[]) => {
     if (!highlights?.length) return text;
