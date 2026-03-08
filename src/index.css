@@ -180,3 +180,26 @@ html {
   -ms-overflow-style: none;  /* IE/Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+/* Minimal thin scrollbar for resume PDF viewer */
+.resume-viewer ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.resume-viewer ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.resume-viewer ::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground) / 0.15);
+  border-radius: 3px;
+}
+
+.resume-viewer ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground) / 0.3);
+}
+
+.resume-viewer {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--foreground) / 0.15) transparent;
+}
