@@ -162,8 +162,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               { icon: BarChart3, title: 'NDVI Analysis', desc: 'Sentinel-2 imagery via Google Earth Engine to calculate vegetation health indices.' },
               { icon: Cpu, title: 'AI Insights', desc: 'Gemini 2.5 Flash powered crop health assessments and irrigation recommendations.' },
               { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
-              { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
-            ].map((item) => (
+            ].map((item, i) => (
               <div
                 key={item.title}
                 className="p-5 rounded-xl flex gap-4"
