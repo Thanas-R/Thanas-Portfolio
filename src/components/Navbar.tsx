@@ -99,10 +99,10 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <button
             onClick={() => window.dispatchEvent(new Event('open-command-palette'))}
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
+            className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
             aria-label="Search"
           >
-            <Command className="w-3.5 h-3.5" />
+            <Command className="w-4 h-4" />
           </button>
           {navItems.map((item) => (
             <Link
