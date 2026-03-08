@@ -135,15 +135,6 @@ const educationData = [
 }];
 
 
-const certifications = [
-{ label: 'Certificate 1' },
-{ label: 'Certificate 2' },
-{ label: 'Certificate 3' },
-{ label: 'Certificate 4' },
-{ label: 'Certificate 5' },
-{ label: 'Certificate 6' },
-{ label: 'Certificate 7' }];
-
 
 const TimelineItem = ({ year, suffix, description, isFirst, isLast }: {year: string;suffix?: string;description: string;isFirst?: boolean;isLast?: boolean;}) =>
 <div className="flex items-start gap-3">
