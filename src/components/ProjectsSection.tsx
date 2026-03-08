@@ -41,7 +41,7 @@ export const projects: Project[] = [
     longDescription:
       'An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data. Virdis processes multispectral imagery to calculate vegetation indices, detect anomalies, and provide actionable insights for precision agriculture.',
     imageSrc: projectVirdis,
-    tags: ['React', 'Mapbox', 'Python', 'Satellite', 'AI'],
+    tags: ['React', 'TypeScript', 'Mapbox', 'Supabase', 'Deno', 'Earth Engine', 'Gemini AI', 'shadcn/ui'],
     live: 'https://virdis.vercel.app',
   },
   {
