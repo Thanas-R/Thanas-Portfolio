@@ -216,6 +216,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               <img src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
             )}
           </div>
+          </div>
         </motion.div>
 
         {/* Nav prev/next */}
