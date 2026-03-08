@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
 import { Mac } from '@/components/Mac';
 import thanasOsMac from '@/assets/thanasos-mac.png';
+import pesuForgeBg from '@/assets/pesuforge-bg.png';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 
