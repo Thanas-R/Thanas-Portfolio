@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
@@ -80,37 +80,51 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           />
           <div className="relative z-10">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-2">
-            <h1
-              className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
-              style={{ fontFamily: font, color: heading }}
+          <h1
+            className="text-4xl md:text-6xl font-bold leading-none tracking-tight mb-2"
+            style={{ fontFamily: font, color: heading }}
+          >
+            Virdis
+          </h1>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+            <p
+              className="text-sm uppercase tracking-[0.2em] font-medium"
+              style={{ color: accent, fontFamily: font }}
             >
-              Virdis
-            </h1>
-            {project.live && (
+              Satellite-Powered Precision Agriculture Platform
+            </p>
+            <div className="flex items-center gap-3 shrink-0">
               <a
-                href={project.live}
+                href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-7 py-3 rounded-xl text-base font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0 order-last md:order-none"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:scale-[1.03] active:scale-[0.98] transition-all"
                 style={{
-                  backgroundColor: text,
-                  color: panelBg,
-                  fontFamily: font,
-                  boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                  backgroundColor: 'rgba(255,251,235,0.08)',
+                  border: '1px solid rgba(255,251,235,0.15)',
                 }}
               >
-                <ExternalLink className="w-5 h-5" />
-                Live Demo
+                <Github className="w-4 h-4" style={{ color: text }} />
               </a>
-            )}
+              {project.live && (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+                  style={{
+                    backgroundColor: text,
+                    color: panelBg,
+                    fontFamily: font,
+                    boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                  }}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Live Demo
+                </a>
+              )}
+            </div>
           </div>
-          <p
-            className="text-sm uppercase tracking-[0.2em] font-medium mb-6"
-            style={{ color: accent, fontFamily: font }}
-          >
-            Satellite-Powered Precision Agriculture Platform
-          </p>
 
           {/* Description */}
           <p
@@ -148,7 +162,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               { icon: BarChart3, title: 'NDVI Analysis', desc: 'Sentinel-2 imagery via Google Earth Engine to calculate vegetation health indices.' },
               { icon: Cpu, title: 'AI Insights', desc: 'Gemini 2.5 Flash powered crop health assessments and irrigation recommendations.' },
               { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
-            ].map((item) => (
+            ].map((item, i) => (
               <div
                 key={item.title}
                 className="p-5 rounded-xl flex gap-4"

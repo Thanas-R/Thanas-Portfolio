@@ -117,7 +117,7 @@ const ProjectsPage = () => {
 
                   {/* Mobile preview image */}
                   <div className="md:hidden pb-4">
-                    <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-video">
+                    <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-[16/10]">
                       <img
                         src={project.imageSrc}
                         alt={project.title}
