@@ -422,7 +422,6 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             <div
               className="mb-12 overflow-hidden"
             >
-            >
               <FlowchartCanvas isDark={isDark} />
             </div>
           </motion.div>
