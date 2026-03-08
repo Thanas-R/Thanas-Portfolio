@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Github, Brain, Layout, PenTool, GitBranch, Save, MessageSquare } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
 import GridBackground from '@/components/GridBackground';
 import { Project } from '@/components/ProjectsSection';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import NautilusFlowchart from '@/components/NautilusFlowchart';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -19,285 +19,6 @@ interface NautilusDetailProps {
   nextProject: Project | null;
 }
 
-/* ── Flowchart node data ── */
-interface FlowNode {
-  id: string;
-  title: string;
-  content: string;
-  highlights?: { text: string; color: string }[];
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-interface FlowEdge {
-  from: string;
-  to: string;
-  label?: string;
-}
-
-const FEATURES: FlowNode[] = [
-  {
-    id: 'ai-gen',
-    title: 'AI-Generated Cards',
-    content: 'Topic cards, concept cards, and flowcharts generated from a simple prompt using AI.',
-    highlights: [{ text: 'AI', color: '#8B5CF6' }],
-    x: 0, y: 0, width: 300, height: 150,
-  },
-  {
-    id: 'canvas',
-    title: 'Infinite Canvas',
-    content: 'Pan, zoom, and freehand drawing on an infinite zoomable canvas with smooth interactions.',
-    highlights: [{ text: 'infinite', color: '#3B82F6' }],
-    x: 380, y: 0, width: 300, height: 150,
-  },
-  {
-    id: 'nodes',
-    title: 'Multiple Node Types',
-    content: 'Content cards, topic nodes, and flowchart shapes with full markdown rendering support.',
-    highlights: [{ text: 'markdown', color: '#10B981' }],
-    x: 0, y: 210, width: 300, height: 150,
-  },
-  {
-    id: 'edges',
-    title: 'Smart Labeled Edges',
-    content: 'Automatic layout with labeled connections between nodes using the Dagre algorithm.',
-    highlights: [{ text: 'Dagre', color: '#F59E0B' }],
-    x: 380, y: 210, width: 300, height: 150,
-  },
-  {
-    id: 'save',
-    title: 'Auto-save & Undo/Redo',
-    content: 'Session management with persistent auto-save, full undo/redo history, and state recovery.',
-    highlights: [{ text: 'auto-save', color: '#EC4899' }],
-    x: 0, y: 420, width: 300, height: 150,
-  },
-  {
-    id: 'explain',
-    title: 'AI Chain Explanations',
-    content: 'Select connected nodes and get AI-generated explanations for the entire chain of concepts.',
-    highlights: [{ text: 'chain', color: '#8B5CF6' }],
-    x: 380, y: 420, width: 300, height: 150,
-  },
-];
-
-const EDGES: FlowEdge[] = [
-  { from: 'ai-gen', to: 'canvas', label: 'renders on' },
-  { from: 'canvas', to: 'edges', label: 'connects via' },
-  { from: 'ai-gen', to: 'nodes', label: 'creates' },
-  { from: 'nodes', to: 'edges', label: 'linked by' },
-  { from: 'nodes', to: 'save', label: 'persisted by' },
-  { from: 'edges', to: 'explain', label: 'analyzed by' },
-];
-
-const ICON_MAP: Record<string, React.ElementType> = {
-  'ai-gen': Brain,
-  'canvas': Layout,
-  'nodes': PenTool,
-  'edges': GitBranch,
-  'save': Save,
-  'explain': MessageSquare,
-};
-
-/* ── SVG edge path helper ── */
-function getEdgePath(from: FlowNode, to: FlowNode): { path: string; labelX: number; labelY: number } {
-  const fx = from.x + from.width / 2;
-  const fy = from.y + from.height / 2;
-  const tx = to.x + to.width / 2;
-  const ty = to.y + to.height / 2;
-
-  // Determine exit/entry points
-  let sx = fx, sy = fy, ex = tx, ey = ty;
-
-  if (Math.abs(tx - fx) > Math.abs(ty - fy)) {
-    // Horizontal dominant
-    sx = tx > fx ? from.x + from.width : from.x;
-    ex = tx > fx ? to.x : to.x + to.width;
-    sy = fy;
-    ey = ty;
-  } else {
-    // Vertical dominant
-    sy = ty > fy ? from.y + from.height : from.y;
-    ey = ty > fy ? to.y : to.y + to.height;
-    sx = fx;
-    ex = tx;
-  }
-
-  const mx = (sx + ex) / 2;
-  const my = (sy + ey) / 2;
-
-  const path = `M ${sx} ${sy} C ${mx} ${sy}, ${mx} ${ey}, ${ex} ${ey}`;
-  return { path, labelX: mx, labelY: my };
-}
-
-/* ── Flowchart Canvas Component ── */
-const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
-
-  const cardBg = isDark ? 'hsl(0 0% 8%)' : 'hsl(0 0% 99%)';
-  const cardBorder = isDark ? 'hsl(0 0% 18%)' : 'hsl(0 0% 88%)';
-  const edgeColor = isDark ? 'hsl(0 0% 30%)' : 'hsl(0 0% 75%)';
-  const labelBg = isDark ? 'hsl(0 0% 6%)' : 'hsl(0 0% 96%)';
-  const labelColor = isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)';
-  const titleColor = isDark ? 'hsl(0 0% 92%)' : 'hsl(0 0% 12%)';
-  const contentColor = isDark ? 'hsl(0 0% 60%)' : 'hsl(0 0% 45%)';
-  const dotColor = isDark ? 'hsl(0 0% 20%)' : 'hsl(0 0% 85%)';
-
-  // Responsive scaling
-  useEffect(() => {
-    const handleResize = () => {
-      if (containerRef.current) {
-        const w = containerRef.current.offsetWidth;
-        // Canvas is 700 wide, scale to fit
-        const s = Math.min(1, (w - 16) / 700);
-        setScale(s);
-      }
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const canvasW = 700;
-  const canvasH = 590;
-
-  const highlightText = (text: string, highlights?: { text: string; color: string }[]) => {
-    if (!highlights?.length) return text;
-    let result = text;
-    highlights.forEach(h => {
-      result = result.replace(new RegExp(`(${h.text})`, 'gi'), `%%${h.color}%%$1%%END%%`);
-    });
-    const parts = result.split(/(%%[^%]+%%)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith('%%') && part.endsWith('%%END%%')) {
-        // Never happens with this split, handle differently
-        return part;
-      }
-      return part;
-    });
-  };
-
-  return (
-    <div ref={containerRef} className="w-full overflow-hidden">
-      <div
-        style={{
-          width: canvasW,
-          height: canvasH * scale,
-          transform: `scale(${scale})`,
-          transformOrigin: 'top left',
-        }}
-        className="relative"
-      >
-        {/* Dot grid background */}
-        <svg className="absolute inset-0" width={canvasW} height={canvasH}>
-          <defs>
-            <pattern id="nautilus-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="10" cy="10" r="1" fill={dotColor} />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#nautilus-dots)" />
-
-          {/* Edges */}
-          {EDGES.map((edge) => {
-            const fromNode = FEATURES.find(n => n.id === edge.from)!;
-            const toNode = FEATURES.find(n => n.id === edge.to)!;
-            const { path, labelX, labelY } = getEdgePath(fromNode, toNode);
-            return (
-              <g key={`${edge.from}-${edge.to}`}>
-                <path
-                  d={path}
-                  fill="none"
-                  stroke={edgeColor}
-                  strokeWidth="1.5"
-                  strokeDasharray="6 4"
-                />
-                {/* Arrow */}
-                <circle cx={labelX} cy={labelY} r="3" fill={edgeColor} />
-                {edge.label && (
-                  <>
-                    <rect
-                      x={labelX - edge.label.length * 3.5 - 6}
-                      y={labelY - 10}
-                      width={edge.label.length * 7 + 12}
-                      height={20}
-                      rx="4"
-                      fill={labelBg}
-                      stroke={cardBorder}
-                      strokeWidth="1"
-                    />
-                    <text
-                      x={labelX}
-                      y={labelY + 4}
-                      textAnchor="middle"
-                      fontSize="10"
-                      fontFamily="'Inter', sans-serif"
-                      fill={labelColor}
-                    >
-                      {edge.label}
-                    </text>
-                  </>
-                )}
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* Cards */}
-        {FEATURES.map((node, i) => {
-          const Icon = ICON_MAP[node.id];
-          const highlightColor = node.highlights?.[0]?.color || '#8B5CF6';
-          return (
-            <motion.div
-              key={node.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
-              className="absolute rounded-xl p-4"
-              style={{
-                left: node.x,
-                top: node.y,
-                width: node.width,
-                height: node.height,
-                backgroundColor: cardBg,
-                border: `1px solid ${cardBorder}`,
-                boxShadow: isDark
-                  ? '0 4px 24px -4px rgba(0,0,0,0.4)'
-                  : '0 4px 24px -4px rgba(0,0,0,0.08)',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <div
-                  className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: highlightColor }}
-                />
-                <Icon className="w-3.5 h-3.5" style={{ color: highlightColor }} />
-                <h3
-                  className="text-sm font-semibold leading-tight"
-                  style={{ color: titleColor, fontFamily: "'Inter', sans-serif" }}
-                >
-                  {node.title}
-                </h3>
-              </div>
-              <p
-                className="text-xs leading-relaxed"
-                style={{ color: contentColor, fontFamily: "'Inter', sans-serif" }}
-              >
-                {node.content.split(new RegExp(`(${node.highlights?.map(h => h.text).join('|') || '$$'})`, 'gi')).map((part, pi) => {
-                  const hl = node.highlights?.find(h => h.text.toLowerCase() === part.toLowerCase());
-                  if (hl) return <span key={pi} style={{ color: hl.color, fontWeight: 600 }}>{part}</span>;
-                  return part;
-                })}
-              </p>
-            </motion.div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
 const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailProps) => {
   const { isDark } = useTheme();
 
@@ -305,25 +26,15 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
   const headingColor = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
   const cardBg = isDark ? 'hsl(0 0% 6%)' : 'hsl(0 0% 97%)';
   const cardBorder = isDark ? 'hsl(0 0% 15%)' : 'hsl(0 0% 88%)';
-  const labelColor = isDark ? 'hsl(0 0% 45%)' : 'hsl(0 0% 55%)';
 
   const font = "'Inter', sans-serif";
-
-  const techStack = [
-    { l: 'Frontend', v: 'React • TypeScript • Vite • Tailwind CSS • shadcn/ui' },
-    { l: 'Canvas', v: 'React Flow (@xyflow/react) • Dagre' },
-    { l: 'Animation', v: 'Framer Motion' },
-    { l: 'Backend', v: 'Supabase Edge Functions (Deno)' },
-    { l: 'Database', v: 'Supabase PostgreSQL' },
-    { l: 'State & Routing', v: 'React Query • React Router' },
-  ];
 
   return (
     <>
       <GridBackground />
       <div className="relative z-10 min-h-screen">
         <Navbar />
-        <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+        <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
           {/* Back link */}
           <motion.div {...fadeUp(0)}>
             <Link
@@ -359,7 +70,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
           </motion.div>
 
           {/* Links */}
-          <motion.div {...fadeUp(0.16)} className="flex gap-3 mb-12">
+          <motion.div {...fadeUp(0.16)} className="flex gap-3 mb-14">
             {project.live && (
               <a
                 href={project.live}
@@ -392,46 +103,13 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             </a>
           </motion.div>
 
-          {/* Flowchart — Key Features */}
+          {/* React Flow Flowchart */}
           <motion.div {...fadeUp(0.2)}>
-            <h2
-              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
-              style={{ color: labelColor, fontFamily: font }}
-            >
-              Key Features
-            </h2>
-            <div
-              className="rounded-xl p-4 mb-12 overflow-hidden"
-              style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
-            >
-              <FlowchartCanvas isDark={isDark} />
-            </div>
-          </motion.div>
-
-          {/* Tech Stack */}
-          <motion.div {...fadeUp(0.28)}>
-            <h2
-              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
-              style={{ color: labelColor, fontFamily: font }}
-            >
-              Tech Stack
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-12">
-              {techStack.map((item) => (
-                <div
-                  key={item.l}
-                  className="p-3.5 rounded-lg"
-                  style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
-                >
-                  <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: labelColor, fontFamily: font }}>{item.l}</p>
-                  <p className="text-[13px] font-medium leading-snug" style={{ color: headingColor, fontFamily: font }}>{item.v}</p>
-                </div>
-              ))}
-            </div>
+            <NautilusFlowchart isDark={isDark} />
           </motion.div>
 
           {/* Screenshot */}
-          <motion.div {...fadeUp(0.34)}>
+          <motion.div {...fadeUp(0.34)} className="mt-14">
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${cardBorder}` }}>
               {project.live ? (
                 <a href={project.live} target="_blank" rel="noopener noreferrer">
