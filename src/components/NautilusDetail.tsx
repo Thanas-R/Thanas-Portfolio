@@ -83,12 +83,12 @@ const FEATURES: FlowNode[] = [
 ];
 
 const EDGES: FlowEdge[] = [
-  { from: 'ai-gen', to: 'canvas', label: 'renders on' },
-  { from: 'canvas', to: 'edges', label: 'connects via' },
-  { from: 'ai-gen', to: 'nodes', label: 'creates' },
-  { from: 'nodes', to: 'edges', label: 'linked by' },
-  { from: 'nodes', to: 'save', label: 'persisted by' },
-  { from: 'edges', to: 'explain', label: 'analyzed by' },
+  { from: 'ai-gen', to: 'canvas' },
+  { from: 'canvas', to: 'edges' },
+  { from: 'ai-gen', to: 'nodes' },
+  { from: 'nodes', to: 'edges' },
+  { from: 'nodes', to: 'save' },
+  { from: 'edges', to: 'explain' },
 ];
 
 const ICON_MAP: Record<string, React.ElementType> = {
