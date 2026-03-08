@@ -195,7 +195,7 @@ const ProjectsSection = () => {
                 >
                   <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-lg hover:shadow-xl transition-all duration-300">
                     <div className="aspect-[16/10] overflow-hidden">
-                      <img
+                      <ProgressiveImage
                         src={project.imageSrc}
                         alt={project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
