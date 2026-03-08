@@ -911,7 +911,7 @@ const ProjectDetailPage = () => {
                 height: isMobile ? '280px' : '400px',
               }}
             >
-              <TopographicBackground density={isMobile ? 'low' : 'medium'} />
+              <TopographicBackground density={isMobile ? 'low' : 'medium'} contained />
               <div className="absolute inset-0 flex items-end p-6 z-10">
                 <p
                   className="text-xs text-muted-foreground backdrop-blur-sm px-3 py-1.5 rounded-full bg-background/50 border border-foreground/5"
