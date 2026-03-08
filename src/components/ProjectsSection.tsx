@@ -64,6 +64,7 @@ export const projects: Project[] = [
     imageSrc: projectPesuMC,
     tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
     live: 'https://pesu-mc.vercel.app',
+    github: 'https://github.com/Thanas-R',
   },
   {
     id: 'askbookie',

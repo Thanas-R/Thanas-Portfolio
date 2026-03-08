@@ -722,12 +722,14 @@ const ProjectDetailPage = () => {
         /* ── PESU Forge — backdrop landscape with floating cards ── */
         <div className="min-h-screen relative">
           {/* Fixed backdrop image */}
-          <div className="fixed inset-0 z-0">
+          <div className="fixed inset-0 z-0 bg-black">
             <img
               src={pesuForgeBg}
               alt=""
-              className="w-full h-full object-cover"
-              loading="eager" />
+              className="w-full h-full object-cover opacity-0 transition-opacity duration-500"
+              loading="eager"
+              onLoad={(e) => { (e.target as HTMLImageElement).classList.replace('opacity-0', 'opacity-100'); }}
+            />
             
             <div className="absolute inset-0 bg-black/40" />
           </div>
