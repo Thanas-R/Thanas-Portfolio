@@ -108,28 +108,32 @@ function getEdgePath(from: FlowNode, to: FlowNode): { path: string; labelX: numb
   const tx = to.x + to.width / 2;
   const ty = to.y + to.height / 2;
 
-  // Determine exit/entry points
   let sx = fx, sy = fy, ex = tx, ey = ty;
 
-  if (Math.abs(tx - fx) > Math.abs(ty - fy)) {
-    // Horizontal dominant
+  // Always exit from bottom, enter from top for downward flow
+  if (ty > fy) {
+    sy = from.y + from.height;
+    ey = to.y;
+    sx = fx;
+    ex = tx;
+  } else if (Math.abs(tx - fx) > Math.abs(ty - fy)) {
     sx = tx > fx ? from.x + from.width : from.x;
     ex = tx > fx ? to.x : to.x + to.width;
     sy = fy;
     ey = ty;
   } else {
-    // Vertical dominant
     sy = ty > fy ? from.y + from.height : from.y;
     ey = ty > fy ? to.y : to.y + to.height;
     sx = fx;
     ex = tx;
   }
 
-  const mx = (sx + ex) / 2;
-  const my = (sy + ey) / 2;
-
-  const path = `M ${sx} ${sy} C ${mx} ${sy}, ${mx} ${ey}, ${ex} ${ey}`;
-  return { path, labelX: mx, labelY: my };
+  // Smooth bezier with vertical bias
+  const midY = (sy + ey) / 2;
+  const path = `M ${sx} ${sy} C ${sx} ${midY}, ${ex} ${midY}, ${ex} ${ey}`;
+  const labelX = (sx + ex) / 2;
+  const labelY = midY;
+  return { path, labelX, labelY };
 }
 
 /* ── Flowchart Canvas Component ── */
