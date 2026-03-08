@@ -195,12 +195,38 @@ const DottedGlobe = ({ isDark, size = 420 }: { isDark: boolean; size?: number })
       document.addEventListener('mouseup', up);
     };
 
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      autoRotate = false;
+      const startX = e.touches[0].clientX;
+      const startY = e.touches[0].clientY;
+      const startRot = [...rotation];
+
+      const move = (te: TouchEvent) => {
+        if (te.touches.length !== 1) return;
+        te.preventDefault();
+        rotation[0] = startRot[0] + (te.touches[0].clientX - startX) * 0.5;
+        rotation[1] = Math.max(-90, Math.min(90, startRot[1] - (te.touches[0].clientY - startY) * 0.5));
+        projection.rotate(rotation as [number, number]);
+        render();
+      };
+      const end = () => {
+        document.removeEventListener('touchmove', move);
+        document.removeEventListener('touchend', end);
+        setTimeout(() => { autoRotate = true; }, 10);
+      };
+      document.addEventListener('touchmove', move, { passive: false });
+      document.addEventListener('touchend', end);
+    };
+
     canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
     loadData();
 
     return () => {
       timer.stop();
       canvas.removeEventListener('mousedown', handleMouseDown);
+      canvas.removeEventListener('touchstart', handleTouchStart);
     };
   }, [isDark, size]);
 

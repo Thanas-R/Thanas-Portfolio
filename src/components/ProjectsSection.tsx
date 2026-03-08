@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import ProgressiveImage from '@/components/ProgressiveImage';
 
 import projectPesuMC from '@/assets/project-pesumc.png';
 import projectAskbookie from '@/assets/project-askbookie.png';
@@ -63,6 +64,7 @@ export const projects: Project[] = [
     imageSrc: projectPesuMC,
     tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
     live: 'https://pesu-mc.vercel.app',
+    github: 'https://github.com/Thanas-R',
   },
   {
     id: 'askbookie',
@@ -195,7 +197,7 @@ const ProjectsSection = () => {
                 >
                   <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-lg hover:shadow-xl transition-all duration-300">
                     <div className="aspect-[16/10] overflow-hidden">
-                      <img
+                      <ProgressiveImage
                         src={project.imageSrc}
                         alt={project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -244,7 +246,7 @@ const ProjectsSection = () => {
                     >
                       <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03]">
                         <div className="aspect-[16/10] overflow-hidden">
-                          <img
+                          <ProgressiveImage
                             src={project.imageSrc}
                             alt={project.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
