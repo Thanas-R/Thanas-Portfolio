@@ -13,6 +13,7 @@ import {
 } from 'react-icons/si';
 import { BiLogoVisualStudio } from 'react-icons/bi';
 import { FaJava, FaFigma } from 'react-icons/fa';
+import { BsStack } from 'react-icons/bs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface TechItem {
