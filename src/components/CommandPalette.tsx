@@ -118,6 +118,13 @@ const CommandPalette = () => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  // Listen for custom open event from Navbar
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener('open-command-palette', handler);
+    return () => window.removeEventListener('open-command-palette', handler);
+  }, []);
+
   // Focus input on open
   useEffect(() => {
     if (open) {
