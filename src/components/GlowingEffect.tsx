@@ -105,6 +105,7 @@ const GlowingEffect = memo(
           } as React.CSSProperties
         }
       >
+        {/* Border glow */}
         <div
           className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
           style={{
@@ -115,6 +116,13 @@ const GlowingEffect = memo(
             WebkitMaskComposite: "xor",
             padding: `${borderWidth}px`,
             filter: `blur(${blur}px)`,
+          }}
+        />
+        {/* Subtle inner glow */}
+        <div
+          className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(${spread * 4}px circle at var(--glow-x) var(--glow-y), ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'}, transparent 60%)`,
           }}
         />
       </div>
