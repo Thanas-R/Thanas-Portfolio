@@ -8,7 +8,6 @@ interface GlowingEffectProps {
   className?: string;
   disabled?: boolean;
   borderWidth?: number;
-  innerGlow?: boolean;
 }
 
 const GlowingEffect = memo(
@@ -19,7 +18,6 @@ const GlowingEffect = memo(
     className,
     disabled = false,
     borderWidth = 0.5,
-    innerGlow = true,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDark, setIsDark] = useState(false);
@@ -120,14 +118,13 @@ const GlowingEffect = memo(
             filter: `blur(${blur}px)`,
           }}
         />
-        {innerGlow && (
-          <div
-            className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
-            style={{
-              background: `radial-gradient(${spread * 4}px circle at var(--glow-x) var(--glow-y), ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'}, transparent 60%)`,
-            }}
-          />
-        )}
+        {/* Subtle inner glow */}
+        <div
+          className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(${spread * 4}px circle at var(--glow-x) var(--glow-y), ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'}, transparent 60%)`,
+          }}
+        />
       </div>
     );
   }
