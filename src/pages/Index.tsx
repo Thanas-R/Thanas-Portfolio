@@ -1,4 +1,3 @@
-import TopographicBackground from '@/components/TopographicBackground';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
@@ -8,17 +7,14 @@ import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
   return (
-    <>
-      <TopographicBackground />
-      <div className="relative z-10 overflow-x-hidden">
-        <Navbar />
-        <HeroSection />
-        <AboutSection />
-        <TechCarousel />
-        <ProjectsSection />
-        <ContactSection />
-      </div>
-    </>
+    <div className="relative overflow-x-hidden">
+      <Navbar />
+      <HeroSection />
+      <AboutSection />
+      <TechCarousel />
+      <ProjectsSection />
+      <ContactSection />
+    </div>
   );
 };
 

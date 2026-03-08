@@ -4,6 +4,7 @@ export type ContourDensity = 'low' | 'medium' | 'high';
 
 interface TopographicBackgroundProps {
   density?: ContourDensity;
+  contained?: boolean;
 }
 
 const getDensityConfig = (density: ContourDensity, isMobile: boolean) => {
@@ -21,7 +22,7 @@ const getDensityConfig = (density: ContourDensity, isMobile: boolean) => {
   }
 };
 
-const TopographicBackground = ({ density: externalDensity }: TopographicBackgroundProps) => {
+const TopographicBackground = ({ density: externalDensity, contained = false }: TopographicBackgroundProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const densityToUse = externalDensity || (isMobile ? 'low' : 'medium');
@@ -38,10 +39,13 @@ const TopographicBackground = ({ density: externalDensity }: TopographicBackgrou
 
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      const container = contained ? canvas.parentElement : null;
+      const w = container ? container.clientWidth : window.innerWidth;
+      const h = container ? container.clientHeight : window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
       ctx.scale(dpr, dpr);
     };
 
@@ -150,8 +154,9 @@ const TopographicBackground = ({ density: externalDensity }: TopographicBackgrou
     };
 
     const drawContours = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+      const container = contained ? canvas.parentElement : null;
+      const width = container ? container.clientWidth : window.innerWidth;
+      const height = container ? container.clientHeight : window.innerHeight;
       const isDark = document.documentElement.classList.contains('dark');
 
       ctx.fillStyle = isDark ? '#070707' : '#fcfcfa';
@@ -309,7 +314,7 @@ const TopographicBackground = ({ density: externalDensity }: TopographicBackgrou
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full"
+      className={contained ? "absolute inset-0 w-full h-full" : "fixed inset-0 w-full h-full"}
       style={{ zIndex: 0 }}
     />
   );
