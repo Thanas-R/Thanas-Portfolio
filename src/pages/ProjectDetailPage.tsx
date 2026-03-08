@@ -13,6 +13,7 @@ import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
 import VirdisDetail from '@/components/VirdisDetail';
+import ContourThemeToggle from '@/components/ContourThemeToggle';
 import contourDark from '@/assets/contour-dark.png';
 import contourLight from '@/assets/contour-light.png';
 
