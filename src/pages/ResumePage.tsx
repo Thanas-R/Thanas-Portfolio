@@ -7,7 +7,7 @@ const ResumePage = () => {
   const resumePath = '/resume.pdf';
 
   return (
-    <div className="relative h-screen bg-background overflow-hidden">
+    <div className="relative h-screen bg-background overflow-hidden flex flex-col">
       <LightRays className="opacity-60" />
 
       <div className="relative z-20">
@@ -19,7 +19,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative z-10 max-w-5xl mx-auto pb-3 flex items-end justify-between px-[20px]"
+        className="relative z-10 max-w-5xl mx-auto w-full pb-3 flex items-end justify-between px-[20px]"
       >
         <h1
           className="text-4xl md:text-5xl font-black text-foreground uppercase leading-none"
@@ -39,13 +39,12 @@ const ResumePage = () => {
         </div>
       </motion.div>
 
-      {/* PDF Viewer */}
+      {/* PDF Viewer — takes all remaining space */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 mt-1"
-        style={{ height: 'calc(100dvh - 148px)' }}
+        className="relative z-10 max-w-5xl mx-auto px-6 w-full flex-1 min-h-0 pb-4"
       >
         <div
           className="h-full rounded-2xl overflow-hidden border border-border bg-card"
@@ -53,11 +52,17 @@ const ResumePage = () => {
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
           }}
         >
-          <iframe
-            src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
-            title="Resume PDF"
-            className="block border-none w-full h-full"
-          />
+          <object
+            data={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
+            type="application/pdf"
+            className="block w-full h-full"
+          >
+            <iframe
+              src={`https://docs.google.com/gview?url=${window.location.origin}${resumePath}&embedded=true`}
+              title="Resume PDF"
+              className="block border-none w-full h-full"
+            />
+          </object>
         </div>
       </motion.div>
     </div>
