@@ -428,7 +428,13 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Right: Mac mockup */}
-              <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex items-start justify-center mt-8 md:mt-0">
+              <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex flex-col items-center mt-8 md:mt-0">
+                {project.live && (
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity mb-6">
+                    <ExternalLink className="w-4 h-4" />
+                    Live Site
+                  </a>
+                )}
                 <Mac src={thanasOsMac} className="w-full max-w-[650px] h-auto text-background" />
               </motion.div>
             </div>
