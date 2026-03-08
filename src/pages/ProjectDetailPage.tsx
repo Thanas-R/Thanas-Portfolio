@@ -911,7 +911,7 @@ const ProjectDetailPage = () => {
               {/* Description left + Live Site right */}
               <motion.div {...fadeUp(0.14)} className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
                 <p className="text-base text-white/50 max-w-lg leading-relaxed">
-                  Official website I developed for the PESU Minecraft Server community — a student-run Minecraft server at PES University.
+                  Official website I developed for the PESU Minecraft Server community , a student-run Minecraft server at PES University.
                 </p>
                 {project.live &&
                   <a href={project.live} target="_blank" rel="noopener noreferrer"
