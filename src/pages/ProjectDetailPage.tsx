@@ -995,6 +995,14 @@ const ProjectDetailPage = () => {
                 </div>
               </motion.div>
 
+              {/* Site preview at bottom */}
+              <motion.div
+                {...fadeUp(0.38)}
+                className="rounded-3xl overflow-hidden mb-16 backdrop-blur-2xl"
+                style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 16px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)', padding: '6px' }}>
+                <ProjectImage src={project.imageSrc} alt={`${project.title} full preview`} className="w-full object-cover rounded-2xl" />
+              </motion.div>
+
               {/* Nav */}
               <motion.div
                 {...fadeUp(0.4)}
