@@ -92,7 +92,7 @@ const Navbar = () => {
       className="relative z-50 px-6 py-4 md:px-12"
     >
       <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <Link to="/" className="font-['Space_Grotesk'] text-lg font-semibold text-foreground tracking-tight">
+        <Link to="/" className="font-['Space_Grotesk'] text-xl font-semibold text-foreground tracking-tight">
           <TextRoll>thanas.</TextRoll>
         </Link>
         <div className="hidden md:flex items-center gap-8">
@@ -100,7 +100,7 @@ const Navbar = () => {
             <Link
               key={item.label}
               to={item.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+              className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
               <TextRoll>{item.label}</TextRoll>
             </Link>

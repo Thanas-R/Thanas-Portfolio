@@ -1,44 +1,63 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface DayCommit {
-  day: string;
+  label: string;
+  date: string;
   value: number;
 }
 
-const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
 const GitHubActivityChart = () => {
-  const [weekData, setWeekData] = useState<DayCommit[]>(
-    dayLabels.map((d) => ({ day: d, value: 0 }))
-  );
+  const [weekData, setWeekData] = useState<DayCommit[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchGitHubData = async () => {
       try {
-        // Get events for Thanas-R from GitHub public API
-        const res = await fetch('https://api.github.com/users/Thanas-R/events/public?per_page=100');
-        if (!res.ok) throw new Error('GitHub API error');
-        const events = await res.json();
-
-        // Count push events per day of week for the last 7 days
-        const now = new Date();
-        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        const counts = [0, 0, 0, 0, 0, 0, 0];
-
-        for (const event of events) {
-          if (event.type === 'PushEvent') {
-            const d = new Date(event.created_at);
-            if (d >= weekAgo) {
-              counts[d.getDay()] += event.payload?.commits?.length || 1;
-            }
+        // Fetch multiple pages to get more complete data
+        const pages = await Promise.all([
+          fetch('https://api.github.com/users/Thanas-R/events/public?per_page=100&page=1'),
+          fetch('https://api.github.com/users/Thanas-R/events/public?per_page=100&page=2'),
+        ]);
+        
+        const allEvents = [];
+        for (const res of pages) {
+          if (res.ok) {
+            const data = await res.json();
+            allEvents.push(...data);
           }
         }
 
-        setWeekData(dayLabels.map((label, i) => ({ day: label, value: counts[i] })));
+        const now = new Date();
+        const days: DayCommit[] = [];
+
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date(now);
+          d.setDate(d.getDate() - i);
+          const dateStr = d.toISOString().slice(0, 10);
+          const label = d.toLocaleDateString('en-US', { weekday: 'short' });
+          let count = 0;
+
+          for (const event of allEvents) {
+            if (event.type === 'PushEvent') {
+              const eventDate = new Date(event.created_at).toISOString().slice(0, 10);
+              if (eventDate === dateStr) {
+                count += event.payload?.commits?.length || 1;
+              }
+            }
+          }
+
+          days.push({ label, date: dateStr, value: count });
+        }
+
+        setWeekData(days);
       } catch {
-        // Fallback: keep zeros
+        setWeekData(Array.from({ length: 7 }, (_, i) => {
+          const d = new Date();
+          d.setDate(d.getDate() - (6 - i));
+          return { label: d.toLocaleDateString('en-US', { weekday: 'short' }), date: d.toISOString().slice(0, 10), value: 0 };
+        }));
       } finally {
         setLoading(false);
       }
@@ -47,11 +66,7 @@ const GitHubActivityChart = () => {
     fetchGitHubData();
   }, []);
 
-  const maxValue = useMemo(
-    () => Math.max(...weekData.map((d) => d.value), 1),
-    [weekData]
-  );
-
+  const maxValue = useMemo(() => Math.max(...weekData.map((d) => d.value), 1), [weekData]);
   const total = useMemo(() => weekData.reduce((s, d) => s + d.value, 0), [weekData]);
 
   const barVariants = {
@@ -66,37 +81,46 @@ const GitHubActivityChart = () => {
   return (
     <div className="h-full flex flex-col">
       <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">
-        GitHub Activity
+        GitHub Commits
       </p>
 
       <div className="flex items-baseline gap-2 mb-3">
         <span className="text-2xl font-bold text-foreground font-['Inter']">
           {loading ? '...' : total}
         </span>
-        <span className="text-xs text-muted-foreground font-['Inter']">commits this week</span>
+        <span className="text-xs text-muted-foreground font-['Inter']">in the last 7 days</span>
       </div>
 
-      <div className="flex-1 flex items-end gap-1.5 min-h-[60px]">
-        {weekData.map((item, i) => (
-          <div key={item.day} className="flex-1 flex flex-col items-center gap-1">
-            <motion.div
-              className="w-full rounded-sm bg-foreground/80"
-              style={{
-                height: `${Math.max((item.value / maxValue) * 100, 4)}%`,
-                originY: 1,
-              }}
-              custom={i}
-              variants={barVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            />
-            <span className="text-[10px] text-muted-foreground font-['JetBrains_Mono']">
-              {item.day}
-            </span>
-          </div>
-        ))}
-      </div>
+      <TooltipProvider delayDuration={0}>
+        <div className="flex-1 flex items-end gap-2 min-h-[80px]">
+          {weekData.map((item, i) => {
+            const heightPct = Math.max((item.value / maxValue) * 100, 6);
+            return (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.div
+                      className="w-full rounded-sm bg-foreground/80 min-h-[3px] cursor-default"
+                      style={{ height: `${heightPct}%`, transformOrigin: 'bottom', pointerEvents: 'auto' }}
+                      custom={i}
+                      variants={barVariants}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="font-['Inter'] text-xs">
+                    {item.value} commit{item.value !== 1 ? 's' : ''}
+                  </TooltipContent>
+                </Tooltip>
+                <span className="text-[10px] text-muted-foreground font-['JetBrains_Mono']">
+                  {item.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </TooltipProvider>
     </div>
   );
 };

@@ -22,7 +22,6 @@ const GlowingEffect = memo(
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDark, setIsDark] = useState(false);
 
-    // Detect dark mode properly
     useEffect(() => {
       const checkTheme = () => {
         const dark = document.documentElement.classList.contains("dark");
@@ -87,10 +86,9 @@ const GlowingEffect = memo(
 
     if (disabled) return null;
 
-    // ✅ COLOR SWITCH HERE
     const glowColor = isDark
-      ? "rgba(255,255,255,0.55)"     // stronger white
-      : "rgba(0,0,0,0.55)";      // light mode → #43B581
+      ? "rgba(255,255,255,0.55)"
+      : "rgba(0,0,0,0.55)";
 
     return (
       <div
@@ -107,6 +105,7 @@ const GlowingEffect = memo(
           } as React.CSSProperties
         }
       >
+        {/* Border glow */}
         <div
           className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
           style={{
@@ -117,6 +116,13 @@ const GlowingEffect = memo(
             WebkitMaskComposite: "xor",
             padding: `${borderWidth}px`,
             filter: `blur(${blur}px)`,
+          }}
+        />
+        {/* Subtle inner glow */}
+        <div
+          className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(${spread * 4}px circle at var(--glow-x) var(--glow-y), ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'}, transparent 60%)`,
           }}
         />
       </div>
