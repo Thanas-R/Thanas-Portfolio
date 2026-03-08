@@ -4,6 +4,7 @@ export type ContourDensity = 'low' | 'medium' | 'high';
 
 interface TopographicBackgroundProps {
   density?: ContourDensity;
+  contained?: boolean;
 }
 
 const getDensityConfig = (density: ContourDensity, isMobile: boolean) => {
