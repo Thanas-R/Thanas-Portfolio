@@ -70,9 +70,9 @@ const ProjectDetailPage = () => {
 
   return (
     <>
-      {!isAskBookie && !isPesuForge && <GridBackground />}
+      {!isAskBookie && !isPesuForge && !isContourFlow && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
-        {!isAskBookie && !isPesuForge && <Navbar />}
+        {!isAskBookie && !isPesuForge && !isContourFlow && <Navbar />}
 
         {isAskBookie ?
         <div
