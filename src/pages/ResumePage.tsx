@@ -1,10 +1,20 @@
 import { motion } from 'framer-motion';
-import { Download } from 'lucide-react';
+import { Download, Printer } from 'lucide-react';
+import { useCallback } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
+
+  const handlePrint = useCallback(() => {
+    const printWindow = window.open(resumePath, '_blank');
+    if (printWindow) {
+      printWindow.addEventListener('load', () => {
+        printWindow.print();
+      });
+    }
+  }, [resumePath]);
 
   return (
     <div className="relative h-screen bg-background overflow-hidden flex flex-col">
@@ -28,6 +38,13 @@ const ResumePage = () => {
           Resume
         </h1>
         <div className="flex items-center gap-2 pb-1">
+          <button
+            onClick={handlePrint}
+            className="flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
+          >
+            <Printer className="w-4 h-4" />
+            Print
+          </button>
           <a
             href={resumePath}
             download
@@ -52,17 +69,11 @@ const ResumePage = () => {
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
           }}
         >
-          <object
-            data={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
-            type="application/pdf"
-            className="block w-full h-full"
-          >
-            <iframe
-              src={`https://docs.google.com/gview?url=${window.location.origin}${resumePath}&embedded=true`}
-              title="Resume PDF"
-              className="block border-none w-full h-full"
-            />
-          </object>
+          <iframe
+            src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
+            title="Resume PDF"
+            className="block border-none w-full h-full"
+          />
         </div>
       </motion.div>
     </div>
