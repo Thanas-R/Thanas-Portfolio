@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud, Github } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud, Github, Satellite, LineChart, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
@@ -131,38 +131,22 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
             style={{ color: textMuted, fontFamily: font }}
           >
-            An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data, delivered through a well-designed, intuitive UI.
+            A precision agriculture web platform that helps farmers and agronomists map fields, monitor crop health from satellite imagery, and receive AI-driven agronomic insights through an interactive geospatial dashboard.
           </p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap items-center gap-3 mb-10">
-            {project.tags.filter(tag => tag.toLowerCase() !== 'deno').map((tag) => (
-              <span
-                key={tag}
-                className="text-[11px] px-3 py-1 rounded-md font-medium uppercase tracking-wider"
-                style={{
-                  backgroundColor: 'rgba(255,251,235,0.06)',
-                  border: '1px solid rgba(255,251,235,0.15)',
-                  color: text,
-                  fontFamily: font,
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
 
           <div className="w-full h-px mb-10" style={{ backgroundColor: divider }} />
 
           {/* Core Capabilities */}
-          <SectionLabel label="Core Capabilities" color={label} font={font} />
+          <SectionLabel label="Key Features" color={label} font={font} />
           <div className="grid md:grid-cols-2 gap-3 mb-10">
             {[
-              { icon: Map, title: 'Satellite Map', desc: 'Mapbox basemap with polygon drawing, field editing, and NDVI layer overlays.' },
-              { icon: BarChart3, title: 'NDVI Analysis', desc: 'Sentinel-2 imagery via Google Earth Engine to calculate vegetation health indices.' },
-              { icon: Cpu, title: 'AI Insights', desc: 'Gemini 2.5 Flash powered crop health assessments and irrigation recommendations.' },
-              { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
-            ].map((item, i) => (
+              { icon: Map, title: 'Interactive Field Mapping', desc: 'Satellite map powered by Mapbox where users can draw and manage field polygons, switch map styles, and navigate fields with smooth fly-to interactions.' },
+              { icon: BarChart3, title: 'NDVI Crop Health Monitoring', desc: 'Sentinel-2 imagery processed through Google Earth Engine to calculate NDVI (Normalized Difference Vegetation Index) and visualize crop health directly on the map.' },
+              { icon: Cpu, title: 'AI Agronomic Insights', desc: 'Field data and vegetation metrics are analyzed using Gemini 2.5 Flash to generate crop health assessments, irrigation guidance, pest risk indicators, and crop recommendations.' },
+              { icon: Cloud, title: 'Weather Integration', desc: 'Per-field weather data including temperature, rainfall, humidity, and wind sourced from Open-Meteo.' },
+              { icon: LineChart, title: 'NDVI Time-Series Analysis', desc: 'Historical vegetation tracking used to estimate growth rate, canopy cover, and biomass trends over time.' },
+              { icon: Layers, title: 'Geospatial Analytics', desc: 'Additional environmental layers derived from satellite data including land cover classification, elevation, slope, rainfall, and soil carbon.' },
+            ].map((item) => (
               <div
                 key={item.title}
                 className="p-5 rounded-xl flex gap-4"
@@ -183,41 +167,41 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             className="p-5 rounded-xl text-[13px] leading-[2] mb-10"
             style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}`, fontFamily: monoFont, color: textMuted }}
           >
-            <span style={{ color: heading, fontWeight: 600 }}>Frontend</span> (React + Mapbox GL JS)
+            <span style={{ color: heading, fontWeight: 600 }}>React + Mapbox Frontend</span>
             <br />
             &nbsp;&nbsp;│
             <br />
-            <span style={{ color: heading, fontWeight: 600 }}>Edge Functions</span> (Deno/TypeScript)
+            <span style={{ color: heading, fontWeight: 600 }}>Supabase Edge Functions</span> <span style={{ color: textMuted }}>(Deno)</span>
             <br />
-            &nbsp;&nbsp;├── <span style={{ color: green }}>gee-ndvi-tiles</span> → Earth Engine REST API
+            &nbsp;&nbsp;│
             <br />
-            &nbsp;&nbsp;├── <span style={{ color: green }}>gee-detect-field</span> → Earth Engine REST API
+            <span style={{ color: heading, fontWeight: 600 }}>Google Earth Engine</span>
             <br />
-            &nbsp;&nbsp;├── <span style={{ color: green }}>analyze-field</span> → Gemini 2.5 Flash
+            &nbsp;&nbsp;│
             <br />
-            &nbsp;&nbsp;└── <span style={{ color: green }}>get-mapbox-token</span> → Mapbox API
+            <span style={{ color: green, fontWeight: 600 }}>Sentinel-2 Satellite Data</span>
           </div>
 
           {/* Tech Stack */}
           <SectionLabel label="Tech Stack" color={label} font={font} />
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
             {[
-              { l: 'Frontend', v: 'React 18' },
-              { l: 'Language', v: 'TypeScript' },
-              { l: 'Backend', v: 'Supabase Edge Fn' },
-              { l: 'Runtime', v: 'Deno' },
-              { l: 'Mapping', v: 'Mapbox GL JS' },
-              { l: 'Satellite', v: 'Earth Engine' },
+              { l: 'Frontend', v: 'React • TypeScript • Vite • Tailwind CSS • shadcn/ui • Mapbox GL JS' },
+              { l: 'Data Visualization', v: 'Recharts' },
+              { l: 'State & Routing', v: 'TanStack Query • React Router' },
+              { l: 'Backend', v: 'Supabase Edge Functions (Deno)' },
+              { l: 'Database', v: 'Supabase PostgreSQL' },
+              { l: 'Satellite Data', v: 'Google Earth Engine (Sentinel-2)' },
               { l: 'AI', v: 'Gemini 2.5 Flash' },
-              { l: 'Weather', v: 'Open-Meteo' },
+              { l: 'Weather', v: 'Open-Meteo API' },
             ].map((item) => (
               <div
                 key={item.l}
                 className="p-3.5 rounded-lg"
                 style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
               >
-                <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: label, fontFamily: font }}>{item.l}</p>
-                <p className="text-sm font-semibold" style={{ color: heading, fontFamily: font }}>{item.v}</p>
+                <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: label, fontFamily: font }}>{item.l}</p>
+                <p className="text-[13px] font-medium leading-snug" style={{ color: heading, fontFamily: font }}>{item.v}</p>
               </div>
             ))}
           </div>
