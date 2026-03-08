@@ -22,7 +22,7 @@ const getDensityConfig = (density: ContourDensity, isMobile: boolean) => {
   }
 };
 
-const TopographicBackground = ({ density: externalDensity }: TopographicBackgroundProps) => {
+const TopographicBackground = ({ density: externalDensity, contained = false }: TopographicBackgroundProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const densityToUse = externalDensity || (isMobile ? 'low' : 'medium');
