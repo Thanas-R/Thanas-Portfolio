@@ -882,7 +882,7 @@ const ProjectDetailPage = () => {
           </div>
 
           <div className="relative z-10">
-            <Navbar />
+            <Navbar forceDark />
             <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
               <motion.div {...fadeUp(0)}>
                 <Link
