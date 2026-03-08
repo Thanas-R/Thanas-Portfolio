@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import GridBackground from '@/components/GridBackground';
 import { Project } from '@/components/ProjectsSection';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import mermaid from 'mermaid';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
