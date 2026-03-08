@@ -34,7 +34,7 @@ const ResumeSection = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground font-['Space_Grotesk']">
-                    Thanas R — Resume
+                    Thanas R - Resume
                   </h3>
                   <p className="text-sm text-muted-foreground">PDF • Updated 2025</p>
                 </div>
