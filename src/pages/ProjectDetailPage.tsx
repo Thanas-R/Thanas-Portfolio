@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useParams, Navigate } from 'react-router-dom';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
@@ -933,25 +934,43 @@ const ProjectDetailPage = () => {
                 </div>
               </motion.div>
 
-              <motion.div {...fadeUp(0.3)} className="mb-16 rounded-2xl overflow-hidden border border-foreground/10">
-                <motion.img
-                  src={isDark ? contourLight : contourDark}
-                  alt={`Contour Flow ${isDark ? 'light' : 'dark'} mode preview`}
-                  className="w-full object-cover cursor-pointer"
-                  style={{ maxHeight: 480 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    const html = document.documentElement;
-                    if (isDark) {
-                      html.classList.remove('dark');
-                      localStorage.setItem('theme', 'light');
-                    } else {
-                      html.classList.add('dark');
-                      localStorage.setItem('theme', 'dark');
-                    }
-                  }}
-                />
+              <motion.div {...fadeUp(0.3)} className="mb-16 rounded-2xl overflow-hidden border border-foreground/10 relative">
+                <TooltipProvider delayDuration={200}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div
+                        className="relative cursor-pointer overflow-hidden"
+                        style={{ maxHeight: 480 }}
+                        onClick={() => {
+                          const html = document.documentElement;
+                          if (isDark) {
+                            html.classList.remove('dark');
+                            localStorage.setItem('theme', 'light');
+                          } else {
+                            html.classList.add('dark');
+                            localStorage.setItem('theme', 'dark');
+                          }
+                        }}
+                      >
+                        <AnimatePresence mode="popLayout" initial={false}>
+                          <motion.img
+                            key={isDark ? 'light-preview' : 'dark-preview'}
+                            src={isDark ? contourLight : contourDark}
+                            alt={`Contour Flow ${isDark ? 'light' : 'dark'} mode preview`}
+                            className="w-full object-cover"
+                            initial={{ opacity: 0, scale: 1.03 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.97 }}
+                            transition={{ duration: 0.15 }}
+                          />
+                        </AnimatePresence>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="text-xs">
+                      Click to switch theme
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </motion.div>
 
               {/* Nav */}
