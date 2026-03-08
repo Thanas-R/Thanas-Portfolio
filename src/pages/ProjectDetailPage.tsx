@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
-import { Link, useParams, Navigate } from 'react-router-dom';
+import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
