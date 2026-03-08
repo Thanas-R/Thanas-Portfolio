@@ -151,7 +151,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
         // Canvas is 700 wide, scale to fit
-        const s = Math.min(1, (w - 16) / 700);
+        const s = Math.min(1, (w - 16) / 580);
         setScale(s);
       }
     };
@@ -160,8 +160,8 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const canvasW = 700;
-  const canvasH = 590;
+  const canvasW = 580;
+  const canvasH = 480;
 
   const highlightText = (text: string, highlights?: { text: string; color: string }[]) => {
     if (!highlights?.length) return text;
