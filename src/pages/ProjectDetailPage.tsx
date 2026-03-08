@@ -953,11 +953,11 @@ const ProjectDetailPage = () => {
                 )}
               </motion.div>
 
-              {/* Tech Stack */}
+              {/* Tech Stack - liquid glass */}
               <motion.div
                 {...fadeUp(0.3)}
-                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
-                style={{ backgroundColor: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-2xl"
+                style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                 <h2 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-5">Tech Stack</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
@@ -970,7 +970,7 @@ const ProjectDetailPage = () => {
                     { label: 'Scroll', value: 'Lenis' },
                     { label: 'Hosting', value: 'Vercel' },
                   ].map((item) =>
-                    <div key={item.label} className="p-4 rounded-xl" style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <div key={item.label} className="p-4 rounded-xl backdrop-blur-xl" style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}>
                       <p className="text-xs text-white/30 uppercase tracking-wider mb-1">{item.label}</p>
                       <p className="text-sm font-semibold text-white/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
                     </div>
