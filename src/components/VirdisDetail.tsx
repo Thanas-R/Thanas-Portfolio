@@ -20,11 +20,11 @@ interface VirdisDetailProps {
 const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) => {
   const { isDark } = useTheme();
 
-  const pageBg = isDark ? 'hsl(0 0% 1.5%)' : '#FFFFFF';
-  const outsideText = isDark ? 'hsl(0 0% 70%)' : 'hsl(0 0% 40%)';
+  const pageBg = isDark ? '#22392E' : '#FFFFFF';
+  const outsideText = isDark ? 'hsl(150 10% 65%)' : 'hsl(0 0% 40%)';
   const outsideHeading = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
-  const outsideBorder = isDark ? 'hsl(0 0% 15%)' : 'hsl(0 0% 90%)';
-  const outsideCardBg = isDark ? 'hsl(0 0% 6%)' : 'hsl(0 0% 97%)';
+  const outsideBorder = isDark ? 'hsl(150 15% 22%)' : 'hsl(0 0% 90%)';
+  const outsideCardBg = isDark ? 'hsl(150 18% 14%)' : 'hsl(0 0% 97%)';
 
   const panelBorder = isDark ? '#FFFBEB' : '#041009';
   const panelBg = '#1D2A23';
