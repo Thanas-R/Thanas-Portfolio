@@ -13,6 +13,7 @@ import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
 import VirdisDetail from '@/components/VirdisDetail';
 import NautilusDetail from '@/components/NautilusDetail';
+import SphealDetail from '@/components/SphealDetail';
 import ContourThemeToggle from '@/components/ContourThemeToggle';
 import contourDark from '@/assets/contour-dark.png';
 import contourLight from '@/assets/contour-light.png';
@@ -60,6 +61,7 @@ const ProjectDetailPage = () => {
   const isVirdis = project.id === 'virdis';
   const isPesuMC = project.id === 'pesu-mc';
   const isNautilus = project.id === 'nautilus';
+  const isSpheal = project.id === 'spheal';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
@@ -134,6 +136,10 @@ const ProjectDetailPage = () => {
 
   if (isNautilus) {
     return <><SideNav /><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+  }
+
+  if (isSpheal) {
+    return <><SideNav /><SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   return (
