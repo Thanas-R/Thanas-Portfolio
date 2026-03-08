@@ -197,13 +197,22 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
           <defs>
             <marker
               id="arrowhead"
-              markerWidth="8"
-              markerHeight="6"
-              refX="7"
-              refY="3"
-              orient="auto"
+              markerWidth="12.5"
+              markerHeight="12.5"
+              viewBox="-10 -10 20 20"
+              refX="0"
+              refY="0"
+              orient="auto-start-reverse"
+              markerUnits="strokeWidth"
             >
-              <polygon points="0 0, 8 3, 0 6" fill={edgeColor} />
+              <polyline
+                points="-5,-4 0,0 -5,4"
+                fill="none"
+                stroke={edgeColor}
+                strokeWidth="1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </marker>
           </defs>
           {EDGES.map((edge, edgeIdx) => {
