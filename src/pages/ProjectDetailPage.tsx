@@ -894,17 +894,17 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Title — center-aligned, big */}
-              <motion.div {...fadeUp(0.08)} className="text-center mb-10">
+               <motion.div {...fadeUp(0.08)} className="text-center mb-10">
                 <h1
-                  className="text-7xl md:text-8xl lg:text-[10rem] font-black text-white leading-[0.9] tracking-tighter uppercase"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif", textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
-                  PESU MC
+                  className="text-[3rem] sm:text-[4.5rem] md:text-[6.5rem] lg:text-[9rem] xl:text-[11rem] font-black text-white leading-[0.85] tracking-tight uppercase"
+                  style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 900, textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
+                  PESU<br />MINECRAFT
                 </h1>
                 <p
-                  className="text-xl lg:text-6xl mt-3 inline-flex items-center gap-3"
+                  className="text-lg sm:text-2xl md:text-3xl lg:text-5xl mt-4 inline-flex items-center gap-2 md:gap-3 tracking-wider"
                   style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 300, color: 'rgba(255,255,255,0.5)' }}>
-                  <img src={pesuMcHero} alt="Server icon" className="inline-block rounded-md" style={{ height: '1em' }} />
                   SEASON 2
+                  <img src={pesuMcIcon} alt="Server icon" className="inline-block rounded-full" style={{ height: '1.1em' }} />
                 </p>
               </motion.div>
 
