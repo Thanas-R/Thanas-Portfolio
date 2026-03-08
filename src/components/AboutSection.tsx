@@ -57,7 +57,7 @@ const AboutSection = () => {
 
           {/* About Me */}
           <BentoCard className="md:col-span-4 min-h-[10rem]">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Space_Grotesk']">About Me</h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">About Me</h3>
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
               I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
             </p>
