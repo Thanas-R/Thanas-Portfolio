@@ -314,7 +314,7 @@ const TopographicBackground = ({ density: externalDensity, contained = false }: 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full"
+      className={contained ? "absolute inset-0 w-full h-full" : "fixed inset-0 w-full h-full"}
       style={{ zIndex: 0 }}
     />
   );
