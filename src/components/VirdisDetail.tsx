@@ -22,24 +22,27 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
 
   const c = {
     pageBg: isDark ? 'hsl(150 30% 8%)' : '#FFFBEB',
-    panelBg: isDark ? 'hsl(150 25% 12%)' : 'hsl(0 0% 100%)',
-    panelBorder: isDark ? 'hsl(150 15% 20%)' : 'hsl(47 30% 82%)',
+    panelBg: isDark
+      ? 'hsla(150 25% 14% / 0.85)'
+      : 'hsla(150 30% 15% / 0.06)',
+    panelBorder: isDark ? 'hsl(150 15% 22%)' : 'hsl(150 20% 75%)',
     text: isDark ? 'hsl(47 100% 96%)' : 'hsl(150 30% 15%)',
     textMuted: isDark ? 'hsl(150 10% 55%)' : 'hsl(150 15% 40%)',
     heading: isDark ? 'hsl(47 100% 96%)' : 'hsl(150 30% 15%)',
     accent: '#EAB947',
     label: isDark ? 'hsl(150 10% 45%)' : 'hsl(150 10% 50%)',
-    cardBg: isDark ? 'hsl(150 25% 10%)' : 'hsl(47 40% 96%)',
-    cardBorder: isDark ? 'hsl(150 15% 18%)' : 'hsl(47 30% 85%)',
+    cardBg: isDark ? 'hsl(150 25% 10%)' : 'hsl(150 20% 96%)',
+    cardBorder: isDark ? 'hsl(150 15% 18%)' : 'hsl(150 15% 85%)',
     tagBg: isDark ? 'rgba(234,185,71,0.08)' : 'rgba(234,185,71,0.08)',
     tagBorder: isDark ? 'rgba(234,185,71,0.2)' : 'rgba(234,185,71,0.25)',
     tagText: isDark ? '#d4b84a' : '#8a7030',
-    navBg: isDark ? 'hsl(150 25% 10%)' : 'hsl(47 40% 97%)',
+    navBg: isDark ? 'hsl(150 25% 10%)' : 'hsl(150 20% 97%)',
     btnBg: isDark ? 'hsl(47 100% 96%)' : 'hsl(150 30% 15%)',
     btnText: isDark ? 'hsl(150 30% 10%)' : 'hsl(47 100% 96%)',
-    divider: isDark ? 'hsl(150 15% 16%)' : 'hsl(47 25% 88%)',
-    codeBg: isDark ? 'hsl(150 30% 7%)' : 'hsl(47 30% 94%)',
+    divider: isDark ? 'hsl(150 15% 16%)' : 'hsl(150 15% 88%)',
+    codeBg: isDark ? 'hsl(150 30% 7%)' : 'hsl(150 15% 95%)',
     flowArrow: isDark ? 'hsl(150 30% 35%)' : 'hsl(150 25% 45%)',
+    green: isDark ? 'hsl(150 30% 35%)' : 'hsl(150 30% 30%)',
   };
 
   const font = "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
@@ -62,10 +65,10 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           </Link>
         </motion.div>
 
-        {/* Floating panel */}
+        {/* Floating glass panel */}
         <motion.div
           {...fadeUp(0.08)}
-          className="rounded-2xl p-8 md:p-12"
+          className="rounded-2xl p-8 md:p-12 backdrop-blur-xl"
           style={{
             backgroundColor: c.panelBg,
             border: `2px solid ${c.panelBorder}`,
@@ -73,7 +76,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
         >
           {/* Title block */}
           <div className="flex items-center gap-3 mb-1">
-            <Leaf className="w-6 h-6" style={{ color: c.flowArrow }} />
+            <Leaf className="w-6 h-6" style={{ color: c.green }} />
             <h1
               className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
               style={{ fontFamily: font, color: c.heading }}
@@ -138,16 +141,16 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           <div className="grid md:grid-cols-2 gap-3 mb-12">
             {[
               { icon: Satellite, title: 'Interactive Satellite Map', desc: 'High-resolution Mapbox basemap with polygon drawing, field editing, fly-to animations, and layer toggles.' },
-              { icon: BarChart3, title: 'NDVI Vegetation Analysis', desc: 'Sentinel-2 satellite imagery processed through Google Earth Engine to calculate vegetation health indices.' },
-              { icon: Crosshair, title: 'Auto Field Detection', desc: 'Single-click field detection using NDVI-based region-growing segmentation, returning boundaries, area, and health scores.' },
-              { icon: Cpu, title: 'AI Agronomic Insights', desc: 'AI-generated crop health assessments, irrigation recommendations, pest risk analysis, and scouting suggestions.' },
+              { icon: BarChart3, title: 'NDVI Vegetation Analysis', desc: 'Sentinel-2 satellite imagery processed through Google Earth Engine REST API to calculate vegetation health indices.' },
+              { icon: Crosshair, title: 'Auto Field Detection', desc: 'Single-click field detection using NDVI-based region-growing segmentation via the GEE computePixels endpoint.' },
+              { icon: Cpu, title: 'AI Agronomic Insights', desc: 'Gemini 2.5 Flash powered crop health assessments, irrigation recommendations, pest risk analysis, and scouting suggestions.' },
             ].map((item) => (
               <div
                 key={item.title}
                 className="p-5 rounded-xl flex gap-4"
                 style={{ backgroundColor: c.cardBg, border: `1px solid ${c.cardBorder}` }}
               >
-                <item.icon className="w-5 h-5 mt-0.5 shrink-0" style={{ color: c.flowArrow }} />
+                <item.icon className="w-5 h-5 mt-0.5 shrink-0" style={{ color: c.green }} />
                 <div>
                   <h3 className="font-semibold text-sm mb-1.5" style={{ color: c.heading, fontFamily: font }}>
                     {item.title}
@@ -169,7 +172,9 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             <span style={{ color: c.heading, fontWeight: 600 }}>User Click</span>
             <span style={{ color: c.flowArrow }}> → </span>Capture lat/lon
             <br />
-            <span style={{ color: c.flowArrow }}>→ </span>Edge Function queries Sentinel-2
+            <span style={{ color: c.flowArrow }}>→ </span>Edge Function (Deno) calls GEE REST API
+            <br />
+            <span style={{ color: c.flowArrow }}>→ </span>Sentinel-2 query via computePixels endpoint
             <br />
             <span style={{ color: c.flowArrow }}>→ </span>NDVI calculation (NIR − Red) / (NIR + Red)
             <br />
@@ -203,12 +208,16 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             {[
               { label: 'Frontend', value: 'React 18' },
               { label: 'Language', value: 'TypeScript' },
+              { label: 'Backend', value: 'Supabase Edge Fn' },
+              { label: 'Runtime', value: 'Deno' },
               { label: 'Mapping', value: 'Mapbox GL JS' },
               { label: 'Satellite', value: 'Earth Engine' },
-              { label: 'Styling', value: 'Tailwind + shadcn' },
+              { label: 'Styling', value: 'Tailwind + shadcn/ui' },
               { label: 'Charts', value: 'Recharts' },
-              { label: 'AI', value: 'Lovable AI' },
+              { label: 'AI', value: 'Gemini 2.5 Flash' },
               { label: 'Weather', value: 'Open-Meteo' },
+              { label: 'Database', value: 'Supabase' },
+              { label: 'State', value: 'TanStack Query' },
             ].map((item) => (
               <div
                 key={item.label}
@@ -231,26 +240,27 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             className="p-5 rounded-xl text-[13px] leading-[2] mb-12"
             style={{ backgroundColor: c.codeBg, border: `1px solid ${c.cardBorder}`, fontFamily: monoFont, color: c.textMuted }}
           >
-            <span style={{ color: c.heading, fontWeight: 600 }}>Frontend</span> (React + Mapbox)
+            <span style={{ color: c.heading, fontWeight: 600 }}>Frontend</span> (React + Mapbox GL JS)
             <br />
             &nbsp;&nbsp;|
             <br />
             &nbsp;&nbsp;v
             <br />
-            <span style={{ color: c.heading, fontWeight: 600 }}>Edge Functions</span>
+            <span style={{ color: c.heading, fontWeight: 600 }}>Supabase Edge Functions</span> (Deno/TypeScript)
             <br />
             &nbsp;&nbsp;|
             <br />
-            &nbsp;&nbsp;
-            <span style={{ color: c.flowArrow }}>NDVI Tiles</span>
-            {' | '}
-            <span style={{ color: c.flowArrow }}>Field Detection</span>
-            {' | '}
-            <span style={{ color: c.flowArrow }}>AI Analysis</span>
+            &nbsp;&nbsp;├── <span style={{ color: c.green }}>gee-detect-field</span> → Google Earth Engine REST API
+            <br />
+            &nbsp;&nbsp;├── <span style={{ color: c.green }}>gee-ndvi-tiles</span> → Google Earth Engine REST API
+            <br />
+            &nbsp;&nbsp;├── <span style={{ color: c.green }}>analyze-field</span> → Gemini 2.5 Flash
+            <br />
+            &nbsp;&nbsp;└── <span style={{ color: c.green }}>get-mapbox-token</span> → Mapbox API
             <br />
             &nbsp;&nbsp;|
             <br />
-            <span style={{ color: c.heading, fontWeight: 600 }}>Google Earth Engine</span> (Sentinel-2)
+            <span style={{ color: c.heading, fontWeight: 600 }}>Google Earth Engine</span> (Sentinel-2 SR Harmonized)
           </div>
 
           {/* Key Features */}
@@ -269,7 +279,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               'Responsive design with mobile-optimized map and slide-up panels',
             ].map((feat) => (
               <div key={feat} className="flex items-start gap-3">
-                <span className="mt-0.5 text-xs" style={{ color: c.flowArrow }}>▸</span>
+                <span className="mt-0.5 text-xs" style={{ color: c.green }}>▸</span>
                 <p className="text-[13px] leading-relaxed" style={{ color: c.text, fontFamily: font }}>{feat}</p>
               </div>
             ))}
@@ -287,7 +297,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 className="p-5 rounded-xl"
                 style={{ backgroundColor: c.cardBg, border: `1px solid ${c.cardBorder}` }}
               >
-                <item.icon className="w-4 h-4 mb-2.5" style={{ color: c.flowArrow }} />
+                <item.icon className="w-4 h-4 mb-2.5" style={{ color: c.green }} />
                 <h3 className="font-semibold text-sm mb-1.5" style={{ color: c.heading, fontFamily: font }}>
                   {item.title}
                 </h3>
