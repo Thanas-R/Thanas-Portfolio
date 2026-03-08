@@ -1,19 +1,11 @@
 import { motion } from 'framer-motion';
 import { Download, Printer } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
 
   const handlePrint = useCallback(() => {
     const printWindow = window.open(resumePath, '_blank');
