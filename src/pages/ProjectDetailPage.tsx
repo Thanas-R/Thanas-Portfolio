@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
+import TopographicBackground from '@/components/TopographicBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
 import { Mac } from '@/components/Mac';
@@ -9,6 +10,7 @@ import thanasOsMac from '@/assets/thanasos-mac.png';
 import pesuForgeBg from '@/assets/pesuforge-bg.png';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
