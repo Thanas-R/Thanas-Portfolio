@@ -250,7 +250,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 />
                 <Icon className="w-3.5 h-3.5" style={{ color: highlightColor }} />
                 <h3
-                  className="text-sm font-semibold leading-tight"
+                  className="text-base font-semibold leading-tight"
                   style={{ color: titleColor, fontFamily: "'Inter', sans-serif" }}
                 >
                   {node.title}
