@@ -9,7 +9,6 @@ import {
   Mail,
   Sun,
   Moon,
-  ExternalLink,
   ArrowRight,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
