@@ -44,47 +44,46 @@ const FEATURES: FlowNode[] = [
     title: 'Infinite Canvas',
     content: 'Pan, zoom, and freehand drawing on an infinite zoomable canvas with smooth interactions.',
     highlights: [{ text: 'infinite', color: '#3B82F6' }],
-    x: 15, y: 10, width: 250, height: 105,
+    x: 10, y: 0, width: 250, height: 105,
   },
   {
     id: 'ai-gen',
     title: 'AI-Generated Cards',
     content: 'Topic cards, concept cards, and flowcharts generated from a simple prompt using AI.',
     highlights: [{ text: 'AI', color: '#8B5CF6' }],
-    x: 330, y: 40, width: 240, height: 105,
+    x: 320, y: 0, width: 250, height: 105,
   },
   {
     id: 'nodes',
     title: 'Multiple Node Types',
     content: 'Content cards, topic nodes, and flowchart shapes with full markdown rendering support.',
     highlights: [{ text: 'markdown', color: '#10B981' }],
-    x: 140, y: 155, width: 255, height: 105,
+    x: 165, y: 160, width: 250, height: 105,
   },
   {
     id: 'edges',
     title: 'Smart Labeled Edges',
     content: 'Automatic layout with labeled connections between nodes using the Dagre algorithm.',
     highlights: [{ text: 'Dagre', color: '#F59E0B' }],
-    x: 0, y: 300, width: 240, height: 105,
+    x: 10, y: 320, width: 250, height: 105,
   },
   {
     id: 'explain',
     title: 'AI Chain Explanations',
     content: 'Select connected nodes and get AI-generated explanations for the entire chain of concepts.',
     highlights: [{ text: 'chain', color: '#8B5CF6' }],
-    x: 320, y: 280, width: 250, height: 105,
+    x: 320, y: 320, width: 250, height: 105,
   },
   {
     id: 'save',
     title: 'Auto-save & Undo/Redo',
     content: 'Session management with persistent auto-save, full undo/redo history, and state recovery.',
     highlights: [{ text: 'auto-save', color: '#EC4899' }],
-    x: 150, y: 430, width: 260, height: 105,
+    x: 100, y: 480, width: 260, height: 105,
   },
 ];
 
 const EDGES: FlowEdge[] = [
-  { from: 'canvas', to: 'ai-gen' },
   { from: 'canvas', to: 'nodes' },
   { from: 'ai-gen', to: 'nodes' },
   { from: 'nodes', to: 'edges' },
@@ -109,28 +108,32 @@ function getEdgePath(from: FlowNode, to: FlowNode): { path: string; labelX: numb
   const tx = to.x + to.width / 2;
   const ty = to.y + to.height / 2;
 
-  // Determine exit/entry points
   let sx = fx, sy = fy, ex = tx, ey = ty;
 
-  if (Math.abs(tx - fx) > Math.abs(ty - fy)) {
-    // Horizontal dominant
+  // Always exit from bottom, enter from top for downward flow
+  if (ty > fy) {
+    sy = from.y + from.height;
+    ey = to.y;
+    sx = fx;
+    ex = tx;
+  } else if (Math.abs(tx - fx) > Math.abs(ty - fy)) {
     sx = tx > fx ? from.x + from.width : from.x;
     ex = tx > fx ? to.x : to.x + to.width;
     sy = fy;
     ey = ty;
   } else {
-    // Vertical dominant
     sy = ty > fy ? from.y + from.height : from.y;
     ey = ty > fy ? to.y : to.y + to.height;
     sx = fx;
     ex = tx;
   }
 
-  const mx = (sx + ex) / 2;
-  const my = (sy + ey) / 2;
-
-  const path = `M ${sx} ${sy} C ${mx} ${sy}, ${mx} ${ey}, ${ex} ${ey}`;
-  return { path, labelX: mx, labelY: my };
+  // Smooth bezier with vertical bias
+  const midY = (sy + ey) / 2;
+  const path = `M ${sx} ${sy} C ${sx} ${midY}, ${ex} ${midY}, ${ex} ${ey}`;
+  const labelX = (sx + ex) / 2;
+  const labelY = midY;
+  return { path, labelX, labelY };
 }
 
 /* ── Flowchart Canvas Component ── */
@@ -163,7 +166,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   }, []);
 
   const canvasW = 580;
-  const canvasH = 555;
+  const canvasH = 600;
 
   const highlightText = (text: string, highlights?: { text: string; color: string }[]) => {
     if (!highlights?.length) return text;
