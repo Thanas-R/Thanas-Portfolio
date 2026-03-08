@@ -88,8 +88,8 @@ const TechCarousel = () => {
           Tech Stack
         </h3>
         <div className="space-y-3 overflow-hidden">
-          <Ribbon items={techStack} reverse={false} speed={25} />
-          <Ribbon items={reversed} reverse={true} speed={30} />
+          <Ribbon items={techStack} reverse={false} speed={25} tooltipSide="top" />
+          <Ribbon items={reversed} reverse={true} speed={30} tooltipSide="bottom" />
         </div>
       </div>
     </section>
