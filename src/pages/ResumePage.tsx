@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Download, Printer, ExternalLink } from 'lucide-react';
+import { Download, Printer } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
@@ -24,7 +24,6 @@ const ResumePage = () => {
     }
   }, [resumePath]);
 
-  // Google Docs viewer for mobile (native PDF iframes don't work on mobile browsers)
   const googleViewerUrl = `https://docs.google.com/gview?embedded=true&url=${window.location.origin}${resumePath}`;
 
   return (
@@ -40,7 +39,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative z-10 max-w-5xl mx-auto w-full pb-3 flex items-center justify-between px-5 gap-3"
+        className="relative z-10 max-w-5xl mx-auto w-full pb-3 flex items-center justify-between px-4 md:px-5 gap-3"
       >
         <h1
           className="text-3xl md:text-5xl font-black text-foreground uppercase leading-none shrink-0"
@@ -62,16 +61,7 @@ const ResumePage = () => {
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
           >
             <Download className="w-4 h-4" />
-            <span className="hidden sm:inline">Download</span>
-          </a>
-          {/* Mobile: open in new tab since iframe viewing is limited */}
-          <a
-            href={resumePath}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex md:hidden items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold"
-          >
-            <ExternalLink className="w-4 h-4" />
+            Download
           </a>
         </div>
       </motion.div>
@@ -84,7 +74,7 @@ const ResumePage = () => {
         className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 w-full flex-1 min-h-0 pb-4"
       >
         <div
-          className="h-full rounded-2xl overflow-hidden border border-border bg-card"
+          className="h-full rounded-2xl overflow-hidden border border-border bg-card resume-viewer"
           style={{
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
           }}
