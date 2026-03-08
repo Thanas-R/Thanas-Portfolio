@@ -31,6 +31,7 @@ const ProjectDetailPage = () => {
   const isSmartChef = project.id === 'smart-chef';
   const isAskBookie = project.id === 'askbookie';
   const isPesuForge = project.id === 'pesu-forge';
+  const isContourFlow = project.id === 'contour-flow';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
