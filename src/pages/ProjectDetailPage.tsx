@@ -990,15 +990,15 @@ const ProjectDetailPage = () => {
                 style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
                 {prevProject ?
                   <Link to={`/projects/${prevProject.id}`}
-                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-xl"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-2xl"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
                     <span className="text-xs uppercase tracking-widest text-white/40 flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Previous</span>
                     <span className="text-sm font-bold text-white/80 group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{prevProject.title}</span>
                   </Link> : <div />}
                 {nextProject ?
                   <Link to={`/projects/${nextProject.id}`}
-                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-xl"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-2xl"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
                     <span className="text-xs uppercase tracking-widest text-white/40 flex items-center justify-end gap-1">Next <ArrowRight className="w-3 h-3" /></span>
                     <span className="text-sm font-bold text-white/80 group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{nextProject.title}</span>
                   </Link> : <div />}
