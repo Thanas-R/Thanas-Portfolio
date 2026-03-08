@@ -83,16 +83,6 @@ const CommandPalette = () => {
         icon: ArrowRight,
         action: () => go(`/projects/${p.id}`),
       })),
-      // External links for projects with live demos
-      ...projects
-        .filter((p) => p.live)
-        .map((p) => ({
-          id: `live-${p.id}`,
-          label: `${p.title} — Live Demo`,
-          section: 'External',
-          icon: ExternalLink,
-          action: () => go(p.live!),
-        })),
     ];
     return items;
   }, [resolvedTheme, go, close, setTheme]);
