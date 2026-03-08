@@ -54,18 +54,18 @@ const FEATURES: FlowNode[] = [
     x: 320, y: 0, width: 260, height: 120,
   },
   {
-    id: 'nodes',
-    title: 'Multiple Node Types',
-    content: 'Content cards, topic nodes, and flowchart shapes with full markdown rendering support.',
-    highlights: [{ text: 'markdown', color: '#10B981' }],
-    x: 0, y: 170, width: 260, height: 120,
-  },
-  {
     id: 'edges',
     title: 'Smart Labeled Edges',
     content: 'Automatic layout with labeled connections between nodes using the Dagre algorithm.',
     highlights: [{ text: 'Dagre', color: '#F59E0B' }],
     x: 320, y: 170, width: 260, height: 120,
+  },
+  {
+    id: 'nodes',
+    title: 'Multiple Node Types',
+    content: 'Content cards, topic nodes, and flowchart shapes with full markdown rendering support.',
+    highlights: [{ text: 'markdown', color: '#10B981' }],
+    x: 0, y: 170, width: 260, height: 120,
   },
   {
     id: 'save',
@@ -86,10 +86,9 @@ const FEATURES: FlowNode[] = [
 const EDGES: FlowEdge[] = [
   { from: 'ai-gen', to: 'canvas' },
   { from: 'canvas', to: 'edges' },
-  { from: 'ai-gen', to: 'nodes' },
-  { from: 'nodes', to: 'edges' },
+  { from: 'edges', to: 'nodes' },
   { from: 'nodes', to: 'save' },
-  { from: 'edges', to: 'explain' },
+  { from: 'save', to: 'explain' },
 ];
 
 const ICON_MAP: Record<string, React.ElementType> = {
