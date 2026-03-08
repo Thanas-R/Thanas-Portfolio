@@ -103,6 +103,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <GlowCardPointerTracker />
+      <Analytics />
       <BrowserRouter>
         <HashScrollHandler />
         <CommandPalette />
