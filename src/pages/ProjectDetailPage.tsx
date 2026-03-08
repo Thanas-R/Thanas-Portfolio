@@ -84,6 +84,10 @@ const ProjectDetailPage = () => {
     return <VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
   }
 
+  if (isNautilus) {
+    return <NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
+  }
+
   return (
     <>
       {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
