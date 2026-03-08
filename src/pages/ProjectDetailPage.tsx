@@ -138,6 +138,10 @@ const ProjectDetailPage = () => {
     return <><SideNav /><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
+  if (isSpheal) {
+    return <><SideNav /><SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+  }
+
   return (
     <>
       <SideNav />
