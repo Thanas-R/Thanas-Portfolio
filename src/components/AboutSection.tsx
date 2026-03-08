@@ -210,82 +210,21 @@ const AboutSection = () => {
             </BentoCard>
 
             {/* Education */}
-            <BentoCard className="md:col-span-2 min-h-[10rem]">
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Education</p>
-              <div className="space-y-4">
+            <BentoCard className="md:col-span-2 min-h-[8rem]">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">Education</p>
+              <div className="space-y-3">
                 {educationData.map((edu, idx) =>
-                <div key={idx} className="flex items-start gap-3">
-                    
-
-
-
-
-
-
-
-                  
-                    <div className="flex-1 -mt-0.5">
-                      <p className="text-sm font-semibold text-foreground font-['Inter']">{edu.institution}</p>
-                      <p className="text-xs text-muted-foreground font-['Inter']">{edu.detail}</p>
-                      <p className="text-xs text-muted-foreground/70 font-['JetBrains_Mono']">{edu.years}</p>
-                    </div>
+                <div key={idx} className="flex-1">
+                    <p className="text-sm font-semibold text-foreground font-['Inter']">{edu.institution}</p>
+                    <p className="text-xs text-muted-foreground font-['Inter']">{edu.detail} <span className="text-muted-foreground/70 font-['JetBrains_Mono']">· {edu.years}</span></p>
                   </div>
                 )}
               </div>
             </BentoCard>
 
-            {/* Certifications */}
-            <BentoCard className="md:col-span-2 min-h-[10rem]">
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Certifications</p>
-              <div className="grid grid-cols-4 gap-2">
-                {certifications.map((cert, idx) =>
-                <div
-                  key={idx}
-                  className="aspect-square rounded-lg border border-border bg-muted/30 flex items-center justify-center">
-                  
-                    <span className="text-muted-foreground text-lg font-medium">—</span>
-                  </div>
-                )}
-                <a
-                  href="#"
-                  className="aspect-square rounded-lg border border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors font-['Inter'] text-center px-1">
-                  
-                  View All
-                </a>
-              </div>
-
-              <TooltipProvider delayDuration={100}>
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-              </TooltipProvider>
+            {/* GitHub Activity */}
+            <BentoCard className="md:col-span-2 min-h-[8rem]">
+              <GitHubActivityChart />
             </BentoCard>
           </div>
         </motion.div>
