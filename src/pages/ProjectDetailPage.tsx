@@ -13,9 +13,9 @@ import { useTheme } from '@/hooks/use-theme';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.5, ease: 'easeOut' },
+  transition: { duration: 0.55, delay, ease: 'easeOut' as const }
 });
 
 const ProjectDetailPage = () => {
