@@ -62,7 +62,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
         {/* Panel — 4px border */}
         <motion.div
           {...fadeUp(0.08)}
-          className="rounded-2xl p-5 sm:p-8 md:p-12"
+          className="rounded-2xl p-5 sm:p-8 md:p-12 relative overflow-hidden"
           style={{
             backgroundColor: panelBg,
             border: `4px solid ${panelBorder}`,
@@ -71,26 +71,28 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               : '0 25px 60px -12px rgba(0,0,0,0.25), 0 0 30px -10px rgba(4,16,9,0.1)',
           }}
         >
+          {/* Inner glow overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-2xl"
+            style={{
+              background: 'radial-gradient(ellipse at 20% 0%, rgba(74,140,111,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(234,185,71,0.06) 0%, transparent 50%)',
+            }}
+          />
+          <div className="relative z-10">
           {/* Header */}
-          <h1
-            className="text-4xl md:text-6xl font-bold leading-none tracking-tight mb-2"
-            style={{ fontFamily: font, color: heading }}
-          >
-            Virdis
-          </h1>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-            <p
-              className="text-sm uppercase tracking-[0.2em] font-medium"
-              style={{ color: accent, fontFamily: font }}
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
+            <h1
+              className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
+              style={{ fontFamily: font, color: heading }}
             >
-              Precision Agriculture Platform
-            </p>
+              Virdis
+            </h1>
             {project.live && (
               <a
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-8 py-3 rounded-xl text-base font-bold hover:scale-[1.03] active:scale-[0.98] transition-all"
+                className="inline-flex items-center gap-2.5 px-8 py-3 rounded-xl text-base font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
                 style={{
                   backgroundColor: text,
                   color: panelBg,
@@ -103,6 +105,12 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               </a>
             )}
           </div>
+          <p
+            className="text-sm uppercase tracking-[0.2em] font-medium mb-6"
+            style={{ color: accent, fontFamily: font }}
+          >
+            Precision Agriculture Platform
+          </p>
           <p
             className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
             style={{ color: textMuted, fontFamily: font }}
@@ -207,6 +215,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             ) : (
               <img src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
             )}
+          </div>
           </div>
         </motion.div>
 
