@@ -146,7 +146,6 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             {[
               { icon: Map, title: 'Satellite Map', desc: 'Mapbox basemap with polygon drawing, field editing, and NDVI layer overlays.' },
               { icon: BarChart3, title: 'NDVI Analysis', desc: 'Sentinel-2 imagery via Google Earth Engine to calculate vegetation health indices.' },
-              { icon: Crosshair, title: 'Auto Detection', desc: 'One-click field detection using region-growing segmentation via GEE computePixels.' },
               { icon: Cpu, title: 'AI Insights', desc: 'Gemini 2.5 Flash powered crop health assessments and irrigation recommendations.' },
               { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
             ].map((item) => (
