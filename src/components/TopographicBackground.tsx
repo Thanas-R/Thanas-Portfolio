@@ -39,10 +39,13 @@ const TopographicBackground = ({ density: externalDensity, contained = false }: 
 
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      const container = contained ? canvas.parentElement : null;
+      const w = container ? container.clientWidth : window.innerWidth;
+      const h = container ? container.clientHeight : window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
       ctx.scale(dpr, dpr);
     };
 
