@@ -80,37 +80,56 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           />
           <div className="relative z-10">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-2">
-            <h1
-              className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
-              style={{ fontFamily: font, color: heading }}
-            >
-              Virdis
-            </h1>
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-7 py-3 rounded-xl text-base font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0 order-last md:order-none"
-                style={{
-                  backgroundColor: text,
-                  color: panelBg,
-                  fontFamily: font,
-                  boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
-                }}
-              >
-                <ExternalLink className="w-5 h-5" />
-                Live Demo
-              </a>
-            )}
-          </div>
-          <p
-            className="text-sm uppercase tracking-[0.2em] font-medium mb-6"
-            style={{ color: accent, fontFamily: font }}
+          <h1
+            className="text-4xl md:text-6xl font-bold leading-none tracking-tight mb-2"
+            style={{ fontFamily: font, color: heading }}
           >
-            Satellite-Powered Precision Agriculture Platform
-          </p>
+            Virdis
+          </h1>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+            <p
+              className="text-sm uppercase tracking-[0.2em] font-medium"
+              style={{ color: accent, fontFamily: font }}
+            >
+              Satellite-Powered Precision Agriculture Platform
+            </p>
+            <div className="flex items-center gap-2.5">
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all"
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: text,
+                    fontFamily: font,
+                    border: `1px solid rgba(255,251,235,0.2)`,
+                  }}
+                >
+                  <Github className="w-4 h-4" />
+                  GitHub
+                </a>
+              )}
+              {project.live && (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+                  style={{
+                    backgroundColor: text,
+                    color: panelBg,
+                    fontFamily: font,
+                    boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                  }}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Live Demo
+                </a>
+              )}
+            </div>
+          </div>
 
           {/* Description */}
           <p
