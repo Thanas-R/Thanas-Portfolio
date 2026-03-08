@@ -11,6 +11,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ResumePage from "./pages/ResumePage";
 import NotFound from "./pages/NotFound";
+import CommandPalette from "./components/CommandPalette";
 
 const queryClient = new QueryClient();
 
