@@ -250,11 +250,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
               }}
             >
               <div className="flex items-center gap-2 mb-2">
-                <div
-                  className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: highlightColor }}
-                />
-                <Icon className="w-3.5 h-3.5" style={{ color: highlightColor }} />
+                <Icon className="w-4 h-4" style={{ color: highlightColor }} />
                 <h3
                   className="text-base font-semibold leading-tight"
                   style={{ color: titleColor, fontFamily: "'Inter', sans-serif" }}
