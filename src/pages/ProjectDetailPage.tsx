@@ -15,6 +15,7 @@ import ContourThemeToggle from '@/components/ContourThemeToggle';
 import contourDark from '@/assets/contour-dark.png';
 import contourLight from '@/assets/contour-light.png';
 import pesuMcHero from '@/assets/pesumc-hero.png';
+import pesuMcBackdrop from '@/assets/pesumc-backdrop.png';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
