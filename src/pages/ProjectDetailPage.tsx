@@ -9,6 +9,7 @@ import thanasOsMac from '@/assets/thanasos-mac.png';
 import pesuForgeBg from '@/assets/pesuforge-bg.png';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
+import ContourFlowBackground from '@/components/ContourFlowBackground';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
