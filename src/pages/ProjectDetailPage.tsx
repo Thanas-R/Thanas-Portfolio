@@ -49,6 +49,9 @@ const ProjectDetailPage = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevProject, nextProject, navigate]);
+
+  if (!project) return <Navigate to="/projects" replace />;
+
   const isThanasOS = project.id === 'thanas-os';
   const isSmartChef = project.id === 'smart-chef';
   const isAskBookie = project.id === 'askbookie';
