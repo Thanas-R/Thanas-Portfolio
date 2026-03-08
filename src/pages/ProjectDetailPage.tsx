@@ -934,11 +934,23 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               <motion.div {...fadeUp(0.3)} className="mb-16 rounded-2xl overflow-hidden border border-foreground/10">
-                <ProjectImage
-                  src={project.imageSrc}
-                  alt={`${project.title} preview`}
-                  className="w-full object-cover"
+                <motion.img
+                  src={isDark ? contourLight : contourDark}
+                  alt={`Contour Flow ${isDark ? 'light' : 'dark'} mode preview`}
+                  className="w-full object-cover cursor-pointer"
                   style={{ maxHeight: 480 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    const html = document.documentElement;
+                    if (isDark) {
+                      html.classList.remove('dark');
+                      localStorage.setItem('theme', 'light');
+                    } else {
+                      html.classList.add('dark');
+                      localStorage.setItem('theme', 'dark');
+                    }
+                  }}
                 />
               </motion.div>
 
