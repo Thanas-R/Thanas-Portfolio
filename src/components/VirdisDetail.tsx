@@ -80,13 +80,19 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           />
           <div className="relative z-10">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
-            <h1
-              className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
-              style={{ fontFamily: font, color: heading }}
+          <h1
+            className="text-4xl md:text-6xl font-bold leading-none tracking-tight mb-2"
+            style={{ fontFamily: font, color: heading }}
+          >
+            Virdis
+          </h1>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+            <p
+              className="text-sm uppercase tracking-[0.2em] font-medium"
+              style={{ color: accent, fontFamily: font }}
             >
-              Virdis
-            </h1>
+              Precision Agriculture Platform
+            </p>
             {project.live && (
               <a
                 href={project.live}
@@ -105,12 +111,6 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               </a>
             )}
           </div>
-          <p
-            className="text-sm uppercase tracking-[0.2em] font-medium mb-6"
-            style={{ color: accent, fontFamily: font }}
-          >
-            Precision Agriculture Platform
-          </p>
           <p
             className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
             style={{ color: textMuted, fontFamily: font }}
