@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
-import { Link, useParams, Navigate } from 'react-router-dom';
+import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
@@ -27,14 +28,30 @@ const fadeUp = (delay = 0) => ({
 
 const ProjectDetailPage = () => {
   const { slug } = useParams<{slug: string;}>();
+  const navigate = useNavigate();
   const project = projects.find((p) => p.id === slug);
   const { isDark } = useTheme();
-
-  if (!project) return <Navigate to="/projects" replace />;
 
   const currentIndex = projects.findIndex((p) => p.id === slug);
   const prevProject = projects[currentIndex - 1] ?? null;
   const nextProject = projects[currentIndex + 1] ?? null;
+
+  // Arrow key navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'ArrowLeft' && prevProject) {
+        navigate(`/projects/${prevProject.id}`);
+      } else if (e.key === 'ArrowRight' && nextProject) {
+        navigate(`/projects/${nextProject.id}`);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [prevProject, nextProject, navigate]);
+
+  if (!project) return <Navigate to="/projects" replace />;
+
   const isThanasOS = project.id === 'thanas-os';
   const isSmartChef = project.id === 'smart-chef';
   const isAskBookie = project.id === 'askbookie';
@@ -80,16 +97,48 @@ const ProjectDetailPage = () => {
   // Smart Chef background removed per user request
   const smartChefBg = undefined;
 
+  const SideNav = () => (
+    <>
+      {prevProject && (
+        <Link
+          to={`/projects/${prevProject.id}`}
+          className="fixed left-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
+          style={{
+            backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
+            borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)',
+          }}
+          aria-label="Previous project"
+        >
+          <ChevronLeft className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
+        </Link>
+      )}
+      {nextProject && (
+        <Link
+          to={`/projects/${nextProject.id}`}
+          className="fixed right-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
+          style={{
+            backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
+            borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)',
+          }}
+          aria-label="Next project"
+        >
+          <ChevronRight className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
+        </Link>
+      )}
+    </>
+  );
+
   if (isVirdis) {
-    return <VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
+    return <><SideNav /><VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   if (isNautilus) {
-    return <NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
+    return <><SideNav /><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   return (
     <>
+      <SideNav />
       {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
         {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <Navbar />}
