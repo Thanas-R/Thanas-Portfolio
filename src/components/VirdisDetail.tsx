@@ -62,10 +62,13 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
         {/* Panel — 4px border */}
         <motion.div
           {...fadeUp(0.08)}
-          className="rounded-2xl p-8 md:p-12"
+          className="rounded-2xl p-5 sm:p-8 md:p-12"
           style={{
             backgroundColor: panelBg,
             border: `4px solid ${panelBorder}`,
+            boxShadow: isDark
+              ? '0 25px 60px -12px rgba(0,0,0,0.5), 0 0 40px -10px rgba(74,140,111,0.15)'
+              : '0 25px 60px -12px rgba(0,0,0,0.25), 0 0 30px -10px rgba(4,16,9,0.1)',
           }}
         >
           {/* Header */}
