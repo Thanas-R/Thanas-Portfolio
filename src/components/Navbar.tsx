@@ -2,7 +2,7 @@ import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-mo
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from 'next-themes';
-import { Search } from 'lucide-react';
+import { Command } from 'lucide-react';
 import TextRoll from '@/components/TextRoll';
 import { cn } from '@/lib/utils';
 
