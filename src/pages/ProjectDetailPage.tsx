@@ -10,6 +10,7 @@ import pesuForgeBg from '@/assets/pesuforge-bg.png';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
+import VirdisDetail from '@/components/VirdisDetail';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -32,6 +33,7 @@ const ProjectDetailPage = () => {
   const isAskBookie = project.id === 'askbookie';
   const isPesuForge = project.id === 'pesu-forge';
   const isContourFlow = project.id === 'contour-flow';
+  const isVirdis = project.id === 'virdis';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
@@ -68,6 +70,10 @@ const ProjectDetailPage = () => {
 
   // Smart Chef background removed per user request
   const smartChefBg = undefined;
+
+  if (isVirdis) {
+    return <VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
+  }
 
   return (
     <>
