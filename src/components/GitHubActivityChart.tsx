@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 interface DayCommit {
@@ -17,12 +17,10 @@ const GitHubActivityChart = () => {
   useEffect(() => {
     const fetchGitHubData = async () => {
       try {
-        // Get events for Thanas-R from GitHub public API
         const res = await fetch('https://api.github.com/users/Thanas-R/events/public?per_page=100');
         if (!res.ok) throw new Error('GitHub API error');
         const events = await res.json();
 
-        // Count push events per day of week for the last 7 days
         const now = new Date();
         const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
         const counts = [0, 0, 0, 0, 0, 0, 0];
@@ -76,26 +74,29 @@ const GitHubActivityChart = () => {
         <span className="text-xs text-muted-foreground font-['Inter']">commits this week</span>
       </div>
 
-      <div className="flex-1 flex items-end gap-1.5 min-h-[60px]">
-        {weekData.map((item, i) => (
-          <div key={item.day} className="flex-1 flex flex-col items-center gap-1">
-            <motion.div
-              className="w-full rounded-sm bg-foreground/80"
-              style={{
-                height: `${Math.max((item.value / maxValue) * 100, 4)}%`,
-                originY: 1,
-              }}
-              custom={i}
-              variants={barVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            />
-            <span className="text-[10px] text-muted-foreground font-['JetBrains_Mono']">
-              {item.day}
-            </span>
-          </div>
-        ))}
+      <div className="flex-1 flex items-end gap-2 min-h-[80px]">
+        {weekData.map((item, i) => {
+          const heightPct = Math.max((item.value / maxValue) * 100, 6);
+          return (
+            <div key={item.day} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+              <motion.div
+                className="w-full rounded-sm bg-foreground/80 min-h-[3px]"
+                style={{
+                  height: `${heightPct}%`,
+                  transformOrigin: 'bottom',
+                }}
+                custom={i}
+                variants={barVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              />
+              <span className="text-[10px] text-muted-foreground font-['JetBrains_Mono']">
+                {item.day}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
