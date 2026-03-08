@@ -38,6 +38,7 @@ const ProjectDetailPage = () => {
   const isPesuForge = project.id === 'pesu-forge';
   const isContourFlow = project.id === 'contour-flow';
   const isVirdis = project.id === 'virdis';
+  const isPesuMC = project.id === 'pesu-mc';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
