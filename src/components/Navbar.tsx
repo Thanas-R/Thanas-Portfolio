@@ -70,7 +70,7 @@ const SolarSwitch = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-const Navbar = () => {
+const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -85,6 +85,12 @@ const Navbar = () => {
 
   const isDark = mounted && resolvedTheme === 'dark';
 
+  // When forceDark, override text colors to always appear as dark-mode (white text on dark bg)
+  const textPrimary = forceDark ? 'text-white' : 'text-foreground';
+  const textMuted = forceDark ? 'text-white/50 hover:text-white' : 'text-muted-foreground hover:text-foreground';
+  const borderColor = forceDark ? 'border-white/20' : 'border-border';
+  const mutedIcon = forceDark ? 'text-white/60 hover:text-white' : 'text-muted-foreground hover:text-foreground';
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -93,7 +99,7 @@ const Navbar = () => {
       className="relative z-50 px-6 py-4 md:px-12"
     >
       <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <Link to="/" className="font-['Space_Grotesk'] text-xl font-semibold text-foreground tracking-tight">
+        <Link to="/" className={`font-['Space_Grotesk'] text-xl font-semibold ${textPrimary} tracking-tight`}>
           <TextRoll>thanas.</TextRoll>
         </Link>
         <div className="hidden md:flex items-center gap-8">
