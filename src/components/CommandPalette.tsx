@@ -38,6 +38,16 @@ const CommandPalette = () => {
     setActiveIndex(0);
   }, []);
 
+  // Lock body scroll when open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
   const go = useCallback(
     (path: string) => {
       close();
