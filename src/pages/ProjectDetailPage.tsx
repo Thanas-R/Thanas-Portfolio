@@ -71,6 +71,10 @@ const ProjectDetailPage = () => {
   // Smart Chef background removed per user request
   const smartChefBg = undefined;
 
+  if (isVirdis) {
+    return <VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
+  }
+
   return (
     <>
       {!isAskBookie && !isPesuForge && !isContourFlow && <GridBackground />}
