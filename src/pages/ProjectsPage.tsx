@@ -6,6 +6,7 @@ import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
 import defaultPreview from '@/assets/projects-default.png';
+import ProgressiveImage from '@/components/ProgressiveImage';
 
 const ProjectsPage = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
