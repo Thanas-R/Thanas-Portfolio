@@ -257,7 +257,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 </h3>
               </div>
               <p
-                className="text-xs leading-relaxed"
+                className="text-sm leading-relaxed"
                 style={{ color: contentColor, fontFamily: "'Inter', sans-serif" }}
               >
                 {node.content.split(new RegExp(`(${node.highlights?.map(h => h.text).join('|') || '$$'})`, 'gi')).map((part, pi) => {
