@@ -394,122 +394,43 @@ const ProjectDetailPage = () => {
           </div> :
         isThanasOS ? (
         /* ── ThanasOS ── */
-        <div className="max-w-6xl mx-auto px-6 pt-12 pb-24">
+        <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
             <motion.div {...fadeUp(0)}>
-              <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
-              
+              <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
                 <ArrowLeft className="w-4 h-4" />
                 All Projects
               </Link>
             </motion.div>
 
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-16 mb-16">
-              <div className="flex-1 min-w-0">
-                <motion.div {...fadeUp(0.08)} className="mb-6">
-                  <h1
-                  className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-4"
-                  style={{ fontFamily: "'Inter', sans-serif" }}>
-                  
-                    {project.title}
-                  </h1>
-                  <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-                    {project.description}
-                  </p>
-                </motion.div>
+            <motion.div {...fadeUp(0.08)} className="flex justify-center mb-12">
+              <Mac src={thanasOsMac} className="w-full max-w-[600px] h-auto text-background" />
+            </motion.div>
 
-                <motion.div {...fadeUp(0.15)} className="flex gap-3 mb-8">
-                  {project.live &&
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity">
-                  
-                      <ExternalLink className="w-4 h-4" />
-                      Live Site
-                    </a>
-                }
-                  {project.github &&
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all">
-                  
-                      <Github className="w-4 h-4" />
-                      GitHub
-                    </a>
-                }
-                </motion.div>
+            <motion.div {...fadeUp(0.15)} className="flex justify-center mb-10">
+              <AppleHelloEffect className="h-12 md:h-16 text-foreground" speed={0.7} />
+            </motion.div>
 
-                <motion.div {...fadeUp(0.2)} className="flex flex-wrap gap-2 mb-8">
-                  {project.tags.map((tag) =>
-                <span
-                  key={tag}
-                  className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
-                  
-                      {tag}
-                    </span>
-                )}
-                </motion.div>
-
-                <motion.div {...fadeUp(0.25)}>
-                  <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
-                    About this project
-                  </h2>
-                  <p
-                  className="text-lg md:text-xl leading-relaxed text-foreground/80"
-                  style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}>
-                  
-                    {project.longDescription}
-                  </p>
-                </motion.div>
+            <motion.div {...fadeUp(0.2)} className="max-w-2xl mx-auto">
+              <h1 className="text-4xl md:text-6xl font-black text-foreground leading-none tracking-tight mb-4 text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {project.title}
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-center mb-8">
+                A browser-based portfolio designed to recreate the macOS desktop experience. Visitors interact with a desktop-like interface — opening apps, moving windows, and exploring sections like About, Projects, and Journey.
+              </p>
+              <p className="text-sm text-muted-foreground/80 leading-relaxed text-center mb-10">
+                This was one of my first serious web projects where I experimented with UI design and interactions. The goal was to make a portfolio that feels more immersive and memorable than a standard webpage.
+              </p>
+              <div className="flex justify-center gap-3 mb-10">
+                {project.live && <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity"><ExternalLink className="w-4 h-4" />Live Site</a>}
               </div>
+              <div className="flex flex-wrap justify-center gap-2 mb-10">
+                {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
+              </div>
+            </motion.div>
 
-              <motion.div
-              {...fadeUp(0.2)}
-              className="flex-shrink-0 w-full md:w-auto flex justify-center">
-              
-                <Mac
-                src={thanasOsMac}
-                className="w-full max-w-[520px] h-auto text-background" />
-              
-              </motion.div>
-            </div>
-
-            {/* Nav */}
-            <motion.div
-            {...fadeUp(0.4)}
-            className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4">
-            
-              {prevProject ?
-            <Link
-              to={`/projects/${prevProject.id}`}
-              className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors">
-              
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1">
-                    <ArrowLeft className="w-3 h-3" /> Previous
-                  </span>
-                  <span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {prevProject.title}
-                  </span>
-                </Link> :
-            <div />}
-              {nextProject ?
-            <Link
-              to={`/projects/${nextProject.id}`}
-              className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full">
-              
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">
-                    Next <ArrowRight className="w-3 h-3" />
-                  </span>
-                  <span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {nextProject.title}
-                  </span>
-                </Link> :
-            <div />}
+            <motion.div {...fadeUp(0.4)} className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4 mt-8">
+              {prevProject ? <Link to={`/projects/${prevProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors"><span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Previous</span><span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{prevProject.title}</span></Link> : <div />}
+              {nextProject ? <Link to={`/projects/${nextProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full"><span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">Next <ArrowRight className="w-3 h-3" /></span><span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{nextProject.title}</span></Link> : <div />}
             </motion.div>
           </div>) :
         isSmartChef ? (
