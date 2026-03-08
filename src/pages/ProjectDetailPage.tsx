@@ -891,18 +891,12 @@ const ProjectDetailPage = () => {
                 </Link>
               </motion.div>
 
-              {/* Hero */}
-              <motion.div
-                {...fadeUp(0.08)}
-                className="rounded-2xl p-8 md:p-10 mb-8 backdrop-blur-xl"
-                style={{ backgroundColor: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <p className="text-xs font-bold uppercase tracking-widest text-white/30 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  Community Project
-                </p>
+              {/* Title - big and open, no card */}
+              <motion.div {...fadeUp(0.08)} className="mb-6 mt-4">
                 <h1
-                  className="text-5xl md:text-7xl font-black text-white leading-none tracking-tight mb-5"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  PESU Minecraft S2
+                  className="text-6xl md:text-9xl font-black text-white leading-none tracking-tight mb-5 uppercase"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif", textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>
+                  PESU<br />Minecraft S2
                 </h1>
                 <p className="text-base text-white/50 max-w-xl leading-relaxed">
                   Official website I developed for the PESU Minecraft Server community - a student-run Minecraft server at PES University.
@@ -911,62 +905,37 @@ const ProjectDetailPage = () => {
                 <div className="flex gap-3 mt-6">
                   {project.live &&
                     <a href={project.live} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:opacity-85 transition-opacity">
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
+                      style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: 'white', border: '1px solid rgba(255,255,255,0.2)' }}>
                       <ExternalLink className="w-4 h-4" />
                       Live Site
                     </a>
                   }
-                  {project.github &&
-                    <a href={project.github} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white text-sm font-semibold hover:bg-white hover:text-black transition-all">
-                      <Github className="w-4 h-4" />
-                      GitHub
-                    </a>
-                  }
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mt-6">
+                  {project.tags.map((tag) =>
+                    <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
+                      style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                      {tag}
+                    </span>
+                  )}
                 </div>
               </motion.div>
 
-              {/* Tags */}
-              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-8 justify-center">
-                {project.tags.map((tag) =>
-                  <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider bg-white/5 text-white/50 border border-white/10">
-                    {tag}
-                  </span>
-                )}
-              </motion.div>
-
-              {/* Server Info Bar */}
+              {/* About / My Role - liquid glass */}
               <motion.div
-                {...fadeUp(0.15)}
-                className="rounded-2xl p-6 mb-6 backdrop-blur-xl grid grid-cols-3 md:grid-cols-6 gap-4 text-center"
-                style={{ backgroundColor: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                {[
-                  { label: 'Platform', value: 'Google Cloud' },
-                  { label: 'Version', value: '1.21.11' },
-                  { label: 'Software', value: 'PaperMC / Fabric' },
-                  { label: 'Mode', value: 'Survival' },
-                  { label: 'Difficulty', value: 'Hard' },
-                  { label: 'Cracked', value: 'Enabled' },
-                ].map((item) =>
-                  <div key={item.label}>
-                    <p className="text-[10px] text-white/30 uppercase tracking-wider mb-1">{item.label}</p>
-                    <p className="text-sm font-semibold text-white/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
-                  </div>
-                )}
-              </motion.div>
-
-              {/* About / My Role */}
-              <motion.div
-                {...fadeUp(0.2)}
-                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
-                style={{ backgroundColor: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                {...fadeUp(0.18)}
+                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-2xl"
+                style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
                 <h2 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-5">My Role</h2>
                 <p className="text-base leading-relaxed text-white/60">
                   Designed and developed the entire website from scratch for the PESU Minecraft community. Built a glassmorphism-themed landing page with real-time server status polling, a countdown timer to Season 2 launch, gallery carousel, and a full server contents breakdown.
                 </p>
               </motion.div>
 
-              {/* Key Features */}
+              {/* Key Features - liquid glass cards */}
               <motion.div {...fadeUp(0.25)} className="grid md:grid-cols-2 gap-4 mb-6">
                 {[
                   { title: 'Real-time Status', desc: 'Live server status polling every 30 seconds via mcsrvstat API' },
@@ -976,9 +945,9 @@ const ProjectDetailPage = () => {
                 ].map((item) =>
                   <div
                     key={item.title}
-                    className="rounded-2xl p-6 backdrop-blur-xl"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                    <h3 className="font-bold text-white mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</h3>
+                    className="rounded-2xl p-6 backdrop-blur-2xl"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
+                    <h3 className="font-bold text-white/90 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</h3>
                     <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
                   </div>
                 )}
