@@ -22,6 +22,7 @@ const ProjectDetailPage = () => {
   const { slug } = useParams<{slug: string;}>();
   const project = projects.find((p) => p.id === slug);
   const { isDark } = useTheme();
+  const isMobile = useIsMobile();
 
   if (!project) return <Navigate to="/projects" replace />;
 
