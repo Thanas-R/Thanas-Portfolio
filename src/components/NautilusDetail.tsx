@@ -43,42 +43,42 @@ const FEATURES: FlowNode[] = [
     title: 'AI-Generated Cards',
     content: 'Topic cards, concept cards, and flowcharts generated from a simple prompt using AI.',
     highlights: [{ text: 'AI', color: '#8B5CF6' }],
-    x: 0, y: 0, width: 300, height: 150,
+    x: 0, y: 0, width: 260, height: 120,
   },
   {
     id: 'canvas',
     title: 'Infinite Canvas',
     content: 'Pan, zoom, and freehand drawing on an infinite zoomable canvas with smooth interactions.',
     highlights: [{ text: 'infinite', color: '#3B82F6' }],
-    x: 380, y: 0, width: 300, height: 150,
+    x: 320, y: 0, width: 260, height: 120,
   },
   {
     id: 'nodes',
     title: 'Multiple Node Types',
     content: 'Content cards, topic nodes, and flowchart shapes with full markdown rendering support.',
     highlights: [{ text: 'markdown', color: '#10B981' }],
-    x: 0, y: 210, width: 300, height: 150,
+    x: 0, y: 170, width: 260, height: 120,
   },
   {
     id: 'edges',
     title: 'Smart Labeled Edges',
     content: 'Automatic layout with labeled connections between nodes using the Dagre algorithm.',
     highlights: [{ text: 'Dagre', color: '#F59E0B' }],
-    x: 380, y: 210, width: 300, height: 150,
+    x: 320, y: 170, width: 260, height: 120,
   },
   {
     id: 'save',
     title: 'Auto-save & Undo/Redo',
     content: 'Session management with persistent auto-save, full undo/redo history, and state recovery.',
     highlights: [{ text: 'auto-save', color: '#EC4899' }],
-    x: 0, y: 420, width: 300, height: 150,
+    x: 0, y: 340, width: 260, height: 120,
   },
   {
     id: 'explain',
     title: 'AI Chain Explanations',
     content: 'Select connected nodes and get AI-generated explanations for the entire chain of concepts.',
     highlights: [{ text: 'chain', color: '#8B5CF6' }],
-    x: 380, y: 420, width: 300, height: 150,
+    x: 320, y: 340, width: 260, height: 120,
   },
 ];
 
@@ -151,7 +151,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
         // Canvas is 700 wide, scale to fit
-        const s = Math.min(1, (w - 16) / 700);
+        const s = Math.min(1, (w - 16) / 580);
         setScale(s);
       }
     };
@@ -160,8 +160,8 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const canvasW = 700;
-  const canvasH = 590;
+  const canvasW = 580;
+  const canvasH = 480;
 
   const highlightText = (text: string, highlights?: { text: string; color: string }[]) => {
     if (!highlights?.length) return text;
@@ -180,13 +180,13 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   };
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden">
+    <div ref={containerRef} className="w-full overflow-hidden flex justify-center">
       <div
         style={{
           width: canvasW,
           height: canvasH * scale,
           transform: `scale(${scale})`,
-          transformOrigin: 'top left',
+          transformOrigin: 'top center',
         }}
         className="relative"
       >
