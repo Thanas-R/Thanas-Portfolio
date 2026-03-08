@@ -34,7 +34,7 @@ const ResumeSection = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground font-['Space_Grotesk']">
-                    Thanas R — Resume
+                    Thanas R - Resume
                   </h3>
                   <p className="text-sm text-muted-foreground">PDF • Updated 2025</p>
                 </div>
@@ -49,7 +49,7 @@ const ResumeSection = () => {
                   </DialogTrigger>
                   <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-4 sm:p-6">
                     <DialogHeader>
-                      <DialogTitle className="font-['Space_Grotesk']">Thanas R — Resume</DialogTitle>
+                      <DialogTitle className="font-['Space_Grotesk']">Thanas R - Resume</DialogTitle>
                       <DialogDescription>
                         Preview of the uploaded PDF. Use download if your browser blocks embedded PDFs.
                       </DialogDescription>
@@ -59,9 +59,9 @@ const ResumeSection = () => {
                     </div>
                   </DialogContent>
                 </Dialog>
-                <a
+              <a
                   href={resumePath}
-                  download
+                  download="Thanas-R resume.pdf"
                   className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   <Download className="w-4 h-4" />
