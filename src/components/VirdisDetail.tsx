@@ -103,21 +103,9 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             and receive AI-powered recommendations — all from a single dashboard.
           </p>
 
-          {/* Links + Tags */}
+          {/* Tags */}
           <div className="flex flex-wrap items-center gap-3 mb-10">
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: text, color: panelBg, fontFamily: font }}
-              >
-                <ExternalLink className="w-4 h-4" />
-                Live Demo
-              </a>
-            )}
-            {project.tags.map((tag) => (
+            {project.tags.filter(tag => tag.toLowerCase() !== 'deno').map((tag) => (
               <span
                 key={tag}
                 className="text-[11px] px-3 py-1 rounded-md font-medium uppercase tracking-wider"
