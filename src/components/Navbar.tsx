@@ -102,7 +102,7 @@ const Navbar = () => {
             className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Search"
           >
-            <Search className="w-3.5 h-3.5" />
+            <Command className="w-3.5 h-3.5" />
           </button>
           {navItems.map((item) => (
             <Link
