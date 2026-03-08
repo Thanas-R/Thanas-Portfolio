@@ -85,7 +85,7 @@ const HeroSection = () => {
   const statusLabel = statusLabels[discordStatus] || statusLabels.offline;
 
   return (
-    <section className="relative min-h-[42vh] flex items-center justify-center px-6 pt-[103px] pb-[86px]">
+    <section className="relative min-h-[42vh] flex items-center justify-center px-6 pt-[86px] xl:pt-[120px] 2xl:pt-[150px] pb-[86px]">
       <div className="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center">
         <motion.div
           initial={{ x: -60, opacity: 0 }}
