@@ -896,7 +896,7 @@ const ProjectDetailPage = () => {
               {/* Title — center-aligned, big */}
                <motion.div {...fadeUp(0.08)} className="text-center mb-10">
                 <h1
-                  className="text-[2.2rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[8rem] font-black text-white leading-[0.85] tracking-tight uppercase whitespace-nowrap"
+                  className="text-[2.8rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[8rem] font-black text-white leading-[0.85] tracking-tight uppercase whitespace-nowrap"
                   style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 900, textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
                   PESU MINECRAFT
                 </h1>
