@@ -3,6 +3,7 @@ import { Download, Printer } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
+import MobilePdfViewer from '@/components/MobilePdfViewer';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
@@ -23,8 +24,6 @@ const ResumePage = () => {
       });
     }
   }, [resumePath]);
-
-  const googleViewerUrl = `https://docs.google.com/gview?embedded=true&url=${window.location.origin}${resumePath}`;
 
   return (
     <div className="relative h-screen bg-background overflow-hidden flex flex-col">
@@ -79,12 +78,16 @@ const ResumePage = () => {
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
           }}
         >
-          <iframe
-            src={isMobile ? googleViewerUrl : `${resumePath}#toolbar=0&navpanes=0&view=FitH`}
-            title="Resume PDF"
-            className="block border-none w-full h-full"
-            allow="autoplay"
-          />
+          {isMobile ? (
+            <MobilePdfViewer src={resumePath} />
+          ) : (
+            <iframe
+              src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
+              title="Resume PDF"
+              className="block border-none w-full h-full"
+              allow="autoplay"
+            />
+          )}
         </div>
       </motion.div>
     </div>

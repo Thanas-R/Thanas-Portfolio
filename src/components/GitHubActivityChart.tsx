@@ -99,14 +99,9 @@ const GitHubActivityChart = () => {
               <div key={i} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <motion.div
-                      className="w-full rounded-sm bg-foreground/80 min-h-[3px] cursor-default"
-                      style={{ height: `${heightPct}%`, transformOrigin: 'bottom', pointerEvents: 'auto' }}
-                      custom={i}
-                      variants={barVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
+                    <div
+                      className="w-full rounded-sm bg-foreground/80 min-h-[3px]  cursor-default"
+                      style={{ height: `${heightPct}%`, pointerEvents: 'auto' }}
                     />
                   </TooltipTrigger>
                   <TooltipContent side="top" className="font-['Inter'] text-xs">

@@ -108,11 +108,11 @@ export const projects: Project[] = [
   {
     id: 'pesu-forge',
     title: 'PESU Forge',
-    description: 'Collaborative academic resource platform for PES University',
+    description: 'AI-powered study tool that transforms notes into interactive learning experiences',
     longDescription:
-      'A community-driven platform for sharing notes, assignments, and academic resources across PES University departments.',
+      'PESU Forge is an AI-powered study tool that transforms notes into interactive learning experiences such as flashcards, quizzes, memory games, and visual mind maps. This was my first ever project and the one that introduced me to building with AI. Working on this project exposed me to how modern AI systems can be integrated into applications, which eventually pushed me to explore and build more projects afterwards. It became the starting point of my development journey and helped me understand how to connect frontend interfaces with AI-powered backends. The idea behind PESU Forge was to make studying more interactive by turning static notes into dynamic learning formats that help with recall, understanding, and engagement.',
     imageSrc: projectPesuForge,
-    tags: ['React', 'Supabase', 'Tailwind', 'TypeScript'],
+    tags: ['First Project Ever', 'React', 'TypeScript', 'Tailwind CSS', 'Gemini AI', 'Zustand'],
     live: 'https://pesuforge.vercel.app',
   },
 ];
