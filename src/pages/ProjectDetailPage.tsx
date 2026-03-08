@@ -406,18 +406,13 @@ const ProjectDetailPage = () => {
             <div className="flex flex-col md:flex-row md:items-start md:gap-12 mt-4">
               {/* Left: text content */}
               <motion.div {...fadeUp(0.08)} className="md:w-[45%] shrink-0">
-                <h1 className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                <h1 className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {project.title}
                 </h1>
+                <AppleHelloEffect className="h-8 md:h-12 text-foreground mb-4" speed={0.7} />
                 <p className="text-sm text-muted-foreground mb-6">
                   macOS-themed interactive portfolio
                 </p>
-                {project.live && (
-                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity mb-8">
-                    <ExternalLink className="w-4 h-4" />
-                    Live Site
-                  </a>
-                )}
                 <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
                 </div>
@@ -430,7 +425,6 @@ const ProjectDetailPage = () => {
                     This was one of my first serious web projects where I experimented with UI design and interactions. The goal was to make a portfolio that feels more immersive and memorable than a standard webpage.
                   </p>
                 </div>
-                <AppleHelloEffect className="h-10 md:h-14 text-foreground mb-6" speed={0.7} />
               </motion.div>
 
               {/* Right: Mac mockup */}
