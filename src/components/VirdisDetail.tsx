@@ -20,11 +20,11 @@ interface VirdisDetailProps {
 const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) => {
   const { isDark } = useTheme();
 
-  const pageBg = isDark ? 'hsl(0 0% 1.5%)' : '#FFFFFF';
-  const outsideText = isDark ? 'hsl(0 0% 70%)' : 'hsl(0 0% 40%)';
+  const pageBg = isDark ? '#22392E' : '#FFFFFF';
+  const outsideText = isDark ? 'hsl(150 10% 65%)' : 'hsl(0 0% 40%)';
   const outsideHeading = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
-  const outsideBorder = isDark ? 'hsl(0 0% 15%)' : 'hsl(0 0% 90%)';
-  const outsideCardBg = isDark ? 'hsl(0 0% 6%)' : 'hsl(0 0% 97%)';
+  const outsideBorder = isDark ? 'hsl(150 15% 22%)' : 'hsl(0 0% 90%)';
+  const outsideCardBg = isDark ? 'hsl(150 18% 14%)' : 'hsl(0 0% 97%)';
 
   const panelBorder = isDark ? '#FFFBEB' : '#041009';
   const panelBg = '#1D2A23';
@@ -62,10 +62,13 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
         {/* Panel — 4px border */}
         <motion.div
           {...fadeUp(0.08)}
-          className="rounded-2xl p-8 md:p-12"
+          className="rounded-2xl p-5 sm:p-8 md:p-12"
           style={{
             backgroundColor: panelBg,
             border: `4px solid ${panelBorder}`,
+            boxShadow: isDark
+              ? '0 25px 60px -12px rgba(0,0,0,0.5), 0 0 40px -10px rgba(74,140,111,0.15)'
+              : '0 25px 60px -12px rgba(0,0,0,0.25), 0 0 30px -10px rgba(4,16,9,0.1)',
           }}
         >
           {/* Header */}
@@ -75,7 +78,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           >
             Virdis
           </h1>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <p
               className="text-sm uppercase tracking-[0.2em] font-medium"
               style={{ color: accent, fontFamily: font }}
@@ -87,10 +90,15 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: text, color: panelBg, fontFamily: font }}
+                className="inline-flex items-center gap-2.5 px-8 py-3 rounded-xl text-base font-bold hover:scale-[1.03] active:scale-[0.98] transition-all"
+                style={{
+                  backgroundColor: text,
+                  color: panelBg,
+                  fontFamily: font,
+                  boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                }}
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-5 h-5" />
                 Live Demo
               </a>
             )}
