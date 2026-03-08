@@ -153,7 +153,7 @@ const ContourFlowBackground = ({ density: externalDensity }: ContourFlowBackgrou
       const isDark = document.documentElement.classList.contains('dark');
       const mobile = width < 768;
 
-      ctx.fillStyle = isDark ? '#070707' : '#fcfcfa';
+      ctx.fillStyle = isDark ? '#040404' : '#ffffff';
       ctx.fillRect(0, 0, width, height);
 
       const config = getDensityConfig(densityToUse, mobile);
