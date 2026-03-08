@@ -105,7 +105,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
         <div className="hidden md:flex items-center gap-8">
           <button
             onClick={() => window.dispatchEvent(new Event('open-command-palette'))}
-            className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className={`text-base font-medium ${textMuted} transition-colors duration-200`}
             aria-label="Search"
           >
             <Command className="w-4 h-4" />
@@ -114,23 +114,25 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
             <Link
               key={item.label}
               to={item.href}
-              className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+              className={`text-base font-medium ${textMuted} transition-colors duration-200`}
             >
               <TextRoll>{item.label}</TextRoll>
             </Link>
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setTheme(isDark ? 'light' : 'dark')}
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Toggle theme"
-          >
-            <SolarSwitch isDark={isDark} />
-          </button>
+          {!forceDark && (
+            <button
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              className={`w-8 h-8 flex items-center justify-center rounded-full border ${borderColor} ${mutedIcon} transition-colors`}
+              aria-label="Toggle theme"
+            >
+              <SolarSwitch isDark={isDark} />
+            </button>
+          )}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden w-8 h-8 flex items-center justify-center text-foreground"
+            className={`md:hidden w-8 h-8 flex items-center justify-center ${textPrimary}`}
           >
             <MenuToggleIcon open={mobileOpen} />
           </button>
