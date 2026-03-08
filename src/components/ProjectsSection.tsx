@@ -41,7 +41,7 @@ export const projects: Project[] = [
     longDescription:
       'An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data. Virdis processes multispectral imagery to calculate vegetation indices, detect anomalies, and provide actionable insights for precision agriculture.',
     imageSrc: projectVirdis,
-    tags: ['React', 'TypeScript', 'Mapbox', 'Supabase', 'Deno', 'Earth Engine', 'Gemini AI', 'shadcn/ui'],
+    tags: ['Mapbox', 'Earth Engine', 'TypeScript', 'React', 'Supabase', 'Gemini AI', 'shadcn/ui'],
     live: 'https://virdis.vercel.app',
   },
   {
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     longDescription:
       'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences - then the AI designs the full itinerary.',
     imageSrc: projectSpheal,
-    tags: ['React', 'Mapbox', 'AI', 'TypeScript'],
+    tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
     live: 'https://spheal.vercel.app',
   },
   {

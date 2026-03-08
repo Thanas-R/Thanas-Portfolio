@@ -70,7 +70,7 @@ const SolarSwitch = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-const Navbar = () => {
+const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -85,6 +85,12 @@ const Navbar = () => {
 
   const isDark = mounted && resolvedTheme === 'dark';
 
+  // When forceDark, override text colors to always appear as dark-mode (white text on dark bg)
+  const textPrimary = forceDark ? 'text-white' : 'text-foreground';
+  const textMuted = forceDark ? 'text-white/50 hover:text-white' : 'text-muted-foreground hover:text-foreground';
+  const borderColor = forceDark ? 'border-white/20' : 'border-border';
+  const mutedIcon = forceDark ? 'text-white/60 hover:text-white' : 'text-muted-foreground hover:text-foreground';
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -93,13 +99,13 @@ const Navbar = () => {
       className="relative z-50 px-6 py-4 md:px-12"
     >
       <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <Link to="/" className="font-['Space_Grotesk'] text-xl font-semibold text-foreground tracking-tight">
+        <Link to="/" className={`font-['Space_Grotesk'] text-xl font-semibold ${textPrimary} tracking-tight`}>
           <TextRoll>thanas.</TextRoll>
         </Link>
         <div className="hidden md:flex items-center gap-8">
           <button
             onClick={() => window.dispatchEvent(new Event('open-command-palette'))}
-            className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className={`text-base font-medium ${textMuted} transition-colors duration-200`}
             aria-label="Search"
           >
             <Command className="w-4 h-4" />
@@ -108,23 +114,25 @@ const Navbar = () => {
             <Link
               key={item.label}
               to={item.href}
-              className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+              className={`text-base font-medium ${textMuted} transition-colors duration-200`}
             >
               <TextRoll>{item.label}</TextRoll>
             </Link>
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setTheme(isDark ? 'light' : 'dark')}
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Toggle theme"
-          >
-            <SolarSwitch isDark={isDark} />
-          </button>
+          {!forceDark && (
+            <button
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              className={`w-8 h-8 flex items-center justify-center rounded-full border ${borderColor} ${mutedIcon} transition-colors`}
+              aria-label="Toggle theme"
+            >
+              <SolarSwitch isDark={isDark} />
+            </button>
+          )}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden w-8 h-8 flex items-center justify-center text-foreground"
+            className={`md:hidden w-8 h-8 flex items-center justify-center ${textPrimary}`}
           >
             <MenuToggleIcon open={mobileOpen} />
           </button>
@@ -141,7 +149,7 @@ const Navbar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden fixed inset-0 z-40 bg-background/60 backdrop-blur-xl"
+               className={`md:hidden fixed inset-0 z-40 backdrop-blur-xl ${forceDark ? 'bg-black/60' : 'bg-background/60'}`}
               onClick={() => setMobileOpen(false)}
             />
             {/* Menu panel */}
@@ -150,7 +158,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
-              className="md:hidden fixed top-20 left-4 right-4 z-50 rounded-2xl border border-border bg-card/95 backdrop-blur-2xl p-6 space-y-1 shadow-2xl"
+              className={`md:hidden fixed top-20 left-4 right-4 z-50 rounded-2xl border backdrop-blur-2xl p-6 space-y-1 shadow-2xl ${forceDark ? 'border-white/15 bg-black/80' : 'border-border bg-card/95'}`}
             >
               {navItems.map((item, i) => (
                 <motion.div
@@ -162,7 +170,7 @@ const Navbar = () => {
                   <Link
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block py-3 px-3 rounded-xl text-lg font-medium text-foreground hover:bg-muted/50 transition-colors font-['Space_Grotesk']"
+                    className={`block py-3 px-3 rounded-xl text-lg font-medium transition-colors font-['Space_Grotesk'] ${forceDark ? 'text-white hover:bg-white/10' : 'text-foreground hover:bg-muted/50'}`}
                   >
                     {item.label}
                   </Link>
