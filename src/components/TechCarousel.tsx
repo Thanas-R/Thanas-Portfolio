@@ -12,7 +12,8 @@ import {
   SiVercel,
 } from 'react-icons/si';
 import { BiLogoVisualStudio } from 'react-icons/bi';
-import { FaJava, FaFigma } from 'react-icons/fa';
+import { FaJava } from 'react-icons/fa';
+import { SiFigma } from 'react-icons/si';
 import { BsStack } from 'react-icons/bs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
@@ -42,6 +43,9 @@ const techStack: TechItem[] = [
 
   // Deployment / Platform
   { name: 'Vercel', icon: <SiVercel />, url: 'https://vercel.com/' },
+
+  // Design
+  { name: 'Figma', icon: <SiFigma />, url: 'https://www.figma.com/' },
 ];
 
 function Ribbon({ items, reverse, speed, tooltipSide }: { items: TechItem[]; reverse: boolean; speed: number; tooltipSide: 'top' | 'bottom' }) {

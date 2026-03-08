@@ -11,6 +11,8 @@ import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
 import VirdisDetail from '@/components/VirdisDetail';
+import contourDark from '@/assets/contour-dark.png';
+import contourLight from '@/assets/contour-light.png';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -447,7 +449,9 @@ const ProjectDetailPage = () => {
 
               {/* Right: Mac mockup */}
               <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex items-start justify-center mt-8 md:mt-0">
-                <Mac src={thanasOsMac} className="w-full max-w-[650px] h-auto text-background" />
+                <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer w-full max-w-[650px]">
+                  <Mac src={thanasOsMac} className="w-full h-auto text-background" />
+                </a>
               </motion.div>
             </div>
 
@@ -930,11 +934,23 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               <motion.div {...fadeUp(0.3)} className="mb-16 rounded-2xl overflow-hidden border border-foreground/10">
-                <ProjectImage
-                  src={project.imageSrc}
-                  alt={`${project.title} preview`}
-                  className="w-full object-cover"
+                <motion.img
+                  src={isDark ? contourLight : contourDark}
+                  alt={`Contour Flow ${isDark ? 'light' : 'dark'} mode preview`}
+                  className="w-full object-cover cursor-pointer"
                   style={{ maxHeight: 480 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    const html = document.documentElement;
+                    if (isDark) {
+                      html.classList.remove('dark');
+                      localStorage.setItem('theme', 'light');
+                    } else {
+                      html.classList.add('dark');
+                      localStorage.setItem('theme', 'dark');
+                    }
+                  }}
                 />
               </motion.div>
 

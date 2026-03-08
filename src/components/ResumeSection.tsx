@@ -59,9 +59,9 @@ const ResumeSection = () => {
                     </div>
                   </DialogContent>
                 </Dialog>
-                <a
+              <a
                   href={resumePath}
-                  download
+                  download="Thanas-R resume.pdf"
                   className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   <Download className="w-4 h-4" />
