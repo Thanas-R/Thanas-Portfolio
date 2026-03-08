@@ -104,6 +104,7 @@ const App = () => (
       <GlowCardPointerTracker />
       <BrowserRouter>
         <HashScrollHandler />
+        <CommandPalette />
         <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>
