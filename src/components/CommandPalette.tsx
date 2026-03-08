@@ -9,7 +9,6 @@ import {
   Mail,
   Sun,
   Moon,
-  ExternalLink,
   ArrowRight,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
@@ -84,16 +83,6 @@ const CommandPalette = () => {
         icon: ArrowRight,
         action: () => go(`/projects/${p.id}`),
       })),
-      // External links for projects with live demos
-      ...projects
-        .filter((p) => p.live)
-        .map((p) => ({
-          id: `live-${p.id}`,
-          label: `${p.title} — Live Demo`,
-          section: 'External',
-          icon: ExternalLink,
-          action: () => go(p.live!),
-        })),
     ];
     return items;
   }, [resolvedTheme, go, close, setTheme]);
@@ -127,6 +116,13 @@ const CommandPalette = () => {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  // Listen for custom open event from Navbar
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener('open-command-palette', handler);
+    return () => window.removeEventListener('open-command-palette', handler);
   }, []);
 
   // Focus input on open
@@ -193,7 +189,7 @@ const CommandPalette = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed z-[101] top-[20%] left-1/2 -translate-x-1/2 w-[90vw] max-w-[560px] rounded-2xl border border-border bg-card/95 backdrop-blur-2xl shadow-2xl overflow-hidden"
+            className="fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[560px] rounded-2xl border border-border bg-card/95 backdrop-blur-2xl shadow-2xl overflow-hidden"
           >
             {/* Search input */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
