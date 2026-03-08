@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import contourDark from '@/assets/contour-dark.png';
@@ -8,18 +8,18 @@ interface Props {
   isDark: boolean;
 }
 
-const DURATION = 600; // ms
+const DURATION = 1000; // slow ripple
 
 const ContourThemeToggle = ({ isDark }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLImageElement>(null);
   const animatingRef = useRef(false);
-  // showDark tracks what the *base* layer currently shows (independent of global theme during animation)
-  const [showDark, setShowDark] = useState(isDark);
+  // Track what base layer shows — opposite of current theme (hint to user)
+  const [baseDark, setBaseDark] = useState(!isDark);
 
-  // Sync when theme changes externally
+  // Sync on external theme changes (navbar toggle) — instant, no ripple
   useEffect(() => {
-    if (!animatingRef.current) setShowDark(isDark);
+    if (!animatingRef.current) setBaseDark(!isDark);
   }, [isDark]);
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -38,15 +38,19 @@ const ContourThemeToggle = ({ isDark }: Props) => {
       Math.hypot(rect.width - x, rect.height - y)
     ));
 
-    const targetDark = !isDark;
-
-    // Set overlay to the TARGET image and start clip at 0
-    overlay.src = targetDark ? contourDark : contourLight;
+    // Base currently shows the OPPOSITE theme image.
+    // Clicking means: switch theme to match what base shows → overlay reveals current theme image (the one we're leaving)
+    // Actually: base = opposite. We want to ripple-reveal what will become the NEW opposite after switch.
+    // Simpler: after click, theme flips. New base = !newTheme = current isDark. 
+    // So overlay should show current isDark image, ripple expands, then we flip theme & base.
+    
+    // The overlay shows what the NEW base will be after theme switch = current theme image
+    overlay.src = isDark ? contourDark : contourLight;
     overlay.style.clipPath = `circle(0px at ${x}px ${y}px)`;
     overlay.style.transition = 'none';
     overlay.style.display = 'block';
 
-    // Force reflow then animate
+    // Force reflow
     overlay.offsetHeight;
     overlay.style.transition = `clip-path ${DURATION}ms cubic-bezier(0.22, 1, 0.36, 1)`;
     overlay.style.clipPath = `circle(${maxDist + 50}px at ${x}px ${y}px)`;
@@ -54,6 +58,7 @@ const ContourThemeToggle = ({ isDark }: Props) => {
     setTimeout(() => {
       // Toggle theme
       const html = document.documentElement;
+      const targetDark = !isDark;
       if (targetDark) {
         html.classList.add('dark');
         localStorage.setItem('theme', 'dark');
@@ -61,8 +66,8 @@ const ContourThemeToggle = ({ isDark }: Props) => {
         html.classList.remove('dark');
         localStorage.setItem('theme', 'light');
       }
-      // Update base layer to match new theme
-      setShowDark(targetDark);
+      // New base = opposite of new theme
+      setBaseDark(!targetDark);
       // Hide overlay
       overlay.style.transition = 'none';
       overlay.style.clipPath = 'circle(0px at 50% 50%)';
@@ -71,10 +76,7 @@ const ContourThemeToggle = ({ isDark }: Props) => {
     }, DURATION);
   }, [isDark]);
 
-  // Base layer shows the CURRENT theme's opposite image (dark mode → show light img to click, etc.)
-  // Actually: base = current theme look, overlay reveals the next
-  // When dark → base shows dark contour, overlay reveals light (and vice versa)
-  const baseImg = showDark ? contourDark : contourLight;
+  const baseImg = baseDark ? contourDark : contourLight;
 
   return (
     <motion.div
@@ -94,7 +96,7 @@ const ContourThemeToggle = ({ isDark }: Props) => {
             >
               <img
                 src={baseImg}
-                alt={`Contour Flow ${showDark ? 'dark' : 'light'} mode`}
+                alt={`Contour Flow — click to switch to ${baseDark ? 'dark' : 'light'} theme`}
                 className="w-full object-cover block"
               />
               <img
