@@ -39,56 +39,60 @@ interface FlowEdge {
 }
 
 const FEATURES: FlowNode[] = [
+  // Row 1: left to right
   {
     id: 'ai-gen',
     title: 'AI-Generated Cards',
     content: 'Topic cards, concept cards, and flowcharts generated from a simple prompt using AI.',
     highlights: [{ text: 'AI', color: '#8B5CF6' }],
-    x: 0, y: 0, width: 260, height: 120,
+    x: 30, y: 0, width: 240, height: 110,
   },
   {
     id: 'canvas',
     title: 'Infinite Canvas',
     content: 'Pan, zoom, and freehand drawing on an infinite zoomable canvas with smooth interactions.',
     highlights: [{ text: 'infinite', color: '#3B82F6' }],
-    x: 320, y: 0, width: 260, height: 120,
+    x: 310, y: 0, width: 240, height: 110,
   },
+  // Row 2: right to left (swapped positions)
   {
     id: 'edges',
     title: 'Smart Labeled Edges',
     content: 'Automatic layout with labeled connections between nodes using the Dagre algorithm.',
     highlights: [{ text: 'Dagre', color: '#F59E0B' }],
-    x: 320, y: 170, width: 260, height: 120,
+    x: 310, y: 160, width: 240, height: 110,
   },
   {
     id: 'nodes',
     title: 'Multiple Node Types',
     content: 'Content cards, topic nodes, and flowchart shapes with full markdown rendering support.',
     highlights: [{ text: 'markdown', color: '#10B981' }],
-    x: 0, y: 170, width: 260, height: 120,
+    x: 30, y: 160, width: 240, height: 110,
   },
+  // Row 3: left to right
   {
     id: 'save',
     title: 'Auto-save & Undo/Redo',
     content: 'Session management with persistent auto-save, full undo/redo history, and state recovery.',
     highlights: [{ text: 'auto-save', color: '#EC4899' }],
-    x: 0, y: 340, width: 260, height: 120,
+    x: 30, y: 320, width: 240, height: 110,
   },
   {
     id: 'explain',
     title: 'AI Chain Explanations',
     content: 'Select connected nodes and get AI-generated explanations for the entire chain of concepts.',
     highlights: [{ text: 'chain', color: '#8B5CF6' }],
-    x: 320, y: 340, width: 260, height: 120,
+    x: 310, y: 320, width: 240, height: 110,
   },
 ];
 
+// Z-path: left→right, then down-right to down-left, then left→right
 const EDGES: FlowEdge[] = [
-  { from: 'ai-gen', to: 'canvas' },
-  { from: 'canvas', to: 'edges' },
-  { from: 'edges', to: 'nodes' },
-  { from: 'nodes', to: 'save' },
-  { from: 'save', to: 'explain' },
+  { from: 'ai-gen', to: 'canvas' },     // row1 L→R
+  { from: 'canvas', to: 'edges' },       // row1-R → row2-R (down)
+  { from: 'edges', to: 'nodes' },        // row2 R→L
+  { from: 'nodes', to: 'save' },         // row2-L → row3-L (down)
+  { from: 'save', to: 'explain' },       // row3 L→R
 ];
 
 const ICON_MAP: Record<string, React.ElementType> = {
