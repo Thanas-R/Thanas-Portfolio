@@ -69,9 +69,9 @@ const ProjectDetailPage = () => {
 
   return (
     <>
-      {!isAskBookie && <GridBackground />}
+      {!isAskBookie && !isPesuForge && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
-        {!isAskBookie && <Navbar />}
+        {!isAskBookie && !isPesuForge && <Navbar />}
 
         {isAskBookie ?
         <div
