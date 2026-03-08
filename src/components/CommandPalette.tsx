@@ -183,14 +183,15 @@ const CommandPalette = () => {
             onClick={close}
           />
 
-          {/* Palette */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: -10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: -10 }}
-            transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[560px] rounded-2xl border border-border bg-card/95 backdrop-blur-2xl shadow-2xl overflow-hidden"
-          >
+          {/* Centering wrapper */}
+          <div className="fixed inset-0 z-[101] flex items-center justify-center pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
+              className="w-[90vw] max-w-[560px] rounded-2xl border border-border bg-card/95 backdrop-blur-2xl shadow-2xl overflow-hidden pointer-events-auto"
+            >
             {/* Search input */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
               <Search className="w-4 h-4 text-muted-foreground shrink-0" />
@@ -267,6 +268,7 @@ const CommandPalette = () => {
               </span>
             </div>
           </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
