@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useParams, Navigate } from 'react-router-dom';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useRef, useState, useCallback } from 'react';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
