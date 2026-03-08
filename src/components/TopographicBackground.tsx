@@ -154,8 +154,9 @@ const TopographicBackground = ({ density: externalDensity, contained = false }: 
     };
 
     const drawContours = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+      const container = contained ? canvas.parentElement : null;
+      const width = container ? container.clientWidth : window.innerWidth;
+      const height = container ? container.clientHeight : window.innerHeight;
       const isDark = document.documentElement.classList.contains('dark');
 
       ctx.fillStyle = isDark ? '#070707' : '#fcfcfa';
