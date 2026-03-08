@@ -200,21 +200,22 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
           <defs>
             <marker
               id="arrowhead"
-              markerWidth="12.5"
-              markerHeight="12.5"
+              markerWidth="20"
+              markerHeight="20"
               viewBox="-10 -10 20 20"
               refX="0"
               refY="0"
               orient="auto-start-reverse"
               markerUnits="strokeWidth"
             >
-              <polyline
-                points="-5,-4 0,0 -5,4"
-                fill="none"
+              <path
+                d="M -5 -3.5 L 0 0 L -5 3.5"
+                fill={edgeColor}
                 stroke={edgeColor}
-                strokeWidth="1"
+                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                opacity="0.7"
               />
             </marker>
           </defs>
