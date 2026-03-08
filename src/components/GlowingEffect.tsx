@@ -1,125 +1,179 @@
 import { useRef, useCallback, useEffect, memo, useState } from "react";
 import { cn } from "@/lib/utils";
+import { animate } from "motion/react";
 
 interface GlowingEffectProps {
   blur?: number;
+  inactiveZone?: number;
   proximity?: number;
   spread?: number;
+  variant?: "default" | "white";
+  glow?: boolean;
   className?: string;
   disabled?: boolean;
+  movementDuration?: number;
   borderWidth?: number;
 }
 
 const GlowingEffect = memo(
   ({
-    proximity = 64,
-    spread = 40,
     blur = 0,
+    inactiveZone = 0.7,
+    proximity = 0,
+    spread = 20,
+    variant = "default",
+    glow = false,
     className,
-    disabled = false,
-    borderWidth = 0.5,
+    movementDuration = 2,
+    borderWidth = 1,
+    disabled = true,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [isDark, setIsDark] = useState(false);
-
-    // Detect dark mode properly
-    useEffect(() => {
-      const checkTheme = () => {
-        const dark = document.documentElement.classList.contains("dark");
-        setIsDark(dark);
-      };
-
-      checkTheme();
-
-      const observer = new MutationObserver(checkTheme);
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-      });
-
-      return () => observer.disconnect();
-    }, []);
+    const lastPosition = useRef({ x: 0, y: 0 });
+    const animationFrameRef = useRef<number>(0);
 
     const handleMove = useCallback(
-      (e: PointerEvent) => {
-        const el = containerRef.current;
-        if (!el) return;
+      (e?: MouseEvent | { x: number; y: number }) => {
+        if (!containerRef.current) return;
 
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const isNear =
-          e.clientX > rect.left - proximity &&
-          e.clientX < rect.right + proximity &&
-          e.clientY > rect.top - proximity &&
-          e.clientY < rect.bottom + proximity;
-
-        if (isNear) {
-          el.style.setProperty("--glow-x", `${x}px`);
-          el.style.setProperty("--glow-y", `${y}px`);
-          el.style.setProperty("--glow-opacity", "1");
-        } else {
-          el.style.setProperty("--glow-opacity", "0");
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
         }
-      },
-      [proximity]
-    );
 
-    const handleLeave = useCallback(() => {
-      const el = containerRef.current;
-      if (el) el.style.setProperty("--glow-opacity", "0");
-    }, []);
+        animationFrameRef.current = requestAnimationFrame(() => {
+          const element = containerRef.current;
+          if (!element) return;
+
+          const { left, top, width, height } = element.getBoundingClientRect();
+          const mouseX = e?.x ?? lastPosition.current.x;
+          const mouseY = e?.y ?? lastPosition.current.y;
+
+          if (e) {
+            lastPosition.current = { x: mouseX, y: mouseY };
+          }
+
+          const center = [left + width * 0.5, top + height * 0.5];
+          const distanceFromCenter = Math.hypot(
+            mouseX - center[0],
+            mouseY - center[1]
+          );
+          const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
+
+          if (distanceFromCenter < inactiveRadius) {
+            element.style.setProperty("--active", "0");
+            return;
+          }
+
+          const isActive =
+            mouseX > left - proximity &&
+            mouseX < left + width + proximity &&
+            mouseY > top - proximity &&
+            mouseY < top + height + proximity;
+
+          element.style.setProperty("--active", isActive ? "1" : "0");
+
+          if (!isActive) return;
+
+          const currentAngle =
+            parseFloat(element.style.getPropertyValue("--start")) || 0;
+          let targetAngle =
+            (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
+              Math.PI +
+            90;
+
+          const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
+          const newAngle = currentAngle + angleDiff;
+
+          animate(currentAngle, newAngle, {
+            duration: movementDuration,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate: (value) => {
+              element.style.setProperty("--start", String(value));
+            },
+          });
+        });
+      },
+      [inactiveZone, proximity, movementDuration]
+    );
 
     useEffect(() => {
       if (disabled) return;
 
-      document.body.addEventListener("pointermove", handleMove, {
+      const handleScroll = () => handleMove();
+      const handlePointerMove = (e: PointerEvent) => handleMove(e);
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      document.body.addEventListener("pointermove", handlePointerMove, {
         passive: true,
       });
-      document.body.addEventListener("pointerleave", handleLeave);
 
       return () => {
-        document.body.removeEventListener("pointermove", handleMove);
-        document.body.removeEventListener("pointerleave", handleLeave);
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+        window.removeEventListener("scroll", handleScroll);
+        document.body.removeEventListener("pointermove", handlePointerMove);
       };
-    }, [handleMove, handleLeave, disabled]);
-
-    if (disabled) return null;
-
-    // ✅ COLOR SWITCH HERE
-    const glowColor = isDark
-      ? "rgba(255,255,255,0.55)"     // stronger white
-      : "rgba(0,0,0,0.55)";      // light mode → #43B581
+    }, [handleMove, disabled]);
 
     return (
-      <div
-        ref={containerRef}
-        className={cn(
-          "pointer-events-none absolute inset-0 rounded-[inherit]",
-          className
-        )}
-        style={
-          {
-            "--glow-x": "0px",
-            "--glow-y": "0px",
-            "--glow-opacity": "0",
-          } as React.CSSProperties
-        }
-      >
+      <>
         <div
-          className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(${spread * 6}px circle at var(--glow-x) var(--glow-y), ${glowColor}, transparent 70%)`,
-            mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-            WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-            maskComposite: "exclude",
-            WebkitMaskComposite: "xor",
-            padding: `${borderWidth}px`,
-            filter: `blur(${blur}px)`,
-          }}
-        />
-      </div>
+          ref={containerRef}
+          style={
+            {
+              "--blur": `${blur}px`,
+              "--spread": spread,
+              "--start": "0",
+              "--active": "0",
+              "--glowingeffect-border-width": `${borderWidth}px`,
+              "--repeating-conic-gradient-times": "5",
+              "--gradient":
+                variant === "white"
+                  ? `repeating-conic-gradient(
+                      from calc(var(--start) * 1deg),
+                      #fff 0%,
+                      #fff 8%,
+                      transparent 8%,
+                      transparent 20%
+                    )`
+                  : `repeating-conic-gradient(
+                      from calc(var(--start) * 1deg),
+                      #5B8AF520 0%,
+                      #93C5FD40 5%,
+                      #60A5FA30 10%,
+                      #3B82F620 15%,
+                      #5B8AF510 20%
+                    )`,
+            } as React.CSSProperties
+          }
+          className={cn(
+            "pointer-events-none absolute -inset-px rounded-[inherit] opacity-[var(--active)] transition-opacity duration-300",
+            glow && "opacity-100",
+            blur > 0 && "blur-[var(--blur)]",
+            className,
+            disabled && "!hidden"
+          )}
+        >
+          <div
+            className="absolute inset-0 rounded-[inherit]"
+            style={{
+              background: "var(--gradient)",
+              maskImage: `
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0)
+              `,
+              WebkitMaskImage: `
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0)
+              `,
+              maskComposite: "exclude",
+              WebkitMaskComposite: "xor",
+              padding: "var(--glowingeffect-border-width)",
+            }}
+          />
+        </div>
+      </>
     );
   }
 );
