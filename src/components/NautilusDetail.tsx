@@ -318,7 +318,7 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-
+const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailProps) => {
   const { isDark } = useTheme();
 
   const textColor = isDark ? 'hsl(0 0% 65%)' : 'hsl(0 0% 40%)';
