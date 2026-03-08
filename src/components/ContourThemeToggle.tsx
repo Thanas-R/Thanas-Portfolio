@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import contourDark from '@/assets/contour-dark.png';
@@ -8,37 +8,51 @@ interface Props {
   isDark: boolean;
 }
 
+const DURATION = 600; // ms
+
 const ContourThemeToggle = ({ isDark }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [ripple, setRipple] = useState<{ x: number; y: number; expanding: boolean; targetDark: boolean } | null>(null);
+  const overlayRef = useRef<HTMLImageElement>(null);
+  const animatingRef = useRef(false);
+  // showDark tracks what the *base* layer currently shows (independent of global theme during animation)
+  const [showDark, setShowDark] = useState(isDark);
+
+  // Sync when theme changes externally
+  useEffect(() => {
+    if (!animatingRef.current) setShowDark(isDark);
+  }, [isDark]);
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (animatingRef.current) return;
     const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
+    const overlay = overlayRef.current;
+    if (!rect || !overlay) return;
+
+    animatingRef.current = true;
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    // Max distance from click to any corner = radius needed
-    const maxDist = Math.max(
+    const maxDist = Math.ceil(Math.max(
       Math.hypot(x, y),
       Math.hypot(rect.width - x, y),
       Math.hypot(x, rect.height - y),
       Math.hypot(rect.width - x, rect.height - y)
-    );
+    ));
 
     const targetDark = !isDark;
-    setRipple({ x, y, expanding: true, targetDark });
 
-    // Use a CSS animation via clip-path. After it finishes, toggle theme.
-    const el = containerRef.current?.querySelector('.ripple-overlay') as HTMLElement;
-    if (el) {
-      el.style.clipPath = `circle(0px at ${x}px ${y}px)`;
-      // Force reflow
-      el.offsetHeight;
-      el.style.transition = 'clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      el.style.clipPath = `circle(${maxDist}px at ${x}px ${y}px)`;
-    }
+    // Set overlay to the TARGET image and start clip at 0
+    overlay.src = targetDark ? contourDark : contourLight;
+    overlay.style.clipPath = `circle(0px at ${x}px ${y}px)`;
+    overlay.style.transition = 'none';
+    overlay.style.display = 'block';
+
+    // Force reflow then animate
+    overlay.offsetHeight;
+    overlay.style.transition = `clip-path ${DURATION}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+    overlay.style.clipPath = `circle(${maxDist + 50}px at ${x}px ${y}px)`;
 
     setTimeout(() => {
+      // Toggle theme
       const html = document.documentElement;
       if (targetDark) {
         html.classList.add('dark');
@@ -47,13 +61,20 @@ const ContourThemeToggle = ({ isDark }: Props) => {
         html.classList.remove('dark');
         localStorage.setItem('theme', 'light');
       }
-      setRipple(null);
-    }, 500);
+      // Update base layer to match new theme
+      setShowDark(targetDark);
+      // Hide overlay
+      overlay.style.transition = 'none';
+      overlay.style.clipPath = 'circle(0px at 50% 50%)';
+      overlay.style.display = 'none';
+      animatingRef.current = false;
+    }, DURATION);
   }, [isDark]);
 
-  // Bottom layer = current theme image, top ripple layer = opposite theme image
-  const currentImg = isDark ? contourDark : contourLight;
-  const nextImg = isDark ? contourLight : contourDark;
+  // Base layer shows the CURRENT theme's opposite image (dark mode → show light img to click, etc.)
+  // Actually: base = current theme look, overlay reveals the next
+  // When dark → base shows dark contour, overlay reveals light (and vice versa)
+  const baseImg = showDark ? contourDark : contourLight;
 
   return (
     <motion.div
@@ -71,21 +92,17 @@ const ContourThemeToggle = ({ isDark }: Props) => {
               style={{ maxHeight: 480 }}
               onClick={handleClick}
             >
-              {/* Base image: current theme */}
               <img
-                src={currentImg}
-                alt={`Contour Flow ${isDark ? 'dark' : 'light'} mode`}
+                src={baseImg}
+                alt={`Contour Flow ${showDark ? 'dark' : 'light'} mode`}
                 className="w-full object-cover block"
               />
-              {/* Ripple overlay: next theme image, clipped to expanding circle */}
-              {ripple && (
-                <img
-                  src={ripple.targetDark ? contourDark : contourLight}
-                  alt=""
-                  className="ripple-overlay absolute inset-0 w-full h-full object-cover"
-                  style={{ clipPath: 'circle(0px at 50% 50%)' }}
-                />
-              )}
+              <img
+                ref={overlayRef}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ display: 'none', clipPath: 'circle(0px at 50% 50%)' }}
+              />
             </div>
           </TooltipTrigger>
           <TooltipContent side="top" className="text-xs">
