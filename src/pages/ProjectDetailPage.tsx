@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
+import TopographicBackground from '@/components/TopographicBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
 import { Mac } from '@/components/Mac';
@@ -9,6 +10,7 @@ import thanasOsMac from '@/assets/thanasos-mac.png';
 import pesuForgeBg from '@/assets/pesuforge-bg.png';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -20,6 +22,7 @@ const ProjectDetailPage = () => {
   const { slug } = useParams<{slug: string;}>();
   const project = projects.find((p) => p.id === slug);
   const { isDark } = useTheme();
+  const isMobile = useIsMobile();
 
   if (!project) return <Navigate to="/projects" replace />;
 
@@ -30,6 +33,7 @@ const ProjectDetailPage = () => {
   const isSmartChef = project.id === 'smart-chef';
   const isAskBookie = project.id === 'askbookie';
   const isPesuForge = project.id === 'pesu-forge';
+  const isContourFlow = project.id === 'contour-flow';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
@@ -69,9 +73,10 @@ const ProjectDetailPage = () => {
 
   return (
     <>
-      {!isAskBookie && !isPesuForge && <GridBackground />}
+      {!isAskBookie && !isPesuForge && !isContourFlow && <GridBackground />}
+      {isContourFlow && <TopographicBackground density={isMobile ? 'low' : 'medium'} />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
-        {!isAskBookie && !isPesuForge && <Navbar />}
+        {!isAskBookie && !isPesuForge && !isContourFlow && <Navbar />}
 
         {isAskBookie ?
         <div
@@ -855,6 +860,156 @@ const ProjectDetailPage = () => {
             </div>
           </div>
         </div>
+        ) : isContourFlow ? (
+        /* ── Contour Flow ── */
+        <>
+          <Navbar />
+          <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+            <motion.div {...fadeUp(0)}>
+              <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
+                <ArrowLeft className="w-4 h-4" />
+                All Projects
+              </Link>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.08)} className="mb-8 mt-4">
+              <h1
+                className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-4 uppercase text-foreground"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                Contour Flow
+              </h1>
+              <p className="text-base text-muted-foreground max-w-xl leading-relaxed">
+                A real-time procedural topographic map animation — no images, no SVGs, pure math rendered to canvas at 60fps.
+              </p>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.12)} className="flex gap-3 mb-10">
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all"
+                >
+                  <Github className="w-4 h-4" />
+                  GitHub
+                </a>
+              )}
+            </motion.div>
+
+            <motion.div {...fadeUp(0.15)} className="flex flex-wrap gap-2 mb-14">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider backdrop-blur-sm bg-background/30"
+                >
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
+
+            <motion.div
+              {...fadeUp(0.2)}
+              className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
+              style={{
+                backgroundColor: isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.6)',
+                border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+              }}
+            >
+              <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
+                How it works
+              </h2>
+              <div className="space-y-3 text-sm text-foreground/70 leading-relaxed" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                <p>▸ Simplex Noise generates a 2D height field on a grid</p>
+                <p>▸ Marching Squares extracts iso-contour segments at multiple thresholds</p>
+                <p>▸ Segments are stitched into paths and drawn as Catmull-Rom splines</p>
+                <p>▸ Time-based offsets animate the noise for a flowing drift effect</p>
+                <p>▸ On mobile, DeviceOrientation adds subtle parallax</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              {...fadeUp(0.25)}
+              className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
+              style={{
+                backgroundColor: isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.6)',
+                border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+              }}
+            >
+              <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
+                Tech Stack
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {[
+                  { label: 'Framework', value: 'React 18' },
+                  { label: 'Language', value: 'TypeScript' },
+                  { label: 'Rendering', value: 'Canvas 2D' },
+                  { label: 'Build', value: 'Vite' },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="p-4 rounded-xl backdrop-blur-sm"
+                    style={{
+                      backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+                      border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+                    }}
+                  >
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
+                    <p className="text-sm font-semibold text-foreground/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              {...fadeUp(0.3)}
+              className="rounded-2xl p-6 mb-16 backdrop-blur-xl text-center"
+              style={{
+                backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.5)',
+                border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+              }}
+            >
+              <p className="text-sm text-muted-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                ↑ The background you're seeing right now <em>is</em> Contour Flow.
+              </p>
+            </motion.div>
+
+            <motion.div
+              {...fadeUp(0.35)}
+              className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4"
+            >
+              {prevProject ? (
+                <Link
+                  to={`/projects/${prevProject.id}`}
+                  className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors backdrop-blur-sm"
+                  style={{ backgroundColor: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.4)' }}
+                >
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1">
+                    <ArrowLeft className="w-3 h-3" /> Previous
+                  </span>
+                  <span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {prevProject.title}
+                  </span>
+                </Link>
+              ) : <div />}
+              {nextProject ? (
+                <Link
+                  to={`/projects/${nextProject.id}`}
+                  className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full backdrop-blur-sm"
+                  style={{ backgroundColor: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.4)' }}
+                >
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">
+                    Next <ArrowRight className="w-3 h-3" />
+                  </span>
+                  <span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {nextProject.title}
+                  </span>
+                </Link>
+              ) : <div />}
+            </motion.div>
+          </div>
+        </>
         ) : (
 
         /* ── Default layout ── */
