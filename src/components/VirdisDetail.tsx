@@ -191,23 +191,6 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             ))}
           </div>
 
-          {/* NDVI Scale */}
-          <SectionLabel label="NDVI Scale" color={label} font={font} />
-          <div className="flex gap-4 mb-10">
-            {[
-              { color: '#d73027', lbl: 'Stressed', range: '< 0.2' },
-              { color: '#fee08b', lbl: 'Moderate', range: '0.2 – 0.5' },
-              { color: '#2e7d32', lbl: 'Healthy', range: '> 0.5' },
-            ].map((item) => (
-              <div key={item.lbl} className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                <span className="text-xs" style={{ color: textMuted, fontFamily: font }}>
-                  {item.lbl} <span className="opacity-60">({item.range})</span>
-                </span>
-              </div>
-            ))}
-          </div>
-
           {/* Screenshot */}
           <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${cardBorder}` }}>
             {project.live ? (
