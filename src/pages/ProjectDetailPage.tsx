@@ -933,13 +933,6 @@ const ProjectDetailPage = () => {
                 )}
               </motion.div>
 
-              {/* Website showcase — liquid glass frame */}
-              <motion.div
-                {...fadeUp(0.22)}
-                className="rounded-3xl overflow-hidden mb-12 backdrop-blur-2xl"
-                style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 16px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)', padding: '6px' }}>
-                <ProjectImage src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover rounded-2xl" />
-              </motion.div>
 
               {/* My Role — liquid glass */}
               <motion.div
