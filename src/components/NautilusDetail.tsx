@@ -215,30 +215,6 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 />
                 {/* Arrow */}
                 <circle cx={labelX} cy={labelY} r="3" fill={edgeColor} />
-                {edge.label && (
-                  <>
-                    <rect
-                      x={labelX - edge.label.length * 3.5 - 6}
-                      y={labelY - 10}
-                      width={edge.label.length * 7 + 12}
-                      height={20}
-                      rx="4"
-                      fill={labelBg}
-                      stroke={cardBorder}
-                      strokeWidth="1"
-                    />
-                    <text
-                      x={labelX}
-                      y={labelY + 4}
-                      textAnchor="middle"
-                      fontSize="10"
-                      fontFamily="'Inter', sans-serif"
-                      fill={labelColor}
-                    >
-                      {edge.label}
-                    </text>
-                  </>
-                )}
               </g>
             );
           })}
