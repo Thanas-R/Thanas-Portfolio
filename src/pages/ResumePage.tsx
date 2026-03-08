@@ -1,11 +1,20 @@
 import { motion } from 'framer-motion';
 import { Download, Printer } from 'lucide-react';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
+import MobilePdfViewer from '@/components/MobilePdfViewer';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const handlePrint = useCallback(() => {
     const printWindow = window.open(resumePath, '_blank');
@@ -69,12 +78,16 @@ const ResumePage = () => {
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
           }}
         >
-          <iframe
-            src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
-            title="Resume PDF"
-            className="block border-none w-full h-full"
-            allow="autoplay"
-          />
+          {isMobile ? (
+            <MobilePdfViewer src={resumePath} />
+          ) : (
+            <iframe
+              src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
+              title="Resume PDF"
+              className="block border-none w-full h-full"
+              allow="autoplay"
+            />
+          )}
         </div>
       </motion.div>
     </div>
