@@ -206,8 +206,8 @@ const AboutSection = () => {
               <div className="space-y-3">
                 {educationData.map((edu, idx) =>
                 <div key={idx} className="flex-1">
-                    <p className="text-sm font-semibold text-foreground font-['Inter']">{edu.institution}</p>
-                    <p className="text-xs text-muted-foreground font-['Inter']">{edu.detail} <span className="text-muted-foreground/70 font-['JetBrains_Mono']">· {edu.years}</span></p>
+                    <p className="font-semibold text-foreground font-sans text-lg">{edu.institution}</p>
+                    <p className="text-muted-foreground font-['Inter'] text-sm">{edu.detail} <span className="text-muted-foreground/70 font-['JetBrains_Mono']">· {edu.years}</span></p>
                   </div>
                 )}
               </div>
