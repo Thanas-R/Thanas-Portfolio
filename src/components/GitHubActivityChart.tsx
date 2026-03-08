@@ -59,7 +59,7 @@ const GitHubActivityChart = () => {
     visible: (i: number) => ({
       scaleY: 1,
       opacity: 1,
-      transition: { duration: 0.4, delay: i * 0.06, ease: [0.4, 0, 0.2, 1] },
+      transition: { duration: 0.4, delay: i * 0.06, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] },
     }),
   };
 

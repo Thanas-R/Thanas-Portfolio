@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { TbBrandGithubFilled } from 'react-icons/tb';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import GitHubActivityChart from '@/components/GitHubActivityChart';
 
 const cardVariants = {
   hidden: {
