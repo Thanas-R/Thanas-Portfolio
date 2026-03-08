@@ -24,8 +24,6 @@ const ResumePage = () => {
     }
   }, [resumePath]);
 
-  const googleViewerUrl = `https://docs.google.com/gview?embedded=true&url=${window.location.origin}${resumePath}`;
-
   return (
     <div className="relative h-screen bg-background overflow-hidden flex flex-col">
       <LightRays className="opacity-60" />
@@ -80,7 +78,7 @@ const ResumePage = () => {
           }}
         >
           <iframe
-            src={isMobile ? googleViewerUrl : `${resumePath}#toolbar=0&navpanes=0&view=FitH`}
+            src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
             title="Resume PDF"
             className="block border-none w-full h-full"
             allow="autoplay"
