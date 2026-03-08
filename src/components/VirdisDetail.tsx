@@ -99,8 +99,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
             style={{ color: textMuted, fontFamily: font }}
           >
-            Map fields, monitor crop health via satellite imagery, analyze NDVI indices,
-            and receive AI-powered recommendations — all from a single dashboard.
+            An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data, delivered through a well-designed, intuitive UI.
           </p>
 
           {/* Tags */}
