@@ -12,14 +12,10 @@ const GradientCard = ({ children, className }: GradientCardProps) => {
     <div className={cn('relative rounded-xl border-[0.9px] border-border bg-card overflow-hidden p-5', className)}>
       <GlowingEffect
         spread={40}
-        glow={false}
         disabled={false}
         proximity={64}
-        inactiveZone={0.01}
         borderWidth={2}
         blur={0}
-        variant="default"
-        movementDuration={1}
       />
       <div className="relative z-10 h-full">{children}</div>
     </div>
