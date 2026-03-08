@@ -858,80 +858,50 @@ const ProjectDetailPage = () => {
           </div>
         </div>
         ) : isContourFlow ? (
-        /* ── Contour Flow — live canvas background ── */
+        /* ── Contour Flow — live canvas background, clean layout ── */
         <div className="min-h-screen relative">
           <ContourFlowBackground density={window.innerWidth < 768 ? 'low' : 'medium'} />
           <div className="relative z-10">
             <Navbar />
-            <div className="max-w-3xl mx-auto px-6 pt-12 pb-24">
+            <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
               <motion.div {...fadeUp(0)}>
                 <Link
                   to="/projects"
-                  className="inline-flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors mb-8"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   All Projects
                 </Link>
               </motion.div>
 
-              {/* Hero */}
-              <motion.div
-                {...fadeUp(0.08)}
-                className="rounded-2xl p-8 md:p-10 mb-8 backdrop-blur-xl"
-                style={{
-                  backgroundColor: 'hsl(var(--background) / 0.6)',
-                  border: '1px solid hsl(var(--foreground) / 0.08)',
-                }}
-              >
+              <motion.div {...fadeUp(0.08)} className="mb-8">
                 <h1
-                  className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-4 uppercase text-foreground"
+                  className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-4 uppercase"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 >
                   Contour Flow
                 </h1>
-                <p
-                  className="text-base text-muted-foreground max-w-lg leading-relaxed"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
+                <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
                   A real-time procedural topographic map generator — no images, no SVGs, pure math rendered to canvas.
                 </p>
               </motion.div>
 
-              {/* Tags */}
-              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-8">
+              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-14">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
-                    style={{
-                      backgroundColor: 'hsl(var(--foreground) / 0.06)',
-                      color: 'hsl(var(--foreground) / 0.55)',
-                      border: '1px solid hsl(var(--foreground) / 0.1)',
-                      fontFamily: "'JetBrains Mono', monospace",
-                    }}
+                    className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider"
                   >
                     {tag}
                   </span>
                 ))}
               </motion.div>
 
-              {/* How it works */}
-              <motion.div
-                {...fadeUp(0.18)}
-                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
-                style={{
-                  backgroundColor: 'hsl(var(--background) / 0.6)',
-                  border: '1px solid hsl(var(--foreground) / 0.08)',
-                }}
-              >
-                <h2
-                  className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
+              <motion.div {...fadeUp(0.2)} className="border-t border-foreground/10 pt-10 mb-10">
+                <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
                   How it works
                 </h2>
-                <ul className="space-y-2 text-sm text-foreground/70 leading-relaxed" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                <ul className="space-y-2 text-sm text-foreground/80 leading-relaxed">
                   <li>▸ Simplex Noise produces a 2D height field on a grid</li>
                   <li>▸ Marching Squares extracts iso-contour segments at multiple thresholds</li>
                   <li>▸ Segments are stitched into paths and drawn as Catmull-Rom splines</li>
@@ -940,53 +910,20 @@ const ProjectDetailPage = () => {
                 </ul>
               </motion.div>
 
-              {/* Tech Stack */}
-              <motion.div
-                {...fadeUp(0.24)}
-                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
-                style={{
-                  backgroundColor: 'hsl(var(--background) / 0.6)',
-                  border: '1px solid hsl(var(--foreground) / 0.08)',
-                }}
-              >
-                <h2
-                  className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  Tech Stack
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {[
-                    { label: 'Framework', value: 'React 18' },
-                    { label: 'Language', value: 'TypeScript' },
-                    { label: 'Build', value: 'Vite' },
-                    { label: 'Styling', value: 'Tailwind CSS' },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="p-4 rounded-xl backdrop-blur-md"
-                      style={{
-                        backgroundColor: 'hsl(var(--foreground) / 0.04)',
-                        border: '1px solid hsl(var(--foreground) / 0.06)',
-                      }}
-                    >
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                        {item.label}
-                      </p>
-                      <p className="text-sm font-semibold text-foreground/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                        {item.value}
-                      </p>
-                    </div>
-                  ))}
+              <motion.div {...fadeUp(0.25)} className="grid md:grid-cols-2 gap-6 border-t border-foreground/10 pt-10 mb-10">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Stack</p>
+                  <p className="text-foreground/80 text-sm leading-relaxed">
+                    {project.tags.join(', ')}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Type</p>
+                  <p className="text-foreground/80 text-sm">Personal Project</p>
                 </div>
               </motion.div>
 
-              {/* Screenshot */}
-              <motion.div
-                {...fadeUp(0.3)}
-                className="rounded-2xl overflow-hidden mb-16"
-                style={{ border: '1px solid hsl(var(--foreground) / 0.08)' }}
-              >
+              <motion.div {...fadeUp(0.3)} className="mb-16 rounded-2xl overflow-hidden border border-foreground/10">
                 <ProjectImage
                   src={project.imageSrc}
                   alt={`${project.title} preview`}
@@ -997,23 +934,18 @@ const ProjectDetailPage = () => {
 
               {/* Nav */}
               <motion.div
-                {...fadeUp(0.38)}
-                className="border-t pt-8 grid grid-cols-2 gap-4"
-                style={{ borderColor: 'hsl(var(--foreground) / 0.1)' }}
+                {...fadeUp(0.4)}
+                className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4"
               >
                 {prevProject ? (
                   <Link
                     to={`/projects/${prevProject.id}`}
-                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-xl"
-                    style={{
-                      backgroundColor: 'hsl(var(--background) / 0.5)',
-                      border: '1px solid hsl(var(--foreground) / 0.08)',
-                    }}
+                    className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors"
                   >
                     <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                       <ArrowLeft className="w-3 h-3" /> Previous
                     </span>
-                    <span className="text-sm font-bold text-foreground/80 group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    <span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                       {prevProject.title}
                     </span>
                   </Link>
@@ -1021,16 +953,12 @@ const ProjectDetailPage = () => {
                 {nextProject ? (
                   <Link
                     to={`/projects/${nextProject.id}`}
-                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-xl"
-                    style={{
-                      backgroundColor: 'hsl(var(--background) / 0.5)',
-                      border: '1px solid hsl(var(--foreground) / 0.08)',
-                    }}
+                    className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full"
                   >
                     <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">
                       Next <ArrowRight className="w-3 h-3" />
                     </span>
-                    <span className="text-sm font-bold text-foreground/80 group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    <span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                       {nextProject.title}
                     </span>
                   </Link>
