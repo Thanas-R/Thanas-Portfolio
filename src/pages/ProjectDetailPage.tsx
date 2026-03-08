@@ -409,7 +409,7 @@ const ProjectDetailPage = () => {
                 <h1 className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {project.title}
                 </h1>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-16 mb-4">
                   <AppleHelloEffect className="h-8 md:h-12 text-foreground" speed={0.7} />
                   {project.live && (
                     <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
