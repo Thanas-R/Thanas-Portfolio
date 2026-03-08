@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import GridBackground from '@/components/GridBackground';
 import { Project } from '@/components/ProjectsSection';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import mermaid from 'mermaid';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -274,6 +275,49 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
+const MERMAID_CHART = `graph TD
+    A["App.tsx"] --> B["QueryClientProvider + CanvasStoreProvider"]
+    B --> C["Index.tsx"]
+    C --> D["KnowledgeCanvas\n(React Flow)"]
+    C --> E["LeftSidebar\n(Chat Sessions)"]
+    C --> F["SettingsPanel\n(Theme, Layout)"]
+    C --> G["CommandPalette\n(Ctrl+K)"]
+    D --> H["10 Node Types\n(TopicCard, ConceptBlock,\nBuildingCard, KnowledgeNode,\nTextNode, ImageNode...)"]
+    D --> I["Custom Edge Types\n(BezierLabeledEdge)"]
+    D --> J["FloatingChatInput\n(AI Prompt Bar)"]
+    D --> K["Toolbar +\nDrawingToolbar +\nDrawingCanvas"]
+    D --> L["CanvasControls\n(Zoom, Undo/Redo)"]
+    D --> M["PathExplainPanel"]
+`;
+
+const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [svg, setSvg] = useState('');
+
+  useEffect(() => {
+    const id = 'nautilus-arch-' + Date.now();
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDark ? 'dark' : 'default',
+      themeVariables: isDark
+        ? { primaryColor: '#1a1a1a', primaryBorderColor: '#333', primaryTextColor: '#e5e5e5', lineColor: '#444', secondaryColor: '#111' }
+        : { primaryColor: '#f5f5f5', primaryBorderColor: '#ddd', primaryTextColor: '#1a1a1a', lineColor: '#bbb', secondaryColor: '#fafafa' },
+      flowchart: { curve: 'basis', padding: 16 },
+    });
+    mermaid.render(id, MERMAID_CHART).then(({ svg: renderedSvg }) => {
+      setSvg(renderedSvg);
+    });
+  }, [isDark]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="w-full flex justify-center [&_svg]:max-w-full [&_svg]:h-auto"
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  );
+};
+
 const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailProps) => {
   const { isDark } = useTheme();
 
@@ -403,6 +447,22 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                   <p className="text-[13px] font-medium leading-snug" style={{ color: headingColor, fontFamily: font }}>{item.v}</p>
                 </div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* Architecture Diagram */}
+          <motion.div {...fadeUp(0.32)}>
+            <h2
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
+              style={{ color: labelColor, fontFamily: font }}
+            >
+              Architecture
+            </h2>
+            <div
+              className="rounded-xl p-6 mb-12 overflow-x-auto"
+              style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+            >
+              <MermaidDiagram isDark={isDark} />
             </div>
           </motion.div>
 
