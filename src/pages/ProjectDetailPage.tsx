@@ -74,7 +74,6 @@ const ProjectDetailPage = () => {
   return (
     <>
       {!isAskBookie && !isPesuForge && !isContourFlow && <GridBackground />}
-      {isContourFlow && <TopographicBackground density={isMobile ? 'low' : 'medium'} />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
         {!isAskBookie && !isPesuForge && !isContourFlow && <Navbar />}
 
