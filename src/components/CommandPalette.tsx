@@ -268,6 +268,7 @@ const CommandPalette = () => {
               </span>
             </div>
           </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
