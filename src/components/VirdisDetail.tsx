@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud, Crosshair } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
@@ -93,23 +93,37 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             >
               Satellite-Powered Precision Agriculture Platform
             </p>
-            {project.live && (
+            <div className="flex items-center gap-3 shrink-0">
               <a
-                href={project.live}
+                href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:scale-[1.03] active:scale-[0.98] transition-all"
                 style={{
-                  backgroundColor: text,
-                  color: panelBg,
-                  fontFamily: font,
-                  boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                  backgroundColor: 'rgba(255,251,235,0.08)',
+                  border: '1px solid rgba(255,251,235,0.15)',
                 }}
               >
-                <ExternalLink className="w-4 h-4" />
-                Live Demo
+                <Github className="w-4 h-4" style={{ color: text }} />
               </a>
-            )}
+              {project.live && (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+                  style={{
+                    backgroundColor: text,
+                    color: panelBg,
+                    fontFamily: font,
+                    boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                  }}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Live Demo
+                </a>
+              )}
+            </div>
           </div>
 
           {/* Description */}
@@ -146,8 +160,8 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             {[
               { icon: Map, title: 'Satellite Map', desc: 'Mapbox basemap with polygon drawing, field editing, and NDVI layer overlays.' },
               { icon: BarChart3, title: 'NDVI Analysis', desc: 'Sentinel-2 imagery via Google Earth Engine to calculate vegetation health indices.' },
-              { icon: Crosshair, title: 'Auto Detection', desc: 'One-click field detection using region-growing segmentation via GEE computePixels.' },
               { icon: Cpu, title: 'AI Insights', desc: 'Gemini 2.5 Flash powered crop health assessments and irrigation recommendations.' },
+              { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
               { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
             ].map((item) => (
               <div
