@@ -215,7 +215,6 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                opacity="0.7"
               />
             </marker>
           </defs>
