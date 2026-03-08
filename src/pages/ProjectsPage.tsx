@@ -43,16 +43,16 @@ const ProjectsPage = () => {
 
               {/* Preview image — wider */}
               <div className="relative rounded-2xl overflow-hidden border border-foreground/10 aspect-[16/10] bg-muted">
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="popLayout">
                   <motion.img
                     key={previewImage}
                     src={previewImage}
                     alt={previewLabel || 'Projects'}
                     className="absolute inset-0 w-full h-full object-cover"
-                    initial={{ opacity: 0, scale: 1.04 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.97 }}
-                    transition={{ duration: 0.2, ease: 'easeInOut' }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15, ease: 'easeInOut' }}
                   />
                 </AnimatePresence>
                 {activeProject && (
