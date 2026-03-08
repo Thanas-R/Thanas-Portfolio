@@ -13,9 +13,9 @@ import { useTheme } from '@/hooks/use-theme';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.55, delay, ease: 'easeOut' as const }
+  transition: { delay, duration: 0.5, ease: 'easeOut' },
 });
 
 const ProjectDetailPage = () => {
@@ -41,12 +41,10 @@ const ProjectDetailPage = () => {
         <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer">
           <img src={src} alt={alt} className={className} style={style} />
         </a>);
-
     }
     return <img src={src} alt={alt} className={className} style={style} />;
   };
 
-  // AskBookie theme colors based on mode
   const ab = {
     bg: isDark ? '#1a1a1a' : '#ffffff',
     dotColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)',
@@ -68,7 +66,6 @@ const ProjectDetailPage = () => {
     navLabel: isDark ? '#888888' : '#999999'
   };
 
-  // Smart Chef background removed per user request
   const smartChefBg = undefined;
 
   return (
@@ -296,7 +293,7 @@ const ProjectDetailPage = () => {
                         <span style={{ color: ab.sectionLabel }} className="mt-0.5">▸</span>
                         <p
                       className="text-sm"
-                      style={{ color: ab.text, fontFamily: "'Roboto', sans-serif" }}>
+                      style={{ color: ab.text, fontFamily: "'Roboto', monospace" }}>
                       
                           {feat}
                         </p>
@@ -318,7 +315,7 @@ const ProjectDetailPage = () => {
                   </h2>
                   <p
                   className="leading-relaxed text-base"
-                  style={{ color: ab.textMuted, fontFamily: "'Roboto', sans-serif" }}>
+                  style={{ color: ab.textMuted, fontFamily: "'Roboto', monospace" }}>
                   
                     Backend, RAG pipeline, and project lead:{' '}
                     <a
@@ -374,7 +371,7 @@ const ProjectDetailPage = () => {
                     </span>
                   </Link> :
               <div />}
-
+  
                 {nextProject ?
               <Link
                 to={`/projects/${nextProject.id}`}
@@ -408,605 +405,195 @@ const ProjectDetailPage = () => {
               </Link>
             </motion.div>
 
-            {/* Two-column: text left, Mac right */}
-            <div className="flex flex-col md:flex-row md:items-start md:gap-12 mt-4">
-              {/* Left: text content */}
-              <motion.div {...fadeUp(0.08)} className="md:w-[45%] shrink-0">
-                <h1 className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {project.title}
-                </h1>
-                <div className="flex items-center gap-16 mb-4">
-                  <AppleHelloEffect className="h-8 md:h-12 text-foreground" speed={0.7} />
-                  {project.live && (
-                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
-                      <ExternalLink className="w-4 h-4" />
-                      Live Site
-                    </a>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground mb-6">
-                  macOS-themed interactive portfolio
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
-                </div>
-                <div className="mb-8">
-                  <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">About this project</h2>
-                  <p className="text-sm md:text-base text-foreground/80 leading-relaxed">
-                    A browser-based portfolio designed to recreate the macOS desktop experience. Visitors interact with a desktop-like interface &amp; opening apps, moving windows, and exploring sections like About, Projects, and Journey.
-                  </p>
-                  <p className="text-sm text-muted-foreground/80 leading-relaxed mt-4">
-                    This was one of my first serious web projects where I experimented with UI design and interactions. The goal was to make a portfolio that feels more immersive and memorable than a standard webpage.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Right: Mac mockup */}
-              <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex items-start justify-center mt-8 md:mt-0">
-                <Mac src={thanasOsMac} className="w-full max-w-[650px] h-auto text-background" />
-              </motion.div>
-            </div>
-
-            <motion.div {...fadeUp(0.4)} className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4 mt-12">
-              {prevProject ? <Link to={`/projects/${prevProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors"><span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Previous</span><span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{prevProject.title}</span></Link> : <div />}
-              {nextProject ? <Link to={`/projects/${nextProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full"><span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">Next <ArrowRight className="w-3 h-3" /></span><span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{nextProject.title}</span></Link> : <div />}
-            </motion.div>
-          </div>) :
-        isSmartChef ? (
-        /* ── Smart Chef ── */
-        <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
-            <motion.div {...fadeUp(0)}>
-              <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
-              
-                <ArrowLeft className="w-4 h-4" />
-                All Projects
-              </Link>
-            </motion.div>
-
-            <motion.div {...fadeUp(0.08)} className="mb-10 mt-4">
-              <h1
-              className="text-5xl md:text-7xl font-bold text-foreground leading-[1.05]"
-              style={{ fontFamily: "'Playfair Display', serif" }}>
-              
-                Smart{' '}
-                <span className="italic" style={{ color: '#FA8638' }}>
-                  Chef
-                </span>
+            <motion.div {...fadeUp(0.08)} className="mb-10">
+              <h1 className="text-6xl font-black text-foreground leading-none tracking-tight mb-4 uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                ThanasOS
               </h1>
-              <p className="text-lg text-muted-foreground mt-5 max-w-xl leading-relaxed">
-                A full-stack recipe matching system powered by TF-IDF vectors, fuzzy ingredient mapping, and AI-generated cooking steps.
+              <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+                A macOS inspired desktop environment built with React and TypeScript, featuring window management, animations, and a custom terminal.
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp(0.15)} className="flex gap-3 mb-12">
+            <motion.div {...fadeUp(0.15)} className="flex gap-3 mb-10">
               {project.live &&
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
-              style={{ backgroundColor: '#FA8638' }}>
-              
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity">
+                
                   <ExternalLink className="w-4 h-4" />
-                  Live Demo
+                  Live Site
                 </a>
-            }
+              }
               {project.github &&
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all">
-              
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all">
+                
                   <Github className="w-4 h-4" />
                   GitHub
                 </a>
-            }
+              }
             </motion.div>
 
-            <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-14">
-              {project.tags.map((tag) =>
-            <span
-              key={tag}
-              className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
-              
+            <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-12">
+              {project.tags.map((tag) => (
+                <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
                   {tag}
                 </span>
-            )}
+              ))}
             </motion.div>
 
-            <motion.div {...fadeUp(0.22)} className="space-y-14">
-              <div>
-                <h2
-                className="text-2xl md:text-3xl font-bold mb-4"
-                style={{ fontFamily: "'Playfair Display', serif", color: '#FA8638' }}>
-                
-                  Overview
-                </h2>
-                <p className="text-lg text-foreground/80 leading-relaxed">
-                  SmartChef combines a lightweight frontend with a FastAPI backend to deliver intelligent recipe suggestions.
-                  Enter the ingredients you have on hand, and the system ranks recipes by relevance using cosine similarity
-                  over TF-IDF vectors then generates step by step cooking instructions with Google Gemini AI.
-                </p>
-              </div>
-
-              <div>
-                <h2
-                className="text-2xl md:text-3xl font-bold mb-6"
-                style={{ fontFamily: "'Playfair Display', serif" }}>
-                
-                  How It{' '}
-                  <span className="italic" style={{ color: '#FA8638' }}>
-                    Works
-                  </span>
-                </h2>
-                <div className="grid md:grid-cols-3 gap-6">
-                  {[
-                { num: '01', title: 'Enter Ingredients', desc: 'Input what you have on hand. The system normalizes and maps them using fuzzy matching.' },
-                { num: '02', title: 'Match Recipes', desc: 'TF-IDF vectorization and cosine similarity rank the best recipe matches instantly.' },
-                { num: '03', title: 'Get Instructions', desc: 'Google Gemini generates tailored cooking steps based on the matched recipe and your ingredients.' }].
-                map((step) =>
-                <div key={step.num} className="p-6 rounded-2xl border border-foreground/10 bg-card">
-                      <span
-                    className="text-3xl font-bold"
-                    style={{ fontFamily: "'Playfair Display', serif", color: '#FA8638' }}>
-                    
-                        {step.num}
-                      </span>
-                      <h3 className="font-bold text-foreground mt-3 mb-2 font-['Space_Grotesk']">{step.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-                    </div>
-                )}
-                </div>
-              </div>
-
-              <div>
-                <h2
-                className="text-2xl md:text-3xl font-bold mb-4"
-                style={{ fontFamily: "'Playfair Display', serif" }}>
-                
-                  Architecture
-                </h2>
-                <div className="p-6 rounded-2xl border border-foreground/10 bg-card font-mono text-sm text-foreground/70 leading-loose">
-                  <span className="text-foreground font-semibold">User Input</span> → Frontend (HTML + CSS + JS)<br />
-                  → <span style={{ color: '#FA8638' }} className="font-semibold">FastAPI Backend</span> (TF-IDF + Cosine Similarity)<br />
-                  → Recipe Matches + <span style={{ color: '#FA8638' }} className="font-semibold">AI Cooking Instructions</span>
-                </div>
-              </div>
-
-              <div>
-                <h2
-                className="text-2xl md:text-3xl font-bold mb-6"
-                style={{ fontFamily: "'Playfair Display', serif", color: '#FA8638' }}>
-                
-                  Tech Stack
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[
-                { label: 'Framework', value: 'FastAPI' },
-                { label: 'Vectorization', value: 'TF-IDF' },
-                { label: 'Similarity', value: 'Cosine' },
-                { label: 'AI Model', value: 'Gemini 2.5 Flash' },
-                { label: 'Frontend', value: 'HTML / CSS / JS' },
-                { label: 'API', value: 'Fetch API' },
-                { label: 'Server', value: 'Uvicorn' },
-                { label: 'Hosting', value: 'Render + Vercel' }].
-                map((item) =>
-                <div key={item.label} className="p-4 rounded-xl border border-foreground/10 bg-card">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
-                      <p className="text-sm font-semibold text-foreground font-['Space_Grotesk']">{item.value}</p>
-                    </div>
-                )}
-                </div>
-              </div>
+            <motion.div {...fadeUp(0.22)} className="rounded-2xl overflow-hidden mb-16 border border-foreground/10">
+              <img src={thanasOsMac} alt="ThanasOS preview" className="w-full object-cover" style={{ maxHeight: 480 }} />
             </motion.div>
 
-            <motion.div {...fadeUp(0.3)} className="mt-14 rounded-2xl overflow-hidden border border-foreground/10">
-              <ProjectImage
-              src={project.imageSrc}
-              alt={`${project.title} preview`}
-              className="w-full object-cover"
-              style={{ maxHeight: 480 }} />
-            
+            <motion.div {...fadeUp(0.25)} className="mb-16">
+              <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
+                About this project
+              </h2>
+              <p className="text-xl md:text-2xl leading-relaxed text-foreground/80" style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}>
+                ThanasOS is a React-based macOS-like desktop environment with draggable windows, a dock, and a custom terminal. It showcases advanced React patterns and animations.
+              </p>
             </motion.div>
 
-            {/* Nav */}
+            <motion.div {...fadeUp(0.3)} className="mb-16 rounded-2xl overflow-hidden border border-foreground/10">
+              <img src={thanasOsMac} alt="ThanasOS preview" className="w-full object-cover" style={{ maxHeight: 480 }} />
+            </motion.div>
+
             <motion.div
-            {...fadeUp(0.4)}
-            className="border-t border-foreground/10 pt-8 mt-16 grid grid-cols-2 gap-4">
-            
-              {prevProject ?
-            <Link
-              to={`/projects/${prevProject.id}`}
-              className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors">
-              
+              {...fadeUp(0.4)}
+              className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4"
+            >
+              {prevProject ? (
+                <Link
+                  to={`/projects/${prevProject.id}`}
+                  className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors"
+                >
                   <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                     <ArrowLeft className="w-3 h-3" /> Previous
                   </span>
-                  <span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <span
+                    className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  >
                     {prevProject.title}
                   </span>
-                </Link> :
-            <div />}
-              {nextProject ?
-            <Link
-              to={`/projects/${nextProject.id}`}
-              className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full">
-              
+                </Link>
+              ) : (
+                <div />
+              )}
+              {nextProject ? (
+                <Link
+                  to={`/projects/${nextProject.id}`}
+                  className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full"
+                >
                   <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">
                     Next <ArrowRight className="w-3 h-3" />
                   </span>
-                  <span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <span
+                    className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  >
                     {nextProject.title}
                   </span>
-                </Link> :
-            <div />}
+                </Link>
+              ) : (
+                <div />
+              )}
             </motion.div>
-          </div>) : isPesuForge ? (
-        /* ── PESU Forge — backdrop landscape with floating cards ── */
-        <div className="min-h-screen relative">
-          {/* Fixed backdrop image */}
-          <div className="fixed inset-0 z-0">
-            <img
-              src={pesuForgeBg}
-              alt=""
-              className="w-full h-full object-cover"
-              loading="eager"
-            />
-            <div className="absolute inset-0 bg-black/40" />
           </div>
-
+        ) : isContourFlow ? (
+        /* ── Contour Flow — live animation as full page background ── */
+        <div className="relative min-h-screen">
+          <TopographicBackground density={isMobile ? 'low' : 'medium'} />
           <div className="relative z-10">
             <Navbar />
             <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
               <motion.div {...fadeUp(0)}>
-                <Link
-                  to="/projects"
-                  className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors mb-8"
-                >
+                <Link to="/projects" className="inline-flex items-center gap-2 text-sm backdrop-blur-sm px-3 py-1.5 rounded-full hover:opacity-70 transition-opacity mb-8 text-foreground/70 bg-background/30 border border-foreground/5">
                   <ArrowLeft className="w-4 h-4" />
                   All Projects
                 </Link>
               </motion.div>
 
-              {/* Hero card */}
-              <motion.div
-                {...fadeUp(0.08)}
-                className="rounded-2xl p-8 md:p-10 mb-8 backdrop-blur-xl"
-                style={{
-                  backgroundColor: 'rgba(0,0,0,0.55)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
-                <h1
-                  className="text-5xl md:text-7xl font-black text-white leading-none tracking-tight mb-5 uppercase"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                >
-                  {project.title}
-                </h1>
-                <p className="text-lg text-white/60 max-w-xl leading-relaxed">
-                  {project.description}
+              <motion.div {...fadeUp(0.08)} className="mb-10 mt-4">
+                <p className="text-xs font-bold uppercase tracking-[0.3em] mb-3 text-foreground/50" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                  Canvas Animation
                 </p>
-
-                {/* Links */}
-                <div className="flex gap-3 mt-6">
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:opacity-85 transition-opacity"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Live Site
-                    </a>
-                  )}
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white text-sm font-semibold hover:bg-white hover:text-black transition-all"
-                    >
-                      <Github className="w-4 h-4" />
-                      GitHub
-                    </a>
-                  )}
-                </div>
+                <h1 className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-5 text-foreground" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  Contour Flow
+                </h1>
+                <p className="text-base max-w-lg leading-relaxed text-foreground/60">
+                  A real-time procedural topographic map animation rendered to canvas. No images, no SVGs — pure math.
+                </p>
               </motion.div>
 
-              {/* Tags between hero and about */}
-              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-8 justify-center">
-                {project.tags.map((tag, i) => (
-                  <span
-                    key={tag}
-                    className={`text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider ${
-                      i === 0
-                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                        : 'bg-white/5 text-white/50 border border-white/10'
-                    }`}
-                  >
+              <motion.div {...fadeUp(0.12)} className="flex gap-3 mb-8">
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold backdrop-blur-xl transition-all bg-foreground/10 border border-foreground/10 text-foreground hover:bg-foreground/20">
+                    <Github className="w-4 h-4" />
+                    GitHub
+                  </a>
+                )}
+              </motion.div>
+
+              <motion.div {...fadeUp(0.15)} className="flex flex-wrap gap-2 mb-12">
+                {project.tags.map((tag) => (
+                  <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-sm border border-foreground/10 text-foreground/50 bg-background/30">
                     {tag}
                   </span>
                 ))}
               </motion.div>
 
-              {/* About card */}
-              <motion.div
-                {...fadeUp(0.15)}
-                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
-                style={{
-                  backgroundColor: 'rgba(0,0,0,0.55)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
-                <h2 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-5">
-                  About this project
-                </h2>
-                <p className="text-base md:text-lg leading-relaxed text-white/70">
-                  PESU Forge is an AI-powered study tool that transforms notes into interactive learning experiences such as flashcards, quizzes, memory games, and visual mind maps.
-                </p>
-                <p className="text-base md:text-lg leading-relaxed text-white/70 mt-4">
-                  This was my first ever project and the one that introduced me to building with AI. Working on it exposed me to how modern AI systems can be integrated into applications, which eventually pushed me to explore and build more projects afterwards. It became the starting point of my development journey.
-                </p>
-                <p className="text-base md:text-lg leading-relaxed text-white/70 mt-4">
-                  The idea was to make studying more interactive by turning static notes into dynamic learning formats that help with recall, understanding, and engagement.
+              <motion.div {...fadeUp(0.18)} className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl border border-foreground/8 bg-background/60">
+                <h2 className="text-xs font-bold uppercase tracking-widest mb-5 text-foreground/40" style={{ fontFamily: "'JetBrains Mono', monospace" }}>About</h2>
+                <p className="text-base leading-relaxed text-foreground/70">
+                  Contour Flow is the procedural canvas animation powering this page's background. It generates a continuous topographic map using Simplex Noise, extracts contour lines via Marching Squares, and renders them as smooth Catmull-Rom splines — all in real time with no external assets.
                 </p>
               </motion.div>
 
-              {/* Features grid */}
-              <motion.div {...fadeUp(0.22)} className="grid md:grid-cols-2 gap-4 mb-6">
-                {[
-                  { title: 'Flashcards', desc: 'AI-generated question and answer cards with flip animations' },
-                  { title: 'Quiz', desc: 'Multiple-choice quizzes generated from notes with explanations' },
-                  { title: 'Memory Match', desc: 'Concept matching card game with scoring and timer' },
-                  { title: 'Thoughtscape', desc: 'Visual mind maps generated from study material' },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-2xl p-6 backdrop-blur-xl"
-                    style={{
-                      backgroundColor: 'rgba(0,0,0,0.5)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                    }}
-                  >
-                    <h3 className="font-bold text-white mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
-              </motion.div>
-
-              {/* Tech Stack card */}
-              <motion.div
-                {...fadeUp(0.28)}
-                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
-                style={{
-                  backgroundColor: 'rgba(0,0,0,0.55)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
-                <h2 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-5">
-                  Tech Stack
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <motion.div {...fadeUp(0.22)} className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl border border-foreground/8 bg-background/60">
+                <h2 className="text-xs font-bold uppercase tracking-widest mb-5 text-foreground/40" style={{ fontFamily: "'JetBrains Mono', monospace" }}>Tech Stack</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {[
-                    { label: 'Frontend', value: 'React' },
+                    { label: 'Framework', value: 'React 18' },
                     { label: 'Language', value: 'TypeScript' },
+                    { label: 'Rendering', value: 'Canvas 2D' },
                     { label: 'Build', value: 'Vite' },
-                    { label: 'Styling', value: 'Tailwind CSS' },
-                    { label: 'Components', value: 'shadcn/ui' },
-                    { label: 'Animation', value: 'Framer Motion' },
-                    { label: 'AI', value: 'Gemini 2.5 Flash' },
-                    { label: 'State', value: 'Zustand' },
                   ].map((item) => (
-                    <div key={item.label} className="p-4 rounded-xl" style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <p className="text-xs text-white/30 uppercase tracking-wider mb-1">{item.label}</p>
-                      <p className="text-sm font-semibold text-white/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
+                    <div key={item.label} className="p-4 rounded-xl backdrop-blur-sm border border-foreground/5 bg-background/40">
+                      <p className="text-xs uppercase tracking-wider mb-1 text-foreground/30">{item.label}</p>
+                      <p className="text-sm font-semibold text-foreground/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
                     </div>
                   ))}
                 </div>
               </motion.div>
 
-              {/* Screenshot */}
-              <motion.div {...fadeUp(0.32)} className="rounded-2xl overflow-hidden mb-16" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
-                <ProjectImage
-                  src={project.imageSrc}
-                  alt={`${project.title} preview`}
-                  className="w-full object-cover"
-                  style={{ maxHeight: 480 }}
-                />
+              <motion.div {...fadeUp(0.28)} className="rounded-2xl overflow-hidden mb-16 backdrop-blur-sm border border-foreground/8">
+                <ProjectImage src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
               </motion.div>
 
-              {/* Nav */}
-              <motion.div
-                {...fadeUp(0.38)}
-                className="border-t pt-8 grid grid-cols-2 gap-4"
-                style={{ borderColor: 'rgba(255,255,255,0.1)' }}
-              >
+              <motion.div {...fadeUp(0.35)} className="border-t pt-8 mt-10 grid grid-cols-2 gap-4 border-foreground/10">
                 {prevProject ? (
-                  <Link
-                    to={`/projects/${prevProject.id}`}
-                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-xl"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}
-                  >
-                    <span className="text-xs uppercase tracking-widest text-white/40 flex items-center gap-1">
-                      <ArrowLeft className="w-3 h-3" /> Previous
-                    </span>
-                    <span className="text-sm font-bold text-white/80 group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {prevProject.title}
-                    </span>
+                  <Link to={`/projects/${prevProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-xl border border-foreground/8 bg-background/50">
+                    <span className="text-xs uppercase tracking-widest flex items-center gap-1 text-foreground/40"><ArrowLeft className="w-3 h-3" /> Previous</span>
+                    <span className="text-sm font-bold group-hover:translate-x-0.5 transition-transform text-foreground/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{prevProject.title}</span>
                   </Link>
                 ) : <div />}
                 {nextProject ? (
-                  <Link
-                    to={`/projects/${nextProject.id}`}
-                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-xl"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}
-                  >
-                    <span className="text-xs uppercase tracking-widest text-white/40 flex items-center justify-end gap-1">
-                      Next <ArrowRight className="w-3 h-3" />
-                    </span>
-                    <span className="text-sm font-bold text-white/80 group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {nextProject.title}
-                    </span>
+                  <Link to={`/projects/${nextProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-xl border border-foreground/8 bg-background/50">
+                    <span className="text-xs uppercase tracking-widest flex items-center justify-end gap-1 text-foreground/40">Next <ArrowRight className="w-3 h-3" /></span>
+                    <span className="text-sm font-bold group-hover:-translate-x-0.5 transition-transform text-foreground/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{nextProject.title}</span>
                   </Link>
                 ) : <div />}
               </motion.div>
             </div>
           </div>
         </div>
-        ) : isContourFlow ? (
-        /* ── Contour Flow — geological / topographic theme ── */
-        <>
-          <Navbar />
-          <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
-            <motion.div {...fadeUp(0)}>
-              <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
-                <ArrowLeft className="w-4 h-4" />
-                All Projects
-              </Link>
-            </motion.div>
-
-            {/* Hero */}
-            <motion.div {...fadeUp(0.08)} className="mb-10 mt-4">
-              <p
-                className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground mb-3"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              >
-                Canvas Animation
-              </p>
-              <h1
-                className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-5 text-foreground"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
-                Contour Flow
-              </h1>
-              <p className="text-base text-muted-foreground max-w-lg leading-relaxed">
-                A real-time procedural topographic map animation rendered to canvas. No images, no SVGs — pure math at 60fps.
-              </p>
-            </motion.div>
-
-            {/* Tags */}
-            <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-12">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider backdrop-blur-sm bg-background/30"
-                >
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-
-            {/* Live preview card with the actual animation */}
-            <motion.div
-              {...fadeUp(0.16)}
-              className="rounded-2xl overflow-hidden mb-8 relative"
-              style={{
-                border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
-                height: isMobile ? '280px' : '400px',
-              }}
-            >
-              <TopographicBackground density={isMobile ? 'low' : 'medium'} contained />
-              <div className="absolute inset-0 flex items-end p-6 z-10">
-                <p
-                  className="text-xs text-muted-foreground backdrop-blur-sm px-3 py-1.5 rounded-full bg-background/50 border border-foreground/5"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  ↑ Live render — this is Contour Flow running in real time
-                </p>
-              </div>
-            </motion.div>
-
-            {/* How it works */}
-            <motion.div
-              {...fadeUp(0.2)}
-              className="rounded-2xl p-8 md:p-10 mb-6"
-              style={{
-                backgroundColor: isDark ? 'hsl(var(--card))' : 'hsl(var(--card))',
-                border: `1px solid hsl(var(--border))`,
-              }}
-            >
-              <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
-                How it works
-              </h2>
-              <div className="space-y-3 text-sm text-foreground/70 leading-relaxed" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                <p>▸ Simplex Noise generates a 2D height field on a grid</p>
-                <p>▸ Marching Squares extracts iso-contour segments at multiple thresholds</p>
-                <p>▸ Segments are stitched into paths and drawn as Catmull-Rom splines</p>
-                <p>▸ Time-based offsets animate the noise for a flowing drift effect</p>
-                <p>▸ On mobile, DeviceOrientation adds subtle parallax</p>
-              </div>
-            </motion.div>
-
-            {/* Tech Stack */}
-            <motion.div
-              {...fadeUp(0.25)}
-              className="rounded-2xl p-8 md:p-10 mb-6"
-              style={{
-                backgroundColor: 'hsl(var(--card))',
-                border: `1px solid hsl(var(--border))`,
-              }}
-            >
-              <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
-                Tech Stack
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {[
-                  { label: 'Framework', value: 'React 18' },
-                  { label: 'Language', value: 'TypeScript' },
-                  { label: 'Rendering', value: 'Canvas 2D' },
-                  { label: 'Build', value: 'Vite' },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="p-4 rounded-xl bg-muted/50 border border-border"
-                  >
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
-                    <p className="text-sm font-semibold text-foreground/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Nav prev/next */}
-            <motion.div
-              {...fadeUp(0.35)}
-              className="border-t border-border pt-8 mt-10 grid grid-cols-2 gap-4"
-            >
-              {prevProject ? (
-                <Link
-                  to={`/projects/${prevProject.id}`}
-                  className="group flex flex-col gap-1 p-5 rounded-xl border border-border transition-colors bg-card"
-                >
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1">
-                    <ArrowLeft className="w-3 h-3" /> Previous
-                  </span>
-                  <span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {prevProject.title}
-                  </span>
-                </Link>
-              ) : <div />}
-              {nextProject ? (
-                <Link
-                  to={`/projects/${nextProject.id}`}
-                  className="group flex flex-col gap-1 p-5 rounded-xl border border-border transition-colors text-right ml-auto w-full bg-card"
-                >
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">
-                    Next <ArrowRight className="w-3 h-3" />
-                  </span>
-                  <span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {nextProject.title}
-                  </span>
-                </Link>
-              ) : <div />}
-            </motion.div>
-          </div>
-        </>
         ) : (
 
         /* ── Default layout ── */
@@ -1149,10 +736,12 @@ const ProjectDetailPage = () => {
               <div />}
               </motion.div>
             </div>
-          </>)
+          </>
+        )
         }
       </div>
-    </>);
+    </>
+  );
 
 };
 
