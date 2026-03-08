@@ -77,12 +77,12 @@ export const projects: Project[] = [
   },
   {
     id: 'contour-flow',
-    title: 'Contour Flow',
-    description: 'Real-time procedural topographic map animation',
+    title: 'Contour Flow Demo',
+    description: 'Interactive animated topographic contour flow visualization',
     longDescription:
-      'A real-time procedural topographic map generator rendered to canvas — no images, no SVGs, pure math. Uses Simplex Noise, Marching Squares, and Catmull-Rom splines to create flowing organic contour lines.',
+      'An interactive WebGL-based animation showcasing flowing topographic contour lines. Built as a creative coding experiment exploring generative art with real-time shader effects and smooth gradient transitions.',
     imageSrc: projectContour,
-    tags: ['Canvas', 'Simplex Noise', 'Marching Squares', 'TypeScript', 'React'],
+    tags: ['WebGL', 'Canvas', 'Shaders', 'Creative Coding'],
   },
 {
   id: 'smart-chef',
