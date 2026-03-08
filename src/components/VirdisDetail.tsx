@@ -78,7 +78,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           >
             Virdis
           </h1>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <p
               className="text-sm uppercase tracking-[0.2em] font-medium"
               style={{ color: accent, fontFamily: font }}
@@ -90,10 +90,15 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: text, color: panelBg, fontFamily: font }}
+                className="inline-flex items-center gap-2.5 px-8 py-3 rounded-xl text-base font-bold hover:scale-[1.03] active:scale-[0.98] transition-all"
+                style={{
+                  backgroundColor: text,
+                  color: panelBg,
+                  fontFamily: font,
+                  boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                }}
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-5 h-5" />
                 Live Demo
               </a>
             )}
