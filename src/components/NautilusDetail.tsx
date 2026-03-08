@@ -407,6 +407,22 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             </div>
           </motion.div>
 
+          {/* Architecture Diagram */}
+          <motion.div {...fadeUp(0.32)}>
+            <h2
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
+              style={{ color: labelColor, fontFamily: font }}
+            >
+              Architecture
+            </h2>
+            <div
+              className="rounded-xl p-6 mb-12 overflow-x-auto"
+              style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+            >
+              <MermaidDiagram isDark={isDark} />
+            </div>
+          </motion.div>
+
           {/* Screenshot */}
           <motion.div {...fadeUp(0.34)}>
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${cardBorder}` }}>
