@@ -85,8 +85,10 @@ const TechCarousel = () => {
   return (
     <section className="relative px-6 py-6 mb-4">
       <div className="max-w-5xl mx-auto">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4 text-center">
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4 text-center flex items-center justify-center gap-1.5">
+          <BsStack className="text-sm" />
           Tech Stack
+        </h3>
         </h3>
         <div className="space-y-3 overflow-hidden">
           <Ribbon items={techStack} reverse={false} speed={25} tooltipSide="top" />
