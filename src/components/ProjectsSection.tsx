@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import ProgressiveImage from '@/components/ProgressiveImage';
 
 import projectPesuMC from '@/assets/project-pesumc.png';
 import projectAskbookie from '@/assets/project-askbookie.png';

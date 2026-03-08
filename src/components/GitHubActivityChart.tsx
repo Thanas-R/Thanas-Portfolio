@@ -68,15 +68,7 @@ const GitHubActivityChart = () => {
 
   const maxValue = useMemo(() => Math.max(...weekData.map((d) => d.value), 1), [weekData]);
   const total = useMemo(() => weekData.reduce((s, d) => s + d.value, 0), [weekData]);
-
-  const barVariants = {
-    hidden: { scaleY: 0, opacity: 0 },
-    visible: (i: number) => ({
-      scaleY: 1,
-      opacity: 1,
-      transition: { duration: 0.4, delay: i * 0.06, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] },
-    }),
-  };
+  const isMobile = useIsMobile();
 
   return (
     <div className="h-full flex flex-col">
@@ -100,8 +92,13 @@ const GitHubActivityChart = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div
-                      className="w-full rounded-sm bg-foreground/80 min-h-[3px]  cursor-default"
-                      style={{ height: `${heightPct}%`, pointerEvents: 'auto' }}
+                      className="w-full rounded-sm bg-foreground/80 min-h-[3px] cursor-default transition-all duration-500"
+                      style={{
+                        height: loading ? '6%' : `${heightPct}%`,
+                        opacity: loading ? 0.3 : 1,
+                        transitionDelay: isMobile ? `${i * 60}ms` : '0ms',
+                        pointerEvents: 'auto',
+                      }}
                     />
                   </TooltipTrigger>
                   <TooltipContent side="top" className="font-['Inter'] text-xs">
