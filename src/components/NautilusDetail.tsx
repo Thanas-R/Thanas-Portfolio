@@ -180,13 +180,13 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   };
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden">
+    <div ref={containerRef} className="w-full overflow-hidden flex justify-center">
       <div
         style={{
           width: canvasW,
           height: canvasH * scale,
           transform: `scale(${scale})`,
-          transformOrigin: 'top left',
+          transformOrigin: 'top center',
         }}
         className="relative"
       >
