@@ -41,7 +41,7 @@ export const projects: Project[] = [
     longDescription:
       'An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data. Virdis processes multispectral imagery to calculate vegetation indices, detect anomalies, and provide actionable insights for precision agriculture.',
     imageSrc: projectVirdis,
-    tags: ['React', 'Mapbox', 'Python', 'Satellite', 'AI'],
+    tags: ['React', 'TypeScript', 'Mapbox', 'Supabase', 'Deno', 'Earth Engine', 'Gemini AI', 'shadcn/ui'],
     live: 'https://virdis.vercel.app',
   },
   {
@@ -77,12 +77,12 @@ export const projects: Project[] = [
   },
   {
     id: 'contour-flow',
-    title: 'Contour Flow Demo',
-    description: 'Interactive animated topographic contour flow visualization',
+    title: 'Contour Flow',
+    description: 'Real-time procedural topographic map generator rendered to canvas',
     longDescription:
-      'An interactive WebGL-based animation showcasing flowing topographic contour lines. Built as a creative coding experiment exploring generative art with real-time shader effects and smooth gradient transitions.',
+      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares — no images, no SVGs, pure math.',
     imageSrc: projectContour,
-    tags: ['WebGL', 'Canvas', 'Shaders', 'Creative Coding'],
+    tags: ['React', 'Canvas', 'TypeScript', 'Simplex Noise', 'Creative Coding'],
   },
 {
   id: 'smart-chef',
@@ -153,7 +153,8 @@ const ProjectsSection = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="flex items-end justify-between mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground font-['Space_Grotesk'] tracking-tight flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" className="fill-foreground"><path d="M2.165 19.551c.186.28.499.449.835.449h15c.4 0 .762-.238.919-.606l3-7A.998.998 0 0 0 21 11h-1V8c0-1.103-.897-2-2-2h-6.655L8.789 4H4c-1.103 0-2 .897-2 2v13h.007a1 1 0 0 0 .158.551zM18 8v3H6c-.4 0-.762.238-.919.606L4 14.129V8h14z"></path></svg>
               Projects
             </h2>
 

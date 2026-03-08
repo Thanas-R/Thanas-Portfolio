@@ -9,6 +9,8 @@ import thanasOsMac from '@/assets/thanasos-mac.png';
 import pesuForgeBg from '@/assets/pesuforge-bg.png';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
+import ContourFlowBackground from '@/components/ContourFlowBackground';
+import VirdisDetail from '@/components/VirdisDetail';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -30,6 +32,8 @@ const ProjectDetailPage = () => {
   const isSmartChef = project.id === 'smart-chef';
   const isAskBookie = project.id === 'askbookie';
   const isPesuForge = project.id === 'pesu-forge';
+  const isContourFlow = project.id === 'contour-flow';
+  const isVirdis = project.id === 'virdis';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
@@ -67,11 +71,15 @@ const ProjectDetailPage = () => {
   // Smart Chef background removed per user request
   const smartChefBg = undefined;
 
+  if (isVirdis) {
+    return <VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
+  }
+
   return (
     <>
-      {!isAskBookie && !isPesuForge && <GridBackground />}
+      {!isAskBookie && !isPesuForge && !isContourFlow && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
-        {!isAskBookie && !isPesuForge && <Navbar />}
+        {!isAskBookie && !isPesuForge && !isContourFlow && <Navbar />}
 
         {isAskBookie ?
         <div
@@ -847,6 +855,116 @@ const ProjectDetailPage = () => {
                       Next <ArrowRight className="w-3 h-3" />
                     </span>
                     <span className="text-sm font-bold text-white/80 group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {nextProject.title}
+                    </span>
+                  </Link>
+                ) : <div />}
+              </motion.div>
+            </div>
+          </div>
+        </div>
+        ) : isContourFlow ? (
+        /* ── Contour Flow — live canvas background, clean layout ── */
+        <div className="min-h-screen relative">
+          <ContourFlowBackground density={window.innerWidth < 768 ? 'low' : 'medium'} />
+          <div className="relative z-10">
+            <Navbar />
+            <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+              <motion.div {...fadeUp(0)}>
+                <Link
+                  to="/projects"
+                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  All Projects
+                </Link>
+              </motion.div>
+
+              <motion.div {...fadeUp(0.08)} className="mb-8">
+                <h1
+                  className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-4 uppercase"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  Contour Flow
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+                  A real-time procedural topographic map generator — no images, no SVGs, pure math rendered to canvas.
+                </p>
+              </motion.div>
+
+              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-14">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </motion.div>
+
+              <motion.div {...fadeUp(0.2)} className="border-t border-foreground/10 pt-10 mb-10">
+                <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
+                  How it works
+                </h2>
+                <ul className="space-y-2 text-sm text-foreground/80 leading-relaxed">
+                  <li>▸ Simplex Noise produces a 2D height field on a grid</li>
+                  <li>▸ Marching Squares extracts iso-contour segments at multiple thresholds</li>
+                  <li>▸ Segments are stitched into paths and drawn as Catmull-Rom splines</li>
+                  <li>▸ Noise offsets animate over time to create a flowing drift</li>
+                  <li>▸ Dark and light themes change background color and stroke opacity</li>
+                </ul>
+              </motion.div>
+
+              <motion.div {...fadeUp(0.25)} className="grid md:grid-cols-2 gap-6 border-t border-foreground/10 pt-10 mb-10">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Stack</p>
+                  <p className="text-foreground/80 text-sm leading-relaxed">
+                    {project.tags.join(', ')}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Type</p>
+                  <p className="text-foreground/80 text-sm">Personal Project</p>
+                </div>
+              </motion.div>
+
+              <motion.div {...fadeUp(0.3)} className="mb-16 rounded-2xl overflow-hidden border border-foreground/10">
+                <ProjectImage
+                  src={project.imageSrc}
+                  alt={`${project.title} preview`}
+                  className="w-full object-cover"
+                  style={{ maxHeight: 480 }}
+                />
+              </motion.div>
+
+              {/* Nav */}
+              <motion.div
+                {...fadeUp(0.4)}
+                className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4"
+              >
+                {prevProject ? (
+                  <Link
+                    to={`/projects/${prevProject.id}`}
+                    className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors"
+                  >
+                    <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1">
+                      <ArrowLeft className="w-3 h-3" /> Previous
+                    </span>
+                    <span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {prevProject.title}
+                    </span>
+                  </Link>
+                ) : <div />}
+                {nextProject ? (
+                  <Link
+                    to={`/projects/${nextProject.id}`}
+                    className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full"
+                  >
+                    <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">
+                      Next <ArrowRight className="w-3 h-3" />
+                    </span>
+                    <span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                       {nextProject.title}
                     </span>
                   </Link>

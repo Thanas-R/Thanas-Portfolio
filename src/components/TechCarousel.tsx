@@ -13,6 +13,7 @@ import {
 } from 'react-icons/si';
 import { BiLogoVisualStudio } from 'react-icons/bi';
 import { FaJava, FaFigma } from 'react-icons/fa';
+import { BsStack } from 'react-icons/bs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface TechItem {
@@ -43,7 +44,7 @@ const techStack: TechItem[] = [
   { name: 'Vercel', icon: <SiVercel />, url: 'https://vercel.com/' },
 ];
 
-function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean; speed: number }) {
+function Ribbon({ items, reverse, speed, tooltipSide }: { items: TechItem[]; reverse: boolean; speed: number; tooltipSide: 'top' | 'bottom' }) {
   const tripled = [...items, ...items, ...items];
   return (
     <div className="overflow-hidden w-full">
@@ -58,18 +59,17 @@ function Ribbon({ items, reverse, speed }: { items: TechItem[]; reverse: boolean
           <TooltipProvider key={`${tech.name}-${i}`} delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
-                {/* anchor is clickable and opens the official site in a new tab */}
                 <a
-  href={tech.url ?? '#'}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex-shrink-0 px-7 flex items-center transition-filter duration-200 filter hover:brightness-125 focus:brightness-125 text-foreground/70 hover:text-foreground text-[38px] no-underline"
-  aria-label={tech.name}
->
+                  href={tech.url ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 px-7 flex items-center transition-filter duration-200 filter hover:brightness-125 focus:brightness-125 text-foreground/70 hover:text-foreground text-[38px] no-underline"
+                  aria-label={tech.name}
+                >
                   {tech.icon}
                 </a>
               </TooltipTrigger>
-              <TooltipContent side="bottom" className="text-xs">
+              <TooltipContent side={tooltipSide} className="text-xs">
                 {tech.name}
               </TooltipContent>
             </Tooltip>
@@ -85,12 +85,13 @@ const TechCarousel = () => {
   return (
     <section className="relative px-6 py-6 mb-4">
       <div className="max-w-5xl mx-auto">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4 text-center">
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4 text-center flex items-center justify-center gap-1.5">
+          <BsStack className="text-sm" />
           Tech Stack
         </h3>
         <div className="space-y-3 overflow-hidden">
-          <Ribbon items={techStack} reverse={false} speed={25} />
-          <Ribbon items={reversed} reverse={true} speed={30} />
+          <Ribbon items={techStack} reverse={false} speed={25} tooltipSide="top" />
+          <Ribbon items={reversed} reverse={true} speed={30} tooltipSide="bottom" />
         </div>
       </div>
     </section>

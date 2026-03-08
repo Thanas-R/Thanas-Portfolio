@@ -1,0 +1,273 @@
+import { motion } from 'framer-motion';
+import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useTheme } from '@/hooks/use-theme';
+import Navbar from '@/components/Navbar';
+import { Project } from '@/components/ProjectsSection';
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.55, delay, ease: 'easeOut' as const },
+});
+
+interface VirdisDetailProps {
+  project: Project;
+  prevProject: Project | null;
+  nextProject: Project | null;
+}
+
+const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) => {
+  const { isDark } = useTheme();
+
+  const pageBg = isDark ? '#22392E' : '#FFFFFF';
+  const outsideText = isDark ? 'hsl(150 10% 65%)' : 'hsl(0 0% 40%)';
+  const outsideHeading = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
+  const outsideBorder = isDark ? 'hsl(150 15% 22%)' : 'hsl(0 0% 90%)';
+  const outsideCardBg = isDark ? 'hsl(150 18% 14%)' : 'hsl(0 0% 97%)';
+
+  const panelBorder = '#041009';
+  const panelBg = '#1D2A23';
+  const cardBg = '#24322C';
+  const cardBorder = '#2E3F37';
+
+  const text = '#FFFBEB';
+  const textMuted = '#8A9B8F';
+  const heading = '#FFFBEB';
+  const label = '#6B7D72';
+  const green = '#4A8C6F';
+  const divider = '#2E3F37';
+  const codeBg = '#182420';
+  const accent = '#EAB947';
+
+  const font = "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+  const monoFont = "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace";
+
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: pageBg }}>
+      <Navbar />
+
+      <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
+        <motion.div {...fadeUp(0)}>
+          <Link
+            to="/projects"
+            className="inline-flex items-center gap-2 text-sm hover:opacity-70 transition-opacity mb-10"
+            style={{ color: outsideText, fontFamily: font }}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            All Projects
+          </Link>
+        </motion.div>
+
+        {/* Panel — 4px border */}
+        <motion.div
+          {...fadeUp(0.08)}
+          className="rounded-2xl p-5 sm:p-8 md:p-12 relative overflow-hidden"
+          style={{
+            backgroundColor: panelBg,
+            border: `4px solid ${panelBorder}`,
+            boxShadow: isDark
+              ? '0 25px 60px -12px rgba(0,0,0,0.5), 0 0 40px -10px rgba(74,140,111,0.15)'
+              : '0 25px 60px -12px rgba(0,0,0,0.25), 0 0 30px -10px rgba(4,16,9,0.1)',
+          }}
+        >
+          {/* Inner glow overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-2xl"
+            style={{
+              background: 'radial-gradient(ellipse at 20% 0%, rgba(74,140,111,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(234,185,71,0.06) 0%, transparent 50%)',
+            }}
+          />
+          <div className="relative z-10">
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-2">
+            <h1
+              className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
+              style={{ fontFamily: font, color: heading }}
+            >
+              Virdis
+            </h1>
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-7 py-3 rounded-xl text-base font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0 order-last md:order-none"
+                style={{
+                  backgroundColor: text,
+                  color: panelBg,
+                  fontFamily: font,
+                  boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+                }}
+              >
+                <ExternalLink className="w-5 h-5" />
+                Live Demo
+              </a>
+            )}
+          </div>
+          <p
+            className="text-sm uppercase tracking-[0.2em] font-medium mb-6"
+            style={{ color: accent, fontFamily: font }}
+          >
+            Satellite-Powered Precision Agriculture Platform
+          </p>
+
+          {/* Description */}
+          <p
+            className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
+            style={{ color: textMuted, fontFamily: font }}
+          >
+            An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data, delivered through a well-designed, intuitive UI.
+          </p>
+
+          {/* Tags */}
+          <div className="flex flex-wrap items-center gap-3 mb-10">
+            {project.tags.filter(tag => tag.toLowerCase() !== 'deno').map((tag) => (
+              <span
+                key={tag}
+                className="text-[11px] px-3 py-1 rounded-md font-medium uppercase tracking-wider"
+                style={{
+                  backgroundColor: 'rgba(255,251,235,0.06)',
+                  border: '1px solid rgba(255,251,235,0.15)',
+                  color: text,
+                  fontFamily: font,
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="w-full h-px mb-10" style={{ backgroundColor: divider }} />
+
+          {/* Core Capabilities */}
+          <SectionLabel label="Core Capabilities" color={label} font={font} />
+          <div className="grid md:grid-cols-2 gap-3 mb-10">
+            {[
+              { icon: Map, title: 'Satellite Map', desc: 'Mapbox basemap with polygon drawing, field editing, and NDVI layer overlays.' },
+              { icon: BarChart3, title: 'NDVI Analysis', desc: 'Sentinel-2 imagery via Google Earth Engine to calculate vegetation health indices.' },
+              { icon: Cpu, title: 'AI Insights', desc: 'Gemini 2.5 Flash powered crop health assessments and irrigation recommendations.' },
+              { icon: Cloud, title: 'Weather', desc: 'Per-field weather data via Open-Meteo for contextual crop analysis.' },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="p-5 rounded-xl flex gap-4"
+                style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+              >
+                <item.icon className="w-5 h-5 mt-0.5 shrink-0" style={{ color: green }} />
+                <div>
+                  <h3 className="font-semibold text-sm mb-1" style={{ color: heading, fontFamily: font }}>{item.title}</h3>
+                  <p className="text-[13px] leading-relaxed" style={{ color: textMuted, fontFamily: font }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Architecture */}
+          <SectionLabel label="Architecture" color={label} font={font} />
+          <div
+            className="p-5 rounded-xl text-[13px] leading-[2] mb-10"
+            style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}`, fontFamily: monoFont, color: textMuted }}
+          >
+            <span style={{ color: heading, fontWeight: 600 }}>Frontend</span> (React + Mapbox GL JS)
+            <br />
+            &nbsp;&nbsp;│
+            <br />
+            <span style={{ color: heading, fontWeight: 600 }}>Edge Functions</span> (Deno/TypeScript)
+            <br />
+            &nbsp;&nbsp;├── <span style={{ color: green }}>gee-ndvi-tiles</span> → Earth Engine REST API
+            <br />
+            &nbsp;&nbsp;├── <span style={{ color: green }}>gee-detect-field</span> → Earth Engine REST API
+            <br />
+            &nbsp;&nbsp;├── <span style={{ color: green }}>analyze-field</span> → Gemini 2.5 Flash
+            <br />
+            &nbsp;&nbsp;└── <span style={{ color: green }}>get-mapbox-token</span> → Mapbox API
+          </div>
+
+          {/* Tech Stack */}
+          <SectionLabel label="Tech Stack" color={label} font={font} />
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 mb-10">
+            {[
+              { l: 'Frontend', v: 'React 18' },
+              { l: 'Language', v: 'TypeScript' },
+              { l: 'Backend', v: 'Supabase Edge Fn' },
+              { l: 'Runtime', v: 'Deno' },
+              { l: 'Mapping', v: 'Mapbox GL JS' },
+              { l: 'Satellite', v: 'Earth Engine' },
+              { l: 'AI', v: 'Gemini 2.5 Flash' },
+              { l: 'Weather', v: 'Open-Meteo' },
+            ].map((item) => (
+              <div
+                key={item.l}
+                className="p-3.5 rounded-lg"
+                style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+              >
+                <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: label, fontFamily: font }}>{item.l}</p>
+                <p className="text-sm font-semibold" style={{ color: heading, fontFamily: font }}>{item.v}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Screenshot */}
+          <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${cardBorder}` }}>
+            {project.live ? (
+              <a href={project.live} target="_blank" rel="noopener noreferrer">
+                <img src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
+              </a>
+            ) : (
+              <img src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
+            )}
+          </div>
+          </div>
+        </motion.div>
+
+        {/* Nav prev/next */}
+        <motion.div
+          {...fadeUp(0.4)}
+          className="pt-8 mt-8 grid grid-cols-2 gap-4"
+          style={{ borderTop: `1px solid ${outsideBorder}` }}
+        >
+          {prevProject ? (
+            <Link
+              to={`/projects/${prevProject.id}`}
+              className="group flex flex-col gap-1 p-5 rounded-xl transition-colors"
+              style={{ backgroundColor: outsideCardBg, border: `1px solid ${outsideBorder}` }}
+            >
+              <span className="text-[11px] uppercase tracking-widest flex items-center gap-1" style={{ color: outsideText, fontFamily: font }}>
+                <ArrowLeft className="w-3 h-3" /> Previous
+              </span>
+              <span className="text-sm font-semibold group-hover:translate-x-0.5 transition-transform" style={{ color: outsideHeading, fontFamily: font }}>
+                {prevProject.title}
+              </span>
+            </Link>
+          ) : <div />}
+          {nextProject ? (
+            <Link
+              to={`/projects/${nextProject.id}`}
+              className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full"
+              style={{ backgroundColor: outsideCardBg, border: `1px solid ${outsideBorder}` }}
+            >
+              <span className="text-[11px] uppercase tracking-widest flex items-center justify-end gap-1" style={{ color: outsideText, fontFamily: font }}>
+                Next <ArrowRight className="w-3 h-3" />
+              </span>
+              <span className="text-sm font-semibold group-hover:-translate-x-0.5 transition-transform" style={{ color: outsideHeading, fontFamily: font }}>
+                {nextProject.title}
+              </span>
+            </Link>
+          ) : <div />}
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+const SectionLabel = ({ label, color, font }: { label: string; color: string; font: string }) => (
+  <h2
+    className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
+    style={{ color, fontFamily: font }}
+  >
+    {label}
+  </h2>
+);
+
+export default VirdisDetail;
