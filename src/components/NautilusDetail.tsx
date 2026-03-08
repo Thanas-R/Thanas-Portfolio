@@ -420,8 +420,8 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               Key Features
             </h2>
             <div
-              className="rounded-xl p-4 mb-12 overflow-hidden"
-              style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+              className="mb-12 overflow-hidden"
+            >
             >
               <FlowchartCanvas isDark={isDark} />
             </div>
