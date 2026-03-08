@@ -14,6 +14,7 @@ import VirdisDetail from '@/components/VirdisDetail';
 import ContourThemeToggle from '@/components/ContourThemeToggle';
 import contourDark from '@/assets/contour-dark.png';
 import contourLight from '@/assets/contour-light.png';
+import pesuMcHero from '@/assets/pesumc-hero.png';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -37,6 +38,7 @@ const ProjectDetailPage = () => {
   const isPesuForge = project.id === 'pesu-forge';
   const isContourFlow = project.id === 'contour-flow';
   const isVirdis = project.id === 'virdis';
+  const isPesuMC = project.id === 'pesu-mc';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
@@ -80,9 +82,9 @@ const ProjectDetailPage = () => {
 
   return (
     <>
-      {!isAskBookie && !isPesuForge && !isContourFlow && <GridBackground />}
+      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
-        {!isAskBookie && !isPesuForge && !isContourFlow && <Navbar />}
+        {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <Navbar />}
 
         {isAskBookie ?
         <div
@@ -864,6 +866,142 @@ const ProjectDetailPage = () => {
                     </span>
                   </Link> :
                 <div />}
+              </motion.div>
+            </div>
+          </div>
+        </div>) :
+        isPesuMC ? (
+        /* ── PESU MC — dark glassmorphism with Minecraft background ── */
+        <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
+          {/* Fixed backdrop */}
+          <div className="fixed inset-0 z-0">
+            <img src={pesuMcHero} alt="" className="w-full h-full object-cover" loading="eager" />
+            <div className="absolute inset-0 bg-black/50" />
+          </div>
+
+          <div className="relative z-10">
+            <Navbar />
+            <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+              <motion.div {...fadeUp(0)}>
+                <Link
+                  to="/projects"
+                  className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors mb-8">
+                  <ArrowLeft className="w-4 h-4" />
+                  All Projects
+                </Link>
+              </motion.div>
+
+              {/* Title - big and open, no card */}
+              <motion.div {...fadeUp(0.08)} className="mb-6 mt-4">
+                <h1
+                  className="text-6xl md:text-9xl font-black text-white leading-none tracking-tight mb-5 uppercase"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif", textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>
+                  PESU<br />Minecraft S2
+                </h1>
+                <p className="text-base text-white/50 max-w-xl leading-relaxed">
+                  Official website I developed for the PESU Minecraft Server community - a student-run Minecraft server at PES University.
+                </p>
+
+                <div className="flex gap-3 mt-6">
+                  {project.live &&
+                    <a href={project.live} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
+                      style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: 'white', border: '1px solid rgba(255,255,255,0.2)' }}>
+                      <ExternalLink className="w-4 h-4" />
+                      Live Site
+                    </a>
+                  }
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mt-6">
+                  {project.tags.map((tag) =>
+                    <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
+                      style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                      {tag}
+                    </span>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* About / My Role - liquid glass */}
+              <motion.div
+                {...fadeUp(0.18)}
+                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-2xl"
+                style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                <h2 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-5">My Role</h2>
+                <p className="text-base leading-relaxed text-white/60">
+                  Designed and developed the entire website from scratch for the PESU Minecraft community. Built a glassmorphism-themed landing page with real-time server status polling, a countdown timer to Season 2 launch, gallery carousel, and a full server contents breakdown.
+                </p>
+              </motion.div>
+
+              {/* Key Features - liquid glass cards */}
+              <motion.div {...fadeUp(0.25)} className="grid md:grid-cols-2 gap-4 mb-6">
+                {[
+                  { title: 'Real-time Status', desc: 'Live server status polling every 30 seconds via mcsrvstat API' },
+                  { title: 'Launch Countdown', desc: 'Countdown timer with confetti celebration on Season 2 launch' },
+                  { title: 'Gallery & Trailer', desc: 'Swipeable image carousel with YouTube trailer modal' },
+                  { title: 'Glassmorphism UI', desc: 'Dark-only theme with backdrop-blur cards and custom design tokens' },
+                ].map((item) =>
+                  <div
+                    key={item.title}
+                    className="rounded-2xl p-6 backdrop-blur-2xl"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
+                    <h3 className="font-bold text-white/90 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</h3>
+                    <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
+                  </div>
+                )}
+              </motion.div>
+
+              {/* Tech Stack - liquid glass */}
+              <motion.div
+                {...fadeUp(0.3)}
+                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-2xl"
+                style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
+                <h2 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-5">Tech Stack</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { label: 'Framework', value: 'React 18' },
+                    { label: 'Language', value: 'TypeScript' },
+                    { label: 'Build', value: 'Vite 5 (SWC)' },
+                    { label: 'Styling', value: 'Tailwind CSS' },
+                    { label: 'Components', value: 'shadcn/ui' },
+                    { label: 'Animation', value: 'Framer Motion' },
+                    { label: 'Scroll', value: 'Lenis' },
+                    { label: 'Hosting', value: 'Vercel' },
+                  ].map((item) =>
+                    <div key={item.label} className="p-4 rounded-xl backdrop-blur-xl" style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+                      <p className="text-xs text-white/30 uppercase tracking-wider mb-1">{item.label}</p>
+                      <p className="text-sm font-semibold text-white/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Screenshot */}
+              <motion.div {...fadeUp(0.35)} className="rounded-2xl overflow-hidden mb-16" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+                <ProjectImage src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
+              </motion.div>
+
+              {/* Nav */}
+              <motion.div
+                {...fadeUp(0.4)}
+                className="border-t pt-8 grid grid-cols-2 gap-4"
+                style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+                {prevProject ?
+                  <Link to={`/projects/${prevProject.id}`}
+                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-2xl"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
+                    <span className="text-xs uppercase tracking-widest text-white/40 flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Previous</span>
+                    <span className="text-sm font-bold text-white/80 group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{prevProject.title}</span>
+                  </Link> : <div />}
+                {nextProject ?
+                  <Link to={`/projects/${nextProject.id}`}
+                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-2xl"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
+                    <span className="text-xs uppercase tracking-widest text-white/40 flex items-center justify-end gap-1">Next <ArrowRight className="w-3 h-3" /></span>
+                    <span className="text-sm font-bold text-white/80 group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{nextProject.title}</span>
+                  </Link> : <div />}
               </motion.div>
             </div>
           </div>
