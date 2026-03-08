@@ -861,7 +861,7 @@ const ProjectDetailPage = () => {
           </div>
         </div>
         ) : isContourFlow ? (
-        /* ── Contour Flow ── */
+        /* ── Contour Flow — geological / topographic theme ── */
         <>
           <Navbar />
           <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
@@ -872,33 +872,27 @@ const ProjectDetailPage = () => {
               </Link>
             </motion.div>
 
-            <motion.div {...fadeUp(0.08)} className="mb-8 mt-4">
+            {/* Hero */}
+            <motion.div {...fadeUp(0.08)} className="mb-10 mt-4">
+              <p
+                className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground mb-3"
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              >
+                Canvas Animation
+              </p>
               <h1
-                className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-4 uppercase text-foreground"
+                className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-5 text-foreground"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
                 Contour Flow
               </h1>
-              <p className="text-base text-muted-foreground max-w-xl leading-relaxed">
-                A real-time procedural topographic map animation — no images, no SVGs, pure math rendered to canvas at 60fps.
+              <p className="text-base text-muted-foreground max-w-lg leading-relaxed">
+                A real-time procedural topographic map animation rendered to canvas. No images, no SVGs — pure math at 60fps.
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp(0.12)} className="flex gap-3 mb-10">
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all"
-                >
-                  <Github className="w-4 h-4" />
-                  GitHub
-                </a>
-              )}
-            </motion.div>
-
-            <motion.div {...fadeUp(0.15)} className="flex flex-wrap gap-2 mb-14">
+            {/* Tags */}
+            <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-12">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
@@ -909,12 +903,33 @@ const ProjectDetailPage = () => {
               ))}
             </motion.div>
 
+            {/* Live preview card with the actual animation */}
+            <motion.div
+              {...fadeUp(0.16)}
+              className="rounded-2xl overflow-hidden mb-8 relative"
+              style={{
+                border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+                height: isMobile ? '280px' : '400px',
+              }}
+            >
+              <TopographicBackground density={isMobile ? 'low' : 'medium'} />
+              <div className="absolute inset-0 flex items-end p-6 z-10">
+                <p
+                  className="text-xs text-muted-foreground backdrop-blur-sm px-3 py-1.5 rounded-full bg-background/50 border border-foreground/5"
+                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                >
+                  ↑ Live render — this is Contour Flow running in real time
+                </p>
+              </div>
+            </motion.div>
+
+            {/* How it works */}
             <motion.div
               {...fadeUp(0.2)}
-              className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
+              className="rounded-2xl p-8 md:p-10 mb-6"
               style={{
-                backgroundColor: isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.6)',
-                border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+                backgroundColor: isDark ? 'hsl(var(--card))' : 'hsl(var(--card))',
+                border: `1px solid hsl(var(--border))`,
               }}
             >
               <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
@@ -929,12 +944,13 @@ const ProjectDetailPage = () => {
               </div>
             </motion.div>
 
+            {/* Tech Stack */}
             <motion.div
               {...fadeUp(0.25)}
-              className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
+              className="rounded-2xl p-8 md:p-10 mb-6"
               style={{
-                backgroundColor: isDark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.6)',
-                border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+                backgroundColor: 'hsl(var(--card))',
+                border: `1px solid hsl(var(--border))`,
               }}
             >
               <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
@@ -949,11 +965,7 @@ const ProjectDetailPage = () => {
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className="p-4 rounded-xl backdrop-blur-sm"
-                    style={{
-                      backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
-                      border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
-                    }}
+                    className="p-4 rounded-xl bg-muted/50 border border-border"
                   >
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
                     <p className="text-sm font-semibold text-foreground/80" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
@@ -962,28 +974,15 @@ const ProjectDetailPage = () => {
               </div>
             </motion.div>
 
-            <motion.div
-              {...fadeUp(0.3)}
-              className="rounded-2xl p-6 mb-16 backdrop-blur-xl text-center"
-              style={{
-                backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.5)',
-                border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
-              }}
-            >
-              <p className="text-sm text-muted-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                ↑ The background you're seeing right now <em>is</em> Contour Flow.
-              </p>
-            </motion.div>
-
+            {/* Nav prev/next */}
             <motion.div
               {...fadeUp(0.35)}
-              className="border-t border-foreground/10 pt-8 grid grid-cols-2 gap-4"
+              className="border-t border-border pt-8 mt-10 grid grid-cols-2 gap-4"
             >
               {prevProject ? (
                 <Link
                   to={`/projects/${prevProject.id}`}
-                  className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors backdrop-blur-sm"
-                  style={{ backgroundColor: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.4)' }}
+                  className="group flex flex-col gap-1 p-5 rounded-xl border border-border transition-colors bg-card"
                 >
                   <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                     <ArrowLeft className="w-3 h-3" /> Previous
@@ -996,8 +995,7 @@ const ProjectDetailPage = () => {
               {nextProject ? (
                 <Link
                   to={`/projects/${nextProject.id}`}
-                  className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full backdrop-blur-sm"
-                  style={{ backgroundColor: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.4)' }}
+                  className="group flex flex-col gap-1 p-5 rounded-xl border border-border transition-colors text-right ml-auto w-full bg-card"
                 >
                   <span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">
                     Next <ArrowRight className="w-3 h-3" />
