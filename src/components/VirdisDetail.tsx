@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Leaf, BarChart3, Crosshair, Cpu, Satellite } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, BarChart3, Crosshair, Cpu, Satellite } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
@@ -69,21 +69,32 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
           }}
         >
           {/* Header */}
-          <div className="flex items-center gap-3 mb-1">
-            <Leaf className="w-6 h-6" style={{ color: green }} />
-            <h1
-              className="text-4xl md:text-6xl font-bold leading-none tracking-tight"
-              style={{ fontFamily: font, color: heading }}
-            >
-              Virdis
-            </h1>
-          </div>
-          <p
-            className="text-xs uppercase tracking-[0.2em] font-medium mb-6 ml-9"
-            style={{ color: accent, fontFamily: font }}
+          <h1
+            className="text-4xl md:text-6xl font-bold leading-none tracking-tight mb-2"
+            style={{ fontFamily: font, color: heading }}
           >
-            Precision Agriculture Platform
-          </p>
+            Virdis
+          </h1>
+          <div className="flex items-center gap-4 mb-6">
+            <p
+              className="text-xs uppercase tracking-[0.2em] font-medium"
+              style={{ color: accent, fontFamily: font }}
+            >
+              Precision Agriculture Platform
+            </p>
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-semibold hover:opacity-85 transition-opacity"
+                style={{ backgroundColor: text, color: panelBg, fontFamily: font }}
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                Live Demo
+              </a>
+            )}
+          </div>
           <p
             className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
             style={{ color: textMuted, fontFamily: font }}
@@ -92,21 +103,9 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             and receive AI-powered recommendations — all from a single dashboard.
           </p>
 
-          {/* Links + Tags */}
+          {/* Tags */}
           <div className="flex flex-wrap items-center gap-3 mb-10">
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: text, color: panelBg, fontFamily: font }}
-              >
-                <ExternalLink className="w-4 h-4" />
-                Live Demo
-              </a>
-            )}
-            {project.tags.map((tag) => (
+            {project.tags.filter(tag => tag.toLowerCase() !== 'deno').map((tag) => (
               <span
                 key={tag}
                 className="text-[11px] px-3 py-1 rounded-md font-medium uppercase tracking-wider"
@@ -188,23 +187,6 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               >
                 <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: label, fontFamily: font }}>{item.l}</p>
                 <p className="text-sm font-semibold" style={{ color: heading, fontFamily: font }}>{item.v}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* NDVI Scale */}
-          <SectionLabel label="NDVI Scale" color={label} font={font} />
-          <div className="flex gap-4 mb-10">
-            {[
-              { color: '#d73027', lbl: 'Stressed', range: '< 0.2' },
-              { color: '#fee08b', lbl: 'Moderate', range: '0.2 – 0.5' },
-              { color: '#2e7d32', lbl: 'Healthy', range: '> 0.5' },
-            ].map((item) => (
-              <div key={item.lbl} className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                <span className="text-xs" style={{ color: textMuted, fontFamily: font }}>
-                  {item.lbl} <span className="opacity-60">({item.range})</span>
-                </span>
               </div>
             ))}
           </div>
