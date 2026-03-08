@@ -856,6 +856,194 @@ const ProjectDetailPage = () => {
             </div>
           </div>
         </div>
+        ) : isContourFlow ? (
+        /* ── Contour Flow — live topographic background ── */
+        <div className="min-h-screen relative">
+          <div className="fixed inset-0 z-0">
+            <TopographicBackground density="medium" />
+          </div>
+
+          <div className="relative z-10">
+            <Navbar />
+            <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+              <motion.div {...fadeUp(0)}>
+                <Link
+                  to="/projects"
+                  className="inline-flex items-center gap-2 text-sm hover:opacity-70 transition-opacity mb-8"
+                  style={{ color: 'hsl(var(--foreground) / 0.5)', fontFamily: "'JetBrains Mono', monospace" }}
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  All Projects
+                </Link>
+              </motion.div>
+
+              {/* Hero card */}
+              <motion.div
+                {...fadeUp(0.08)}
+                className="rounded-2xl p-8 md:p-10 mb-8 backdrop-blur-xl"
+                style={{
+                  backgroundColor: 'hsl(var(--background) / 0.6)',
+                  border: '1px solid hsl(var(--foreground) / 0.08)',
+                }}
+              >
+                <h1
+                  className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-5 uppercase"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'hsl(var(--foreground))' }}
+                >
+                  Contour Flow
+                </h1>
+                <p className="text-lg max-w-xl leading-relaxed" style={{ color: 'hsl(var(--foreground) / 0.6)' }}>
+                  A real-time procedural topographic map generator — no images, no SVGs, pure math rendered to canvas.
+                </p>
+
+                <div className="flex gap-3 mt-6">
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Live Site
+                    </a>
+                  )}
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold transition-all"
+                      style={{ border: '1px solid hsl(var(--foreground) / 0.2)', color: 'hsl(var(--foreground))' }}
+                    >
+                      <Github className="w-4 h-4" />
+                      GitHub
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Tags */}
+              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-8 justify-center">
+                {project.tags.map((tag, i) => (
+                  <span
+                    key={tag}
+                    className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider"
+                    style={{
+                      backgroundColor: i === 0 ? 'hsl(var(--foreground) / 0.12)' : 'hsl(var(--foreground) / 0.05)',
+                      color: i === 0 ? 'hsl(var(--foreground) / 0.8)' : 'hsl(var(--foreground) / 0.5)',
+                      border: `1px solid hsl(var(--foreground) / ${i === 0 ? '0.15' : '0.08'})`,
+                      fontFamily: "'JetBrains Mono', monospace",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </motion.div>
+
+              {/* About card */}
+              <motion.div
+                {...fadeUp(0.15)}
+                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
+                style={{
+                  backgroundColor: 'hsl(var(--background) / 0.6)',
+                  border: '1px solid hsl(var(--foreground) / 0.08)',
+                }}
+              >
+                <h2 className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: 'hsl(var(--foreground) / 0.4)', fontFamily: "'JetBrains Mono', monospace" }}>
+                  How it works
+                </h2>
+                <p className="text-base md:text-lg leading-relaxed" style={{ color: 'hsl(var(--foreground) / 0.7)' }}>
+                  Simplex Noise generates a 2D height field. Marching Squares extracts iso-contour segments at multiple thresholds, stitched into continuous paths and drawn as Catmull-Rom splines for smooth organic lines.
+                </p>
+                <p className="text-base md:text-lg leading-relaxed mt-4" style={{ color: 'hsl(var(--foreground) / 0.7)' }}>
+                  The noise is animated with slow time-based offsets to create a flowing drift. On mobile, DeviceOrientation adds subtle parallax. Dark and light themes change stroke opacity and background.
+                </p>
+              </motion.div>
+
+              {/* Tech Stack card */}
+              <motion.div
+                {...fadeUp(0.22)}
+                className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
+                style={{
+                  backgroundColor: 'hsl(var(--background) / 0.6)',
+                  border: '1px solid hsl(var(--foreground) / 0.08)',
+                }}
+              >
+                <h2 className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: 'hsl(var(--foreground) / 0.4)', fontFamily: "'JetBrains Mono', monospace" }}>
+                  Tech Stack
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { label: 'Framework', value: 'React 18' },
+                    { label: 'Language', value: 'TypeScript' },
+                    { label: 'Build', value: 'Vite' },
+                    { label: 'Styling', value: 'Tailwind CSS' },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="p-4 rounded-xl"
+                      style={{ backgroundColor: 'hsl(var(--foreground) / 0.05)', border: '1px solid hsl(var(--foreground) / 0.06)' }}
+                    >
+                      <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'hsl(var(--foreground) / 0.35)', fontFamily: "'JetBrains Mono', monospace" }}>
+                        {item.label}
+                      </p>
+                      <p className="text-sm font-semibold" style={{ color: 'hsl(var(--foreground) / 0.8)', fontFamily: "'Space Grotesk', sans-serif" }}>
+                        {item.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Screenshot */}
+              <motion.div {...fadeUp(0.28)} className="rounded-2xl overflow-hidden mb-16" style={{ border: '1px solid hsl(var(--foreground) / 0.08)' }}>
+                <ProjectImage
+                  src={project.imageSrc}
+                  alt={`${project.title} preview`}
+                  className="w-full object-cover"
+                  style={{ maxHeight: 480 }}
+                />
+              </motion.div>
+
+              {/* Nav */}
+              <motion.div
+                {...fadeUp(0.35)}
+                className="border-t pt-8 grid grid-cols-2 gap-4"
+                style={{ borderColor: 'hsl(var(--foreground) / 0.1)' }}
+              >
+                {prevProject ? (
+                  <Link
+                    to={`/projects/${prevProject.id}`}
+                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-xl"
+                    style={{ backgroundColor: 'hsl(var(--background) / 0.5)', border: '1px solid hsl(var(--foreground) / 0.08)' }}
+                  >
+                    <span className="text-xs uppercase tracking-widest flex items-center gap-1" style={{ color: 'hsl(var(--foreground) / 0.4)' }}>
+                      <ArrowLeft className="w-3 h-3" /> Previous
+                    </span>
+                    <span className="text-sm font-bold group-hover:translate-x-0.5 transition-transform" style={{ color: 'hsl(var(--foreground) / 0.8)', fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {prevProject.title}
+                    </span>
+                  </Link>
+                ) : <div />}
+                {nextProject ? (
+                  <Link
+                    to={`/projects/${nextProject.id}`}
+                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-xl"
+                    style={{ backgroundColor: 'hsl(var(--background) / 0.5)', border: '1px solid hsl(var(--foreground) / 0.08)' }}
+                  >
+                    <span className="text-xs uppercase tracking-widest flex items-center justify-end gap-1" style={{ color: 'hsl(var(--foreground) / 0.4)' }}>
+                      Next <ArrowRight className="w-3 h-3" />
+                    </span>
+                    <span className="text-sm font-bold group-hover:-translate-x-0.5 transition-transform" style={{ color: 'hsl(var(--foreground) / 0.8)', fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {nextProject.title}
+                    </span>
+                  </Link>
+                ) : <div />}
+              </motion.div>
+            </div>
+          </div>
+        </div>
         ) : (
 
         /* ── Default layout ── */
