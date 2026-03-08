@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Download, Printer } from 'lucide-react';
+import { Download, ExternalLink, Printer } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
@@ -47,6 +47,15 @@ const ResumePage = () => {
           Resume
         </h1>
         <div className="flex items-center gap-2">
+          <a
+            href={resumePath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
+          >
+            <ExternalLink className="w-4 h-4" />
+            Open
+          </a>
           <button
             onClick={handlePrint}
             className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
