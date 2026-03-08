@@ -96,7 +96,7 @@ const ContourThemeToggle = ({ isDark }: Props) => {
             >
               <img
                 src={baseImg}
-                alt={`Contour Flow — click to switch to ${baseDark ? 'dark' : 'light'} theme`}
+                alt={`Contour Flow - click to switch to ${baseDark ? 'dark' : 'light'} theme`}
                 className="w-full object-cover block"
               />
               <img

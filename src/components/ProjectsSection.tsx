@@ -49,7 +49,7 @@ export const projects: Project[] = [
     title: 'Spheal',
     description: 'Smart AI travel planner with interactive map visualization',
     longDescription:
-      'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences — then the AI designs the full itinerary.',
+      'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences - then the AI designs the full itinerary.',
     imageSrc: projectSpheal,
     tags: ['React', 'Mapbox', 'AI', 'TypeScript'],
     live: 'https://spheal.vercel.app',
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     title: 'Contour Flow',
     description: 'Real-time procedural topographic map generator rendered to canvas',
     longDescription:
-      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares — no images, no SVGs, pure math.',
+      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares - no images, no SVGs, pure math.',
     imageSrc: projectContour,
     tags: ['React', 'Canvas', 'TypeScript', 'Simplex Noise', 'Creative Coding'],
   },
