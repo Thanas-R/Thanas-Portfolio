@@ -167,19 +167,19 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             className="p-5 rounded-xl text-[13px] leading-[2] mb-10"
             style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}`, fontFamily: monoFont, color: textMuted }}
           >
-            <span style={{ color: heading, fontWeight: 600 }}>React + Mapbox Frontend</span>
+            <span style={{ color: heading, fontWeight: 600 }}>Frontend</span> (React + Mapbox GL JS)
             <br />
             &nbsp;&nbsp;│
             <br />
-            <span style={{ color: heading, fontWeight: 600 }}>Supabase Edge Functions</span> <span style={{ color: textMuted }}>(Deno)</span>
+            <span style={{ color: heading, fontWeight: 600 }}>Edge Functions</span> (Deno/TypeScript)
             <br />
-            &nbsp;&nbsp;│
+            &nbsp;&nbsp;├── <span style={{ color: green }}>gee-ndvi-tiles</span> → Earth Engine REST API
             <br />
-            <span style={{ color: heading, fontWeight: 600 }}>Google Earth Engine</span>
+            &nbsp;&nbsp;├── <span style={{ color: green }}>gee-detect-field</span> → Earth Engine REST API
             <br />
-            &nbsp;&nbsp;│
+            &nbsp;&nbsp;├── <span style={{ color: green }}>analyze-field</span> → Gemini 2.5 Flash
             <br />
-            <span style={{ color: green, fontWeight: 600 }}>Sentinel-2 Satellite Data</span>
+            &nbsp;&nbsp;└── <span style={{ color: green }}>get-mapbox-token</span> → Mapbox API
           </div>
 
           {/* Tech Stack */}
