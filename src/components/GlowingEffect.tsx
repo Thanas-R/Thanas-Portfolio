@@ -8,6 +8,7 @@ interface GlowingEffectProps {
   className?: string;
   disabled?: boolean;
   borderWidth?: number;
+  innerGlow?: boolean;
 }
 
 const GlowingEffect = memo(
