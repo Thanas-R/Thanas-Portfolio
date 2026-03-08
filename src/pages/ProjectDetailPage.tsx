@@ -11,6 +11,7 @@ import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
 import VirdisDetail from '@/components/VirdisDetail';
+import NautilusDetail from '@/components/NautilusDetail';
 import ContourThemeToggle from '@/components/ContourThemeToggle';
 import contourDark from '@/assets/contour-dark.png';
 import contourLight from '@/assets/contour-light.png';
@@ -41,6 +42,7 @@ const ProjectDetailPage = () => {
   const isContourFlow = project.id === 'contour-flow';
   const isVirdis = project.id === 'virdis';
   const isPesuMC = project.id === 'pesu-mc';
+  const isNautilus = project.id === 'nautilus';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
@@ -80,6 +82,10 @@ const ProjectDetailPage = () => {
 
   if (isVirdis) {
     return <VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
+  }
+
+  if (isNautilus) {
+    return <NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} />;
   }
 
   return (
