@@ -185,15 +185,15 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   };
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden flex items-start justify-center">
+    <div ref={containerRef} className="w-full overflow-hidden">
       <div
         style={{
           width: canvasW,
           height: canvasH * scale,
           transform: `scale(${scale})`,
-          transformOrigin: 'top center',
+          transformOrigin: 'top left',
         }}
-        className="relative mx-auto"
+        className="relative"
       >
         {/* Edges SVG */}
         <svg className="absolute inset-0 pointer-events-none" width={canvasW} height={canvasH}>
