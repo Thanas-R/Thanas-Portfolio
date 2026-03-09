@@ -44,11 +44,21 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
   const monoFont = "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace";
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: pageBg }}>
-      <Navbar />
+    <div className="min-h-screen relative" style={{ backgroundColor: pageBg }}>
+      {/* Grid Background */}
+      <div 
+        className="absolute inset-0 pointer-events-none" 
+        style={{
+          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }}
+      />
+      
+      <div className="relative z-10">
+        <Navbar />
 
-      <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
-        <motion.div {...fadeUp(0)}>
+        <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
+          <motion.div {...fadeUp(0)}>
           <Link
             to="/projects"
             className="inline-flex items-center gap-2 text-sm hover:opacity-70 transition-opacity mb-10"
