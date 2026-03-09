@@ -554,7 +554,7 @@ const ProjectDetailPage = () => {
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp(0.15)} className="flex gap-3 mb-12">
+            <motion.div {...fadeUp(0.15)} className="flex flex-wrap gap-3 mb-12">
               {project.live &&
             <a
               href={project.live}
@@ -562,18 +562,25 @@ const ProjectDetailPage = () => {
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
               style={{ backgroundColor: '#FA8638' }}>
-              
                   <ExternalLink className="w-4 h-4" />
                   Live Demo
                 </a>
             }
+              <a
+                href="https://smartchef-backend-oq3n.onrender.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
+                style={{ backgroundColor: '#FA8638', opacity: 0.85 }}>
+                  <ExternalLink className="w-4 h-4" />
+                  Backend API
+              </a>
               {project.github &&
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all">
-              
                   <Github className="w-4 h-4" />
                   GitHub
                 </a>
