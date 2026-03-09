@@ -185,13 +185,13 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   };
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden flex justify-center">
+    <div ref={containerRef} className="w-full overflow-hidden">
       <div
         style={{
           width: canvasW,
           height: canvasH * scale,
           transform: `scale(${scale})`,
-          transformOrigin: 'top center',
+          transformOrigin: 'top left',
         }}
         className="relative"
       >
@@ -434,7 +434,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               Key Features
             </h2>
             <div
-              className="mb-12 overflow-hidden"
+              className="mb-12 overflow-hidden flex justify-center"
             >
               <FlowchartCanvas isDark={isDark} />
             </div>
