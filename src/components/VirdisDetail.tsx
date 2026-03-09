@@ -20,7 +20,7 @@ interface VirdisDetailProps {
 const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) => {
   const { isDark } = useTheme();
 
-  const pageBg = isDark ? '#22392E' : '#FFFBEB';
+  const pageBg = isDark ? '#22392E' : '#FFFFFF';
   const outsideText = isDark ? 'hsl(150 10% 65%)' : 'hsl(0 0% 40%)';
   const outsideHeading = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
   const outsideBorder = isDark ? 'hsl(150 15% 22%)' : 'hsl(0 0% 90%)';
