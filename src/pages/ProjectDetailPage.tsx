@@ -214,7 +214,7 @@ const ProjectDetailPage = () => {
                 <span
                   className="text-xs font-medium px-4 py-2 rounded-lg border border-dashed opacity-60"
                   style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
-                  RAG model not supported in web version
+                  RAG model not supported in web version anymore
                 </span>
               </motion.div>
 
