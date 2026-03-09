@@ -20,7 +20,7 @@ interface VirdisDetailProps {
 const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) => {
   const { isDark } = useTheme();
 
-  const pageBg = isDark ? '#22392E' : '#FFFFFF';
+  const pageBg = isDark ? '#22392E' : '#7BC75B';
   const outsideText = isDark ? 'hsl(150 10% 65%)' : 'hsl(0 0% 40%)';
   const outsideHeading = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
   const outsideBorder = isDark ? 'hsl(150 15% 22%)' : 'hsl(0 0% 90%)';
@@ -44,11 +44,21 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
   const monoFont = "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace";
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: pageBg }}>
-      <Navbar />
+    <div className="min-h-screen relative" style={{ backgroundColor: pageBg }}>
+      {/* Grid Background */}
+      <div 
+        className="absolute inset-0 pointer-events-none" 
+        style={{
+          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }}
+      />
+      
+      <div className="relative z-10">
+        <Navbar />
 
-      <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
-        <motion.div {...fadeUp(0)}>
+        <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
+          <motion.div {...fadeUp(0)}>
           <Link
             to="/projects"
             className="inline-flex items-center gap-2 text-sm hover:opacity-70 transition-opacity mb-10"
@@ -149,8 +159,8 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             ].map((item) => (
               <div
                 key={item.title}
-                className="p-5 rounded-xl flex gap-4"
-                style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+                className="p-5 rounded-xl flex gap-4 backdrop-blur-md"
+                style={{ backgroundColor: 'rgba(0,0,0,0.7)', border: `1px solid rgba(255,255,255,0.1)` }}
               >
                 <item.icon className="w-5 h-5 mt-0.5 shrink-0" style={{ color: green }} />
                 <div>
@@ -197,8 +207,8 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             ].map((item) => (
               <div
                 key={item.l}
-                className="p-3.5 rounded-lg"
-                style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+                className="p-3.5 rounded-lg backdrop-blur-md"
+                style={{ backgroundColor: 'rgba(0,0,0,0.7)', border: `1px solid rgba(255,255,255,0.1)` }}
               >
                 <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: label, fontFamily: font }}>{item.l}</p>
                 <p className="text-[13px] font-medium leading-snug" style={{ color: heading, fontFamily: font }}>{item.v}</p>
@@ -254,6 +264,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             </Link>
           ) : <div />}
         </motion.div>
+        </div>
       </div>
     </div>
   );
