@@ -185,7 +185,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   };
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden flex justify-center">
+    <div ref={containerRef} className="w-full overflow-hidden flex items-start justify-center">
       <div
         style={{
           width: canvasW,
@@ -193,7 +193,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
           transform: `scale(${scale})`,
           transformOrigin: 'top center',
         }}
-        className="relative"
+        className="relative mx-auto"
       >
         {/* Edges SVG */}
         <svg className="absolute inset-0 pointer-events-none" width={canvasW} height={canvasH}>
@@ -434,7 +434,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               Key Features
             </h2>
             <div
-              className="mb-12 overflow-hidden"
+              className="mb-12 overflow-hidden flex justify-center"
             >
               <FlowchartCanvas isDark={isDark} />
             </div>
