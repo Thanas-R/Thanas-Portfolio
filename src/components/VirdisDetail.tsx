@@ -207,8 +207,8 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             ].map((item) => (
               <div
                 key={item.l}
-                className="p-3.5 rounded-lg"
-                style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+                className="p-3.5 rounded-lg backdrop-blur-md"
+                style={{ backgroundColor: 'rgba(0,0,0,0.7)', border: `1px solid rgba(255,255,255,0.1)` }}
               >
                 <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: label, fontFamily: font }}>{item.l}</p>
                 <p className="text-[13px] font-medium leading-snug" style={{ color: heading, fontFamily: font }}>{item.v}</p>
