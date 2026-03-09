@@ -2,73 +2,91 @@ import { useEffect, useState, useMemo } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-interface DayCommit {
+interface MonthCommit {
   label: string;
-  date: string;
   value: number;
 }
 
 const GitHubActivityChart = () => {
-  const [weekData, setWeekData] = useState<DayCommit[]>([]);
+  const [monthData, setMonthData] = useState<MonthCommit[]>([]);
   const [loading, setLoading] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    const fetchGitHubData = async () => {
+    const fetchMonthlyData = async () => {
       try {
-        // Fetch multiple pages to get more complete data
-        const pages = await Promise.all([
-          fetch('https://api.github.com/users/Thanas-R/events/public?per_page=100&page=1'),
-          fetch('https://api.github.com/users/Thanas-R/events/public?per_page=100&page=2'),
-        ]);
-        
-        const allEvents = [];
-        for (const res of pages) {
-          if (res.ok) {
-            const data = await res.json();
-            allEvents.push(...data);
+        // Get all public repos
+        const reposRes = await fetch('https://api.github.com/users/Thanas-R/repos?per_page=100');
+        if (!reposRes.ok) throw new Error('Failed to fetch repos');
+        const repos = await reposRes.json();
+
+        // For each repo, get weekly commit participation (last 52 weeks)
+        const statsPromises = repos.map((repo: any) =>
+          fetch(`https://api.github.com/repos/Thanas-R/${repo.name}/stats/participation`)
+            .then(r => r.ok ? r.json() : null)
+            .catch(() => null)
+        );
+        const allStats = await Promise.all(statsPromises);
+
+        // Build weekly totals (owner commits) for last 52 weeks
+        const weeklyTotals = new Array(52).fill(0);
+        for (const stat of allStats) {
+          if (stat?.owner) {
+            stat.owner.forEach((count: number, i: number) => {
+              weeklyTotals[i] += count;
+            });
           }
         }
 
+        // Map weeks to months for the last 7 months
         const now = new Date();
-        const days: DayCommit[] = [];
+        const months: MonthCommit[] = [];
 
-        for (let i = 6; i >= 0; i--) {
-          const d = new Date(now);
-          d.setDate(d.getDate() - i);
-          const dateStr = d.toISOString().slice(0, 10);
-          const label = d.toLocaleDateString('en-US', { weekday: 'short' });
-          let count = 0;
+        for (let m = 6; m >= 0; m--) {
+          const target = new Date(now.getFullYear(), now.getMonth() - m, 1);
+          const label = target.toLocaleDateString('en-US', { month: 'short' });
 
-          for (const event of allEvents) {
-            if (event.type === 'PushEvent') {
-              const eventDate = new Date(event.created_at).toISOString().slice(0, 10);
-              if (eventDate === dateStr) {
-                count += event.payload?.commits?.length || 1;
-              }
+          // Calculate which weeks fall in this month
+          const monthStart = new Date(target.getFullYear(), target.getMonth(), 1);
+          const monthEnd = new Date(target.getFullYear(), target.getMonth() + 1, 0);
+
+          let total = 0;
+          for (let w = 0; w < 52; w++) {
+            // Week 51 = most recent, week 0 = oldest
+            const weekEnd = new Date(now);
+            weekEnd.setDate(weekEnd.getDate() - (51 - w) * 7);
+            const weekStart = new Date(weekEnd);
+            weekStart.setDate(weekStart.getDate() - 6);
+
+            // Check if this week overlaps with the target month
+            if (weekEnd >= monthStart && weekStart <= monthEnd) {
+              total += weeklyTotals[w];
             }
           }
 
-          days.push({ label, date: dateStr, value: count });
+          months.push({ label, value: total });
         }
 
-        setWeekData(days);
+        setMonthData(months);
       } catch {
-        setWeekData(Array.from({ length: 7 }, (_, i) => {
-          const d = new Date();
-          d.setDate(d.getDate() - (6 - i));
-          return { label: d.toLocaleDateString('en-US', { weekday: 'short' }), date: d.toISOString().slice(0, 10), value: 0 };
-        }));
+        // Fallback: empty data
+        const months: MonthCommit[] = [];
+        const now = new Date();
+        for (let m = 6; m >= 0; m--) {
+          const target = new Date(now.getFullYear(), now.getMonth() - m, 1);
+          months.push({ label: target.toLocaleDateString('en-US', { month: 'short' }), value: 0 });
+        }
+        setMonthData(months);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchGitHubData();
+    fetchMonthlyData();
   }, []);
 
-  const maxValue = useMemo(() => Math.max(...weekData.map((d) => d.value), 1), [weekData]);
-  const total = useMemo(() => weekData.reduce((s, d) => s + d.value, 0), [weekData]);
-  const isMobile = useIsMobile();
+  const maxValue = useMemo(() => Math.max(...monthData.map(d => d.value), 1), [monthData]);
+  const total = useMemo(() => monthData.reduce((s, d) => s + d.value, 0), [monthData]);
 
   return (
     <div className="h-full flex flex-col">
@@ -80,12 +98,12 @@ const GitHubActivityChart = () => {
         <span className="text-2xl font-bold text-foreground font-['Inter']">
           {loading ? '...' : total}
         </span>
-        <span className="text-xs text-muted-foreground font-['Inter']">in the last 7 days</span>
+        <span className="text-xs text-muted-foreground font-['Inter']">in the last 7 months</span>
       </div>
 
       <TooltipProvider delayDuration={0}>
         <div className="flex-1 flex items-end gap-2 min-h-[80px]">
-          {weekData.map((item, i) => {
+          {monthData.map((item, i) => {
             const heightPct = Math.max((item.value / maxValue) * 100, 6);
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
