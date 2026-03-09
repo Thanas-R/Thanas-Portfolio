@@ -20,7 +20,7 @@ interface VirdisDetailProps {
 const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) => {
   const { isDark } = useTheme();
 
-  const pageBg = isDark ? '#22392E' : '#7BC75B';
+  const pageBg = isDark ? '#22392E' : '#476154';
   const outsideText = isDark ? 'hsl(150 10% 65%)' : 'hsl(0 0% 40%)';
   const outsideHeading = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
   const outsideBorder = isDark ? 'hsl(150 15% 22%)' : 'hsl(0 0% 90%)';
@@ -49,7 +49,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
       <div 
         className="absolute inset-0 pointer-events-none" 
         style={{
-          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)',
           backgroundSize: '40px 40px'
         }}
       />
