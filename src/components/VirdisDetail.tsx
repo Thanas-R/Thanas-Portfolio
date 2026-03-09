@@ -264,6 +264,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             </Link>
           ) : <div />}
         </motion.div>
+        </div>
       </div>
     </div>
   );
