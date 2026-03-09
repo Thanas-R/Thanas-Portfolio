@@ -190,6 +190,15 @@ const ProjectDetailPage = () => {
 
               {/* Links */}
               <motion.div {...fadeUp(0.15)} className="flex flex-wrap items-center gap-3 mb-10">
+                <a
+                  href="https://ask-bookie.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-lg border text-sm font-semibold hover:opacity-75 transition-all"
+                  style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
+                  <ExternalLink className="w-4 h-4" />
+                  Live Demo
+                </a>
                 {project.github &&
               <a
                 href={project.github}
@@ -202,15 +211,6 @@ const ProjectDetailPage = () => {
                     GitHub
                   </a>
                }
-                <a
-                  href="https://ask-bookie.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-lg border text-sm font-semibold hover:opacity-75 transition-all"
-                  style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
-                  <ExternalLink className="w-4 h-4" />
-                  Live Demo
-                </a>
                 <span
                   className="text-xs font-medium px-4 py-2 rounded-lg border border-dashed opacity-60"
                   style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
