@@ -189,19 +189,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Links */}
-              <motion.div {...fadeUp(0.15)} className="flex gap-3 mb-10">
-                {project.live &&
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: ab.btnBg, color: ab.btnText, fontFamily: "'JetBrains Mono', monospace" }}>
-                
-                    <ExternalLink className="w-4 h-4" />
-                    Live Demo
-                  </a>
-              }
+              <motion.div {...fadeUp(0.15)} className="flex flex-wrap items-center gap-3 mb-10">
                 {project.github &&
               <a
                 href={project.github}
@@ -214,6 +202,11 @@ const ProjectDetailPage = () => {
                     GitHub
                   </a>
               }
+                <span
+                  className="text-xs font-medium px-4 py-2 rounded-lg border border-dashed opacity-60"
+                  style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
+                  Web version no longer available
+                </span>
               </motion.div>
 
               {/* Tags */}
