@@ -554,7 +554,7 @@ const ProjectDetailPage = () => {
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp(0.15)} className="flex gap-3 mb-12">
+            <motion.div {...fadeUp(0.15)} className="flex flex-wrap gap-3 mb-12">
               {project.live &&
             <a
               href={project.live}
@@ -562,18 +562,25 @@ const ProjectDetailPage = () => {
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
               style={{ backgroundColor: '#FA8638' }}>
-              
                   <ExternalLink className="w-4 h-4" />
                   Live Demo
                 </a>
             }
+              <a
+                href="https://smartchef-backend-oq3n.onrender.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
+                style={{ backgroundColor: '#FA8638', opacity: 0.85 }}>
+                  <ExternalLink className="w-4 h-4" />
+                  Backend API
+              </a>
               {project.github &&
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all">
-              
                   <Github className="w-4 h-4" />
                   GitHub
                 </a>
@@ -638,15 +645,32 @@ const ProjectDetailPage = () => {
 
               <div>
                 <h2
-                className="text-2xl md:text-3xl font-bold mb-4"
+                className="text-2xl md:text-3xl font-bold mb-6"
                 style={{ fontFamily: "'Playfair Display', serif" }}>
-                
                   Architecture
                 </h2>
-                <div className="p-6 rounded-2xl border border-foreground/10 bg-card font-mono text-sm text-foreground/70 leading-loose">
-                  <span className="text-foreground font-semibold">User Input</span> → Frontend (HTML + CSS + JS)<br />
-                  → <span style={{ color: '#FA8638' }} className="font-semibold">FastAPI Backend</span> (TF-IDF + Cosine Similarity)<br />
-                  → Recipe Matches + <span style={{ color: '#FA8638' }} className="font-semibold">AI Cooking Instructions</span>
+                <div className="p-6 rounded-2xl border border-foreground/10 bg-card font-mono text-sm text-foreground/70 leading-relaxed space-y-4">
+                  <div className="flex flex-col items-center gap-2">
+                    <span className="px-4 py-2 rounded-lg border border-foreground/10 bg-background text-foreground font-semibold text-center">User Input</span>
+                    <span style={{ color: '#FA8638' }}>↓</span>
+                    <span className="px-4 py-2 rounded-lg border border-foreground/10 bg-background text-foreground font-semibold text-center">Frontend <span className="text-muted-foreground font-normal">(HTML + CSS + JS)</span></span>
+                    <span style={{ color: '#FA8638' }}>↓</span>
+                    <span className="px-4 py-2 rounded-lg border border-foreground/10 text-center" style={{ backgroundColor: 'rgba(250,134,56,0.1)' }}>
+                      <span style={{ color: '#FA8638' }} className="font-semibold">FastAPI Backend</span>
+                      <span className="text-muted-foreground block text-xs mt-0.5">TF-IDF Vectorization + Cosine Similarity</span>
+                    </span>
+                    <div className="flex items-center gap-6">
+                      <span style={{ color: '#FA8638' }}>↙</span>
+                      <span style={{ color: '#FA8638' }}>↘</span>
+                    </div>
+                    <div className="flex gap-4 flex-wrap justify-center">
+                      <span className="px-4 py-2 rounded-lg border border-foreground/10 bg-background text-foreground font-semibold text-center">Recipe Matches</span>
+                      <span className="px-4 py-2 rounded-lg border border-foreground/10 text-center" style={{ backgroundColor: 'rgba(250,134,56,0.1)' }}>
+                        <span style={{ color: '#FA8638' }} className="font-semibold">Gemini AI</span>
+                        <span className="text-muted-foreground block text-xs mt-0.5">Cooking Instructions</span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
