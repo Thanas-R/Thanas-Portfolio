@@ -159,8 +159,8 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             ].map((item) => (
               <div
                 key={item.title}
-                className="p-5 rounded-xl flex gap-4"
-                style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+                className="p-5 rounded-xl flex gap-4 backdrop-blur-md"
+                style={{ backgroundColor: 'rgba(0,0,0,0.7)', border: `1px solid rgba(255,255,255,0.1)` }}
               >
                 <item.icon className="w-5 h-5 mt-0.5 shrink-0" style={{ color: green }} />
                 <div>
