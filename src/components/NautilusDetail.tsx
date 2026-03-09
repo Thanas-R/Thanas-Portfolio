@@ -434,7 +434,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               Key Features
             </h2>
             <div
-              className="mb-12 overflow-hidden"
+              className="mb-12 overflow-hidden flex justify-center"
             >
               <FlowchartCanvas isDark={isDark} />
             </div>
