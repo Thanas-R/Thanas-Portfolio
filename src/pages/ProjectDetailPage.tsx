@@ -570,8 +570,7 @@ const ProjectDetailPage = () => {
                 href="https://smartchef-backend-oq3n.onrender.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
-                style={{ backgroundColor: '#FA8638', opacity: 0.85 }}>
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity bg-foreground text-background">
                   <ExternalLink className="w-4 h-4" />
                   Backend API
               </a>
