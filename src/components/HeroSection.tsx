@@ -100,7 +100,7 @@ const HeroSection = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                      <span
-                      className={`absolute bottom-[0px] right-[-8px] w-3 h-3 md:bottom-[0.08em] md:-right-[0.12em] md:w-4 md:h-4 rounded-full ring-[3.5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300`}
+                      className={`absolute bottom-[0px] right-[-10px] w-3 h-3 md:bottom-[0.08em] md:-right-[0.12em] md:w-4 md:h-4 rounded-full ring-[3.5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300`}
                       aria-label={statusLabel} />
                     
                   </TooltipTrigger>
