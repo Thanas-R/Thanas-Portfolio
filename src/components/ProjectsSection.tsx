@@ -107,6 +107,7 @@ export const projects: Project[] = [
     imageSrc: projectThanasOS,
     tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
     live: 'https://thanas-os.vercel.app/',
+    github: 'https://github.com/Thanas-R/thanas-OS',
   },
   {
     id: 'pesu-forge',
