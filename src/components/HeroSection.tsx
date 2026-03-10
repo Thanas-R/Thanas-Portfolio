@@ -86,7 +86,7 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-[42vh] flex items-center justify-center px-6 pt-[86px] xl:pt-[120px] 2xl:pt-[150px] pb-[86px]">
-      <div className="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center px-0">
+      <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 items-center px-0 mx-[22px]">
         <motion.div
           initial={{ x: -60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
