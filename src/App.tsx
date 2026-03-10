@@ -11,6 +11,7 @@ import PageLoader from "./components/PageLoader";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ResumePage from "./pages/ResumePage";
+import BlogsPage from "./pages/BlogsPage";
 import NotFound from "./pages/NotFound";
 import CommandPalette from "./components/CommandPalette";
 
