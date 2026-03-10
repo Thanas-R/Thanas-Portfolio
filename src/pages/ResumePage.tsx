@@ -1,32 +1,14 @@
 import { motion } from 'framer-motion';
-import { Download, ExternalLink, Printer } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { Download, FileText } from 'lucide-react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
-import MobilePdfViewer from '@/components/MobilePdfViewer';
+import resumePreview from '@/assets/resume-preview.png';
 
 const ResumePage = () => {
   const resumePath = '/resume.pdf';
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  const handlePrint = useCallback(() => {
-    const printWindow = window.open(resumePath, '_blank');
-    if (printWindow) {
-      printWindow.addEventListener('load', () => {
-        printWindow.print();
-      });
-    }
-  }, [resumePath]);
 
   return (
-    <div className="relative h-screen bg-background overflow-hidden flex flex-col">
+    <div className="relative min-h-screen bg-background flex flex-col">
       <LightRays className="opacity-60" />
 
       <div className="relative z-20">
@@ -51,18 +33,11 @@ const ResumePage = () => {
             href={resumePath}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
+            className="flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
           >
-            <ExternalLink className="w-4 h-4" />
-            Open
+            <FileText className="w-4 h-4" />
+            View PDF
           </a>
-          <button
-            onClick={handlePrint}
-            className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
-          >
-            <Printer className="w-4 h-4" />
-            Print
-          </button>
           <a
             href={resumePath}
             download="Thanas-R resume.pdf"
@@ -74,29 +49,24 @@ const ResumePage = () => {
         </div>
       </motion.div>
 
-      {/* PDF Viewer */}
+      {/* Resume as image */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 w-full flex-1 min-h-0 pb-4"
+        className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 w-full flex-1 pb-8"
       >
         <div
-          className="h-full rounded-2xl overflow-hidden border border-border bg-card resume-viewer"
+          className="rounded-2xl overflow-hidden border border-border bg-card"
           style={{
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
           }}
         >
-          {isMobile ? (
-            <MobilePdfViewer src={resumePath} />
-          ) : (
-            <iframe
-              src={`${resumePath}#toolbar=0&navpanes=0&view=FitH`}
-              title="Resume PDF"
-              className="block border-none w-full h-full"
-              allow="autoplay"
-            />
-          )}
+          <img
+            src={resumePreview}
+            alt="Thanas R - Resume"
+            className="w-full h-auto block"
+          />
         </div>
       </motion.div>
     </div>
