@@ -44,243 +44,181 @@ const blogArticles = [
   column: 2
 }];
 
+
 const BlogsPage = () => {
-
   const today = new Date();
-  const dateStr = today.toLocaleDateString(
-    'en-US',
-    { weekday:'long', year:'numeric', month:'long', day:'numeric' }
-  );
-
-  const bg = "#2f2f2f";
-  const text = "#f9f7f1";
+  const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
+    <div className="min-h-screen" style={{ backgroundColor: '#f9f7f1', color: '#2f2f2f' }}>
+      {/* Navbar override for newspaper theme */}
+      <div className="relative z-50">
+        <Navbar />
+      </div>
 
-<div
-className="min-h-screen"
-style={{
-backgroundColor:bg,
-color:text
-}}
->
+      {/* Newspaper Header */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="text-center pt-6 px-6">
+        
+        <div className="max-w-5xl mx-auto">
+          <header
+            className="inline-block leading-[0.9] mb-3"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontWeight: 900,
+              fontSize: 'clamp(48px, 10vw, 80px)',
+              textTransform: 'uppercase',
+              color: '#2f2f2f'
+            }}>
+            
+            Thanas Blogs
+          </header>
+          <div
+            className="py-3 px-4"
+            style={{
+              borderTop: '2px solid #2f2f2f',
+              borderBottom: '2px solid #2f2f2f',
+              textTransform: 'uppercase',
+              fontFamily: "'Playfair Display', serif",
+              fontSize: '12px',
+              letterSpacing: '2px'
+            }}>
+            
+            {dateStr} — Thoughts, Projects & Learnings
+          </div>
+        </div>
+      </motion.div>
 
-<div className="relative z-50">
-<Navbar/>
-</div>
+      {/* Articles in newspaper columns */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="max-w-5xl mx-auto px-6 py-10">
+        
+        {/* Coming Soon overlay */}
+        <div className="relative">
+          <div className="absolute inset-0 z-20 flex items-center justify-center">
+            <div
+              className="px-10 py-6 text-center"
+              style={{
+                backgroundColor: '#f9f7f1',
+                border: '3px double #2f2f2f',
+                fontFamily: "'Playfair Display', serif"
+              }}>
+              
+              <p className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#2f2f2f' }}>
+                Coming Soon
+              </p>
+              <p className="text-sm italic" style={{ color: '#666', fontFamily: "'Droid Serif', 'Georgia', serif" }}>
+                The press is warming up. Articles are being drafted.
+              </p>
+            </div>
+          </div>
 
-{/* Header */}
+          {/* Greyed out articles preview */}
+          <div className="opacity-30 pointer-events-none select-none">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+              {[0, 1, 2].map((colIdx) =>
+              <div
+                key={colIdx}
+                className="px-4"
+                style={{
+                  borderLeft: colIdx > 0 ? '1px solid #2f2f2f' : 'none'
+                }}>
+                
+                  {blogArticles.
+                filter((a) => a.column === colIdx + 1).
+                map((article, i) =>
+                <article key={article.id} className="mb-10">
+                        {/* Headline */}
+                        <div className="text-center mb-4">
+                          <h2
+                      className="leading-tight mb-1"
+                      style={{
+                        fontFamily: "'Playfair Display', serif",
+                        fontWeight: 700,
+                        fontSize: i === 0 && colIdx === 0 ? '28px' : '22px',
+                        textTransform: i === 0 ? 'uppercase' : 'none'
+                      }}>
+                      
+                            {article.headline}
+                          </h2>
+                          {article.subheadline &&
+                    <>
+                              <div
+                        className="mx-auto my-2"
+                        style={{
+                          width: '80px',
+                          height: '1px',
+                          backgroundColor: '#2f2f2f'
+                        }} />
+                      
+                              <p
+                        className="italic"
+                        style={{
+                          fontFamily: "'Playfair Display', serif",
+                          fontWeight: 400,
+                          fontSize: '16px'
+                        }}>
+                        
+                                {article.subheadline}
+                              </p>
+                              <div
+                        className="mx-auto mt-2"
+                        style={{
+                          width: '80px',
+                          height: '1px',
+                          backgroundColor: '#2f2f2f'
+                        }} />
+                      
+                            </>
+                    }
+                          <p
+                      className="mt-2 text-xs font-bold uppercase tracking-widest"
+                      style={{ fontFamily: "'Playfair Display', serif" }}>
+                      
+                            {article.date}
+                          </p>
+                        </div>
 
-<motion.div
-initial={{opacity:0}}
-animate={{opacity:1}}
-transition={{duration:0.8}}
-className="text-center pt-6 px-6"
->
+                        {/* Body */}
+                        <p
+                    className="text-justify leading-[20px]"
+                    style={{
+                      fontFamily: "'Droid Serif', 'Georgia', serif",
+                      fontSize: '14px'
+                    }}>
+                    
+                          {article.excerpt}
+                        </p>
+                      </article>
+                )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
-<div className="max-w-5xl mx-auto">
+      {/* Footer */}
+      
 
-<header
-className="inline-block leading-[0.9] mb-3"
-style={{
-fontFamily:"'Playfair Display', serif",
-fontWeight:900,
-fontSize:'clamp(48px,10vw,80px)',
-textTransform:'uppercase',
-color:text
-}}
->
-THANAS BLOGS
-</header>
 
-<div
-className="py-3 px-4"
-style={{
-borderTop:`2px solid ${text}`,
-borderBottom:`2px solid ${text}`,
-textTransform:'uppercase',
-fontFamily:"'Playfair Display', serif",
-fontSize:'12px',
-letterSpacing:'2px'
-}}
->
 
-{dateStr} — Thoughts, Projects & Learnings
 
-</div>
 
-</div>
 
-</motion.div>
 
-{/* Articles */}
 
-<motion.div
-initial={{opacity:0,y:20}}
-animate={{opacity:1,y:0}}
-transition={{duration:0.6,delay:0.3}}
-className="max-w-5xl mx-auto px-6 py-10"
->
 
-<div className="relative">
 
-{/* Coming Soon */}
 
-<div className="absolute inset-0 z-20 flex items-center justify-center">
-
-<div
-className="px-10 py-6 text-center"
-style={{
-backgroundColor:text,
-border:`3px double ${text}`,
-fontFamily:"'Playfair Display', serif"
-}}
->
-
-<p
-className="text-3xl md:text-4xl font-bold mb-2"
-style={{color:bg}}
->
-Coming Soon
-</p>
-
-<p
-className="text-sm italic"
-style={{
-color:"#555",
-fontFamily:"'Droid Serif','Georgia',serif"
-}}
->
-The press is warming up. Articles are being drafted.
-</p>
-
-</div>
-
-</div>
-
-{/* Articles preview */}
-
-<div className="opacity-30 pointer-events-none select-none">
-
-<div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-
-{[0,1,2].map(colIdx => (
-
-<div
-key={colIdx}
-className="px-4"
-style={{
-borderLeft:colIdx>0?`1px solid ${text}`:'none'
-}}
->
-
-{blogArticles
-.filter(a=>a.column===colIdx+1)
-.map((article,i)=>(
-
-<article
-key={article.id}
-className="mb-10"
->
-
-<div className="text-center mb-4">
-
-<h2
-className="leading-tight mb-1"
-style={{
-fontFamily:"'Playfair Display', serif",
-fontWeight:700,
-fontSize:i===0&&colIdx===0?'28px':'22px',
-textTransform:i===0?'uppercase':'none'
-}}
->
-
-{article.headline}
-
-</h2>
-
-{article.subheadline && (
-
-<>
-
-<div
-className="mx-auto my-2"
-style={{
-width:'80px',
-height:'1px',
-backgroundColor:text
-}}
-/>
-
-<p
-className="italic"
-style={{
-fontFamily:"'Playfair Display', serif",
-fontSize:'16px'
-}}
->
-
-{article.subheadline}
-
-</p>
-
-<div
-className="mx-auto mt-2"
-style={{
-width:'80px',
-height:'1px',
-backgroundColor:text
-}}
-/>
-
-</>
-
-)}
-
-<p
-className="mt-2 text-xs font-bold uppercase tracking-widest"
-style={{
-fontFamily:"'Playfair Display', serif"
-}}
->
-
-{article.date}
-
-</p>
-
-</div>
-
-<p
-className="text-justify leading-[20px]"
-style={{
-fontFamily:"'Droid Serif','Georgia',serif",
-fontSize:'14px'
-}}
->
-
-{article.excerpt}
-
-</p>
-
-</article>
-
-))}
-
-</div>
-
-))}
-
-</div>
-
-</div>
-
-</div>
-
-</motion.div>
-
-</div>
-
-);
+      
+    </div>);
 
 };
 
