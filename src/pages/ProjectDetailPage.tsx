@@ -746,80 +746,77 @@ const ProjectDetailPage = () => {
           </div>) : isPesuForge ? (
         /* ── PESU Forge — backdrop landscape with floating cards ── */
         <div className="min-h-screen relative">
-          {/* Fixed backdrop image */}
-          <div className="fixed inset-0 z-0 bg-black">
+          {/* Fixed backdrop image — starts visible with bg-black fallback */}
+          <div className="fixed inset-0 z-0" style={{ backgroundColor: '#000' }}>
             <img
               src={pesuForgeBg}
               alt=""
-              className="w-full h-full object-cover opacity-0 transition-opacity duration-500"
+              className="w-full h-full object-cover"
               loading="eager"
-              onLoad={(e) => { (e.target as HTMLImageElement).classList.replace('opacity-0', 'opacity-100'); }}
             />
-            
             <div className="absolute inset-0 bg-black/40" />
           </div>
 
           <div className="relative z-10">
-            <Navbar />
+            <Navbar forceDark />
             <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
               <motion.div {...fadeUp(0)}>
                 <Link
                   to="/projects"
                   className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors mb-8">
-                  
                   <ArrowLeft className="w-4 h-4" />
                   All Projects
                 </Link>
               </motion.div>
 
-              {/* Hero card */}
+              {/* Floating title — no background, centered */}
+              <motion.div {...fadeUp(0.08)} className="text-center mb-6">
+                <h1
+                  className="text-6xl md:text-8xl font-bold text-white leading-none tracking-tight"
+                  style={{ fontFamily: "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif", textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>
+                  PESU Forge
+                </h1>
+              </motion.div>
+
+              {/* Tinted glass description block */}
               <motion.div
-                {...fadeUp(0.08)}
-                className="rounded-2xl p-8 md:p-10 mb-8 backdrop-blur-xl"
+                {...fadeUp(0.12)}
+                className="rounded-2xl p-8 md:p-10 mb-8 backdrop-blur-xl text-center"
                 style={{
                   backgroundColor: 'rgba(0,0,0,0.55)',
                   border: '1px solid rgba(255,255,255,0.08)'
                 }}>
-                
-                <h1
-                  className="text-5xl md:text-7xl font-black text-white leading-none tracking-tight mb-5 uppercase"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  
-                  {project.title}
-                </h1>
-                <p className="text-lg text-white/60 max-w-xl leading-relaxed">
+                <p className="text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
                   {project.description}
                 </p>
 
                 {/* Links */}
-                <div className="flex gap-3 mt-6">
+                <div className="flex gap-3 mt-6 justify-center flex-wrap">
                   {project.live &&
                   <a
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:opacity-85 transition-opacity">
-                    
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
+                    style={{ backgroundColor: '#3399FF' }}>
                       <ExternalLink className="w-4 h-4" />
                       Live Site
                     </a>
                   }
-                  {project.github &&
                   <a
-                    href={project.github}
+                    href="https://github.com/Thanas-R/PESU-Forge"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white text-sm font-semibold hover:bg-white hover:text-black transition-all">
-                    
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
+                    style={{ backgroundColor: '#B870DB' }}>
                       <Github className="w-4 h-4" />
                       GitHub
                     </a>
-                  }
                 </div>
               </motion.div>
 
               {/* Tags between hero and about */}
-              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-8 justify-center">
+              <motion.div {...fadeUp(0.16)} className="flex flex-wrap gap-2 mb-8 justify-center">
                 {project.tags.map((tag, i) =>
                 <span
                   key={tag}
@@ -828,7 +825,6 @@ const ProjectDetailPage = () => {
                   'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
                   'bg-white/5 text-white/50 border border-white/10'}`
                   }>
-                  
                     {tag}
                   </span>
                 )}
@@ -836,13 +832,12 @@ const ProjectDetailPage = () => {
 
               {/* About card */}
               <motion.div
-                {...fadeUp(0.15)}
+                {...fadeUp(0.2)}
                 className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
                 style={{
                   backgroundColor: 'rgba(0,0,0,0.55)',
                   border: '1px solid rgba(255,255,255,0.08)'
                 }}>
-                
                 <h2 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-5">
                   About this project
                 </h2>
@@ -858,7 +853,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Features grid */}
-              <motion.div {...fadeUp(0.22)} className="grid md:grid-cols-2 gap-4 mb-6">
+              <motion.div {...fadeUp(0.25)} className="grid md:grid-cols-2 gap-4 mb-6">
                 {[
                 { title: 'Flashcards', desc: 'AI-generated question and answer cards with flip animations' },
                 { title: 'Quiz', desc: 'Multiple-choice quizzes generated from notes with explanations' },
@@ -872,7 +867,6 @@ const ProjectDetailPage = () => {
                     backgroundColor: 'rgba(0,0,0,0.5)',
                     border: '1px solid rgba(255,255,255,0.08)'
                   }}>
-                  
                     <h3 className="font-bold text-white mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                       {item.title}
                     </h3>
@@ -883,13 +877,12 @@ const ProjectDetailPage = () => {
 
               {/* Tech Stack card */}
               <motion.div
-                {...fadeUp(0.28)}
+                {...fadeUp(0.3)}
                 className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-xl"
                 style={{
                   backgroundColor: 'rgba(0,0,0,0.55)',
                   border: '1px solid rgba(255,255,255,0.08)'
                 }}>
-                
                 <h2 className="text-xs font-bold uppercase tracking-widest text-white/40 mb-5">
                   Tech Stack
                 </h2>
@@ -913,13 +906,12 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Screenshot */}
-              <motion.div {...fadeUp(0.32)} className="rounded-2xl overflow-hidden mb-16" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+              <motion.div {...fadeUp(0.35)} className="rounded-2xl overflow-hidden mb-16" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
                 <ProjectImage
                   src={project.imageSrc}
                   alt={`${project.title} preview`}
                   className="w-full object-cover"
                   style={{ maxHeight: 480 }} />
-                
               </motion.div>
 
               {/* Nav */}
@@ -927,13 +919,11 @@ const ProjectDetailPage = () => {
                 {...fadeUp(0.38)}
                 className="border-t pt-8 grid grid-cols-2 gap-4"
                 style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
-                
                 {prevProject ?
                 <Link
                   to={`/projects/${prevProject.id}`}
                   className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-xl"
                   style={{ backgroundColor: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  
                     <span className="text-xs uppercase tracking-widest text-white/40 flex items-center gap-1">
                       <ArrowLeft className="w-3 h-3" /> Previous
                     </span>
@@ -947,7 +937,6 @@ const ProjectDetailPage = () => {
                   to={`/projects/${nextProject.id}`}
                   className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-xl"
                   style={{ backgroundColor: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  
                     <span className="text-xs uppercase tracking-widest text-white/40 flex items-center justify-end gap-1">
                       Next <ArrowRight className="w-3 h-3" />
                     </span>
