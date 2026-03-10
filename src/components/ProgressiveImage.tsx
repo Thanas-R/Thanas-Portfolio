@@ -8,11 +8,6 @@ interface ProgressiveImageProps extends React.ImgHTMLAttributes<HTMLImageElement
   containerClassName?: string;
 }
 
-/**
- * Renders an image with a blur-up effect.
- * Shows a tiny blurred version immediately (via CSS blur on the same src),
- * then removes blur once the full image has loaded.
- */
 const ProgressiveImage = ({ src, alt, className, containerClassName, ...props }: ProgressiveImageProps) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -25,8 +20,8 @@ const ProgressiveImage = ({ src, alt, className, containerClassName, ...props }:
         alt={alt}
         onLoad={onLoad}
         className={cn(
-          'transition-[filter] duration-500 ease-out',
-          loaded ? 'blur-0' : 'blur-md scale-105',
+          'transition-[filter] duration-500 ease-out w-full h-full',
+          loaded ? 'blur-0' : 'blur-md',
           className
         )}
         {...props}
