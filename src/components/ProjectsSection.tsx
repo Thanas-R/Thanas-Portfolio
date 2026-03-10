@@ -84,6 +84,8 @@ export const projects: Project[] = [
       'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares - no images, no SVGs, pure math.',
     imageSrc: projectContour,
     tags: ['React', 'Canvas', 'TypeScript', 'Simplex Noise', 'Creative Coding'],
+    live: 'https://contour-flow.vercel.app/',
+    github: 'https://github.com/Thanas-R/contour-flow',
   },
 {
   id: 'smart-chef',
