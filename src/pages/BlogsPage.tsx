@@ -44,14 +44,13 @@ const blogArticles = [
   column: 2
 }];
 
-
 const BlogsPage = () => {
   const today = new Date();
   const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f9f7f1', color: '#2f2f2f' }}>
-      {/* Navbar override for newspaper theme */}
+      
       <div className="relative z-50">
         <Navbar />
       </div>
@@ -71,155 +70,149 @@ const BlogsPage = () => {
               fontWeight: 900,
               fontSize: 'clamp(48px, 10vw, 80px)',
               textTransform: 'uppercase',
-              color: '#2f2f2f'
+              color: '#f9f7f1'
             }}>
-            
             Thanas Blogs
           </header>
+
           <div
             className="py-3 px-4"
             style={{
-              borderTop: '2px solid #2f2f2f',
-              borderBottom: '2px solid #2f2f2f',
+              borderTop: '2px solid #f9f7f1',
+              borderBottom: '2px solid #f9f7f1',
               textTransform: 'uppercase',
               fontFamily: "'Playfair Display', serif",
               fontSize: '12px',
               letterSpacing: '2px'
             }}>
-            
             {dateStr} — Thoughts, Projects & Learnings
           </div>
         </div>
       </motion.div>
 
-      {/* Articles in newspaper columns */}
+      {/* Articles */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
         className="max-w-5xl mx-auto px-6 py-10">
-        
-        {/* Coming Soon overlay */}
+
         <div className="relative">
+
+          {/* Coming Soon */}
           <div className="absolute inset-0 z-20 flex items-center justify-center">
             <div
               className="px-10 py-6 text-center"
               style={{
-                backgroundColor: '#f9f7f1',
-                border: '3px double #2f2f2f',
+                backgroundColor: '#2f2f2f',
+                border: '3px double #f9f7f1',
                 fontFamily: "'Playfair Display', serif"
               }}>
               
-              <p className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#2f2f2f' }}>
+              <p className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#f9f7f1' }}>
                 Coming Soon
               </p>
-              <p className="text-sm italic" style={{ color: '#666', fontFamily: "'Droid Serif', 'Georgia', serif" }}>
+
+              <p className="text-sm italic" style={{ color: '#ccc', fontFamily: "'Droid Serif', 'Georgia', serif" }}>
                 The press is warming up. Articles are being drafted.
               </p>
             </div>
           </div>
 
-          {/* Greyed out articles preview */}
+          {/* Articles Preview */}
           <div className="opacity-30 pointer-events-none select-none">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-              {[0, 1, 2].map((colIdx) =>
-              <div
-                key={colIdx}
-                className="px-4"
-                style={{
-                  borderLeft: colIdx > 0 ? '1px solid #2f2f2f' : 'none'
-                }}>
-                
-                  {blogArticles.
-                filter((a) => a.column === colIdx + 1).
-                map((article, i) =>
-                <article key={article.id} className="mb-10">
-                        {/* Headline */}
-                        <div className="text-center mb-4">
-                          <h2
-                      className="leading-tight mb-1"
-                      style={{
-                        fontFamily: "'Playfair Display', serif",
-                        fontWeight: 700,
-                        fontSize: i === 0 && colIdx === 0 ? '28px' : '22px',
-                        textTransform: i === 0 ? 'uppercase' : 'none'
-                      }}>
-                      
-                            {article.headline}
-                          </h2>
-                          {article.subheadline &&
-                    <>
-                              <div
-                        className="mx-auto my-2"
-                        style={{
-                          width: '80px',
-                          height: '1px',
-                          backgroundColor: '#2f2f2f'
-                        }} />
-                      
-                              <p
-                        className="italic"
-                        style={{
-                          fontFamily: "'Playfair Display', serif",
-                          fontWeight: 400,
-                          fontSize: '16px'
-                        }}>
-                        
-                                {article.subheadline}
-                              </p>
-                              <div
-                        className="mx-auto mt-2"
-                        style={{
-                          width: '80px',
-                          height: '1px',
-                          backgroundColor: '#2f2f2f'
-                        }} />
-                      
-                            </>
-                    }
-                          <p
-                      className="mt-2 text-xs font-bold uppercase tracking-widest"
-                      style={{ fontFamily: "'Playfair Display', serif" }}>
-                      
-                            {article.date}
-                          </p>
-                        </div>
 
-                        {/* Body */}
+              {[0,1,2].map((colIdx) => (
+                <div
+                  key={colIdx}
+                  className="px-4"
+                  style={{
+                    borderLeft: colIdx > 0 ? '1px solid #f9f7f1' : 'none'
+                  }}>
+
+                  {blogArticles
+                    .filter((a) => a.column === colIdx + 1)
+                    .map((article,i) => (
+
+                    <article key={article.id} className="mb-10">
+
+                      <div className="text-center mb-4">
+
+                        <h2
+                          className="leading-tight mb-1"
+                          style={{
+                            fontFamily: "'Playfair Display', serif",
+                            fontWeight: 700,
+                            fontSize: i === 0 && colIdx === 0 ? '28px' : '22px',
+                            textTransform: i === 0 ? 'uppercase' : 'none'
+                          }}>
+                          {article.headline}
+                        </h2>
+
+                        {article.subheadline && (
+                          <>
+                            <div
+                              className="mx-auto my-2"
+                              style={{
+                                width: '80px',
+                                height: '1px',
+                                backgroundColor: '#f9f7f1'
+                              }}
+                            />
+
+                            <p
+                              className="italic"
+                              style={{
+                                fontFamily: "'Playfair Display', serif",
+                                fontWeight: 400,
+                                fontSize: '16px'
+                              }}>
+                              {article.subheadline}
+                            </p>
+
+                            <div
+                              className="mx-auto mt-2"
+                              style={{
+                                width: '80px',
+                                height: '1px',
+                                backgroundColor: '#f9f7f1'
+                              }}
+                            />
+                          </>
+                        )}
+
                         <p
-                    className="text-justify leading-[20px]"
-                    style={{
-                      fontFamily: "'Droid Serif', 'Georgia', serif",
-                      fontSize: '14px'
-                    }}>
-                    
-                          {article.excerpt}
+                          className="mt-2 text-xs font-bold uppercase tracking-widest"
+                          style={{ fontFamily: "'Playfair Display', serif" }}>
+                          {article.date}
                         </p>
-                      </article>
-                )}
+
+                      </div>
+
+                      <p
+                        className="text-justify leading-[20px]"
+                        style={{
+                          fontFamily: "'Droid Serif', 'Georgia', serif",
+                          fontSize: '14px'
+                        }}>
+                        {article.excerpt}
+                      </p>
+
+                    </article>
+                  ))}
+
                 </div>
-              )}
+              ))}
+
             </div>
           </div>
+
         </div>
       </motion.div>
 
-      {/* Footer */}
-      
-
-
-
-
-
-
-
-
-
-
-
-      
-    </div>);
-
+    </div>
+  );
 };
 
 export default BlogsPage;
