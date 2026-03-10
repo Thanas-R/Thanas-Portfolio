@@ -953,7 +953,7 @@ const ProjectDetailPage = () => {
         /* ── PESU MC — dark glassmorphism with Minecraft backdrop ── */
         <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
           {/* Fixed backdrop */}
-          <div className="fixed inset-0 z-0">
+          <div className="fixed inset-0 z-0" style={{ backgroundColor: '#0a0a0a' }}>
             <img src={pesuMcBackdrop} alt="" className="w-full h-full object-cover" loading="eager" />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%)' }} />
           </div>
