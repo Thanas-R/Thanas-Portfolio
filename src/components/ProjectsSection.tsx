@@ -118,6 +118,7 @@ export const projects: Project[] = [
     imageSrc: projectPesuForge,
     tags: ['First Project Ever', 'React', 'TypeScript', 'Tailwind CSS', 'Gemini AI', 'Zustand'],
     live: 'https://pesuforge.vercel.app',
+    github: 'https://github.com/Thanas-R/PESU-Forge',
   },
 ];
 
