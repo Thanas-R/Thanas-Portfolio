@@ -73,6 +73,7 @@ const CommandPalette = () => {
       // Navigation
       { id: 'home', label: 'Home', section: 'Navigate', icon: Home, shortcut: 'H', action: () => go('/') },
       { id: 'projects', label: 'Projects', section: 'Navigate', icon: FolderOpen, shortcut: 'P', action: () => go('/projects') },
+      { id: 'blogs', label: 'Blogs', section: 'Navigate', icon: Newspaper, shortcut: 'B', action: () => go('/blogs') },
       { id: 'resume', label: 'Resume', section: 'Navigate', icon: FileText, shortcut: 'R', action: () => go('/resume') },
       { id: 'contact', label: 'Contact', section: 'Navigate', icon: Mail, shortcut: 'C', action: () => go('/#contact') },
       // Theme
