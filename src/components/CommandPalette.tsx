@@ -10,6 +10,7 @@ import {
   Sun,
   Moon,
   ArrowRight,
+  Newspaper,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { projects } from '@/components/ProjectsSection';
