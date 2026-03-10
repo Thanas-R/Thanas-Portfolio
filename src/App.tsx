@@ -11,6 +11,7 @@ import PageLoader from "./components/PageLoader";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ResumePage from "./pages/ResumePage";
+import BlogsPage from "./pages/BlogsPage";
 import NotFound from "./pages/NotFound";
 import CommandPalette from "./components/CommandPalette";
 
@@ -89,6 +90,7 @@ const AnimatedRoutes = () => {
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/:slug" element={<ProjectDetailPage />} />
             <Route path="/resume" element={<ResumePage />} />
+            <Route path="/blogs" element={<BlogsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
       </motion.div>

@@ -84,6 +84,8 @@ export const projects: Project[] = [
       'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares - no images, no SVGs, pure math.',
     imageSrc: projectContour,
     tags: ['React', 'Canvas', 'TypeScript', 'Simplex Noise', 'Creative Coding'],
+    live: 'https://contour-flow.vercel.app/',
+    github: 'https://github.com/Thanas-R/contour-flow',
   },
 {
   id: 'smart-chef',
@@ -105,6 +107,7 @@ export const projects: Project[] = [
     imageSrc: projectThanasOS,
     tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
     live: 'https://thanas-os.vercel.app/',
+    github: 'https://github.com/Thanas-R/thanas-OS',
   },
   {
     id: 'pesu-forge',
@@ -115,6 +118,7 @@ export const projects: Project[] = [
     imageSrc: projectPesuForge,
     tags: ['First Project Ever', 'React', 'TypeScript', 'Tailwind CSS', 'Gemini AI', 'Zustand'],
     live: 'https://pesuforge.vercel.app',
+    github: 'https://github.com/Thanas-R/PESU-Forge',
   },
 ];
 
