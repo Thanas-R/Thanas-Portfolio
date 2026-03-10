@@ -50,19 +50,21 @@ const BlogsPage = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f9f7f1', color: '#2f2f2f' }}>
-      
+
+      {/* Navbar */}
       <div className="relative z-50">
         <Navbar />
       </div>
 
-      {/* Newspaper Header */}
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         className="text-center pt-6 px-6">
-        
+
         <div className="max-w-5xl mx-auto">
+
           <header
             className="inline-block leading-[0.9] mb-3"
             style={{
@@ -70,7 +72,7 @@ const BlogsPage = () => {
               fontWeight: 900,
               fontSize: 'clamp(48px, 10vw, 80px)',
               textTransform: 'uppercase',
-              color: '#f9f7f1'
+              color: '#2f2f2f'
             }}>
             Thanas Blogs
           </header>
@@ -78,8 +80,8 @@ const BlogsPage = () => {
           <div
             className="py-3 px-4"
             style={{
-              borderTop: '2px solid #f9f7f1',
-              borderBottom: '2px solid #f9f7f1',
+              borderTop: '2px solid #2f2f2f',
+              borderBottom: '2px solid #2f2f2f',
               textTransform: 'uppercase',
               fontFamily: "'Playfair Display', serif",
               fontSize: '12px',
@@ -87,6 +89,7 @@ const BlogsPage = () => {
             }}>
             {dateStr} — Thoughts, Projects & Learnings
           </div>
+
         </div>
       </motion.div>
 
@@ -99,23 +102,31 @@ const BlogsPage = () => {
 
         <div className="relative">
 
-          {/* Coming Soon */}
+          {/* Coming Soon Overlay */}
           <div className="absolute inset-0 z-20 flex items-center justify-center">
             <div
               className="px-10 py-6 text-center"
               style={{
                 backgroundColor: '#2f2f2f',
-                border: '3px double #f9f7f1',
+                border: '3px double #2f2f2f',
                 fontFamily: "'Playfair Display', serif"
               }}>
-              
-              <p className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#f9f7f1' }}>
+
+              <p
+                className="text-3xl md:text-4xl font-bold mb-2"
+                style={{ color: '#f9f7f1' }}>
                 Coming Soon
               </p>
 
-              <p className="text-sm italic" style={{ color: '#ccc', fontFamily: "'Droid Serif', 'Georgia', serif" }}>
+              <p
+                className="text-sm italic"
+                style={{
+                  color: '#ccc',
+                  fontFamily: "'Droid Serif', 'Georgia', serif"
+                }}>
                 The press is warming up. Articles are being drafted.
               </p>
+
             </div>
           </div>
 
@@ -128,7 +139,7 @@ const BlogsPage = () => {
                   key={colIdx}
                   className="px-4"
                   style={{
-                    borderLeft: colIdx > 0 ? '1px solid #f9f7f1' : 'none'
+                    borderLeft: colIdx > 0 ? '1px solid #2f2f2f' : 'none'
                   }}>
 
                   {blogArticles
@@ -157,7 +168,7 @@ const BlogsPage = () => {
                               style={{
                                 width: '80px',
                                 height: '1px',
-                                backgroundColor: '#f9f7f1'
+                                backgroundColor: '#2f2f2f'
                               }}
                             />
 
@@ -176,7 +187,7 @@ const BlogsPage = () => {
                               style={{
                                 width: '80px',
                                 height: '1px',
-                                backgroundColor: '#f9f7f1'
+                                backgroundColor: '#2f2f2f'
                               }}
                             />
                           </>
