@@ -50,7 +50,7 @@ const BlogsPage = () => {
   const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#2f2f2f', color: '#f9f7f1' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#f9f7f1', color: '#2f2f2f' }}>
       {/* Navbar override for newspaper theme */}
       <div className="relative z-50">
         <Navbar />
