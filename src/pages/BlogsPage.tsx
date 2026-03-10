@@ -74,7 +74,7 @@ const BlogsPage = () => {
               color: '#2f2f2f',
             }}
           >
-            The Thanas Chronicle
+            Thanas Blogs
           </header>
           <div
             className="py-3 px-4"
