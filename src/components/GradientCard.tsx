@@ -14,7 +14,7 @@ const GradientCard = ({ children, className }: GradientCardProps) => {
         spread={40}
         disabled={false}
         proximity={64}
-        borderWidth={1.5}
+        borderWidth={1}
         blur={0}
       />
       <div className="relative z-10 h-full">{children}</div>
