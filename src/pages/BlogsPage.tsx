@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
 import Navbar from '@/components/Navbar';
-
 const blogArticles = [
   {
     id: 'building-pesu-forge',
@@ -40,59 +40,48 @@ const blogArticles = [
   }
 ];
 
-interface WeatherData {
-  temp: number;
-  humidity: number;
-  windSpeed: number;
-  windDir: string;
-  description: string;
-}
-
 const BlogsPage = () => {
-  const today = new Date();
-  const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  const blogCount = blogArticles.length;
+  const { resolvedTheme, setTheme } = useTheme();
 
-  const [weather, setWeather] = useState<WeatherData | null>(null);
+  // Force light theme while on blogs page
+  useEffect(() => {
+    const previousTheme = resolvedTheme;
+    setTheme('light');
+    return () => {
+      if (previousTheme && previousTheme !== 'light') {
+        setTheme(previousTheme);
+      }
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const today = new Date();
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayName = dayNames[today.getDay()];
+  const monthStr = today.toLocaleDateString('en-US', { month: 'long' });
+  const dateStr = `${dayName}, ${monthStr} ${today.getDate()}, ${today.getFullYear()}`;
+  
+  const publishedCount = 0;
+
+  const [weatherText, setWeatherText] = useState('');
 
   useEffect(() => {
-    // Fetch Bengaluru weather from Open-Meteo
     const fetchWeather = async () => {
       try {
         const res = await fetch(
-          'https://api.open-meteo.com/v1/forecast?latitude=12.9716&longitude=77.5946&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=Asia/Kolkata'
+          'https://api.open-meteo.com/v1/forecast?latitude=12.9716&longitude=77.5946&current=temperature_2m,weather_code&timezone=Asia/Kolkata'
         );
         const data = await res.json();
-        const current = data.current;
-        const windDeg = current.wind_direction_10m;
-        const dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
-        const dirIndex = Math.round(windDeg / 22.5) % 16;
-
-        // Simple weather code to description
-        const code = current.weather_code;
-        let desc = 'Clear Skies';
+        const temp = Math.round(data.current.temperature_2m);
+        const code = data.current.weather_code;
+        let desc = 'Clear';
         if (code >= 1 && code <= 3) desc = 'Partly Cloudy';
         if (code >= 45 && code <= 48) desc = 'Foggy';
         if (code >= 51 && code <= 67) desc = 'Light Rain';
-        if (code >= 71 && code <= 77) desc = 'Snowy';
-        if (code >= 80 && code <= 82) desc = 'Rain Showers';
+        if (code >= 80 && code <= 82) desc = 'Showers';
         if (code >= 95) desc = 'Thunderstorms';
-
-        setWeather({
-          temp: Math.round(current.temperature_2m),
-          humidity: current.relative_humidity_2m,
-          windSpeed: Math.round(current.wind_speed_10m),
-          windDir: dirs[dirIndex],
-          description: desc,
-        });
+        setWeatherText(`${temp}°C, ${desc}`);
       } catch {
-        setWeather({
-          temp: 28,
-          humidity: 65,
-          windSpeed: 12,
-          windDir: 'SSE',
-          description: 'Plenty of Sunshine',
-        });
+        setWeatherText('28°C, Sunny');
       }
     };
     fetchWeather();
@@ -100,9 +89,8 @@ const BlogsPage = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f9f7f1', color: '#2f2f2f' }}>
-      {/* Navbar — forced dark (white text) for visibility on light newspaper bg */}
       <div className="relative z-50">
-        <Navbar forceDark={false} />
+        <Navbar forceLight />
       </div>
 
       {/* Newspaper Header */}
@@ -110,37 +98,11 @@ const BlogsPage = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="text-center pt-6 px-6 relative"
+        className="text-center pt-6 px-6"
       >
-        <div className="max-w-5xl mx-auto relative">
-          {/* Weather forecast box — desktop only, positioned at left */}
-          {weather && (
-            <div
-              className="hidden lg:block absolute left-0 top-0 -translate-x-4"
-              style={{
-                border: '3px double #2f2f2f',
-                padding: '10px 15px',
-                lineHeight: '20px',
-                fontFamily: "'Droid Serif', 'Georgia', serif",
-                fontSize: '12px',
-                fontStyle: 'italic',
-                maxWidth: '220px',
-                backgroundColor: '#f9f7f1',
-                zIndex: 10,
-              }}
-            >
-              <span style={{ fontStyle: 'italic' }}>
-                Weatherforecast for the next 24 hours: {weather.description}
-              </span>
-              <br />
-              <span style={{ fontStyle: 'normal' }}>
-                Wind: {weather.windSpeed}km/h {weather.windDir}; Ther: {weather.temp}°C; Hum: {weather.humidity}%
-              </span>
-            </div>
-          )}
-
+        <div className="max-w-5xl mx-auto">
           <header
-            className="inline-block leading-[0.9] mb-3"
+            className="inline-block leading-[0.9] mb-4"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontWeight: 900,
@@ -151,21 +113,28 @@ const BlogsPage = () => {
           >
             Thanas Blogs
           </header>
-        </div>
 
-        {/* Subhead — full width borders with small gap at edges */}
-        <div
-          className="py-3 px-4 mx-4"
-          style={{
-            borderTop: '2px solid #2f2f2f',
-            borderBottom: '2px solid #2f2f2f',
-            textTransform: 'uppercase',
-            fontFamily: "'Playfair Display', serif",
-            fontSize: '12px',
-            letterSpacing: '2px'
-          }}
-        >
-          Bengaluru, India — {dateStr} — {blogCount} {blogCount === 1 ? 'Blog' : 'Blogs'}
+          {/* Info row: weather | date | blog count — single line, bounded */}
+          <div
+            className="flex items-center justify-between py-2.5 text-xs tracking-wider"
+            style={{
+              borderTop: '2px solid #2f2f2f',
+              borderBottom: '2px solid #2f2f2f',
+              fontFamily: "'Playfair Display', serif",
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+            }}
+          >
+            <span style={{ fontSize: '11px', fontWeight: 600 }}>
+              {weatherText || '—'}
+            </span>
+            <span style={{ fontSize: '11px', fontWeight: 600 }}>
+              Bengaluru — {dateStr}
+            </span>
+            <span style={{ fontSize: '11px', fontWeight: 600 }}>
+              {publishedCount} {(publishedCount as number) === 1 ? 'Blog' : 'Blogs'}
+            </span>
+          </div>
         </div>
       </motion.div>
 
@@ -178,19 +147,20 @@ const BlogsPage = () => {
       >
         {/* Coming Soon overlay */}
         <div className="relative">
-          <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <div className="absolute inset-0 z-20 flex items-start justify-center pt-16 md:pt-24">
             <div
-              className="px-10 py-6 text-center"
+              className="px-12 py-8 md:px-16 md:py-10 text-center"
               style={{
                 backgroundColor: '#f9f7f1',
-                border: '3px double #2f2f2f',
-                fontFamily: "'Playfair Display', serif"
+                border: '4px double #2f2f2f',
+                fontFamily: "'Playfair Display', serif",
+                boxShadow: '0 4px 30px rgba(0,0,0,0.08)',
               }}
             >
-              <p className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#2f2f2f' }}>
+              <p className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3" style={{ color: '#2f2f2f' }}>
                 Coming Soon
               </p>
-              <p className="text-sm italic" style={{ color: '#666', fontFamily: "'Droid Serif', 'Georgia', serif" }}>
+              <p className="text-sm md:text-base italic" style={{ color: '#666', fontFamily: "'Droid Serif', 'Georgia', serif" }}>
                 The press is warming up. Articles are being drafted.
               </p>
             </div>
@@ -211,7 +181,6 @@ const BlogsPage = () => {
                     .filter((a) => a.column === colIdx + 1)
                     .map((article, i) => (
                       <article key={article.id} className="mb-10">
-                        {/* Headline */}
                         <div className="text-center mb-4">
                           <h2
                             className="leading-tight mb-1"
@@ -228,11 +197,7 @@ const BlogsPage = () => {
                             <>
                               <div
                                 className="mx-auto my-2"
-                                style={{
-                                  width: '80px',
-                                  height: '1px',
-                                  backgroundColor: '#2f2f2f'
-                                }}
+                                style={{ width: '80px', height: '1px', backgroundColor: '#2f2f2f' }}
                               />
                               <p
                                 className="italic"
@@ -246,23 +211,14 @@ const BlogsPage = () => {
                               </p>
                               <div
                                 className="mx-auto mt-2"
-                                style={{
-                                  width: '80px',
-                                  height: '1px',
-                                  backgroundColor: '#2f2f2f'
-                                }}
+                                style={{ width: '80px', height: '1px', backgroundColor: '#2f2f2f' }}
                               />
                             </>
                           )}
                         </div>
-
-                        {/* Body */}
                         <p
                           className="text-justify leading-[20px]"
-                          style={{
-                            fontFamily: "'Droid Serif', 'Georgia', serif",
-                            fontSize: '14px'
-                          }}
+                          style={{ fontFamily: "'Droid Serif', 'Georgia', serif", fontSize: '14px' }}
                         >
                           {article.excerpt}
                         </p>

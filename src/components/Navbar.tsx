@@ -71,7 +71,7 @@ const SolarSwitch = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
+const Navbar = ({ forceDark = false, forceLight = false }: { forceDark?: boolean; forceLight?: boolean }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -86,11 +86,15 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
 
   const isDark = mounted && resolvedTheme === 'dark';
 
+  // Hide theme toggle when theme is forced
+  const hideThemeToggle = forceDark || forceLight;
+
   // When forceDark, override text colors to always appear as dark-mode (white text on dark bg)
-  const textPrimary = forceDark ? 'text-white' : 'text-foreground';
-  const textMuted = forceDark ? 'text-white/50 hover:text-white' : 'text-muted-foreground hover:text-foreground';
-  const borderColor = forceDark ? 'border-white/20' : 'border-border';
-  const mutedIcon = forceDark ? 'text-white/60 hover:text-white' : 'text-muted-foreground hover:text-foreground';
+  // When forceLight, override text colors to always appear as light-mode (dark text on light bg)
+  const textPrimary = forceDark ? 'text-white' : forceLight ? 'text-[#2f2f2f]' : 'text-foreground';
+  const textMuted = forceDark ? 'text-white/50 hover:text-white' : forceLight ? 'text-[#2f2f2f]/60 hover:text-[#2f2f2f]' : 'text-muted-foreground hover:text-foreground';
+  const borderColor = forceDark ? 'border-white/20' : forceLight ? 'border-[#2f2f2f]/20' : 'border-border';
+  const mutedIcon = forceDark ? 'text-white/60 hover:text-white' : forceLight ? 'text-[#2f2f2f]/60 hover:text-[#2f2f2f]' : 'text-muted-foreground hover:text-foreground';
 
   return (
     <motion.nav
@@ -122,7 +126,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
           ))}
         </div>
         <div className="flex items-center gap-3">
-          {!forceDark && (
+          {!hideThemeToggle && (
             <button
               onClick={() => setTheme(isDark ? 'light' : 'dark')}
               className={`w-8 h-8 flex items-center justify-center rounded-full border ${borderColor} ${mutedIcon} transition-colors`}
@@ -150,7 +154,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-               className={`md:hidden fixed inset-0 z-40 backdrop-blur-xl ${forceDark ? 'bg-black/60' : 'bg-background/60'}`}
+               className={`md:hidden fixed inset-0 z-40 backdrop-blur-xl ${forceDark ? 'bg-black/60' : forceLight ? 'bg-white/60' : 'bg-background/60'}`}
               onClick={() => setMobileOpen(false)}
             />
             {/* Menu panel */}
@@ -159,7 +163,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
-              className={`md:hidden fixed top-20 left-4 right-4 z-50 rounded-2xl border backdrop-blur-2xl p-6 space-y-1 shadow-2xl ${forceDark ? 'border-white/15 bg-black/80' : 'border-border bg-card/95'}`}
+              className={`md:hidden fixed top-20 left-4 right-4 z-50 rounded-2xl border backdrop-blur-2xl p-6 space-y-1 shadow-2xl ${forceDark ? 'border-white/15 bg-black/80' : forceLight ? 'border-[#2f2f2f]/15 bg-[#f9f7f1]/95' : 'border-border bg-card/95'}`}
             >
               {navItems.map((item, i) => (
                 <motion.div
@@ -171,7 +175,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
                   <Link
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`block py-3 px-3 rounded-xl text-lg font-medium transition-colors font-['Space_Grotesk'] ${forceDark ? 'text-white hover:bg-white/10' : 'text-foreground hover:bg-muted/50'}`}
+                    className={`block py-4 px-4 rounded-xl text-xl font-semibold transition-colors font-['Space_Grotesk'] ${forceDark ? 'text-white hover:bg-white/10' : forceLight ? 'text-[#2f2f2f] hover:bg-[#2f2f2f]/10' : 'text-foreground hover:bg-muted/50'}`}
                   >
                     {item.label}
                   </Link>
