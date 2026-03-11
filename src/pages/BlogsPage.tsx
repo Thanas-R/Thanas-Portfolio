@@ -102,7 +102,7 @@ const BlogsPage = () => {
     <div className="min-h-screen" style={{ backgroundColor: '#f9f7f1', color: '#2f2f2f' }}>
       {/* Navbar — forced dark (white text) for visibility on light newspaper bg */}
       <div className="relative z-50">
-        <Navbar forceDark />
+        <Navbar forceDark={false} />
       </div>
 
       {/* Newspaper Header */}
