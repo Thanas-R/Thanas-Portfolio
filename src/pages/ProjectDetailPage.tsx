@@ -770,48 +770,42 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Floating title — no background, centered */}
-              <motion.div {...fadeUp(0.08)} className="text-center mb-6">
+              <motion.div {...fadeUp(0.08)} className="text-center mb-4">
                 <h1
-                  className="text-6xl md:text-8xl font-bold text-white leading-none tracking-tight"
+                  className="text-7xl md:text-9xl font-bold text-white leading-none tracking-tight"
                   style={{ fontFamily: "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif", textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>
                   PESU Forge
                 </h1>
               </motion.div>
 
-              {/* Tinted glass description block */}
-              <motion.div
-                {...fadeUp(0.12)}
-                className="rounded-2xl p-8 md:p-10 mb-8 backdrop-blur-xl text-center"
-                style={{
-                  backgroundColor: 'rgba(0,0,0,0.55)',
-                  border: '1px solid rgba(255,255,255,0.08)'
-                }}>
-                <p className="text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Links */}
-                <div className="flex gap-3 mt-6 justify-center flex-wrap">
-                  {project.live &&
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
-                    style={{ backgroundColor: '#3399FF' }}>
-                      <ExternalLink className="w-4 h-4" />
-                      Live Site
-                    </a>
-                  }
-                  <a
-                    href="https://github.com/Thanas-R/PESU-Forge"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
-                    style={{ backgroundColor: '#B870DB' }}>
-                      <Github className="w-4 h-4" />
-                      GitHub
-                    </a>
+              {/* Description + links — outside glass, inline */}
+              <motion.div {...fadeUp(0.12)} className="mb-8">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                  <p className="text-lg text-white/70 max-w-xl leading-relaxed text-center md:text-left">
+                    {project.description}
+                  </p>
+                  <div className="flex gap-3 shrink-0 justify-center md:justify-end">
+                    {project.live &&
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
+                      style={{ backgroundColor: '#3399FF' }}>
+                        <ExternalLink className="w-4 h-4" />
+                        Live Site
+                      </a>
+                    }
+                    <a
+                      href="https://github.com/Thanas-R/PESU-Forge"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity text-white"
+                      style={{ backgroundColor: '#B870DB' }}>
+                        <Github className="w-4 h-4" />
+                        GitHub
+                      </a>
+                  </div>
                 </div>
               </motion.div>
 
