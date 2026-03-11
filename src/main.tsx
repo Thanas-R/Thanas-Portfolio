@@ -25,6 +25,15 @@ const globeDataPromise = fetch('https://raw.githubusercontent.com/martynafford/n
 // Store on window so SphealDetail can use the cached data
 (window as any).__globeDataPromise = globeDataPromise;
 
+// Preload Bengaluru weather data for blogs page so it's instant on navigation
+const weatherDataPromise = fetch(
+  'https://api.open-meteo.com/v1/forecast?latitude=12.9716&longitude=77.5946&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m&timezone=Asia/Kolkata'
+)
+  .then(res => res.json())
+  .catch(() => null);
+
+(window as any).__weatherDataPromise = weatherDataPromise;
+
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
     <App />
