@@ -27,7 +27,7 @@ const educationData = [
 const TimelineItem = ({ year, suffix, description, isFirst, isLast }: { year: string; suffix?: string; description: string; isFirst?: boolean; isLast?: boolean }) => (
   <div className="flex items-start gap-3">
     <div className="flex flex-col items-center mt-1.5">
-      <div className={cn('w-2.5 h-2.5 rounded-full ring-3 ring-card', isFirst ? 'bg-foreground' : 'bg-muted-foreground/40')} />
+      <div className={cn('w-2.5 h-2.5 rounded-full ring-2 ring-card', isFirst ? 'bg-foreground' : 'bg-muted-foreground/40')} />
       {!isLast && <div className="w-px h-8 bg-border mt-1" />}
     </div>
     <div className="flex-1 -mt-0.5">
