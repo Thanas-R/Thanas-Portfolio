@@ -8,10 +8,10 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
     <motion.span
       initial="initial"
       whileHover="hovered"
-      className={cn('relative inline-block overflow-hidden whitespace-nowrap align-middle', className)}
+      className={cn('relative block overflow-hidden', className)}
       style={{ lineHeight: 0.85 }}
     >
-      <div className="flex">
+      <div>
         {children.split('').map((l, i) => {
           const delay = center
             ? STAGGER * Math.abs(i - (children.length - 1) / 2)
@@ -19,7 +19,7 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
           return (
             <motion.span
               key={i}
-              variants={{ initial: { y: 0 }, hovered: { y: '-100%' } }}
+              variants={{ initial: { y: 0 }, hovered: { y: '-90%' } }}
               transition={{ ease: 'easeInOut', delay }}
               className="inline-block"
             >
@@ -28,8 +28,7 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
           );
         })}
       </div>
-
-      <div className="absolute inset-0 flex">
+      <div className="absolute inset-0">
         {children.split('').map((l, i) => {
           const delay = center
             ? STAGGER * Math.abs(i - (children.length - 1) / 2)
@@ -37,7 +36,7 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
           return (
             <motion.span
               key={i}
-              variants={{ initial: { y: '100%' }, hovered: { y: 0 } }}
+              variants={{ initial: { y: '90%' }, hovered: { y: 0 } }}
               transition={{ ease: 'easeInOut', delay }}
               className="inline-block"
             >
