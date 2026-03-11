@@ -40,9 +40,9 @@ const BlogsLightMode = () => {
               letterSpacing: '2px'
             }}>
             
-            <span style={{ fontSize: '11px', fontWeight: 600 }} className="text-base font-semibold">{weatherText}</span>
-            <span style={{ fontSize: '11px', fontWeight: 600 }} className="text-base font-semibold">Bengaluru — {dateStr}</span>
-            <span style={{ fontSize: '11px', fontWeight: 600 }} className="font-semibold text-base">
+            <span style={{ fontSize: '11px', fontWeight: 600 }} className="font-semibold text-lg">{weatherText}</span>
+            <span style={{ fontSize: '11px', fontWeight: 600 }} className="font-semibold text-lg">Bengaluru — {dateStr}</span>
+            <span style={{ fontSize: '11px', fontWeight: 600 }} className="font-semibold text-lg">
               {publishedCount} {publishedCount === 1 ? 'Blog' : 'Blogs'}
             </span>
           </div>
