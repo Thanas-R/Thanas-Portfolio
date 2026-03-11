@@ -74,13 +74,23 @@ const AboutSection = () => {
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">Education</p>
             <div className="space-y-3">
               {educationData.map((edu, idx) => (
-                <div key={idx} className="flex items-start justify-between gap-2">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-foreground font-sans text-base">{edu.institution}</p>
-                    <p className="text-muted-foreground font-['Inter'] text-sm">{edu.detail}</p>
-                  </div>
-                  <span className="text-muted-foreground/70 font-['JetBrains_Mono'] text-sm shrink-0 text-right">{edu.years}</span>
-                </div>
+<div key={idx} className="space-y-1">
+  {/* Institution */}
+  <p className="font-semibold text-foreground font-sans text-base">
+    {edu.institution}
+  </p>
+
+  {/* Course + Year row */}
+  <div className="flex items-center justify-between">
+    <p className="text-muted-foreground font-['Inter'] text-sm">
+      {edu.detail}
+    </p>
+
+    <span className="text-muted-foreground/70 font-['JetBrains_Mono'] text-sm">
+      {edu.years}
+    </span>
+  </div>
+</div>
               ))}
             </div>
           </BentoCard>
