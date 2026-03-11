@@ -33,7 +33,7 @@ const ProjectsPage = () => {
                   Thanas R
                 </p>
                 <h1
-                  className="text-5xl font-black text-foreground uppercase leading-none"
+                  className="text-5xl font-black text-foreground leading-none"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 >
                   Projects
