@@ -979,19 +979,29 @@ const ProjectDetailPage = () => {
                 </p>
               </motion.div>
 
-              {/* Description left + Live Site right */}
+              {/* Description left + Live Site + GitHub right */}
               <motion.div {...fadeUp(0.14)} className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
                 <p className="text-base text-white/50 max-w-lg leading-relaxed">
                   Official website I developed for the PESU Minecraft Server community , a student-run Minecraft server at PES University.
                 </p>
-                {project.live &&
-                  <a href={project.live} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md shrink-0"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
-                    <ExternalLink className="w-4 h-4" />
-                    Live Site
-                  </a>
-                }
+                <div className="flex items-center gap-3 shrink-0">
+                  {project.live &&
+                    <a href={project.live} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
+                      style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
+                      <ExternalLink className="w-4 h-4" />
+                      Live Site
+                    </a>
+                  }
+                  {project.github &&
+                    <a href={project.github} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
+                      style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
+                      <Github className="w-4 h-4" />
+                      GitHub
+                    </a>
+                  }
+                </div>
               </motion.div>
 
               {/* Tech tags — centered */}
