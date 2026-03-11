@@ -9,18 +9,17 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
       initial="initial"
       whileHover="hovered"
       className={cn('relative block overflow-hidden', className)}
-      style={{ lineHeight: 0.85, paddingTop: '2px', paddingBottom: '2px' }}
+      style={{ lineHeight: 0.85 }}
     >
       <div>
         {children.split('').map((l, i) => {
           const delay = center
             ? STAGGER * Math.abs(i - (children.length - 1) / 2)
             : STAGGER * i;
-
           return (
             <motion.span
               key={i}
-              variants={{ initial: { y: 0 }, hovered: { y: '-95%' } }}
+              variants={{ initial: { y: 0 }, hovered: { y: '-100%' } }}
               transition={{ ease: 'easeInOut', delay }}
               className="inline-block"
             >
@@ -29,17 +28,15 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
           );
         })}
       </div>
-
       <div className="absolute inset-0">
         {children.split('').map((l, i) => {
           const delay = center
             ? STAGGER * Math.abs(i - (children.length - 1) / 2)
             : STAGGER * i;
-
           return (
             <motion.span
               key={i}
-              variants={{ initial: { y: '105%' }, hovered: { y: 0 } }}
+              variants={{ initial: { y: '100%' }, hovered: { y: 0 } }}
               transition={{ ease: 'easeInOut', delay }}
               className="inline-block"
             >
