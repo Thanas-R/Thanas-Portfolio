@@ -17,7 +17,7 @@ const BlogsLightMode = () => {
       >
         <div className="max-w-5xl mx-auto">
           <header
-            className="inline-block leading-[0.9] mb-4"
+            className="inline-block leading-[0.9] mb-6"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontWeight: 900,
