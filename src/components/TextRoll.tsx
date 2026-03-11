@@ -28,7 +28,8 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
           );
         })}
       </div>
-      <div className="absolute inset-0">
+
+      <div className="absolute inset-0 top-[2px]">
         {children.split('').map((l, i) => {
           const delay = center
             ? STAGGER * Math.abs(i - (children.length - 1) / 2)
