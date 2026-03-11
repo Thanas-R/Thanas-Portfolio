@@ -11,11 +11,15 @@ Object.values(imageModules).forEach((src) => {
 });
 
 // Preload other key assets
-const otherAssets = import.meta.glob('./assets/{avatar,thanasos-mac,contour-dark,contour-light,pesumc-hero,pesumc-backdrop,pesumc-icon,pesuforge-bg,hero-bg}.png', { eager: true, import: 'default' }) as Record<string, string>;
+const otherAssets = import.meta.glob('./assets/{avatar,thanasos-mac,contour-dark,contour-light,pesumc-hero,pesumc-backdrop,pesumc-icon,pesuforge-bg,hero-bg,resume-preview}.png', { eager: true, import: 'default' }) as Record<string, string>;
 Object.values(otherAssets).forEach((src) => {
   const img = new Image();
   img.src = src;
 });
+
+// Preload globe GeoJSON data for Spheal page
+fetch('https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json')
+  .catch(() => {});
 
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

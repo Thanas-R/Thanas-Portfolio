@@ -115,16 +115,18 @@ const ProjectsPage = () => {
                     </div>
                   </Link>
 
-                  {/* Mobile preview image */}
+                  {/* Mobile preview image — clickable to project page */}
                   <div className="md:hidden pb-4">
-                    <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-[16/10]">
-                      <img
-                        src={project.imageSrc}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                        loading="eager"
-                      />
-                    </div>
+                    <Link to={`/projects/${project.id}`}>
+                      <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-[16/10]">
+                        <img
+                          src={project.imageSrc}
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                          loading="eager"
+                        />
+                      </div>
+                    </Link>
                   </div>
                 </motion.div>
               ))}
