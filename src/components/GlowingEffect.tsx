@@ -114,7 +114,7 @@ const GlowingEffect = memo(
             WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
             maskComposite: "exclude",
             WebkitMaskComposite: "xor",
-            padding: `0px`,
+            padding: `${borderWidth}px`,
             filter: `blur(${blur}px)`,
           }}
         />
