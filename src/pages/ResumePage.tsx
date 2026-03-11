@@ -20,7 +20,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative z-10 max-w-5xl mx-auto w-full pb-3 flex items-center justify-between px-4 md:px-5 gap-3"
+        className="relative z-10 max-w-5xl mx-auto w-full pb-4 flex items-center justify-between px-4 md:px-5 gap-3"
       >
         <h1
           className="text-3xl md:text-5xl font-black text-foreground uppercase leading-none shrink-0"
@@ -36,7 +36,7 @@ const ResumePage = () => {
             className="flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
           >
             <FileText className="w-4 h-4" />
-            View PDF
+            Open as PDF
           </a>
           <a
             href={resumePath}
@@ -49,12 +49,12 @@ const ResumePage = () => {
         </div>
       </motion.div>
 
-      {/* Resume as image */}
+      {/* Resume as image — bigger on desktop */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 w-full flex-1 pb-8"
+        className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 w-full flex-1 pb-8"
       >
         <div
           className="rounded-2xl overflow-hidden border border-border bg-card"

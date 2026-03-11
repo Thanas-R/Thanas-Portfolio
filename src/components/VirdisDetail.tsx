@@ -177,25 +177,67 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 ))}
               </div>
 
-              {/* Architecture */}
+              {/* Architecture — Flowchart */}
               <SectionLabel label="Architecture" color={label} font={font} />
-              <div
-                className="p-5 rounded-xl text-[13px] leading-[2] mb-10"
-                style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}`, fontFamily: monoFont, color: textMuted }}
-              >
-                <span style={{ color: heading, fontWeight: 600 }}>Frontend</span> (React + Mapbox GL JS)
-                <br />
-                &nbsp;&nbsp;│
-                <br />
-                <span style={{ color: heading, fontWeight: 600 }}>Edge Functions</span> (Deno/TypeScript)
-                <br />
-                &nbsp;&nbsp;├── <span style={{ color: green }}>gee-ndvi-tiles</span> → Earth Engine REST API
-                <br />
-                &nbsp;&nbsp;├── <span style={{ color: green }}>gee-detect-field</span> → Earth Engine REST API
-                <br />
-                &nbsp;&nbsp;├── <span style={{ color: green }}>analyze-field</span> → Gemini 2.5 Flash
-                <br />
-                &nbsp;&nbsp;└── <span style={{ color: green }}>get-mapbox-token</span> → Mapbox API
+              <div className="mb-10 flex justify-center">
+                <div
+                  className="p-6 md:p-8 rounded-xl w-full max-w-2xl"
+                  style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}` }}
+                >
+                  {/* Flowchart boxes */}
+                  <div className="flex flex-col items-center gap-0" style={{ fontFamily: monoFont, fontSize: '13px' }}>
+                    {/* User */}
+                    <div className="px-5 py-2.5 rounded-lg text-center font-semibold" style={{ backgroundColor: 'rgba(255,251,235,0.08)', border: '1px solid rgba(255,251,235,0.15)', color: heading }}>
+                      User / Browser
+                    </div>
+                    <div className="w-px h-6" style={{ backgroundColor: divider }} />
+                    <span style={{ color: green, fontSize: '16px' }}>▼</span>
+                    <div className="w-px h-2" style={{ backgroundColor: divider }} />
+
+                    {/* Frontend */}
+                    <div className="px-5 py-2.5 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.15)', border: `1px solid ${green}`, color: heading }}>
+                      <span className="font-semibold">Frontend</span>
+                      <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>React + Mapbox GL JS + Tailwind</span>
+                    </div>
+                    <div className="w-px h-6" style={{ backgroundColor: divider }} />
+                    <span style={{ color: green, fontSize: '16px' }}>▼</span>
+                    <div className="w-px h-2" style={{ backgroundColor: divider }} />
+
+                    {/* Edge Functions */}
+                    <div className="px-5 py-3 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.1)', border: `1px solid ${cardBorder}`, color: heading }}>
+                      <span className="font-semibold">Edge Functions</span>
+                      <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>Deno / TypeScript</span>
+                    </div>
+                    <div className="w-px h-4" style={{ backgroundColor: divider }} />
+
+                    {/* Branches */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full mt-2">
+                      {[
+                        { name: 'gee-ndvi-tiles', target: 'Earth Engine API' },
+                        { name: 'gee-detect-field', target: 'Earth Engine API' },
+                        { name: 'analyze-field', target: 'Gemini 2.5 Flash' },
+                        { name: 'get-mapbox-token', target: 'Mapbox API' },
+                      ].map((fn) => (
+                        <div key={fn.name} className="flex flex-col items-center gap-1">
+                          <span style={{ color: green, fontSize: '12px' }}>▼</span>
+                          <div className="px-3 py-2 rounded-md text-center w-full" style={{ backgroundColor: 'rgba(255,251,235,0.05)', border: `1px solid ${cardBorder}` }}>
+                            <span className="block text-[11px] font-semibold" style={{ color: green }}>{fn.name}</span>
+                            <span className="block text-[10px] mt-1" style={{ color: textMuted }}>→ {fn.target}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Database at bottom */}
+                    <div className="w-px h-6 mt-3" style={{ backgroundColor: divider }} />
+                    <span style={{ color: accent, fontSize: '16px' }}>▼</span>
+                    <div className="w-px h-2" style={{ backgroundColor: divider }} />
+                    <div className="px-5 py-2.5 rounded-lg text-center" style={{ backgroundColor: 'rgba(234,185,71,0.1)', border: `1px solid ${accent}`, color: heading }}>
+                      <span className="font-semibold">Supabase</span>
+                      <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>PostgreSQL + Auth + Storage</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Tech Stack */}

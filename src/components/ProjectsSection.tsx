@@ -63,7 +63,7 @@ export const projects: Project[] = [
     imageSrc: projectPesuMC,
     tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
     live: 'https://pesu-mc.vercel.app',
-    github: 'https://github.com/Thanas-R',
+    github: 'https://github.com/Thanas-R/PESU-MC-S2-Website',
   },
   {
     id: 'askbookie',
@@ -95,7 +95,7 @@ export const projects: Project[] = [
     'A recipe recommendation engine built entirely in-memory using a Vector Space Model and TF-IDF scoring. Enter ingredients you have on hand and the system ranks recipes by relevance using cosine similarity.',
   imageSrc: projectSmartchef,
   tags: ['Python', 'TF-IDF', 'VSM'],
-  live: 'https://smart-chef-pesu.vercel.app/',   // ← ADD THIS
+  live: 'https://smart-chef-pesu.vercel.app/',
   github: 'https://github.com/Thanas-R/Smart-Chef',
 },
   {
@@ -149,7 +149,6 @@ void preloadedImages;
 const ProjectsSection = () => {
   return (
     <section id="projects" className="relative py-20 overflow-hidden">
-      {/* Header container (centered). Dots are intentionally NOT covering this */}
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
@@ -174,14 +173,8 @@ const ProjectsSection = () => {
         </motion.div>
       </div>
 
-      {/* FULL-WIDTH dotted area that starts AFTER the header.
-          It spans edge-to-edge, but the visible cards/content will be centered inside the max-w container below.
-      */}
       <div className="w-full relative">
-        {/* dotted background spans full width of page but is placed in this block so it doesn't cover the header */}
         <div className="absolute inset-0 dotted-bg pointer-events-none z-0" />
-
-        {/* content centered above dots */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 pt-6">
           <motion.div
             initial={{ y: 12, opacity: 0 }}
@@ -208,8 +201,6 @@ const ProjectsSection = () => {
                         draggable={false}
                       />
                     </div>
-
-                    {/* Mobile "chin": only project NAME, using Quicksand */}
                     <div className="p-4">
                       <p className="text-sm font-medium text-foreground font-['Quicksand']">
                         {project.title}
@@ -220,7 +211,7 @@ const ProjectsSection = () => {
               ))}
             </div>
 
-            {/* DESKTOP: scattered overlapping layout (keeps centered) */}
+            {/* DESKTOP: scattered overlapping layout */}
             <div
               className="hidden md:block relative w-full"
               style={{ height: 'clamp(680px, 90vw, 960px)' }}
