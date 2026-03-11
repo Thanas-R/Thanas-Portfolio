@@ -84,13 +84,13 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  const isDark = forceDark ? true : mounted && resolvedTheme === 'dark';
+  const isDark = mounted && resolvedTheme === 'dark';
 
   // When forceDark, override text colors to always appear as dark-mode (white text on dark bg)
-const textPrimary = isDark ? 'text-white' : 'text-foreground';
-const textMuted = isDark ? 'text-white/50 hover:text-white' : 'text-muted-foreground hover:text-foreground';
-const borderColor = isDark ? 'border-white/20' : 'border-border';
-const mutedIcon = isDark ? 'text-white/60 hover:text-white' : 'text-muted-foreground hover:text-foreground';
+  const textPrimary = forceDark ? 'text-white' : 'text-foreground';
+  const textMuted = forceDark ? 'text-white/50 hover:text-white' : 'text-muted-foreground hover:text-foreground';
+  const borderColor = forceDark ? 'border-white/20' : 'border-border';
+  const mutedIcon = forceDark ? 'text-white/60 hover:text-white' : 'text-muted-foreground hover:text-foreground';
 
   return (
     <motion.nav
