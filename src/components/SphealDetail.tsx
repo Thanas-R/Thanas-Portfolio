@@ -141,20 +141,11 @@ const DottedGlobe = ({ isDark, size = 420 }: { isDark: boolean; size?: number })
 
     const loadData = async () => {
       try {
-        // Use cached globe data from preload if available
-        const cachedPromise = (window as any).__globeDataPromise;
-        let data;
-        if (cachedPromise) {
-          data = await cachedPromise;
-        }
-        if (!data) {
-          const res = await fetch(
-            'https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json'
-          );
-          if (!res.ok) return;
-          data = await res.json();
-        }
-        landFeatures = data;
+        const res = await fetch(
+          'https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json'
+        );
+        if (!res.ok) return;
+        landFeatures = await res.json();
 
         landFeatures.features.forEach((feature: any) => {
           const bounds = d3.geoBounds(feature);
