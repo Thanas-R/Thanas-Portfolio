@@ -770,7 +770,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Floating title — no background, centered */}
-              <motion.div {...fadeUp(0.08)} className="text-center mb-8">
+              <motion.div {...fadeUp(0.08)} className="text-center mb-12">
                 <h1
                   className="text-7xl md:text-9xl font-bold text-white leading-none tracking-tight"
                   style={{ fontFamily: "'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif", textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>
