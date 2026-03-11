@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
@@ -32,8 +31,6 @@ const CommandPalette = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const location = useLocation();
-  const isBlogsPage = location.pathname === "/blogs";
   const { resolvedTheme, setTheme } = useTheme();
 
   const close = useCallback(() => {
@@ -79,17 +76,17 @@ const CommandPalette = () => {
       { id: 'blogs', label: 'Blogs', section: 'Navigate', icon: Newspaper, shortcut: '⌘B', action: () => go('/blogs') },
       { id: 'resume', label: 'Resume', section: 'Navigate', icon: FileText, shortcut: '⌘R', action: () => go('/resume') },
       { id: 'contact', label: 'Contact', section: 'Navigate', icon: Mail, shortcut: '⌘C', action: () => go('/#contact') },
-      // Theme (hidden on blogs page)
-...(!isBlogsPage ? [{
-  id: 'theme',
-  label: isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
-  section: 'Actions',
-  icon: isDark ? Sun : Moon,
-  action: () => {
-    setTheme(isDark ? 'light' : 'dark');
-    close();
-  },
-}] : []),
+      // Theme
+      {
+        id: 'theme',
+        label: isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
+        section: 'Actions',
+        icon: isDark ? Sun : Moon,
+        action: () => {
+          setTheme(isDark ? 'light' : 'dark');
+          close();
+        },
+      },
       // Projects
       ...projects.map((p) => ({
         id: `project-${p.id}`,
@@ -100,7 +97,7 @@ const CommandPalette = () => {
       })),
     ];
     return items;
-  }, [resolvedTheme, go, close, setTheme, isBlogsPage]);
+  }, [resolvedTheme, go, close, setTheme]);
 
   const filtered = useMemo(() => {
     if (!query.trim()) return commands;
