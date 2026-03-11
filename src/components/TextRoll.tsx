@@ -8,10 +8,10 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
     <motion.span
       initial="initial"
       whileHover="hovered"
-      className={cn('relative block overflow-hidden', className)}
+      className={cn('relative inline-block overflow-hidden whitespace-nowrap align-middle', className)}
       style={{ lineHeight: 0.85 }}
     >
-      <div>
+      <div className="flex">
         {children.split('').map((l, i) => {
           const delay = center
             ? STAGGER * Math.abs(i - (children.length - 1) / 2)
@@ -28,7 +28,8 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
           );
         })}
       </div>
-      <div className="absolute inset-0">
+
+      <div className="absolute inset-0 flex">
         {children.split('').map((l, i) => {
           const delay = center
             ? STAGGER * Math.abs(i - (children.length - 1) / 2)
