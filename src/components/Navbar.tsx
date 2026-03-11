@@ -97,7 +97,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, delay: 0.2 }}
-      className="relative z-50 px-6 py-5 md:px-12"
+      className="relative z-50 px-6 py-7 md:px-12"
     >
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <Link to="/" className={`font-['Space_Grotesk'] text-xl font-semibold ${textPrimary} tracking-tight`}>
