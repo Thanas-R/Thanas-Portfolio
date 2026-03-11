@@ -116,7 +116,7 @@ const BlogsPage = () => {
           {/* Weather forecast box — desktop only, positioned at left */}
           {weather && (
             <div
-              className="hidden lg:block absolute left-0 top-0 -translate-x-1"
+              className="hidden lg:block absolute left-0 top-0 -translate-x-12"
               style={{
                 border: '3px double #2f2f2f',
                 padding: '10px 15px',
