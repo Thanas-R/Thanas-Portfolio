@@ -9,7 +9,7 @@ const TextRoll = ({ children, className, center = false }: { children: string; c
       initial="initial"
       whileHover="hovered"
       className={cn('relative inline-block overflow-hidden py-[2px]', className)}
-      style={{ lineHeight: 1.0}}
+      style={{ lineHeight: 0.9}}
     >
       <div>
         {children.split('').map((l, i) => {
