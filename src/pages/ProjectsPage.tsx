@@ -76,7 +76,7 @@ const ProjectsPage = () => {
           <div className="flex-1 md:pt-2">
             {/* Mobile header */}
             <div className="md:hidden mb-8">
-              <h1 className="text-4xl font-black text-foreground uppercase font-['Space_Grotesk']">
+              <h1 className="text-4xl font-black text-foreground font-['Space_Grotesk']">
                 Projects <span className="text-muted-foreground/30 font-mono text-2xl">{projects.length}</span>
               </h1>
             </div>
