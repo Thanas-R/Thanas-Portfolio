@@ -84,7 +84,7 @@ const Navbar = ({ forceDark = false }: { forceDark?: boolean }) => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  const isDark = mounted && resolvedTheme === 'dark';
+  const isDark = forceDark ? true : mounted && resolvedTheme === 'dark';
 
   // When forceDark, override text colors to always appear as dark-mode (white text on dark bg)
   const textPrimary = forceDark ? 'text-white' : 'text-foreground';
