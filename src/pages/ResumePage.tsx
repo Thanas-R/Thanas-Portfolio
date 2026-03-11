@@ -5,7 +5,8 @@ import Navbar from '@/components/Navbar';
 import resumePreview from '@/assets/resume-preview.png';
 
 const ResumePage = () => {
-  const resumePath = '/resume.pdf';
+  // Updated filename — make sure public/Thanas-Resume.pdf exists
+  const resumePath = '/Thanas-Resume.pdf';
 
   return (
     <div className="relative min-h-screen bg-background flex flex-col">
@@ -34,6 +35,7 @@ const ResumePage = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
+            aria-label="Open resume in new tab"
           >
             <FileText className="w-4 h-4" />
             Open as PDF
@@ -41,8 +43,8 @@ const ResumePage = () => {
           <a
             href={resumePath}
             download="Thanas-Resume.pdf"
-            target="_blank"
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
+            aria-label="Download resume"
           >
             <Download className="w-4 h-4" />
             Download
