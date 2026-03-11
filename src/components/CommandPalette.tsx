@@ -71,11 +71,11 @@ const CommandPalette = () => {
     const isDark = resolvedTheme === 'dark';
     const items: CommandItem[] = [
       // Navigation
-      { id: 'home', label: 'Home', section: 'Navigate', icon: Home, shortcut: 'H', action: () => go('/') },
-      { id: 'projects', label: 'Projects', section: 'Navigate', icon: FolderOpen, shortcut: 'P', action: () => go('/projects') },
-      { id: 'blogs', label: 'Blogs', section: 'Navigate', icon: Newspaper, shortcut: 'B', action: () => go('/blogs') },
-      { id: 'resume', label: 'Resume', section: 'Navigate', icon: FileText, shortcut: 'R', action: () => go('/resume') },
-      { id: 'contact', label: 'Contact', section: 'Navigate', icon: Mail, shortcut: 'C', action: () => go('/#contact') },
+      { id: 'home', label: 'Home', section: 'Navigate', icon: Home, shortcut: '⌘H', action: () => go('/') },
+      { id: 'projects', label: 'Projects', section: 'Navigate', icon: FolderOpen, shortcut: '⌘P', action: () => go('/projects') },
+      { id: 'blogs', label: 'Blogs', section: 'Navigate', icon: Newspaper, shortcut: '⌘B', action: () => go('/blogs') },
+      { id: 'resume', label: 'Resume', section: 'Navigate', icon: FileText, shortcut: '⌘R', action: () => go('/resume') },
+      { id: 'contact', label: 'Contact', section: 'Navigate', icon: Mail, shortcut: '⌘C', action: () => go('/#contact') },
       // Theme
       {
         id: 'theme',
@@ -118,17 +118,34 @@ const CommandPalette = () => {
     return map;
   }, [filtered]);
 
-  // ⌘K / Ctrl+K toggle
+  // ⌘K / Ctrl+K toggle + navigation shortcuts
   useEffect(() => {
+    const shortcutMap: Record<string, string> = {
+      h: '/',
+      p: '/projects',
+      b: '/blogs',
+      r: '/resume',
+      c: '/#contact',
+    };
+
     const onKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         setOpen((prev) => !prev);
+        return;
+      }
+      // ⌘+letter shortcuts for navigation (only when palette is NOT open)
+      if ((e.metaKey || e.ctrlKey) && !open) {
+        const path = shortcutMap[e.key.toLowerCase()];
+        if (path) {
+          e.preventDefault();
+          go(path);
+        }
       }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, [open, go]);
 
   // Listen for custom open event from Navbar
   useEffect(() => {

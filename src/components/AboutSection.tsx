@@ -45,18 +45,8 @@ const AboutSection = () => {
     <section id="about" className="relative py-12 w-full pt-0">
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-          {/* Journey */}
-          <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem]">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Journey</p>
-            <div className="space-y-4">
-              {journeyData.map((item, idx) => (
-                <TimelineItem key={item.year} year={item.year} suffix={item.suffix} description={item.description} isFirst={idx === 0} isLast={idx === journeyData.length - 1} />
-              ))}
-            </div>
-          </BentoCard>
-
-          {/* About Me */}
-          <BentoCard className="md:col-span-4 min-h-[10rem]">
+          {/* About Me — first on mobile via order */}
+          <BentoCard className="md:col-span-4 min-h-[10rem] order-1 md:order-2">
             <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">About Me</h3>
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
               I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
@@ -69,21 +59,34 @@ const AboutSection = () => {
             </p>
           </BentoCard>
 
-          {/* Education */}
-          <BentoCard className="md:col-span-2 min-h-[8rem]">
+          {/* Journey — second on mobile */}
+          <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem] order-2 md:order-1">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Journey</p>
+            <div className="space-y-4">
+              {journeyData.map((item, idx) => (
+                <TimelineItem key={item.year} year={item.year} suffix={item.suffix} description={item.description} isFirst={idx === 0} isLast={idx === journeyData.length - 1} />
+              ))}
+            </div>
+          </BentoCard>
+
+          {/* Education — third on mobile */}
+          <BentoCard className="md:col-span-2 min-h-[8rem] order-3">
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">Education</p>
             <div className="space-y-3">
               {educationData.map((edu, idx) => (
-                <div key={idx} className="flex-1">
-                  <p className="font-semibold text-foreground font-sans text-base">{edu.institution}</p>
-                  <p className="text-muted-foreground font-['Inter'] text-sm">{edu.detail} <span className="text-muted-foreground/70 font-['JetBrains_Mono']">· {edu.years}</span></p>
+                <div key={idx} className="flex items-start justify-between gap-2">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-foreground font-sans text-base">{edu.institution}</p>
+                    <p className="text-muted-foreground font-['Inter'] text-sm">{edu.detail}</p>
+                  </div>
+                  <span className="text-muted-foreground/70 font-['JetBrains_Mono'] text-sm shrink-0 text-right">{edu.years}</span>
                 </div>
               ))}
             </div>
           </BentoCard>
 
-          {/* GitHub Activity */}
-          <BentoCard className="md:col-span-2 min-h-[8rem]">
+          {/* GitHub Activity — fourth on mobile */}
+          <BentoCard className="md:col-span-2 min-h-[8rem] order-4">
             <GitHubActivityChart />
           </BentoCard>
         </div>
