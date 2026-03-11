@@ -40,7 +40,7 @@ const ResumePage = () => {
           </a>
           <a
             href={resumePath}
-            download="Thanas-R resume.pdf"
+            download="Thanas-Resume.pdf"
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
           >
             <Download className="w-4 h-4" />
