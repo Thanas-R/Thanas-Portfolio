@@ -12,7 +12,7 @@ const GradientCard = ({ children, className }: GradientCardProps) => {
     <div
       className={cn('relative rounded-xl overflow-hidden p-5', className)}
       style={{
-        border: '1px solid var(--gradient-card-border)',
+        border: '1.5px solid var(--gradient-card-border)',
         backgroundColor: 'var(--gradient-card-bg)',
       }}
     >
@@ -20,7 +20,7 @@ const GradientCard = ({ children, className }: GradientCardProps) => {
         spread={40}
         disabled={false}
         proximity={64}
-        borderWidth={2}
+        borderWidth={1.5}
         blur={0}
       />
       <div className="relative z-10 h-full">{children}</div>
