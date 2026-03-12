@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
@@ -20,6 +20,37 @@ import contourLight from '@/assets/contour-light.png';
 import pesuMcHero from '@/assets/pesumc-hero.png';
 import pesuMcBackdrop from '@/assets/pesumc-backdrop.png';
 import pesuMcIcon from '@/assets/pesumc-icon.png';
+
+/** Blur-to-sharp background image that works even when the image is already cached */
+const ProgressiveBgImg = ({ src }: { src: string }) => {
+  const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const handleLoad = useCallback(() => setLoaded(true), []);
+
+  useEffect(() => {
+    // If image is already cached/complete on mount, trigger transition after one frame
+    if (imgRef.current?.complete) {
+      requestAnimationFrame(() => setLoaded(true));
+    }
+  }, []);
+
+  return (
+    <img
+      ref={imgRef}
+      src={src}
+      alt=""
+      className="w-full h-full object-cover"
+      loading="eager"
+      onLoad={handleLoad}
+      style={{
+        filter: loaded ? 'blur(0px)' : 'blur(20px)',
+        transform: loaded ? 'scale(1)' : 'scale(1.02)',
+        transition: 'filter 700ms ease-out, transform 700ms ease-out',
+      }}
+    />
+  );
+};
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -776,20 +807,7 @@ const ProjectDetailPage = () => {
         <div className="min-h-screen relative">
           {/* Fixed backdrop image — starts visible with bg-black fallback */}
           <div className="fixed inset-0 z-0" style={{ backgroundColor: '#000' }}>
-            <img
-              src={pesuForgeBg}
-              alt=""
-              className="w-full h-full object-cover transition-[filter] duration-700"
-              loading="eager"
-              style={{ filter: 'blur(0px)' }}
-              onLoad={(e) => { (e.target as HTMLImageElement).style.filter = 'blur(0px)'; }}
-              onError={(e) => { (e.target as HTMLImageElement).style.filter = 'blur(0px)'; }}
-              ref={(el) => {
-                if (el && !el.complete) {
-                  el.style.filter = 'blur(20px)';
-                }
-              }}
-            />
+            <ProgressiveBgImg src={pesuForgeBg} />
             <div className="absolute inset-0 bg-black/40" />
           </div>
 
@@ -984,19 +1002,7 @@ const ProjectDetailPage = () => {
         <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
           {/* Fixed backdrop */}
           <div className="fixed inset-0 z-0" style={{ backgroundColor: '#0a0a0a' }}>
-            <img
-              src={pesuMcBackdrop}
-              alt=""
-              className="w-full h-full object-cover transition-[filter] duration-700"
-              loading="eager"
-              style={{ filter: 'blur(0px)' }}
-              onLoad={(e) => { (e.target as HTMLImageElement).style.filter = 'blur(0px)'; }}
-              ref={(el) => {
-                if (el && !el.complete) {
-                  el.style.filter = 'blur(20px)';
-                }
-              }}
-            />
+            <ProgressiveBgImg src={pesuMcBackdrop} />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%)' }} />
           </div>
 
