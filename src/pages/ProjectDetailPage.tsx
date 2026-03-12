@@ -165,12 +165,21 @@ const ProjectDetailPage = () => {
   }
 
   if (isSpheal) {
-    return <>{needsLoader && <ProjectPageLoader ready={assetsReady} />}<SideNav /><SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+    return (
+      <>
+         {needsLoader && <ProjectPageLoader ready={assetsReady} minDuration={1500} />}
+        <div style={{ visibility: assetsReady ? 'visible' : 'hidden' }}>
+          <SideNav />
+          <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+        </div>
+      </>
+    );
   }
 
   return (
     <>
-      {needsLoader && <ProjectPageLoader ready={assetsReady} />}
+      {needsLoader && <ProjectPageLoader ready={assetsReady} minDuration={1500} />}
+      <div style={needsLoader ? { visibility: assetsReady ? 'visible' : 'hidden' } : undefined}>
       <SideNav />
       {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
@@ -1374,6 +1383,7 @@ const ProjectDetailPage = () => {
             </div>
           </>)
         }
+      </div>
       </div>
     </>);
 
