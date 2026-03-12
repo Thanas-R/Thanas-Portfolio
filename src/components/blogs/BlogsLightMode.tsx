@@ -1,57 +1,13 @@
 import { motion } from 'framer-motion';
 import { useBlogData } from './useBlogData';
-import { useIsMobile } from '@/hooks/use-mobile';
 
-interface BlogsLightModeProps {
-  onToggleTheme?: () => void;
-}
-
-const BlogsLightMode = ({ onToggleTheme }: BlogsLightModeProps) => {
+const BlogsLightMode = () => {
   const { weather, dateStr, dateStrMobile, publishedCount, blogArticles } = useBlogData();
-  const isMobile = useIsMobile();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const weatherText = weather ? `${weather.temp}°C, ${weather.desc}` : '—';
 
   return (
-    <div className="min-h-screen relative" style={{ backgroundColor: '#f9f7f1', color: '#2f2f2f' }}>
-      {/* Click Me sticker — desktop only */}
-      {onToggleTheme && !isMobile && (
-        <button
-          onClick={onToggleTheme}
-          className="absolute z-30 hidden md:block"
-          style={{ top: '18px', right: '32px' }}
-        >
-          <div
-            className="relative px-5 py-2.5 transition-transform duration-200 hover:scale-105 active:scale-95"
-            style={{
-              backgroundColor: '#fef3c7',
-              border: '1px solid #d4a017',
-              borderRadius: '2px',
-              fontFamily: "'Caveat', 'Patrick Hand', cursive",
-              fontSize: '16px',
-              fontWeight: 700,
-              color: '#7c4a03',
-              transform: 'rotate(3deg)',
-              boxShadow: '2px 3px 8px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(255,255,255,0.3)',
-            }}
-          >
-            <span style={{ position: 'relative', zIndex: 1 }}>Click me!</span>
-            <div
-              style={{
-                position: 'absolute',
-                top: '-6px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: '40px',
-                height: '12px',
-                backgroundColor: 'rgba(255,255,255,0.5)',
-                borderRadius: '1px',
-                border: '1px solid rgba(0,0,0,0.05)',
-              }}
-            />
-          </div>
-        </button>
-      )}
-
+    <div className="min-h-screen" style={{ backgroundColor: '#f9f7f1', color: '#2f2f2f' }}>
       {/* Newspaper Header */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -73,42 +29,23 @@ const BlogsLightMode = ({ onToggleTheme }: BlogsLightModeProps) => {
             Thanas Blogs
           </header>
 
-          {/* Info row — desktop */}
-          {!isMobile && (
-            <div
-              className="flex items-center justify-between py-2.5 text-xs tracking-wider"
-              style={{
-                borderTop: '2px solid #2f2f2f',
-                borderBottom: '2px solid #2f2f2f',
-                fontFamily: "'Playfair Display', serif",
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-              }}
-            >
-              <span style={{ fontSize: '11px', fontWeight: 600 }}>{weatherText}</span>
-              <span style={{ fontSize: '11px', fontWeight: 600 }}>Bengaluru - {dateStr}</span>
-              <span style={{ fontSize: '11px', fontWeight: 600 }}>
-                {publishedCount} {publishedCount === 1 ? 'Blog' : 'Blogs'}
-              </span>
-            </div>
-          )}
-
-          {/* Info row — mobile: centered, two lines */}
-          {isMobile && (
-            <div
-              className="flex flex-col items-center py-2.5"
-              style={{
-                borderTop: '2px solid #2f2f2f',
-                borderBottom: '2px solid #2f2f2f',
-                fontFamily: "'Playfair Display', serif",
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-              }}
-            >
-              <span style={{ fontSize: '11px', fontWeight: 600 }}>BLR</span>
-              <span style={{ fontSize: '10px', fontWeight: 600, marginTop: '2px' }}>{dateStrMobile}</span>
-            </div>
-          )}
+          {/* Info row */}
+          <div
+            className="flex items-center justify-between py-2.5 text-xs tracking-wider"
+            style={{
+              borderTop: '2px solid #2f2f2f',
+              borderBottom: '2px solid #2f2f2f',
+              fontFamily: "'Playfair Display', serif",
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+            }}
+          >
+            <span style={{ fontSize: '11px', fontWeight: 600 }}>{weatherText}</span>
+            <span style={{ fontSize: '11px', fontWeight: 600 }}>{isMobile ? `BLR - ${dateStrMobile}` : `Bengaluru - ${dateStr}`}</span>
+            <span style={{ fontSize: '11px', fontWeight: 600 }}>
+              {publishedCount} {publishedCount === 1 ? 'Blog' : 'Blogs'}
+            </span>
+          </div>
         </div>
       </motion.div>
 
