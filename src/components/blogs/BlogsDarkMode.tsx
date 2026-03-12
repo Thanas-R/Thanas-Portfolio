@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { useLanyard } from 'react-use-lanyard';
 import { useBlogData } from './useBlogData';
+import { useIsMobile } from '@/hooks/use-mobile';
 
-const DISCORD_USER_ID = '394137572481867786';
+const DISCORD_USER_ID = '677174403859087378';
 
 /* ── Scanline overlay ── */
 const Scanlines = () => (
@@ -16,7 +17,7 @@ const Scanlines = () => (
 );
 
 /* ── Glitch text with animated clip-path ── */
-const GlitchText = ({ children, className = '', large = false }: { children: string; className?: string; large?: boolean }) => (
+const GlitchText = ({ children, className = '' }: { children: string; className?: string; large?: boolean }) => (
   <span className={`glitch-cyber relative inline-block ${className}`} data-text={children}>
     <span className="relative z-10">{children}</span>
     <span aria-hidden className="glitch-cyber-before absolute top-0 left-0 z-0" style={{ color: '#fff' }}>{children}</span>
@@ -41,21 +42,13 @@ const HudRow = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-/* ── Neon glow accent lines ── */
-const NeonAccents = () => (
-  <>
-    <div className="pointer-events-none fixed top-0 left-0 right-0 z-[55] h-px" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(0,255,200,0.3) 20%, rgba(0,200,255,0.5) 50%, rgba(0,255,200,0.3) 80%, transparent 100%)', boxShadow: '0 0 15px rgba(0,255,200,0.15), 0 0 30px rgba(0,200,255,0.08)' }} />
-    <div className="pointer-events-none fixed top-0 left-0 z-0" style={{ width: 400, height: 400, background: 'radial-gradient(circle at 0% 0%, rgba(0,255,200,0.04) 0%, transparent 70%)' }} />
-    <div className="pointer-events-none fixed bottom-0 right-0 z-0" style={{ width: 500, height: 500, background: 'radial-gradient(circle at 100% 100%, rgba(0,200,255,0.03) 0%, transparent 70%)' }} />
-  </>
-);
-
 interface BlogsDarkModeProps {
   onToggleTheme?: () => void;
 }
 
 const BlogsDarkMode = ({ onToggleTheme }: BlogsDarkModeProps) => {
-  const { weather, dateStr, dateStrMobile, publishedCount, blogArticles } = useBlogData();
+  const { weather, dateStr, publishedCount, blogArticles } = useBlogData();
+  const isMobile = useIsMobile();
   const { status: lanyard } = useLanyard({ userId: DISCORD_USER_ID, socket: true });
   const discordStatus = lanyard?.discord_status || 'offline';
   const isOnline = discordStatus !== 'offline';
@@ -63,7 +56,6 @@ const BlogsDarkMode = ({ onToggleTheme }: BlogsDarkModeProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#0a0a0a', color: '#e0e0e0' }}>
       <Scanlines />
-      <NeonAccents />
 
       {/* Grid overlay */}
       <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.03]" style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
@@ -91,30 +83,30 @@ const BlogsDarkMode = ({ onToggleTheme }: BlogsDarkModeProps) => {
         <div className="max-w-6xl mx-auto">
           <p className="text-[11px] tracking-[8px] uppercase mb-4 opacity-30" style={{ fontFamily: "'JetBrains Mono', monospace" }}>ブログ — TRANSMISSION LOG</p>
 
-          <div className="flex items-end gap-6 mb-6 pl-2 md:pl-4">
-            <h1 className="leading-[0.85]" style={{ fontFamily: "'Bebas Neue', 'League Gothic', sans-serif", fontSize: 'clamp(48px, 9vw, 100px)', fontWeight: 400, letterSpacing: '6px', textTransform: 'uppercase', color: '#fff', textShadow: '0 0 30px rgba(0,255,200,0.08)' }}>
-              <GlitchText large>THANAS</GlitchText>
-            </h1>
-            <div className="flex items-center gap-4 pb-2">
-              <p className="opacity-30" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '12px', letterSpacing: '3px' }}>記録 / ARCHIVES</p>
-              {/* Theme toggle button - cyberpunk style */}
-              {onToggleTheme && (
-                <button
-                  onClick={onToggleTheme}
-                  className="relative px-3 py-1 text-[10px] tracking-[3px] uppercase transition-all duration-300 hover:scale-105"
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    color: 'rgba(0,255,200,0.8)',
-                    border: '1px solid rgba(0,255,200,0.25)',
-                    backgroundColor: 'rgba(0,255,200,0.05)',
-                    boxShadow: '0 0 10px rgba(0,255,200,0.08), inset 0 0 10px rgba(0,255,200,0.03)',
-                    letterSpacing: '3px',
-                  }}
-                >
-                  CLICK ME
-                </button>
-              )}
+          <div className="flex items-end justify-between mb-6 pl-2 md:pl-4">
+            <div className="flex items-end gap-6">
+              <h1 className="leading-[0.85]" style={{ fontFamily: "'Bebas Neue', 'League Gothic', sans-serif", fontSize: 'clamp(48px, 9vw, 100px)', fontWeight: 400, letterSpacing: '6px', textTransform: 'uppercase', color: '#fff', textShadow: '0 0 30px rgba(0,255,200,0.08)' }}>
+                <GlitchText large>THANAS</GlitchText>
+              </h1>
+              <p className="opacity-30 pb-2" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '12px', letterSpacing: '3px' }}>記録 / ARCHIVES</p>
             </div>
+            {/* Theme toggle button - desktop only, right end */}
+            {onToggleTheme && !isMobile && (
+              <button
+                onClick={onToggleTheme}
+                className="relative px-3 py-1 text-[10px] tracking-[3px] uppercase transition-all duration-300 hover:scale-105 hidden md:inline-block mb-2"
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  color: 'rgba(0,255,200,0.8)',
+                  border: '1px solid rgba(0,255,200,0.25)',
+                  backgroundColor: 'rgba(0,255,200,0.05)',
+                  boxShadow: '0 0 10px rgba(0,255,200,0.08), inset 0 0 10px rgba(0,255,200,0.03)',
+                  letterSpacing: '3px',
+                }}
+              >
+                CLICK ME
+              </button>
+            )}
           </div>
 
           {/* Subtitle line with neon accent */}
