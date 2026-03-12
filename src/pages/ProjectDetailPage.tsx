@@ -170,6 +170,7 @@ const ProjectDetailPage = () => {
 
   return (
     <>
+      {needsLoader && <ProjectPageLoader ready={assetsReady} />}
       <SideNav />
       {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
