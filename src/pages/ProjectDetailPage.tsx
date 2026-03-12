@@ -52,6 +52,18 @@ const ProjectDetailPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevProject, nextProject, navigate]);
 
+  if (!project) return <Navigate to="/projects" replace />;
+
+  const isThanasOS = project.id === 'thanas-os';
+  const isSmartChef = project.id === 'smart-chef';
+  const isAskBookie = project.id === 'askbookie';
+  const isPesuForge = project.id === 'pesu-forge';
+  const isContourFlow = project.id === 'contour-flow';
+  const isVirdis = project.id === 'virdis';
+  const isPesuMC = project.id === 'pesu-mc';
+  const isNautilus = project.id === 'nautilus';
+  const isSpheal = project.id === 'spheal';
+
   // Loading state for heavy pages (Spheal, PESU Forge, PESU MC)
   const needsLoader = isSpheal || isPesuForge || isPesuMC;
   const [assetsReady, setAssetsReady] = useState(!needsLoader);
@@ -73,26 +85,10 @@ const ProjectDetailPage = () => {
   useEffect(() => {
     if (!needsLoader) return;
     setAssetsReady(false);
-    if (isPesuForge) preloadImages([pesuForgeBg, project?.imageSrc || '']);
-    else if (isPesuMC) preloadImages([pesuMcBackdrop, pesuMcHero, pesuMcIcon, project?.imageSrc || '']);
-    else if (isSpheal) {
-      // Globe loads async, give it a moment + preload image
-      const imgs = [project?.imageSrc || ''];
-      preloadImages(imgs);
-    }
+    if (isPesuForge) preloadImages([pesuForgeBg, project.imageSrc]);
+    else if (isPesuMC) preloadImages([pesuMcBackdrop, pesuMcHero, pesuMcIcon, project.imageSrc]);
+    else if (isSpheal) preloadImages([project.imageSrc]);
   }, [slug, needsLoader, isPesuForge, isPesuMC, isSpheal]);
-
-  if (!project) return <Navigate to="/projects" replace />;
-
-  const isThanasOS = project.id === 'thanas-os';
-  const isSmartChef = project.id === 'smart-chef';
-  const isAskBookie = project.id === 'askbookie';
-  const isPesuForge = project.id === 'pesu-forge';
-  const isContourFlow = project.id === 'contour-flow';
-  const isVirdis = project.id === 'virdis';
-  const isPesuMC = project.id === 'pesu-mc';
-  const isNautilus = project.id === 'nautilus';
-  const isSpheal = project.id === 'spheal';
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
