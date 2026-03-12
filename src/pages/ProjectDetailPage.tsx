@@ -20,6 +20,7 @@ import contourLight from '@/assets/contour-light.png';
 import pesuMcHero from '@/assets/pesumc-hero.png';
 import pesuMcBackdrop from '@/assets/pesumc-backdrop.png';
 import pesuMcIcon from '@/assets/pesumc-icon.png';
+import ProjectPageLoader from '@/components/ProjectPageLoader';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
