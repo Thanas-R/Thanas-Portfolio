@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
@@ -20,7 +20,6 @@ import contourLight from '@/assets/contour-light.png';
 import pesuMcHero from '@/assets/pesumc-hero.png';
 import pesuMcBackdrop from '@/assets/pesumc-backdrop.png';
 import pesuMcIcon from '@/assets/pesumc-icon.png';
-import ProjectPageLoader from '@/components/ProjectPageLoader';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -48,23 +47,6 @@ const ProjectDetailPage = () => {
   const isNautilus = project?.id === 'nautilus';
   const isSpheal = project?.id === 'spheal';
 
-  const needsLoader = isSpheal || isPesuForge || isPesuMC;
-  const [assetsReady, setAssetsReady] = useState(!needsLoader);
-
-  const preloadImages = useCallback((srcs: string[]) => {
-    let loaded = 0;
-    const total = srcs.length;
-    if (total === 0) { setAssetsReady(true); return; }
-    srcs.forEach((src) => {
-      const img = new Image();
-      img.onload = img.onerror = () => {
-        loaded++;
-        if (loaded >= total) setAssetsReady(true);
-      };
-      img.src = src;
-    });
-  }, []);
-
   // Arrow key navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -75,17 +57,32 @@ const ProjectDetailPage = () => {
         navigate(`/projects/${nextProject.id}`);
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevProject, nextProject, navigate]);
 
   useEffect(() => {
-    if (!needsLoader || !project) return;
-    setAssetsReady(false);
-    if (isPesuForge) preloadImages([pesuForgeBg, project.imageSrc]);
-    else if (isPesuMC) preloadImages([pesuMcBackdrop, pesuMcHero, pesuMcIcon, project.imageSrc]);
-    else if (isSpheal) preloadImages([project.imageSrc]);
-  }, [slug, needsLoader, isPesuForge, isPesuMC, isSpheal]);
+    if (!project) return;
+
+    const preload = (srcs: string[]) => {
+      srcs.forEach((src) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = src;
+      });
+    };
+
+    if (isPesuForge) {
+      preload([pesuForgeBg, project.imageSrc]);
+    } else if (isPesuMC) {
+      preload([pesuMcBackdrop, pesuMcHero, pesuMcIcon, project.imageSrc]);
+    } else if (isSpheal) {
+      preload([project.imageSrc]);
+      void (window as any).__globeDataPromise?.catch?.(() => null);
+      void (window as any).__sphealDotsPromise?.catch?.(() => null);
+    }
+  }, [project, isPesuForge, isPesuMC, isSpheal]);
 
   if (!project) return <Navigate to="/projects" replace />;
 
@@ -167,19 +164,14 @@ const ProjectDetailPage = () => {
   if (isSpheal) {
     return (
       <>
-         {needsLoader && <ProjectPageLoader ready={assetsReady} minDuration={800} />}
-        <div style={{ visibility: assetsReady ? 'visible' : 'hidden' }}>
-          <SideNav />
-          <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
-        </div>
+        <SideNav />
+        <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   return (
     <>
-      {needsLoader && <ProjectPageLoader ready={assetsReady} minDuration={800} />}
-      <div style={needsLoader ? { visibility: assetsReady ? 'visible' : 'hidden' } : undefined}>
       <SideNav />
       {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
@@ -1383,7 +1375,6 @@ const ProjectDetailPage = () => {
             </div>
           </>)
         }
-      </div>
       </div>
     </>);
 
