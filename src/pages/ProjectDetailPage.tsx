@@ -26,7 +26,7 @@ const ProgressiveBgImg = ({ src }: { src: string }) => {
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const handleLoad = useCallback(() => setLoaded(true), []);
+  const handleLoad = useCallback(() => {   requestAnimationFrame(() => setLoaded(true)); }, []);
 
   useEffect(() => {
     // If image is already cached/complete on mount, trigger transition after one frame
