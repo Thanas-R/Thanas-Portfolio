@@ -75,15 +75,16 @@ export function useBlogData() {
   const today = new Date();
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const dayName = dayNames[today.getDay()];
-  const monthStr = today.toLocaleDateString('en-US', { month: 'long' });
-  const dateStr = `${dayName}, ${monthStr} ${today.getDate()}, ${today.getFullYear()}`;
+  const monthFull = today.toLocaleDateString('en-US', { month: 'long' });
+  const monthShort = today.toLocaleDateString('en-US', { month: 'short' });
+  const dateStr = `${dayName}, ${monthFull} ${today.getDate()}, ${today.getFullYear()}`;
+  const dateStrMobile = `${dayName}, ${monthShort} ${today.getDate()}, ${today.getFullYear()}`;
 
   const publishedCount = 0;
 
   useEffect(() => {
     const loadWeather = async () => {
       try {
-        // Use preloaded data from main.tsx
         const data = await (window as any).__weatherDataPromise;
         if (data?.current) {
           setWeather({
@@ -102,5 +103,5 @@ export function useBlogData() {
     loadWeather();
   }, []);
 
-  return { weather, dateStr, publishedCount, blogArticles };
+  return { weather, dateStr, dateStrMobile, publishedCount, blogArticles };
 }

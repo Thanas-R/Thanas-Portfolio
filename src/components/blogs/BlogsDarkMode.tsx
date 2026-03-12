@@ -58,7 +58,7 @@ const HudRow = ({ label, value }: { label: string; value: string }) => (
 );
 
 const BlogsDarkMode = () => {
-  const { weather, dateStr, publishedCount, blogArticles } = useBlogData();
+  const { weather, dateStr, dateStrMobile, publishedCount, blogArticles } = useBlogData();
   const { status: lanyard } = useLanyard({ userId: DISCORD_USER_ID, socket: true });
   const discordStatus = lanyard?.discord_status || 'offline';
   const isOnline = discordStatus !== 'offline';

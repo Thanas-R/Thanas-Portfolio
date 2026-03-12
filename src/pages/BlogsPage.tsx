@@ -22,10 +22,10 @@ const BlogsPage = () => {
         {mounted && (
           <motion.div
             key={isDark ? 'dark' : 'light'}
-            initial={{ opacity: 0, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, filter: 'blur(8px)' }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
           >
             {isDark ? <BlogsDarkMode /> : <BlogsLightMode />}
           </motion.div>

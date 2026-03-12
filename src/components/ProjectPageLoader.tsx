@@ -1,23 +1,42 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
 interface ProjectPageLoaderProps {
   /** Set to true once all critical assets are loaded */
   ready: boolean;
 }
+
 const ProjectPageLoader = ({ ready }: ProjectPageLoaderProps) => {
   const [show, setShow] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const startTime = useRef(Date.now());
+
   useEffect(() => {
-    if (ready) {
-      // Small delay so exit animation plays smoothly
-      const t = setTimeout(() => setShow(false), 100);
-      return () => clearTimeout(t);
-    }
+    if (!ready) return;
+    // Animate to 100% then dismiss
+    setProgress(100);
+    const t = setTimeout(() => setShow(false), 350);
+    return () => clearTimeout(t);
   }, [ready]);
-  // Fallback: never block more than 4s
+
+  // Simulate progress while loading
   useEffect(() => {
-    const t = setTimeout(() => setShow(false), 4000);
+    if (ready) return;
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime.current;
+      // Slow logarithmic ramp capped at 85%
+      const p = Math.min(85, (Math.log(elapsed / 100 + 1) / Math.log(50)) * 85);
+      setProgress(Math.round(p));
+    }, 100);
+    return () => clearInterval(interval);
+  }, [ready]);
+
+  // Fallback: never block more than 5s
+  useEffect(() => {
+    const t = setTimeout(() => setShow(false), 5000);
     return () => clearTimeout(t);
   }, []);
+
   return (
     <AnimatePresence>
       {show && (
@@ -40,21 +59,22 @@ const ProjectPageLoader = ({ ready }: ProjectPageLoaderProps) => {
             >
               thanas.
             </span>
-            <motion.div
+            <div
               className="h-0.5 bg-foreground/20 rounded-full overflow-hidden"
               style={{ width: 80 }}
             >
               <motion.div
                 className="h-full bg-foreground rounded-full"
-                initial={{ x: '-100%' }}
-                animate={{ x: '0%' }}
-                transition={{ duration: 0.8, ease: 'easeInOut' }}
+                initial={{ width: '0%' }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
               />
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 };
+
 export default ProjectPageLoader;
