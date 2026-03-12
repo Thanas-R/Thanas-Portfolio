@@ -2,38 +2,63 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 
 interface ProjectPageLoaderProps {
-  /** Set to true once all critical assets are loaded */
   ready: boolean;
+  /** Minimum display time in ms (default 1500) */
+  minDuration?: number;
 }
 
-const ProjectPageLoader = ({ ready }: ProjectPageLoaderProps) => {
+const ProjectPageLoader = ({ ready, minDuration = 1500 }: ProjectPageLoaderProps) => {
   const [show, setShow] = useState(true);
   const [progress, setProgress] = useState(0);
   const startTime = useRef(Date.now());
+  const minElapsed = useRef(false);
 
+  // Track minimum duration
+  useEffect(() => {
+    const t = setTimeout(() => {
+      minElapsed.current = true;
+      // If assets already ready, dismiss
+      if (ready) {
+        setProgress(100);
+        setTimeout(() => setShow(false), 350);
+      }
+    }, minDuration);
+    return () => clearTimeout(t);
+  }, [minDuration, ready]);
+
+  // When assets are ready AND min duration passed, dismiss
   useEffect(() => {
     if (!ready) return;
-    // Animate to 100% then dismiss
-    setProgress(100);
-    const t = setTimeout(() => setShow(false), 350);
-    return () => clearTimeout(t);
+    if (minElapsed.current) {
+      setProgress(100);
+      const t = setTimeout(() => setShow(false), 350);
+      return () => clearTimeout(t);
+    }
+    // If not yet elapsed, the timer above will handle it
   }, [ready]);
 
   // Simulate progress while loading
   useEffect(() => {
-    if (ready) return;
+    if (!show) return;
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime.current;
-      // Slow logarithmic ramp capped at 85%
-      const p = Math.min(85, (Math.log(elapsed / 100 + 1) / Math.log(50)) * 85);
+      const duration = minDuration;
+      // Linear ramp to ~90% over minDuration, then slow crawl
+      let p: number;
+      if (elapsed < duration) {
+        p = (elapsed / duration) * 88;
+      } else {
+        p = Math.min(95, 88 + (Math.log((elapsed - duration) / 500 + 1) / Math.log(20)) * 7);
+      }
+      if (ready && minElapsed.current) p = 100;
       setProgress(Math.round(p));
-    }, 100);
+    }, 50);
     return () => clearInterval(interval);
-  }, [ready]);
+  }, [show, ready, minDuration]);
 
-  // Fallback: never block more than 5s
+  // Fallback: never block more than 6s
   useEffect(() => {
-    const t = setTimeout(() => setShow(false), 5000);
+    const t = setTimeout(() => setShow(false), 6000);
     return () => clearTimeout(t);
   }, []);
 
@@ -67,7 +92,7 @@ const ProjectPageLoader = ({ ready }: ProjectPageLoaderProps) => {
                 className="h-full bg-foreground rounded-full"
                 initial={{ width: '0%' }}
                 animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
               />
             </div>
           </motion.div>
