@@ -38,33 +38,16 @@ const ProjectDetailPage = () => {
   const prevProject = projects[currentIndex - 1] ?? null;
   const nextProject = projects[currentIndex + 1] ?? null;
 
-  // Arrow key navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      if (e.key === 'ArrowLeft' && prevProject) {
-        navigate(`/projects/${prevProject.id}`);
-      } else if (e.key === 'ArrowRight' && nextProject) {
-        navigate(`/projects/${nextProject.id}`);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [prevProject, nextProject, navigate]);
+  const isThanasOS = project?.id === 'thanas-os';
+  const isSmartChef = project?.id === 'smart-chef';
+  const isAskBookie = project?.id === 'askbookie';
+  const isPesuForge = project?.id === 'pesu-forge';
+  const isContourFlow = project?.id === 'contour-flow';
+  const isVirdis = project?.id === 'virdis';
+  const isPesuMC = project?.id === 'pesu-mc';
+  const isNautilus = project?.id === 'nautilus';
+  const isSpheal = project?.id === 'spheal';
 
-  if (!project) return <Navigate to="/projects" replace />;
-
-  const isThanasOS = project.id === 'thanas-os';
-  const isSmartChef = project.id === 'smart-chef';
-  const isAskBookie = project.id === 'askbookie';
-  const isPesuForge = project.id === 'pesu-forge';
-  const isContourFlow = project.id === 'contour-flow';
-  const isVirdis = project.id === 'virdis';
-  const isPesuMC = project.id === 'pesu-mc';
-  const isNautilus = project.id === 'nautilus';
-  const isSpheal = project.id === 'spheal';
-
-  // Loading state for heavy pages (Spheal, PESU Forge, PESU MC)
   const needsLoader = isSpheal || isPesuForge || isPesuMC;
   const [assetsReady, setAssetsReady] = useState(!needsLoader);
 
@@ -82,13 +65,29 @@ const ProjectDetailPage = () => {
     });
   }, []);
 
+  // Arrow key navigation
   useEffect(() => {
-    if (!needsLoader) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'ArrowLeft' && prevProject) {
+        navigate(`/projects/${prevProject.id}`);
+      } else if (e.key === 'ArrowRight' && nextProject) {
+        navigate(`/projects/${nextProject.id}`);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [prevProject, nextProject, navigate]);
+
+  useEffect(() => {
+    if (!needsLoader || !project) return;
     setAssetsReady(false);
     if (isPesuForge) preloadImages([pesuForgeBg, project.imageSrc]);
     else if (isPesuMC) preloadImages([pesuMcBackdrop, pesuMcHero, pesuMcIcon, project.imageSrc]);
     else if (isSpheal) preloadImages([project.imageSrc]);
   }, [slug, needsLoader, isPesuForge, isPesuMC, isSpheal]);
+
+  if (!project) return <Navigate to="/projects" replace />;
 
   const ProjectImage = ({ src, alt, className, style }: {src: string;alt: string;className?: string;style?: React.CSSProperties;}) => {
     if (project.live) {
