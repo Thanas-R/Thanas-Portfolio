@@ -167,7 +167,7 @@ const ProjectDetailPage = () => {
   if (isSpheal) {
     return (
       <>
-         {needsLoader && <ProjectPageLoader ready={assetsReady} minDuration={1500} />}
+         {needsLoader && <ProjectPageLoader ready={assetsReady} minDuration={800} />}
         <div style={{ visibility: assetsReady ? 'visible' : 'hidden' }}>
           <SideNav />
           <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
@@ -178,7 +178,7 @@ const ProjectDetailPage = () => {
 
   return (
     <>
-      {needsLoader && <ProjectPageLoader ready={assetsReady} minDuration={1500} />}
+      {needsLoader && <ProjectPageLoader ready={assetsReady} minDuration={800} />}
       <div style={needsLoader ? { visibility: assetsReady ? 'visible' : 'hidden' } : undefined}>
       <SideNav />
       {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
