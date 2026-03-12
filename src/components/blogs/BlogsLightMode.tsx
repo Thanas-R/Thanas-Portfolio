@@ -41,7 +41,7 @@ const BlogsLightMode = () => {
             }}
           >
             <span style={{ fontSize: '11px', fontWeight: 600 }}>{weatherText}</span>
-            <span style={{ fontSize: '11px', fontWeight: 600 }}>Bengaluru - {dateStr}</span>
+            <span style={{ fontSize: '11px', fontWeight: 600 }}>{isMobile ? `BLR - ${dateStrMobile}` : `Bengaluru - ${dateStr}`}</span>
             <span style={{ fontSize: '11px', fontWeight: 600 }}>
               {publishedCount} {publishedCount === 1 ? 'Blog' : 'Blogs'}
             </span>
