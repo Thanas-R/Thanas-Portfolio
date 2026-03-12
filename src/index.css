@@ -37,8 +37,8 @@
     --radius: 0.5rem;
 
     --glow-color: 153 46% 49%;
-    --gradient-card-bg: #fafafa;
-    --gradient-card-border: #fafafa;
+    --gradient-card-bg: #f7f7f7;
+    --gradient-card-border: #f7f7f7;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -80,8 +80,8 @@
     --ring: 0 0% 83.1%;
 
     --glow-color: 0 0% 100%;
-    --gradient-card-bg: #141414;
-    --gradient-card-border: #141414;
+    --gradient-card-bg: #0F0F0F;
+    --gradient-card-border: #0F0F0F;
 
     --sidebar-background: 0 0% 2%;
     --sidebar-foreground: 0 0% 96%;
