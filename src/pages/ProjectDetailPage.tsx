@@ -52,6 +52,36 @@ const ProjectDetailPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevProject, nextProject, navigate]);
 
+  // Loading state for heavy pages (Spheal, PESU Forge, PESU MC)
+  const needsLoader = isSpheal || isPesuForge || isPesuMC;
+  const [assetsReady, setAssetsReady] = useState(!needsLoader);
+
+  const preloadImages = useCallback((srcs: string[]) => {
+    let loaded = 0;
+    const total = srcs.length;
+    if (total === 0) { setAssetsReady(true); return; }
+    srcs.forEach((src) => {
+      const img = new Image();
+      img.onload = img.onerror = () => {
+        loaded++;
+        if (loaded >= total) setAssetsReady(true);
+      };
+      img.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!needsLoader) return;
+    setAssetsReady(false);
+    if (isPesuForge) preloadImages([pesuForgeBg, project?.imageSrc || '']);
+    else if (isPesuMC) preloadImages([pesuMcBackdrop, pesuMcHero, pesuMcIcon, project?.imageSrc || '']);
+    else if (isSpheal) {
+      // Globe loads async, give it a moment + preload image
+      const imgs = [project?.imageSrc || ''];
+      preloadImages(imgs);
+    }
+  }, [slug, needsLoader, isPesuForge, isPesuMC, isSpheal]);
+
   if (!project) return <Navigate to="/projects" replace />;
 
   const isThanasOS = project.id === 'thanas-os';
