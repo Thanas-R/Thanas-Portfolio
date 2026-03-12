@@ -52,7 +52,7 @@ export const projects: Project[] = [
       'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences - then the AI designs the full itinerary.',
     imageSrc: projectSpheal,
     tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
-    live: 'https://spheal.vercel.app',
+    live: 'https://spheal-worldwide.vercel.app/',
   },
   {
     id: 'pesu-mc',
