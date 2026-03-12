@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { useBlogData } from './useBlogData';
 
 const BlogsLightMode = () => {
-  const { weather, dateStr, publishedCount, blogArticles } = useBlogData();
-
+  const { weather, dateStr, dateStrMobile, publishedCount, blogArticles } = useBlogData();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const weatherText = weather ? `${weather.temp}°C, ${weather.desc}` : '—';
 
   return (
@@ -41,7 +41,7 @@ const BlogsLightMode = () => {
             }}
           >
             <span style={{ fontSize: '11px', fontWeight: 600 }}>{weatherText}</span>
-            <span style={{ fontSize: '11px', fontWeight: 600 }}>Bengaluru - {dateStr}</span>
+            <span style={{ fontSize: '11px', fontWeight: 600 }}>{isMobile ? `BLR - ${dateStrMobile}` : `Bengaluru - ${dateStr}`}</span>
             <span style={{ fontSize: '11px', fontWeight: 600 }}>
               {publishedCount} {publishedCount === 1 ? 'Blog' : 'Blogs'}
             </span>
