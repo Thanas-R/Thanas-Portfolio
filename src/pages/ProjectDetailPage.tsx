@@ -779,8 +779,16 @@ const ProjectDetailPage = () => {
             <img
               src={pesuForgeBg}
               alt=""
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-[filter] duration-700"
               loading="eager"
+              style={{ filter: 'blur(0px)' }}
+              onLoad={(e) => { (e.target as HTMLImageElement).style.filter = 'blur(0px)'; }}
+              onError={(e) => { (e.target as HTMLImageElement).style.filter = 'blur(0px)'; }}
+              ref={(el) => {
+                if (el && !el.complete) {
+                  el.style.filter = 'blur(20px)';
+                }
+              }}
             />
             <div className="absolute inset-0 bg-black/40" />
           </div>
@@ -976,7 +984,19 @@ const ProjectDetailPage = () => {
         <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
           {/* Fixed backdrop */}
           <div className="fixed inset-0 z-0" style={{ backgroundColor: '#0a0a0a' }}>
-            <img src={pesuMcBackdrop} alt="" className="w-full h-full object-cover" loading="eager" />
+            <img
+              src={pesuMcBackdrop}
+              alt=""
+              className="w-full h-full object-cover transition-[filter] duration-700"
+              loading="eager"
+              style={{ filter: 'blur(0px)' }}
+              onLoad={(e) => { (e.target as HTMLImageElement).style.filter = 'blur(0px)'; }}
+              ref={(el) => {
+                if (el && !el.complete) {
+                  el.style.filter = 'blur(20px)';
+                }
+              }}
+            />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%)' }} />
           </div>
 
