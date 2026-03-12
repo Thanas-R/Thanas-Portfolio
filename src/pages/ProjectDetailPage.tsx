@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
