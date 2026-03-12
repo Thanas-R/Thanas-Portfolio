@@ -71,7 +71,7 @@ const SolarSwitch = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-const Navbar = ({ forceDark = false, forceLight = false }: { forceDark?: boolean; forceLight?: boolean }) => {
+const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideThemeToggleProp }: { forceDark?: boolean; forceLight?: boolean; hideThemeToggle?: boolean }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -86,8 +86,8 @@ const Navbar = ({ forceDark = false, forceLight = false }: { forceDark?: boolean
 
   const isDark = mounted && resolvedTheme === 'dark';
 
-  // Hide theme toggle when theme is forced
-  const hideThemeToggle = forceDark || forceLight;
+  // Hide theme toggle when theme is forced, unless explicitly overridden
+  const hideThemeToggle = hideThemeToggleProp !== undefined ? hideThemeToggleProp : (forceDark || forceLight);
 
   // When forceDark, override text colors to always appear as dark-mode (white text on dark bg)
   // When forceLight, override text colors to always appear as light-mode (dark text on light bg)

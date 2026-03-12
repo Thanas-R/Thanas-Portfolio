@@ -5,7 +5,7 @@ import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
 import GridBackground from '@/components/GridBackground';
 import { Project } from '@/components/ProjectsSection';
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 const fadeUp = (delay = 0) => ({
@@ -141,11 +141,24 @@ const DottedGlobe = ({ isDark, size = 420 }: { isDark: boolean; size?: number })
 
     const loadData = async () => {
       try {
-        const res = await fetch(
-          'https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json'
-        );
-        if (!res.ok) return;
-        landFeatures = await res.json();
+        const globeDataPromise = (window as any).__globeDataPromise
+          ?? fetch('https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json')
+            .then((res: Response) => (res.ok ? res.json() : null))
+            .catch(() => null);
+
+        const [cachedLandFeatures, cachedDots] = await Promise.all([
+          globeDataPromise,
+          (window as any).__sphealDotsPromise ?? Promise.resolve(null),
+        ]);
+
+        if (!cachedLandFeatures?.features) return;
+        landFeatures = cachedLandFeatures;
+
+        if (Array.isArray(cachedDots) && cachedDots.length > 0) {
+          allDots.push(...cachedDots);
+          render();
+          return;
+        }
 
         landFeatures.features.forEach((feature: any) => {
           const bounds = d3.geoBounds(feature);
@@ -159,6 +172,7 @@ const DottedGlobe = ({ isDark, size = 420 }: { isDark: boolean; size?: number })
             }
           }
         });
+
         render();
       } catch {}
     };
