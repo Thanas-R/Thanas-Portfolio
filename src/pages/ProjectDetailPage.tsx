@@ -165,7 +165,7 @@ const ProjectDetailPage = () => {
   }
 
   if (isSpheal) {
-    return <><SideNav /><SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+    return <>{needsLoader && <ProjectPageLoader ready={assetsReady} />}<SideNav /><SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   return (
