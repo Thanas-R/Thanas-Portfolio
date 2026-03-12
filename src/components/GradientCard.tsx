@@ -9,7 +9,13 @@ interface GradientCardProps {
 
 const GradientCard = ({ children, className }: GradientCardProps) => {
   return (
-    <div className={cn('relative rounded-xl border border-border bg-card overflow-hidden p-5', className)}>
+    <div
+      className={cn('relative rounded-xl overflow-hidden p-5', className)}
+      style={{
+        border: '1px solid var(--gradient-card-border)',
+        backgroundColor: 'var(--gradient-card-bg)',
+      }}
+    >
       <GlowingEffect
         spread={40}
         disabled={false}

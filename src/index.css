@@ -80,6 +80,8 @@
     --ring: 0 0% 83.1%;
 
     --glow-color: 0 0% 100%;
+    --gradient-card-bg: #0F0F0F;
+    --gradient-card-border: #0F0F0F;
 
     --sidebar-background: 0 0% 2%;
     --sidebar-foreground: 0 0% 96%;
