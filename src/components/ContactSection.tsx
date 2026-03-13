@@ -71,15 +71,6 @@ const ContactSection = () => {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Desktop only: allow shift+enter for new line, plain enter submits
-    // On mobile, Enter always creates a new line
-    if (e.key === 'Enter' && !e.shiftKey && window.innerWidth >= 768) {
-      e.preventDefault();
-      const formEl = e.currentTarget.closest('form');
-      if (formEl) formEl.requestSubmit();
-    }
-  };
 
   return (
     <section
@@ -140,7 +131,7 @@ const ContactSection = () => {
     placeholder="Message"
     value={form.message}
     onChange={(e) => setForm({ ...form, message: e.target.value })}
-    onKeyDown={handleKeyDown}
+    
     className="w-full px-5 py-5 rounded-xl 
     bg-secondary/50 dark:bg-secondary/30 
     border border-[#F6F6F6] dark:border-border
@@ -151,8 +142,6 @@ const ContactSection = () => {
     required
   />
 
-{/* Button LEFT + Enter hint RIGHT */}
-<div className="flex items-center justify-between gap-4">
   <button
     type="submit"
     disabled={sending}
@@ -160,15 +149,6 @@ const ContactSection = () => {
   >
     {sending ? 'Sending...' : 'Send message'}
   </button>
-
-  {/* Enter guide stays on the right — desktop only */}
-  <span className="text-sm text-foreground/60 items-center gap-2 whitespace-nowrap hidden md:flex">
-    Press
-    <kbd className="px-2.5 py-1 rounded-md border border-border text-sm font-mono bg-secondary/40">
-      ↵ Enter
-    </kbd>
-  </span>
-</div>
           </form>
 
           {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
