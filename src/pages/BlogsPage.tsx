@@ -47,8 +47,8 @@ const BlogsPage = () => {
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           >
             {showDark
-              ? <BlogsDarkMode onToggleTheme={toggleMode} />
-              : <BlogsLightMode onToggleTheme={toggleMode} />
+              ? <BlogsDarkMode />
+              : <BlogsLightMode />
             }
           </motion.div>
         )}
