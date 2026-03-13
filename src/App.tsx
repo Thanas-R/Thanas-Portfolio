@@ -14,6 +14,7 @@ import ResumePage from "./pages/ResumePage";
 import BlogsPage from "./pages/BlogsPage";
 import NotFound from "./pages/NotFound";
 import CommandPalette from "./components/CommandPalette";
+import CommandButton from "./components/CommandButton";
 
 const queryClient = new QueryClient();
 
@@ -109,6 +110,7 @@ const App = () => (
       <BrowserRouter>
         <HashScrollHandler />
         <CommandPalette />
+        <CommandButton />
         <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>
