@@ -30,4 +30,4 @@ I strive to be honest, supportive, and reliable, taking responsibility or leadin
 </table>
 
 # License
-GNU GENERAL PUBLIC LICENSE
+ GPL-3.0 license
