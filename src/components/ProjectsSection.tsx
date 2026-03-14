@@ -33,7 +33,7 @@ export const projects: Project[] = [
     imageSrc: projectNautilus,
     tags: ['React', 'Canvas', 'AI', 'TypeScript', 'Graph'],
     live: 'https://nautilus-build.vercel.app',
-    github: 'https://github.com/Thanas-R/nautilus-cloud',
+    github: 'https://github.com/Thanas-R/Nautilus',
 
   },
   {
