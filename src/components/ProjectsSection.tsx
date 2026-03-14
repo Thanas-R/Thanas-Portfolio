@@ -33,6 +33,8 @@ export const projects: Project[] = [
     imageSrc: projectNautilus,
     tags: ['React', 'Canvas', 'AI', 'TypeScript', 'Graph'],
     live: 'https://nautilus-build.vercel.app',
+    github: 'https://github.com/Thanas-R/nautilus-cloud',
+
   },
   {
     id: 'virdis',
@@ -43,6 +45,8 @@ export const projects: Project[] = [
     imageSrc: projectVirdis,
     tags: ['Mapbox', 'Earth Engine', 'TypeScript', 'React', 'Supabase', 'Gemini AI', 'shadcn/ui'],
     live: 'https://virdis.vercel.app',
+    github: 'https://github.com/Thanas-R/Virdis',
+
   },
   {
     id: 'spheal',
@@ -53,6 +57,8 @@ export const projects: Project[] = [
     imageSrc: projectSpheal,
     tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
     live: 'https://spheal-worldwide.vercel.app/',
+    github: 'https://github.com/Thanas-R/Spheal',
+
   },
   {
     id: 'pesu-mc',
@@ -73,7 +79,7 @@ export const projects: Project[] = [
       'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API.',
     imageSrc: projectAskbookie,
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'RAG', 'Vite'],
-    live: 'https://askbookie.vercel.app',
+    live: 'https://ask-bookie.vercel.app',
     github: 'https://github.com/dotpmm/askbookie-frontend',
   },
   {

@@ -17,6 +17,14 @@ const PageLoader = () => {
       }, 200);
     };
 
+    const isAvatarReady = (): boolean => {
+      const avatarImg = Array.from(document.images).find(
+        (img) => img.alt === 'Thanas R' || img.src.includes('avatar')
+      );
+      if (!avatarImg) return false;
+      return avatarImg.complete && avatarImg.naturalHeight > 0;
+    };
+
     const checkProgress = () => {
       if (cancelled) return;
       const elapsed = Date.now() - startTime.current;
@@ -33,9 +41,19 @@ const PageLoader = () => {
 
     const onReady = () => {
       clearInterval(progressInterval);
-      const elapsed = Date.now() - startTime.current;
-      const remaining = Math.max(0, 400 - elapsed);
-      setTimeout(finish, remaining);
+
+      // Wait until the avatar/pfp is fully loaded before dismissing
+      const waitForAvatar = () => {
+        if (cancelled) return;
+        if (isAvatarReady()) {
+          const elapsed = Date.now() - startTime.current;
+          const remaining = Math.max(0, 400 - elapsed);
+          setTimeout(finish, remaining);
+        } else {
+          requestAnimationFrame(waitForAvatar);
+        }
+      };
+      waitForAvatar();
     };
 
     if (document.readyState === 'complete') {
@@ -44,11 +62,11 @@ const PageLoader = () => {
       window.addEventListener('load', onReady);
     }
 
-    // Fallback: never block more than 3s
+    // Fallback: never block more than 5s
     const fallback = setTimeout(() => {
       clearInterval(progressInterval);
       finish();
-    }, 3000);
+    }, 5000);
 
     return () => {
       cancelled = true;
