@@ -111,7 +111,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 </p>
                 <div className="flex items-center gap-3 shrink-0">
                   <a
-                    href="https://github.com"
+                    href="https://github.com/Thanas-R/Virdis"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:scale-[1.03] active:scale-[0.98] transition-all"
