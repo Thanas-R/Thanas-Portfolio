@@ -79,7 +79,7 @@ export const projects: Project[] = [
       'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API.',
     imageSrc: projectAskbookie,
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'RAG', 'Vite'],
-    live: 'https://askbookie.vercel.app',
+    live: 'https://ask-bookie.vercel.app',
     github: 'https://github.com/dotpmm/askbookie-frontend',
   },
   {
