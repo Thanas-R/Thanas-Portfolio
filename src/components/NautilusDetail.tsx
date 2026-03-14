@@ -410,7 +410,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               </a>
             )}
             <a
-              href={project.github || 'https://github.com/thanasR'}
+              href="https://github.com/Thanas-R/Nautilus"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border text-sm font-semibold transition-opacity hover:opacity-75"
@@ -478,8 +478,40 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             </div>
           </motion.div>
 
-          {/* Screenshot */}
+          {/* Credits */}
           <motion.div {...fadeUp(0.34)}>
+            <h2
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
+              style={{ color: labelColor, fontFamily: font }}
+            >
+              Credits
+            </h2>
+            <div
+              className="p-5 rounded-xl mb-12"
+              style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+            >
+              <div className="space-y-2">
+                <p className="text-sm" style={{ color: headingColor, fontFamily: font }}>
+                  <span className="font-medium" style={{ color: isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)' }}>Full-stack development and integration:</span>{' '}
+                  <span className="font-semibold">Thanas R</span>
+                </p>
+                <p className="text-sm" style={{ color: headingColor, fontFamily: font }}>
+                  <span className="font-medium" style={{ color: isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)' }}>Concept and Converge mode:</span>{' '}
+                  <a
+                    href="https://github.com/Tanay-s5"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold hover:opacity-70 transition-opacity underline underline-offset-2"
+                  >
+                    @tanay-s5
+                  </a>
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Screenshot */}
+          <motion.div {...fadeUp(0.38)}>
             <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${cardBorder}` }}>
               {project.live ? (
                 <a href={project.live} target="_blank" rel="noopener noreferrer">
