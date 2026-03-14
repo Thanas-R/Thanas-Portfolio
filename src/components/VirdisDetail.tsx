@@ -38,7 +38,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
   const green = '#4A8C6F';
   const divider = '#2E3F37';
   const codeBg = '#182420';
-  const accent = '#EAB947';
+  const accent = '#C6B77E';
 
   const font = "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
   const monoFont = "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace";
