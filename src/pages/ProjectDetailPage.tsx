@@ -769,7 +769,44 @@ const ProjectDetailPage = () => {
               </div>
             </motion.div>
 
-            <motion.div {...fadeUp(0.3)} className="mt-14 rounded-2xl overflow-hidden border border-foreground/10">
+            {/* Credits */}
+            <motion.div {...fadeUp(0.28)} className="mt-14">
+              <h2
+                className="text-2xl md:text-3xl font-bold mb-6"
+                style={{ fontFamily: "'Playfair Display', serif" }}>
+                Credits
+              </h2>
+              <div className="p-6 rounded-2xl border border-foreground/10 bg-card space-y-2">
+                <p className="text-sm text-foreground">
+                  <span className="text-muted-foreground">Front end and Backend:</span>{' '}
+                  <span className="font-semibold">Thanas R</span>
+                </p>
+                <p className="text-sm text-foreground">
+                  <span className="text-muted-foreground">Backend and database:</span>{' '}
+                  <a
+                    href="https://github.com/Tanay-s5"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold hover:opacity-70 transition-opacity underline underline-offset-2"
+                  >
+                    @tanay-s
+                  </a>
+                </p>
+                <p className="text-sm text-foreground">
+                  <span className="text-muted-foreground">Testing and verification:</span>{' '}
+                  <a
+                    href="https://github.com/kengeorgeoff182-code"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold hover:opacity-70 transition-opacity underline underline-offset-2"
+                  >
+                    @ken-george
+                  </a>
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.32)} className="mt-8 rounded-2xl overflow-hidden border border-foreground/10">
               <ProjectImage
               src={project.imageSrc}
               alt={`${project.title} preview`}
