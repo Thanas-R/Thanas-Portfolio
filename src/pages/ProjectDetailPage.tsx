@@ -550,12 +550,20 @@ const ProjectDetailPage = () => {
                 </h1>
                 <div className="flex items-center gap-16 mb-4">
                   <AppleHelloEffect className="h-8 md:h-12 text-foreground" speed={0.7} />
-                  {project.live &&
-                <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
-                      <ExternalLink className="w-4 h-4" />
-                      Live Site
-                    </a>
-                }
+                  <div className="flex items-center gap-3">
+                    {project.github &&
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0">
+                        <Github className="w-4 h-4" />
+                        GitHub
+                      </a>
+                    }
+                    {project.live &&
+                      <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
+                        <ExternalLink className="w-4 h-4" />
+                        Live Site
+                      </a>
+                    }
+                  </div>
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">
                   macOS-themed interactive portfolio
@@ -1183,12 +1191,29 @@ const ProjectDetailPage = () => {
                 </p>
               </motion.div>
 
-              <motion.div {...fadeUp(0.12)} className="flex flex-wrap gap-2 mb-14">
+              {/* Links */}
+              <motion.div {...fadeUp(0.11)} className="flex flex-wrap gap-3 mb-8">
+                {project.live &&
+                  <a href={project.live} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity">
+                    <ExternalLink className="w-4 h-4" />
+                    Live Site
+                  </a>
+                }
+                {project.github &&
+                  <a href={project.github} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity">
+                    <Github className="w-4 h-4" />
+                    GitHub
+                  </a>
+                }
+              </motion.div>
+
+              <motion.div {...fadeUp(0.14)} className="flex flex-wrap gap-2 mb-14">
                 {project.tags.map((tag) =>
                 <span
                   key={tag}
                   className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
-                  
                     {tag}
                   </span>
                 )}
