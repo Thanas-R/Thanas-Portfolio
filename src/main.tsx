@@ -12,6 +12,16 @@ Object.values(imageModules).forEach((src) => {
 
 // Preload other key assets including PESU MC and PESU Forge backgrounds
 const otherAssets = import.meta.glob('./assets/{avatar,thanasos-mac,contour-dark,contour-light,pesumc-hero,pesumc-backdrop,pesumc-icon,pesuforge-bg,hero-bg,resume-preview}.png', { eager: true, import: 'default' }) as Record<string, string>;
+
+// Preload avatar with high priority so it's ready before loader finishes
+const avatarSrc = Object.entries(otherAssets).find(([k]) => k.includes('avatar'))?.[1];
+if (avatarSrc) {
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'image';
+  link.href = avatarSrc;
+  document.head.appendChild(link);
+}
 Object.values(otherAssets).forEach((src) => {
   const img = new Image();
   img.src = src;
