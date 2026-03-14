@@ -43,6 +43,8 @@ export const projects: Project[] = [
     imageSrc: projectVirdis,
     tags: ['Mapbox', 'Earth Engine', 'TypeScript', 'React', 'Supabase', 'Gemini AI', 'shadcn/ui'],
     live: 'https://virdis.vercel.app',
+    github: 'https://github.com/Thanas-R/Virdis',
+
   },
   {
     id: 'spheal',
