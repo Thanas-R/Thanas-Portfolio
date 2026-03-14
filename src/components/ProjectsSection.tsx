@@ -33,6 +33,8 @@ export const projects: Project[] = [
     imageSrc: projectNautilus,
     tags: ['React', 'Canvas', 'AI', 'TypeScript', 'Graph'],
     live: 'https://nautilus-build.vercel.app',
+    github: 'https://github.com/Thanas-R/nautilus-cloud',
+
   },
   {
     id: 'virdis',
@@ -55,6 +57,8 @@ export const projects: Project[] = [
     imageSrc: projectSpheal,
     tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
     live: 'https://spheal-worldwide.vercel.app/',
+    github: 'https://github.com/Thanas-R/Spheal',
+
   },
   {
     id: 'pesu-mc',
