@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useLanyard } from 'react-use-lanyard';
 import { useBlogData } from './useBlogData';
 
-const DISCORD_USER_ID = '394137572481867786';
+const DISCORD_USER_ID = '677174403859087378';
 
 /* ── Scanline overlay ── */
 const Scanlines = () => (
@@ -67,6 +67,26 @@ const BlogsDarkMode = () => {
     <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#0a0a0a', color: '#e0e0e0' }}>
       <Scanlines />
 
+      {/* Subtle neon ambient glow */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,255,255,0.025) 0%, transparent 70%)',
+        }}
+      />
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background: 'radial-gradient(ellipse 30% 50% at 0% 50%, rgba(200,220,255,0.015) 0%, transparent 70%)',
+        }}
+      />
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background: 'radial-gradient(ellipse 30% 50% at 100% 60%, rgba(200,220,255,0.015) 0%, transparent 70%)',
+        }}
+      />
+
       {/* Grid overlay */}
       <div
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.03]"
@@ -96,7 +116,13 @@ const BlogsDarkMode = () => {
             {weather && <HudRow label="ENV 環境" value={`${weather.temp}°C ${weather.desc.toUpperCase()}`} />}
           </div>
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-white animate-pulse' : 'bg-white/30'}`} />
+            <div
+              className={`w-2 h-2 rounded-full ${isOnline ? 'animate-pulse' : ''}`}
+              style={{
+                backgroundColor: isOnline ? '#fff' : 'rgba(255,255,255,0.3)',
+                boxShadow: isOnline ? '0 0 6px rgba(255,255,255,0.4), 0 0 12px rgba(255,255,255,0.15)' : 'none',
+              }}
+            />
             <span className="text-[10px] tracking-[3px] uppercase opacity-50" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
               {isOnline ? 'LIVE' : 'AWAY'}
             </span>
@@ -120,7 +146,7 @@ const BlogsDarkMode = () => {
             ブログ — TRANSMISSION LOG
           </p>
 
-          {/* Main title with glitch */}
+          {/* Main title with glitch + subtle neon glow on text */}
           <div className="flex items-end gap-6 mb-6 pl-2 md:pl-4">
             <h1
               className="leading-[0.85]"
@@ -131,6 +157,7 @@ const BlogsDarkMode = () => {
                 letterSpacing: '6px',
                 textTransform: 'uppercase',
                 color: '#fff',
+                textShadow: '0 0 20px rgba(255,255,255,0.06), 0 0 40px rgba(255,255,255,0.03)',
               }}
             >
               <GlitchText large>THANAS</GlitchText>
@@ -147,16 +174,26 @@ const BlogsDarkMode = () => {
             </p>
           </div>
 
-          {/* Subtitle line */}
+          {/* Subtitle line with subtle glow on dividers */}
           <div className="flex items-center gap-4 mb-8">
-            <div className="h-px flex-1 bg-white/15" />
+            <div
+              className="h-px flex-1"
+              style={{
+                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), rgba(255,255,255,0.08))',
+              }}
+            />
             <span
               className="text-[10px] tracking-[6px] uppercase opacity-40"
               style={{ fontFamily: "'JetBrains Mono', monospace" }}
             >
               {publishedCount} ENTRIES LOGGED — エントリー
             </span>
-            <div className="h-px flex-1 bg-white/15" />
+            <div
+              className="h-px flex-1"
+              style={{
+                background: 'linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.15), transparent)',
+              }}
+            />
           </div>
         </div>
       </motion.div>
@@ -171,7 +208,12 @@ const BlogsDarkMode = () => {
         <div className="relative">
           {/* Coming Soon overlay */}
           <div className="absolute inset-0 z-20 flex items-start justify-center pt-12 md:pt-20">
-            <div className="relative px-10 py-8 md:px-14 md:py-10 text-center border border-white/20 bg-[#0a0a0a]/95 backdrop-blur-sm">
+            <div
+              className="relative px-10 py-8 md:px-14 md:py-10 text-center border border-white/20 bg-[#0a0a0a]/95 backdrop-blur-sm"
+              style={{
+                boxShadow: '0 0 30px rgba(255,255,255,0.03), inset 0 0 20px rgba(255,255,255,0.02)',
+              }}
+            >
               <CornerBrackets className="top-0 left-0" />
               <CornerBrackets className="top-0 right-0 rotate-90" />
               <CornerBrackets className="bottom-0 right-0 rotate-180" />
@@ -189,6 +231,7 @@ const BlogsDarkMode = () => {
                   fontFamily: "'Bebas Neue', 'League Gothic', sans-serif",
                   letterSpacing: '8px',
                   color: '#fff',
+                  textShadow: '0 0 25px rgba(255,255,255,0.08), 0 0 50px rgba(255,255,255,0.03)',
                 }}
               >
                 <GlitchText large>INCOMING</GlitchText>
