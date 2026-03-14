@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { TbBrandGithubFilled } from "react-icons/tb";
 import { ArrowUpRight } from 'lucide-react';
@@ -53,16 +52,17 @@ const ContactSection = () => {
     e.preventDefault();
     setSending(true);
     try {
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
-        body: form,
+      const response = await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       });
-      if (error) throw error;
-      if (data?.success) {
-        toast.success('Message sent successfully!');
-        setForm({ name: '', email: '', message: '' });
-      } else {
+      const data = await response.json();
+      if (!response.ok || !data.success) {
         throw new Error(data?.error || 'Failed to send');
       }
+      toast.success('Message sent successfully!');
+      setForm({ name: '', email: '', message: '' });
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to send message. Please try again.');
