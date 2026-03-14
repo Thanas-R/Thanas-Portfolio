@@ -181,61 +181,45 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               <SectionLabel label="Architecture" color={label} font={font} />
               <div className="mb-10 flex justify-center">
                 <div
-                  className="p-6 md:p-8 rounded-xl w-full max-w-2xl"
-                  style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}` }}
+                  className="p-6 md:p-8 rounded-xl w-full max-w-2xl font-mono text-sm leading-relaxed space-y-4"
+                  style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}`, color: textMuted }}
                 >
-                  {/* Flowchart boxes */}
-                  <div className="flex flex-col items-center gap-0" style={{ fontFamily: monoFont, fontSize: '13px' }}>
-                    {/* User */}
-                    <div className="px-5 py-2.5 rounded-lg text-center font-semibold" style={{ backgroundColor: 'rgba(255,251,235,0.08)', border: '1px solid rgba(255,251,235,0.15)', color: heading }}>
+                  <div className="flex flex-col items-center gap-2">
+                    <span className="px-4 py-2 rounded-lg text-center font-semibold" style={{ backgroundColor: 'rgba(255,251,235,0.08)', border: '1px solid rgba(255,251,235,0.15)', color: heading }}>
                       User / Browser
-                    </div>
-                    <div className="w-px h-6" style={{ backgroundColor: divider }} />
-                    <span style={{ color: green, fontSize: '16px' }}>▼</span>
-                    <div className="w-px h-2" style={{ backgroundColor: divider }} />
-
-                    {/* Frontend */}
-                    <div className="px-5 py-2.5 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.15)', border: `1px solid ${green}`, color: heading }}>
+                    </span>
+                    <span style={{ color: green }}>↓</span>
+                    <span className="px-4 py-2 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.15)', border: `1px solid ${green}`, color: heading }}>
                       <span className="font-semibold">Frontend</span>
                       <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>React + Mapbox GL JS + Tailwind</span>
-                    </div>
-                    <div className="w-px h-6" style={{ backgroundColor: divider }} />
-                    <span style={{ color: green, fontSize: '16px' }}>▼</span>
-                    <div className="w-px h-2" style={{ backgroundColor: divider }} />
-
-                    {/* Edge Functions */}
-                    <div className="px-5 py-3 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.1)', border: `1px solid ${cardBorder}`, color: heading }}>
+                    </span>
+                    <span style={{ color: green }}>↓</span>
+                    <span className="px-4 py-3 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.1)', border: `1px solid ${cardBorder}`, color: heading }}>
                       <span className="font-semibold">Edge Functions</span>
                       <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>Deno / TypeScript</span>
+                    </span>
+                    <div className="flex items-center gap-6">
+                      <span style={{ color: green }}>↙</span>
+                      <span style={{ color: green }}>↓</span>
+                      <span style={{ color: green }}>↘</span>
                     </div>
-                    <div className="w-px h-4" style={{ backgroundColor: divider }} />
-
-                    {/* Branches */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full mt-2">
+                    <div className="flex gap-3 flex-wrap justify-center">
                       {[
                         { name: 'gee-ndvi-tiles', target: 'Earth Engine API' },
-                        { name: 'gee-detect-field', target: 'Earth Engine API' },
                         { name: 'analyze-field', target: 'Gemini 2.5 Flash' },
                         { name: 'get-mapbox-token', target: 'Mapbox API' },
                       ].map((fn) => (
-                        <div key={fn.name} className="flex flex-col items-center gap-1">
-                          <span style={{ color: green, fontSize: '12px' }}>▼</span>
-                          <div className="px-3 py-2 rounded-md text-center w-full" style={{ backgroundColor: 'rgba(255,251,235,0.05)', border: `1px solid ${cardBorder}` }}>
-                            <span className="block text-[11px] font-semibold" style={{ color: green }}>{fn.name}</span>
-                            <span className="block text-[10px] mt-1" style={{ color: textMuted }}>→ {fn.target}</span>
-                          </div>
-                        </div>
+                        <span key={fn.name} className="px-3 py-2 rounded-lg text-center" style={{ backgroundColor: 'rgba(255,251,235,0.05)', border: `1px solid ${cardBorder}` }}>
+                          <span className="block text-[11px] font-semibold" style={{ color: green }}>{fn.name}</span>
+                          <span className="block text-[10px] mt-0.5" style={{ color: textMuted }}>→ {fn.target}</span>
+                        </span>
                       ))}
                     </div>
-
-                    {/* Database at bottom */}
-                    <div className="w-px h-6 mt-3" style={{ backgroundColor: divider }} />
-                    <span style={{ color: accent, fontSize: '16px' }}>▼</span>
-                    <div className="w-px h-2" style={{ backgroundColor: divider }} />
-                    <div className="px-5 py-2.5 rounded-lg text-center" style={{ backgroundColor: 'rgba(234,185,71,0.1)', border: `1px solid ${accent}`, color: heading }}>
+                    <span style={{ color: accent }}>↓</span>
+                    <span className="px-4 py-2 rounded-lg text-center" style={{ backgroundColor: 'rgba(234,185,71,0.1)', border: `1px solid ${accent}`, color: heading }}>
                       <span className="font-semibold">Supabase</span>
                       <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>PostgreSQL + Auth + Storage</span>
-                    </div>
+                    </span>
                   </div>
                 </div>
               </div>
