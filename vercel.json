@@ -1,5 +1,8 @@
 {
   "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/profile.png", "destination": "/profile.png" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
