@@ -1,6 +1,11 @@
 {
   "name": "Thanas R",
-  "short_name": "Thanas",
+  "short_name": "Thanas R",
+  "description": "Developer & creative problem-solver. Building thoughtful digital experiences with code.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -14,8 +19,5 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  ]
 }
