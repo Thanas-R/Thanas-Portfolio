@@ -59,7 +59,7 @@ const socials = [
 },
 {
   label: 'Discord',
-  href: 'https://discord.com/users/darkspacepirate',
+  href: 'https://discord.com/users/677174403859087378',
   tooltip: 'darkspacepirate',
   icon:
   <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
