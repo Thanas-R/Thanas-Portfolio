@@ -119,59 +119,54 @@ const HeroSection = () => {
           <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
             Developer & creative problem-solver. Building thoughtful digital experiences with code.
           </p>
-          <div className="mt-8 flex items-center gap-5">
-            {socials.map((s) => {
-              const isMobileSocial = isMobile;
-              return (
-                <div key={s.label} className="relative group">
-                  {isMobileSocial ? (
-                    <TooltipProvider delayDuration={0}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button
-                            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                            aria-label={s.label}
-                          >
-                            {s.icon}
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent side="top" className="font-['Inter'] tracking-normal">
-                          {s.tooltip}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  ) : (
-                    <>
-                      <a
-                        href={s.href}
-                        target={s.href.startsWith('http') ? '_blank' : undefined}
-                        rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                        aria-label={s.label}
-                        onMouseEnter={() => setHoveredSocial(s.label)}
-                        onMouseLeave={() => setHoveredSocial(null)}
-                      >
-                        {s.icon}
-                      </a>
-                      <AnimatePresence>
-                        {hoveredSocial === s.label && (
-                          <motion.div
-                            initial={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
-                            animate={{ x: '-50%', y: 0, opacity: 1, scale: 1 }}
-                            exit={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
-                            transition={{ duration: 0.1 }}
-                            className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap z-50 shadow-md font-['Inter'] origin-bottom"
-                          >
-                            {s.tooltip}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+<div className="mt-8 flex items-center gap-5">
+  {socials.map((s) => {
+    return (
+      <div key={s.label} className="relative group">
+        {isMobile ? (
+          // Mobile: just clickable link, no tooltip
+          <a
+            href={s.href}
+            target={s.href.startsWith('http') ? '_blank' : undefined}
+            rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+            aria-label={s.label}
+          >
+            {s.icon}
+          </a>
+        ) : (
+          // Desktop: keep existing tooltip logic
+          <>
+            <a
+              href={s.href}
+              target={s.href.startsWith('http') ? '_blank' : undefined}
+              rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+              aria-label={s.label}
+              onMouseEnter={() => setHoveredSocial(s.label)}
+              onMouseLeave={() => setHoveredSocial(null)}
+            >
+              {s.icon}
+            </a>
+            <AnimatePresence>
+              {hoveredSocial === s.label && (
+                <motion.div
+                  initial={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
+                  animate={{ x: '-50%', y: 0, opacity: 1, scale: 1 }}
+                  exit={{ x: '-50%', y: 8, opacity: 0, scale: 0 }}
+                  transition={{ duration: 0.1 }}
+                  className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap z-50 shadow-md font-['Inter'] origin-bottom"
+                >
+                  {s.tooltip}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
+        )}
+      </div>
+    );
+  })}
+</div>
         </motion.div>
 
         <motion.div
