@@ -6,6 +6,7 @@ import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects } from '@/components/ProjectsSection';
 import defaultPreview from '@/assets/projects-default.png';
+import SEOHead from '@/components/SEOHead';
 
 const ProjectsPage = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -15,6 +16,11 @@ const ProjectsPage = () => {
 
   return (
     <>
+      <SEOHead
+        title="Projects - Thanas R"
+        description="Explore projects built by Thanas R - from AI tools to creative web experiences and full-stack applications."
+        path="/projects"
+      />
       <GridBackground />
       <div className="relative z-10 min-h-screen flex flex-col">
         <Navbar />
