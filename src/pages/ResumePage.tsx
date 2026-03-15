@@ -3,13 +3,18 @@ import { Download, FileText } from 'lucide-react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
 import resumePreview from '@/assets/resume-preview.png';
+import SEOHead from '@/components/SEOHead';
 
 const ResumePage = () => {
-  // Updated filename — make sure public/Thanas-Resume.pdf exists
   const resumePath = '/Thanas-Resume.pdf';
 
   return (
     <div className="relative min-h-screen bg-background flex flex-col">
+      <SEOHead
+        title="Resume - Thanas R"
+        description="View and download the resume of Thanas R - developer, creative problem-solver, and full-stack builder."
+        path="/resume"
+      />
       <LightRays className="opacity-60" />
 
       <div className="relative z-20">
