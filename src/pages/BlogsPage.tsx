@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import BlogsLightMode from '@/components/blogs/BlogsLightMode';
 import BlogsDarkMode from '@/components/blogs/BlogsDarkMode';
+import SEOHead from '@/components/SEOHead';
 
 const BlogsPage = () => {
   const { isDark } = useTheme();
@@ -33,6 +34,11 @@ const BlogsPage = () => {
       className="min-h-screen transition-colors duration-700"
       style={{ backgroundColor: showDark ? '#0a0a0a' : '#f9f7f1' }}
     >
+      <SEOHead
+        title="Blogs - Thanas R"
+        description="Read articles and blog posts by Thanas R on development, AI, design, and creative problem-solving."
+        path="/blogs"
+      />
       <div className="relative z-50">
         <Navbar forceDark={showDark && forceMode !== 'auto'} forceLight={!showDark && forceMode !== 'auto'} />
       </div>
