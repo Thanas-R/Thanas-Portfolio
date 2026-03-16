@@ -96,13 +96,19 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [mobileOpen]);
+  if (mobileOpen) {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+  }
+
+  return () => {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+  };
+}, [mobileOpen]);
 
   const isDark = mounted && resolvedTheme === 'dark';
   const hideThemeToggle = hideThemeToggleProp !== undefined ? hideThemeToggleProp : (forceDark || forceLight);
@@ -224,7 +230,8 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, delay: 0.15 }}
-                className="flex-1 flex flex-col px-6 pt-6 gap-1 overflow-y-auto"
+                className="flex-1 flex flex-col px-6 pt-6 gap-1 overflow-y-auto overscroll-contain"
+                style={{ WebkitOverflowScrolling: "touch" }}
               >
                 {navItems.map((item, i) => (
                   <motion.div
