@@ -94,6 +94,16 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
   const isDark = mounted && resolvedTheme === 'dark';
   const hideThemeToggle = hideThemeToggleProp !== undefined ? hideThemeToggleProp : (forceDark || forceLight);
 
@@ -118,14 +128,14 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
 
   return (
     <>
-      {/* Fixed wrapper — always on screen, no initial animation */}
+      {/* Fixed wrapper */}
       <div
         className={cn(
           'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
           isScrolled ? 'px-4 md:px-8 pt-3' : 'px-0 pt-0'
         )}
       >
-        {/* Desktop: full navbar pill — NO initial animation */}
+        {/* Desktop navbar */}
         <nav
           className={cn(
             'hidden md:flex w-full max-w-5xl mx-auto items-center justify-between transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
@@ -170,133 +180,88 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
           </div>
         </nav>
 
-        {/* Mobile: top bar — NO initial animation, always visible */}
-        <div
+        {/* Mobile: single container that expands */}
+        <motion.div
           className={cn(
-            'md:hidden flex items-center justify-between transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
-            isScrolled
-              ? `${scrolledBg} border ${scrolledBorder} rounded-2xl shadow-lg shadow-black/5 px-4 h-[48px] mx-auto max-w-[95%]`
-              : 'bg-transparent border border-transparent px-6 h-14'
+            'md:hidden flex flex-col overflow-hidden backdrop-blur-3xl transition-[padding,border-radius,border-color,background-color,box-shadow] duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
+            isScrolled && !mobileOpen
+              ? `${scrolledBg} border ${scrolledBorder} rounded-2xl shadow-lg shadow-black/5 mx-auto max-w-[95%]`
+              : isScrolled && mobileOpen
+                ? `${mobileBg} border ${scrolledBorder} rounded-2xl shadow-lg shadow-black/5 mx-auto max-w-[95%]`
+                : !isScrolled && mobileOpen
+                  ? `${mobileBg} border border-transparent`
+                  : 'bg-transparent border border-transparent'
           )}
+          animate={{
+            height: mobileOpen
+              ? (isScrolled ? 'calc(100dvh - 24px)' : '100dvh')
+              : (isScrolled ? 48 : 56),
+          }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         >
-          <Link to="/" className={`font-['Space_Grotesk'] text-lg font-semibold ${textPrimary} tracking-tight`}>
-            <TextRoll>thanas.</TextRoll>
-          </Link>
+          {/* Header row — always visible */}
+          <div className={cn(
+            'flex items-center justify-between shrink-0',
+            isScrolled ? 'px-4 h-[48px]' : 'px-6 h-14'
+          )}>
+            <Link to="/" onClick={() => setMobileOpen(false)} className={`font-['Space_Grotesk'] text-lg font-semibold ${textPrimary} tracking-tight`}>
+              <TextRoll>thanas.</TextRoll>
+            </Link>
 
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className={`w-9 h-9 flex items-center justify-center rounded-full ${textPrimary} z-[60] transition-colors`}
-          >
-            <MenuToggleIcon open={mobileOpen} />
-          </button>
-        </div>
-      </div>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className={`w-9 h-9 flex items-center justify-center rounded-full ${textPrimary} z-[60] transition-colors`}
+            >
+              <MenuToggleIcon open={mobileOpen} />
+            </button>
+          </div>
 
-      {/* Spacer so content doesn't hide behind fixed navbar */}
-      <div className="h-16 md:h-16" />
-
-      {/* Mobile menu — expands downward from navbar like a dropdown */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ clipPath: 'inset(0 0 0% 0)' }}
-            exit={{ clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className={cn(
-              'md:hidden fixed inset-0 z-[55] flex flex-col',
-              mobileBg,
-              'backdrop-blur-3xl'
-            )}
-          >
-            {/* Mobile header with logo + close — matches top bar position */}
-            <div className={cn(
-              'flex items-center justify-between px-6 h-14 shrink-0'
-            )}>
-              <Link
-                to="/"
-                onClick={() => setMobileOpen(false)}
-                className={`font-['Space_Grotesk'] text-lg font-semibold ${textPrimary} tracking-tight`}
-              >
-                thanas.
-              </Link>
-              <button
-                onClick={() => setMobileOpen(false)}
-                className={`w-9 h-9 flex items-center justify-center ${textPrimary}`}
-                aria-label="Close menu"
-              >
-                <MenuToggleIcon open={true} />
-              </button>
-            </div>
-
-            {/* Links — Inter font, larger size */}
-            <div className="flex-1 flex flex-col px-6 pt-6 gap-1">
-              {navItems.map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: -12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 + 0.15, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
-                >
-                  <Link
-                    to={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={cn(
-                      'block py-4 px-4 rounded-xl text-[2rem] font-bold transition-colors font-[Inter,sans-serif]',
-                      forceDark
-                        ? 'text-white/80 hover:text-white hover:bg-white/10'
-                        : forceLight
-                          ? 'text-[#2f2f2f]/70 hover:text-[#2f2f2f] hover:bg-[#2f2f2f]/10'
-                          : 'text-foreground/70 hover:text-foreground hover:bg-muted/50'
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-
-              {/* Search button */}
+          {/* Menu content — revealed by height animation */}
+          <AnimatePresence>
+            {mobileOpen && (
               <motion.div
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navItems.length * 0.05 + 0.15, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
-                className="mt-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, delay: 0.15 }}
+                className="flex-1 flex flex-col px-6 pt-6 gap-1 overflow-y-auto"
               >
-                <button
-                  onClick={() => {
-                    setMobileOpen(false);
-                    setTimeout(() => window.dispatchEvent(new Event('open-command-palette')), 100);
-                  }}
-                  className={cn(
-                    'w-full flex items-center gap-3 py-4 px-4 rounded-xl text-lg font-semibold transition-colors font-[Inter,sans-serif]',
-                    forceDark
-                      ? 'text-white/50 hover:text-white hover:bg-white/10'
-                      : forceLight
-                        ? 'text-[#2f2f2f]/50 hover:text-[#2f2f2f] hover:bg-[#2f2f2f]/10'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                  )}
-                >
-                  <Command className="w-5 h-5" />
-                  Search...
-                  <span className={cn(
-                    'ml-auto text-sm px-2.5 py-1 rounded-lg border',
-                    forceDark ? 'border-white/20 text-white/40' : forceLight ? 'border-[#2f2f2f]/20 text-[#2f2f2f]/40' : 'border-border text-muted-foreground'
-                  )}>
-                    ⌘K
-                  </span>
-                </button>
-              </motion.div>
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 + 0.2, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
+                  >
+                    <Link
+                      to={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={cn(
+                        'block py-4 px-4 rounded-xl text-[2rem] font-bold transition-colors font-[Inter,sans-serif]',
+                        forceDark
+                          ? 'text-white/80 hover:text-white hover:bg-white/10'
+                          : forceLight
+                            ? 'text-[#2f2f2f]/70 hover:text-[#2f2f2f] hover:bg-[#2f2f2f]/10'
+                            : 'text-foreground/70 hover:text-foreground hover:bg-muted/50'
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                ))}
 
-              {/* Theme toggle */}
-              {!hideThemeToggle && (
+                {/* Search button */}
                 <motion.div
                   initial={{ opacity: 0, y: -12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: (navItems.length + 1) * 0.05 + 0.15, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
-                  className="mt-2"
+                  transition={{ delay: navItems.length * 0.05 + 0.2, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
+                  className="mt-4"
                 >
                   <button
-                    onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                    onClick={() => {
+                      setMobileOpen(false);
+                      setTimeout(() => window.dispatchEvent(new Event('open-command-palette')), 100);
+                    }}
                     className={cn(
                       'w-full flex items-center gap-3 py-4 px-4 rounded-xl text-lg font-semibold transition-colors font-[Inter,sans-serif]',
                       forceDark
@@ -306,15 +271,43 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
                           : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     )}
                   >
-                    <SolarSwitch isDark={isDark} />
-                    {isDark ? 'Light Mode' : 'Dark Mode'}
+                    <Command className="w-5 h-5" />
+                    Search...
                   </button>
                 </motion.div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+                {/* Theme toggle */}
+                {!hideThemeToggle && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: (navItems.length + 1) * 0.05 + 0.2, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
+                    className="mt-2"
+                  >
+                    <button
+                      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                      className={cn(
+                        'w-full flex items-center gap-3 py-4 px-4 rounded-xl text-lg font-semibold transition-colors font-[Inter,sans-serif]',
+                        forceDark
+                          ? 'text-white/50 hover:text-white hover:bg-white/10'
+                          : forceLight
+                            ? 'text-[#2f2f2f]/50 hover:text-[#2f2f2f] hover:bg-[#2f2f2f]/10'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      )}
+                    >
+                      <SolarSwitch isDark={isDark} />
+                      {isDark ? 'Light Mode' : 'Dark Mode'}
+                    </button>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+
+      {/* Spacer */}
+      <div className="h-16 md:h-16" />
     </>
   );
 };

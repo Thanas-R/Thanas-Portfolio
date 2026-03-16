@@ -71,7 +71,6 @@ const ContactSection = () => {
     }
   };
 
-
   return (
     <section
       id="contact"
@@ -85,105 +84,95 @@ const ContactSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          {/* slightly reduced heading size */}
           <p className="text-sm md:text-base font-semibold uppercase tracking-widest text-muted-foreground mb-3">
             Contact
           </p>
 
-          {/* bold but a bit lighter in color */}
           <p className="text-lg md:text-xl font-semibold text-foreground/60 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
-{/* form */}
-<form onSubmit={handleSubmit} className="mb-7">
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-    <input
-      type="text"
-      placeholder="Name"
-      value={form.name}
-      onChange={(e) => setForm({ ...form, name: e.target.value })}
-      className="w-full px-5 py-4 rounded-xl 
-      bg-[#F8F8F8] dark:bg-secondary/30 
-      border border-[#F6F6F6] dark:border-border
-      text-foreground text-lg font-medium dark:font-semibold 
-      placeholder:text-muted-foreground/70 placeholder:font-medium 
-      focus:outline-none focus:ring-1 focus:ring-ring"
-      required
-    />
+          <form onSubmit={handleSubmit} className="mb-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <input
+                type="text"
+                placeholder="Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="w-full px-5 py-4 rounded-xl 
+                bg-[#F8F8F8] dark:bg-secondary/30 
+                border border-[#F6F6F6] dark:border-border
+                text-foreground text-lg font-medium dark:font-semibold 
+                placeholder:text-muted-foreground/70 placeholder:font-medium 
+                focus:outline-none focus:ring-1 focus:ring-ring"
+                required
+              />
 
-    <input
-      type="email"
-      placeholder="Email"
-      value={form.email}
-      onChange={(e) => setForm({ ...form, email: e.target.value })}
-      className="w-full px-5 py-4 rounded-xl 
-      bg-secondary/50 dark:bg-secondary/30 
-      border border-[#F6F6F6] dark:border-border
-      text-foreground text-lg font-medium dark:font-semibold 
-      placeholder:text-muted-foreground/70 placeholder:font-medium 
-      focus:outline-none focus:ring-1 focus:ring-ring"
-      required
-    />
-  </div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="w-full px-5 py-4 rounded-xl 
+                bg-secondary/50 dark:bg-secondary/30 
+                border border-[#F6F6F6] dark:border-border
+                text-foreground text-lg font-medium dark:font-semibold 
+                placeholder:text-muted-foreground/70 placeholder:font-medium 
+                focus:outline-none focus:ring-1 focus:ring-ring"
+                required
+              />
+            </div>
 
-  <textarea
-    placeholder="Message"
-    value={form.message}
-    onChange={(e) => setForm({ ...form, message: e.target.value })}
-    
-    className="w-full px-5 py-5 rounded-xl 
-    bg-secondary/50 dark:bg-secondary/30 
-    border border-[#F6F6F6] dark:border-border
-    text-foreground text-lg font-medium dark:font-semibold 
-    placeholder:text-muted-foreground/70 placeholder:font-medium 
-    focus:outline-none focus:ring-1 focus:ring-ring 
-    resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
-    required
-  />
+            <textarea
+              placeholder="Message"
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+              className="w-full px-5 py-5 rounded-xl 
+              bg-secondary/50 dark:bg-secondary/30 
+              border border-[#F6F6F6] dark:border-border
+              text-foreground text-lg font-medium dark:font-semibold 
+              placeholder:text-muted-foreground/70 placeholder:font-medium 
+              focus:outline-none focus:ring-1 focus:ring-ring 
+              resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
+              required
+            />
 
-  <button
-    type="submit"
-    disabled={sending}
-    className="px-6 py-3 rounded-xl bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
-  >
-    {sending ? 'Sending...' : 'Send message'}
-  </button>
+            <button
+              type="submit"
+              disabled={sending}
+              className="px-6 py-3 rounded-xl bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+            >
+              {sending ? 'Sending...' : 'Send message'}
+            </button>
           </form>
 
-          {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
-<div className="pt-2 space-y-1">
-  {contactLinks.map((link) => (
-    <a
-      key={link.label}
-      href={link.href}
-      target={link.href.startsWith('http') ? '_blank' : undefined}
-      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-      className="flex items-center justify-between py-2 group"
-    >
-      <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-        {/* icon */}
-        <div className="flex items-center justify-center text-muted-foreground group-hover:text-foreground">
-          {link.icon}
-        </div>
+          <div className="pt-2 space-y-1">
+            {contactLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="flex items-center justify-between py-2 group"
+              >
+                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center justify-center text-muted-foreground group-hover:text-foreground">
+                    {link.icon}
+                  </div>
+                  <span className="text-lg font-medium">
+                    {link.label}
+                  </span>
+                </div>
 
-        {/* removed text-muted-foreground here */}
-        <span className="text-lg font-medium">
-          {link.label}
-        </span>
-      </div>
-
-      <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-        {/* removed text-muted-foreground here */}
-        <span className="text-lg font-medium">
-          {link.value}
-        </span>
-
-        <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-      </div>
-    </a>
-  ))}
-</div>
+                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                  <span className="text-lg font-medium">
+                    {link.value}
+                  </span>
+                  <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </div>
+              </a>
+            ))}
+          </div>
 
         </motion.div>
       </div>
