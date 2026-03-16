@@ -114,20 +114,19 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
       ? 'border-[#2f2f2f]/10'
       : 'border-border/50';
 
+  const mobileBg = forceDark ? 'bg-black/95' : forceLight ? 'bg-[#f9f7f1]/95' : 'bg-background/95';
+
   return (
     <>
-      {/* Fixed wrapper — always on screen */}
+      {/* Fixed wrapper — always on screen, no initial animation */}
       <div
         className={cn(
           'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
           isScrolled ? 'px-4 md:px-8 pt-3' : 'px-0 pt-0'
         )}
       >
-        {/* Desktop: full navbar pill */}
-        <motion.nav
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+        {/* Desktop: full navbar pill — NO initial animation */}
+        <nav
           className={cn(
             'hidden md:flex w-full max-w-5xl mx-auto items-center justify-between transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
             isScrolled
@@ -169,13 +168,10 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
               </button>
             )}
           </div>
-        </motion.nav>
+        </nav>
 
-        {/* Mobile: floating menu button pill — always visible */}
-        <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+        {/* Mobile: top bar — NO initial animation, always visible */}
+        <div
           className={cn(
             'md:hidden flex items-center justify-between transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
             isScrolled
@@ -193,32 +189,34 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
           >
             <MenuToggleIcon open={mobileOpen} />
           </button>
-        </motion.div>
+        </div>
       </div>
 
       {/* Spacer so content doesn't hide behind fixed navbar */}
       <div className="h-16 md:h-16" />
 
-      {/* Mobile full-screen overlay menu */}
+      {/* Mobile menu — expands downward from navbar like a dropdown */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             className={cn(
               'md:hidden fixed inset-0 z-[55] flex flex-col',
-              forceDark ? 'bg-black/97' : forceLight ? 'bg-[#f9f7f1]/98' : 'bg-background/98'
+              mobileBg,
+              'backdrop-blur-3xl'
             )}
-            style={{ backdropFilter: 'blur(32px)' }}
           >
-            {/* Mobile header with logo + close */}
-            <div className="flex items-center justify-between px-6 py-4">
+            {/* Mobile header with logo + close — matches top bar position */}
+            <div className={cn(
+              'flex items-center justify-between px-6 h-14 shrink-0'
+            )}>
               <Link
                 to="/"
                 onClick={() => setMobileOpen(false)}
-                className={`font-['Space_Grotesk'] text-xl font-semibold ${textPrimary} tracking-tight`}
+                className={`font-['Space_Grotesk'] text-lg font-semibold ${textPrimary} tracking-tight`}
               >
                 thanas.
               </Link>
@@ -231,20 +229,20 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
               </button>
             </div>
 
-            {/* Links — larger font */}
-            <div className="flex-1 flex flex-col px-6 pt-8 gap-2">
+            {/* Links — Inter font, larger size */}
+            <div className="flex-1 flex flex-col px-6 pt-6 gap-1">
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.label}
-                  initial={{ opacity: 0, x: -24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.07 + 0.1, ease: 'easeOut', duration: 0.3 }}
+                  initial={{ opacity: 0, y: -12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 + 0.15, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
                 >
                   <Link
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
-                      "block py-5 px-5 rounded-2xl text-3xl font-bold transition-colors font-['Space_Grotesk']",
+                      'block py-4 px-4 rounded-xl text-[2rem] font-bold transition-colors font-[Inter,sans-serif]',
                       forceDark
                         ? 'text-white/80 hover:text-white hover:bg-white/10'
                         : forceLight
@@ -259,10 +257,10 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
 
               {/* Search button */}
               <motion.div
-                initial={{ opacity: 0, x: -24 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: navItems.length * 0.07 + 0.1, ease: 'easeOut', duration: 0.3 }}
-                className="mt-6"
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navItems.length * 0.05 + 0.15, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
+                className="mt-4"
               >
                 <button
                   onClick={() => {
@@ -270,7 +268,7 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
                     setTimeout(() => window.dispatchEvent(new Event('open-command-palette')), 100);
                   }}
                   className={cn(
-                    "w-full flex items-center gap-3 py-5 px-5 rounded-2xl text-xl font-semibold transition-colors font-['Space_Grotesk']",
+                    'w-full flex items-center gap-3 py-4 px-4 rounded-xl text-lg font-semibold transition-colors font-[Inter,sans-serif]',
                     forceDark
                       ? 'text-white/50 hover:text-white hover:bg-white/10'
                       : forceLight
@@ -288,6 +286,31 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
                   </span>
                 </button>
               </motion.div>
+
+              {/* Theme toggle */}
+              {!hideThemeToggle && (
+                <motion.div
+                  initial={{ opacity: 0, y: -12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (navItems.length + 1) * 0.05 + 0.15, ease: [0.4, 0, 0.2, 1], duration: 0.3 }}
+                  className="mt-2"
+                >
+                  <button
+                    onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                    className={cn(
+                      'w-full flex items-center gap-3 py-4 px-4 rounded-xl text-lg font-semibold transition-colors font-[Inter,sans-serif]',
+                      forceDark
+                        ? 'text-white/50 hover:text-white hover:bg-white/10'
+                        : forceLight
+                          ? 'text-[#2f2f2f]/50 hover:text-[#2f2f2f] hover:bg-[#2f2f2f]/10'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    )}
+                  >
+                    <SolarSwitch isDark={isDark} />
+                    {isDark ? 'Light Mode' : 'Dark Mode'}
+                  </button>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         )}
