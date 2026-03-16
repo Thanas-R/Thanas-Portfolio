@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { TbBrandGithubFilled } from "react-icons/tb";
 import { ArrowUpRight } from 'lucide-react';
@@ -47,29 +46,23 @@ const contactLinks = [
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [honeypotUsername, setHoneypotUsername] = useState('');
-  const [honeypotLocation, setHoneypotLocation] = useState('');
   const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (honeypotUsername || honeypotLocation) {
-      toast.success('Message sent successfully!');
-      setForm({ name: '', email: '', message: '' });
-      return;
-    }
     setSending(true);
     try {
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
-        body: form,
+      const response = await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       });
-      if (error) throw error;
-      if (data?.success) {
-        toast.success('Message sent successfully!');
-        setForm({ name: '', email: '', message: '' });
-      } else {
+      const data = await response.json();
+      if (!response.ok || !data.success) {
         throw new Error(data?.error || 'Failed to send');
       }
+      toast.success('Message sent successfully!');
+      setForm({ name: '', email: '', message: '' });
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to send message. Please try again.');
@@ -77,7 +70,6 @@ const ContactSection = () => {
       setSending(false);
     }
   };
-
 
   return (
     <section
@@ -92,124 +84,95 @@ const ContactSection = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          {/* slightly reduced heading size */}
           <p className="text-sm md:text-base font-semibold uppercase tracking-widest text-muted-foreground mb-3">
             Contact
           </p>
 
-          {/* bold but a bit lighter in color */}
           <p className="text-lg md:text-xl font-semibold text-foreground/60 mb-8 md:whitespace-nowrap">
             You can contact me using the form or via the links below.
           </p>
 
-{/* form */}
-<form onSubmit={handleSubmit} className="mb-7">
-  {/* Honeypot fields - hidden from real users */}
-  <div className="absolute -left-[9999px]" aria-hidden="true" tabIndex={-1}>
-    <input
-      type="text"
-      name="username"
-      value={honeypotUsername}
-      onChange={(e) => setHoneypotUsername(e.target.value)}
-      tabIndex={-1}
-      autoComplete="off"
-    />
-    <input
-      type="text"
-      name="location"
-      value={honeypotLocation}
-      onChange={(e) => setHoneypotLocation(e.target.value)}
-      tabIndex={-1}
-      autoComplete="off"
-    />
-  </div>
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-    <input
-      type="text"
-      placeholder="Name"
-      value={form.name}
-      onChange={(e) => setForm({ ...form, name: e.target.value })}
-      className="w-full px-5 py-4 rounded-xl 
-      bg-[#F8F8F8] dark:bg-secondary/30 
-      border border-[#F6F6F6] dark:border-border
-      text-foreground text-lg font-medium dark:font-semibold 
-      placeholder:text-muted-foreground/70 placeholder:font-medium 
-      focus:outline-none focus:ring-1 focus:ring-ring"
-      required
-    />
+          <form onSubmit={handleSubmit} className="mb-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <input
+                type="text"
+                placeholder="Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="w-full px-5 py-4 rounded-xl 
+                bg-[#F8F8F8] dark:bg-secondary/30 
+                border border-[#F6F6F6] dark:border-border
+                text-foreground text-lg font-medium dark:font-semibold 
+                placeholder:text-muted-foreground/70 placeholder:font-medium 
+                focus:outline-none focus:ring-1 focus:ring-ring"
+                required
+              />
 
-    <input
-      type="email"
-      placeholder="Email"
-      value={form.email}
-      onChange={(e) => setForm({ ...form, email: e.target.value })}
-      className="w-full px-5 py-4 rounded-xl 
-      bg-secondary/50 dark:bg-secondary/30 
-      border border-[#F6F6F6] dark:border-border
-      text-foreground text-lg font-medium dark:font-semibold 
-      placeholder:text-muted-foreground/70 placeholder:font-medium 
-      focus:outline-none focus:ring-1 focus:ring-ring"
-      required
-    />
-  </div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="w-full px-5 py-4 rounded-xl 
+                bg-secondary/50 dark:bg-secondary/30 
+                border border-[#F6F6F6] dark:border-border
+                text-foreground text-lg font-medium dark:font-semibold 
+                placeholder:text-muted-foreground/70 placeholder:font-medium 
+                focus:outline-none focus:ring-1 focus:ring-ring"
+                required
+              />
+            </div>
 
-  <textarea
-    placeholder="Message"
-    value={form.message}
-    onChange={(e) => setForm({ ...form, message: e.target.value })}
-    
-    className="w-full px-5 py-5 rounded-xl 
-    bg-secondary/50 dark:bg-secondary/30 
-    border border-[#F6F6F6] dark:border-border
-    text-foreground text-lg font-medium dark:font-semibold 
-    placeholder:text-muted-foreground/70 placeholder:font-medium 
-    focus:outline-none focus:ring-1 focus:ring-ring 
-    resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
-    required
-  />
+            <textarea
+              placeholder="Message"
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+              className="w-full px-5 py-5 rounded-xl 
+              bg-secondary/50 dark:bg-secondary/30 
+              border border-[#F6F6F6] dark:border-border
+              text-foreground text-lg font-medium dark:font-semibold 
+              placeholder:text-muted-foreground/70 placeholder:font-medium 
+              focus:outline-none focus:ring-1 focus:ring-ring 
+              resize-y mb-6 min-h-[200px] overflow-auto scrollbar-hide"
+              required
+            />
 
-  <button
-    type="submit"
-    disabled={sending}
-    className="px-6 py-3 rounded-xl bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
-  >
-    {sending ? 'Sending...' : 'Send message'}
-  </button>
+            <button
+              type="submit"
+              disabled={sending}
+              className="px-6 py-3 rounded-xl bg-foreground text-background text-base font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+            >
+              {sending ? 'Sending...' : 'Send message'}
+            </button>
           </form>
 
-          {/* socials — plain icons, tighter spacing, larger values, gray in both modes */}
-<div className="pt-2 space-y-1">
-  {contactLinks.map((link) => (
-    <a
-      key={link.label}
-      href={link.href}
-      target={link.href.startsWith('http') ? '_blank' : undefined}
-      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-      className="flex items-center justify-between py-2 group"
-    >
-      <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-        {/* icon */}
-        <div className="flex items-center justify-center text-muted-foreground group-hover:text-foreground">
-          {link.icon}
-        </div>
+          <div className="pt-2 space-y-1">
+            {contactLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="flex items-center justify-between py-2 group"
+              >
+                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                  <div className="flex items-center justify-center text-muted-foreground group-hover:text-foreground">
+                    {link.icon}
+                  </div>
+                  <span className="text-lg font-medium">
+                    {link.label}
+                  </span>
+                </div>
 
-        {/* removed text-muted-foreground here */}
-        <span className="text-lg font-medium">
-          {link.label}
-        </span>
-      </div>
-
-      <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
-        {/* removed text-muted-foreground here */}
-        <span className="text-lg font-medium">
-          {link.value}
-        </span>
-
-        <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-      </div>
-    </a>
-  ))}
-</div>
+                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors">
+                  <span className="text-lg font-medium">
+                    {link.value}
+                  </span>
+                  <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </div>
+              </a>
+            ))}
+          </div>
 
         </motion.div>
       </div>
