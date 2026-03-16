@@ -22,11 +22,11 @@ import pesuMcBackdrop from '@/assets/pesumc-backdrop.png';
 import pesuMcIcon from '@/assets/pesumc-icon.png';
 
 /** Blur-to-sharp background image that works even when the image is already cached */
-const ProgressiveBgImg = ({ src }: { src: string }) => {
+const ProgressiveBgImg = ({ src }: {src: string;}) => {
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const handleLoad = useCallback(() => {   requestAnimationFrame(() => setLoaded(true)); }, []);
+  const handleLoad = useCallback(() => {requestAnimationFrame(() => setLoaded(true));}, []);
 
   useEffect(() => {
     // If image is already cached/complete on mount, trigger transition after one frame
@@ -46,10 +46,10 @@ const ProgressiveBgImg = ({ src }: { src: string }) => {
       style={{
         filter: loaded ? 'blur(0px)' : 'blur(20px)',
         transform: loaded ? 'scale(1)' : 'scale(1.02)',
-        transition: 'filter 700ms ease-out, transform 700ms ease-out',
-      }}
-    />
-  );
+        transition: 'filter 700ms ease-out, transform 700ms ease-out'
+      }} />);
+
+
 };
 
 const fadeUp = (delay = 0) => ({
@@ -153,36 +153,36 @@ const ProjectDetailPage = () => {
   // Smart Chef background removed per user request
   const smartChefBg = undefined;
 
-  const SideNav = () => (
-    <>
-      {prevProject && (
-        <Link
-          to={`/projects/${prevProject.id}`}
-          className="fixed left-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
-          style={{
-            backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
-            borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)',
-          }}
-          aria-label="Previous project"
-        >
+  const SideNav = () =>
+  <>
+      {prevProject &&
+    <Link
+      to={`/projects/${prevProject.id}`}
+      className="fixed left-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
+      style={{
+        backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
+        borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)'
+      }}
+      aria-label="Previous project">
+      
           <ChevronLeft className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
         </Link>
-      )}
-      {nextProject && (
-        <Link
-          to={`/projects/${nextProject.id}`}
-          className="fixed right-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
-          style={{
-            backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
-            borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)',
-          }}
-          aria-label="Next project"
-        >
+    }
+      {nextProject &&
+    <Link
+      to={`/projects/${nextProject.id}`}
+      className="fixed right-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
+      style={{
+        backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
+        borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)'
+      }}
+      aria-label="Next project">
+      
           <ChevronRight className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
         </Link>
-      )}
-    </>
-  );
+    }
+    </>;
+
 
   if (isVirdis) {
     return <><SideNav /><VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
@@ -197,8 +197,8 @@ const ProjectDetailPage = () => {
       <>
         <SideNav />
         <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
-      </>
-    );
+      </>);
+
   }
 
   return (
@@ -250,11 +250,11 @@ const ProjectDetailPage = () => {
               {/* Links */}
               <motion.div {...fadeUp(0.15)} className="flex flex-wrap items-center gap-3 mb-10">
                 <a
-                  href="https://ask-bookie.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-lg border text-sm font-semibold hover:opacity-75 transition-all"
-                  style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
+                href="https://ask-bookie.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-lg border text-sm font-semibold hover:opacity-75 transition-all"
+                style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
                   <ExternalLink className="w-4 h-4" />
                   Live Demo
                 </a>
@@ -269,10 +269,10 @@ const ProjectDetailPage = () => {
                     <Github className="w-4 h-4" />
                     GitHub
                   </a>
-               }
+              }
                 <span
-                  className="text-xs font-medium px-4 py-2 rounded-lg border border-dashed opacity-60"
-                  style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
+                className="text-xs font-medium px-4 py-2 rounded-lg border border-dashed opacity-60"
+                style={{ borderColor: ab.cardBorder, color: ab.text, fontFamily: "'JetBrains Mono', monospace" }}>
                   RAG model not supported in web version anymore
                 </span>
               </motion.div>
@@ -552,17 +552,17 @@ const ProjectDetailPage = () => {
                   <AppleHelloEffect className="h-8 md:h-12 text-foreground" speed={0.7} />
                   <div className="flex items-center gap-3">
                     {project.github &&
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0">
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0">
                         <Github className="w-4 h-4" />
                         GitHub
                       </a>
-                    }
+                  }
                     {project.live &&
-                      <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
                         <ExternalLink className="w-4 h-4" />
                         Live Site
                       </a>
-                    }
+                  }
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">
@@ -636,10 +636,10 @@ const ProjectDetailPage = () => {
                 </a>
             }
               <a
-                href="https://smartchef-backend-oq3n.onrender.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity bg-foreground text-background">
+              href="https://smartchef-backend-oq3n.onrender.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity bg-foreground text-background">
                   <ExternalLink className="w-4 h-4" />
                   Backend API
               </a>
@@ -772,34 +772,34 @@ const ProjectDetailPage = () => {
             {/* Credits */}
             <motion.div {...fadeUp(0.28)} className="mt-14">
               <h2
-                className="text-2xl md:text-3xl font-bold mb-6"
-                style={{ fontFamily: "'Playfair Display', serif" }}>
+              className="text-2xl md:text-3xl font-bold mb-6"
+              style={{ fontFamily: "'Playfair Display', serif" }}>
                 Credits
               </h2>
               <div className="p-6 rounded-2xl border border-foreground/10 bg-card space-y-2">
-                <p className="text-sm text-foreground">
-                  <span className="text-muted-foreground">Front end and Backend:</span>{' '}
+                <p className="text-foreground text-base">
+                  <span className="text-muted-foreground">Frontend and Backend:</span>{' '}
                   <span className="font-semibold">Thanas R</span>
                 </p>
-                <p className="text-sm text-foreground">
+                <p className="text-foreground text-base">
                   <span className="text-muted-foreground">Backend and database:</span>{' '}
                   <a
-                    href="https://github.com/Tanay-s5"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-semibold hover:opacity-70 transition-opacity underline underline-offset-2"
-                  >
+                  href="https://github.com/Tanay-s5"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold hover:opacity-70 transition-opacity underline underline-offset-2">
+                  
                     @tanay-s
                   </a>
                 </p>
-                <p className="text-sm text-foreground">
+                <p className="text-foreground text-base">
                   <span className="text-muted-foreground">Testing and verification:</span>{' '}
                   <a
-                    href="https://github.com/kengeorgeoff182-code"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-semibold hover:opacity-70 transition-opacity underline underline-offset-2"
-                  >
+                  href="https://github.com/kengeorgeoff182-code"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold hover:opacity-70 transition-opacity underline underline-offset-2">
+                  
                     @ken-george
                   </a>
                 </p>
@@ -1085,17 +1085,17 @@ const ProjectDetailPage = () => {
                 </p>
                 <div className="flex items-center gap-3 shrink-0">
                   {project.live &&
-                    <a href={project.live} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
-                      style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
+                  <a href={project.live} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
                       <ExternalLink className="w-4 h-4" />
                       Live Site
                     </a>
                   }
                   {project.github &&
-                    <a href={project.github} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
-                      style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
+                  <a href={project.github} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
                       <Github className="w-4 h-4" />
                       GitHub
                     </a>
@@ -1106,8 +1106,8 @@ const ProjectDetailPage = () => {
               {/* Tech tags — centered */}
               <motion.div {...fadeUp(0.18)} className="flex flex-wrap justify-center gap-2 mb-16">
                 {project.tags.map((tag) =>
-                  <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
+                style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)' }}>
                     {tag}
                   </span>
                 )}
@@ -1128,15 +1128,15 @@ const ProjectDetailPage = () => {
               {/* Key Features — liquid glass cards */}
               <motion.div {...fadeUp(0.3)} className="grid md:grid-cols-2 gap-4 mb-6">
                 {[
-                  { title: 'Real-time Status', desc: 'Live server status polling every 30s via mcsrvstat API' },
-                  { title: 'Launch Countdown', desc: 'Countdown timer with confetti celebration on Season 2 launch' },
-                  { title: 'Gallery & Trailer', desc: 'Swipeable image carousel with YouTube trailer modal' },
-                  { title: 'Glassmorphism UI', desc: 'Dark-only theme with backdrop-blur cards and custom design tokens' },
-                ].map((item) =>
-                  <div
-                    key={item.title}
-                    className="rounded-2xl p-6 backdrop-blur-2xl"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+                { title: 'Real-time Status', desc: 'Live server status polling every 30s via mcsrvstat API' },
+                { title: 'Launch Countdown', desc: 'Countdown timer with confetti celebration on Season 2 launch' },
+                { title: 'Gallery & Trailer', desc: 'Swipeable image carousel with YouTube trailer modal' },
+                { title: 'Glassmorphism UI', desc: 'Dark-only theme with backdrop-blur cards and custom design tokens' }].
+                map((item) =>
+                <div
+                  key={item.title}
+                  className="rounded-2xl p-6 backdrop-blur-2xl"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                     <h3 className="font-bold text-white/85 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</h3>
                     <p className="text-sm text-white/35 leading-relaxed">{item.desc}</p>
                   </div>
@@ -1151,16 +1151,16 @@ const ProjectDetailPage = () => {
                 <h2 className="text-xs font-bold uppercase tracking-widest text-white/35 mb-5">Tech Stack</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
-                    { label: 'Framework', value: 'React 18' },
-                    { label: 'Language', value: 'TypeScript' },
-                    { label: 'Build', value: 'Vite 5 (SWC)' },
-                    { label: 'Styling', value: 'Tailwind CSS' },
-                    { label: 'Components', value: 'shadcn/ui' },
-                    { label: 'Animation', value: 'Framer Motion' },
-                    { label: 'Scroll', value: 'Lenis' },
-                    { label: 'Hosting', value: 'Vercel' },
-                  ].map((item) =>
-                    <div key={item.label} className="p-4 rounded-xl backdrop-blur-xl" style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  { label: 'Framework', value: 'React 18' },
+                  { label: 'Language', value: 'TypeScript' },
+                  { label: 'Build', value: 'Vite 5 (SWC)' },
+                  { label: 'Styling', value: 'Tailwind CSS' },
+                  { label: 'Components', value: 'shadcn/ui' },
+                  { label: 'Animation', value: 'Framer Motion' },
+                  { label: 'Scroll', value: 'Lenis' },
+                  { label: 'Hosting', value: 'Vercel' }].
+                  map((item) =>
+                  <div key={item.label} className="p-4 rounded-xl backdrop-blur-xl" style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
                       <p className="text-xs text-white/25 uppercase tracking-wider mb-1">{item.label}</p>
                       <p className="text-sm font-semibold text-white/75" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</p>
                     </div>
@@ -1182,16 +1182,16 @@ const ProjectDetailPage = () => {
                 className="border-t pt-8 grid grid-cols-2 gap-4"
                 style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
                 {prevProject ?
-                  <Link to={`/projects/${prevProject.id}`}
-                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-2xl"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                <Link to={`/projects/${prevProject.id}`}
+                className="group flex flex-col gap-1 p-5 rounded-xl transition-colors backdrop-blur-2xl"
+                style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
                     <span className="text-xs uppercase tracking-widest text-white/35 flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Previous</span>
                     <span className="text-sm font-bold text-white/75 group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{prevProject.title}</span>
                   </Link> : <div />}
                 {nextProject ?
-                  <Link to={`/projects/${nextProject.id}`}
-                    className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-2xl"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                <Link to={`/projects/${nextProject.id}`}
+                className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full backdrop-blur-2xl"
+                style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
                     <span className="text-xs uppercase tracking-widest text-white/35 flex items-center justify-end gap-1">Next <ArrowRight className="w-3 h-3" /></span>
                     <span className="text-sm font-bold text-white/75 group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{nextProject.title}</span>
                   </Link> : <div />}
@@ -1231,15 +1231,15 @@ const ProjectDetailPage = () => {
               {/* Links */}
               <motion.div {...fadeUp(0.11)} className="flex flex-wrap gap-3 mb-8">
                 {project.live &&
-                  <a href={project.live} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity">
+                <a href={project.live} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity">
                     <ExternalLink className="w-4 h-4" />
                     Live Site
                   </a>
                 }
                 {project.github &&
-                  <a href={project.github} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity">
+                <a href={project.github} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity">
                     <Github className="w-4 h-4" />
                     GitHub
                   </a>
