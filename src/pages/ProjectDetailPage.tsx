@@ -1064,19 +1064,35 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               {/* Title — center-aligned, big */}
-               <motion.div {...fadeUp(0.08)} className="text-center mb-10">
-                <h1
-                  className="text-[2.8rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[8rem] font-black text-white leading-[0.85] tracking-tight uppercase"
-                  style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 900, textShadow: '0 4px 40px rgba(0,0,0,0.6)' }}>
-                  PESU MINECRAFT
-                </h1>
-                <p
-                  className="text-lg sm:text-2xl md:text-3xl lg:text-5xl mt-4 inline-flex items-center gap-2 md:gap-3 tracking-wider"
-                  style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 300, color: 'rgba(255,255,255,0.5)' }}>
-                  SEASON 2
-                  <img src={pesuMcIcon} alt="Server icon" className="inline-block rounded-full" style={{ height: '1.1em' }} />
-                </p>
-              </motion.div>
+<motion.div {...fadeUp(0.08)} className="text-center mb-10">
+  <h1
+    className="text-[2.8rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.5rem] font-black text-white leading-[0.85] tracking-tight uppercase lg:whitespace-nowrap"
+    style={{
+      fontFamily: "'Poppins', sans-serif",
+      fontWeight: 900,
+      textShadow: '0 4px 40px rgba(0,0,0,0.6)'
+    }}
+  >
+    PESU MINECRAFT
+  </h1>
+
+  <p
+    className="text-lg sm:text-2xl md:text-3xl lg:text-5xl mt-4 inline-flex items-center gap-2 md:gap-3 tracking-wider"
+    style={{
+      fontFamily: "'Poppins', sans-serif",
+      fontWeight: 300,
+      color: 'rgba(255,255,255,0.5)'
+    }}
+  >
+    SEASON 2
+    <img
+      src={pesuMcIcon}
+      alt="Server icon"
+      className="inline-block rounded-full"
+      style={{ height: '1.1em' }}
+    />
+  </p>
+</motion.div>
 
               {/* Description left + Live Site + GitHub right */}
               <motion.div {...fadeUp(0.14)} className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
