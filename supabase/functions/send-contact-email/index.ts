@@ -142,7 +142,15 @@ serve(async (req) => {
       throw new Error('RESEND_API_KEY is not configured');
     }
 
-    const { name, email, message } = await req.json();
+    const { name, email, message, username, location } = await req.json();
+
+    // Honeypot spam check
+    if (username || location) {
+      return new Response(
+        JSON.stringify({ success: true }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     if (!name || !email || !message) {
       return new Response(
