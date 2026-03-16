@@ -61,6 +61,9 @@ const fadeUp = (delay = 0) => ({
 const ProjectDetailPage = () => {
   const { slug } = useParams<{slug: string;}>();
   const navigate = useNavigate();
+  useEffect(() => {
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+}, [slug]);
   const project = projects.find((p) => p.id === slug);
   const { isDark } = useTheme();
 

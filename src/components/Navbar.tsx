@@ -224,7 +224,8 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, delay: 0.15 }}
-                className="flex-1 flex flex-col px-6 pt-6 gap-1 overflow-y-auto"
+                className="flex-1 flex flex-col px-6 pt-6 gap-1 overflow-y-auto overscroll-contain"
+                style={{ WebkitOverflowScrolling: "touch" }}
               >
                 {navItems.map((item, i) => (
                   <motion.div
