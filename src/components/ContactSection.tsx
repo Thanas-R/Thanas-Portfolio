@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { TbBrandGithubFilled } from "react-icons/tb";
 import { ArrowUpRight } from 'lucide-react';
@@ -46,23 +47,29 @@ const contactLinks = [
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [honeypotUsername, setHoneypotUsername] = useState('');
+  const [honeypotLocation, setHoneypotLocation] = useState('');
   const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSending(true);
-    try {
-      const response = await fetch('/api/send-contact-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      const data = await response.json();
-      if (!response.ok || !data.success) {
-        throw new Error(data?.error || 'Failed to send');
-      }
+    if (honeypotUsername || honeypotLocation) {
       toast.success('Message sent successfully!');
       setForm({ name: '', email: '', message: '' });
+      return;
+    }
+    setSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: form,
+      });
+      if (error) throw error;
+      if (data?.success) {
+        toast.success('Message sent successfully!');
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        throw new Error(data?.error || 'Failed to send');
+      }
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to send message. Please try again.');
@@ -97,6 +104,25 @@ const ContactSection = () => {
 
 {/* form */}
 <form onSubmit={handleSubmit} className="mb-7">
+  {/* Honeypot fields - hidden from real users */}
+  <div className="absolute -left-[9999px]" aria-hidden="true" tabIndex={-1}>
+    <input
+      type="text"
+      name="username"
+      value={honeypotUsername}
+      onChange={(e) => setHoneypotUsername(e.target.value)}
+      tabIndex={-1}
+      autoComplete="off"
+    />
+    <input
+      type="text"
+      name="location"
+      value={honeypotLocation}
+      onChange={(e) => setHoneypotLocation(e.target.value)}
+      tabIndex={-1}
+      autoComplete="off"
+    />
+  </div>
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
     <input
       type="text"
