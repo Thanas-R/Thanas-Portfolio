@@ -143,7 +143,7 @@ const BlogsDarkMode = () => {
             className="text-[11px] tracking-[8px] uppercase mb-4 opacity-30"
             style={{ fontFamily: "'JetBrains Mono', monospace" }}
           >
-            ブログ — TRANSMISSION LOG
+            ブログ - TRANSMISSION LOG
           </p>
 
           {/* Main title with glitch + subtle neon glow on text */}
@@ -186,7 +186,7 @@ const BlogsDarkMode = () => {
               className="text-[10px] tracking-[6px] uppercase opacity-40"
               style={{ fontFamily: "'JetBrains Mono', monospace" }}
             >
-              {publishedCount} ENTRIES LOGGED — エントリー
+              {publishedCount} ENTRIES LOGGED - エントリー
             </span>
             <div
               className="h-px flex-1"
@@ -198,7 +198,7 @@ const BlogsDarkMode = () => {
         </div>
       </motion.div>
 
-      {/* Articles grid — cyberpunk style */}
+      {/* Articles grid - cyberpunk style */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -240,12 +240,12 @@ const BlogsDarkMode = () => {
                 className="text-xs opacity-40"
                 style={{ fontFamily: "'JetBrains Mono', monospace", letterSpacing: '2px' }}
               >
-                データ転送中 — Transmissions pending
+                データ転送中 - Transmissions pending
               </p>
             </div>
           </div>
 
-          {/* Articles preview — greyed out */}
+          {/* Articles preview - greyed out */}
           <div className="opacity-20 pointer-events-none select-none">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
               {blogArticles.map((article, i) => (
