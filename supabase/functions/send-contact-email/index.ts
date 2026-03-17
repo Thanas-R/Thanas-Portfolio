@@ -170,7 +170,7 @@ serve(async (req) => {
       body: JSON.stringify({
         from: 'Portfolio Contact <onboarding@resend.dev>',
         to: ['thanas5.rd@gmail.com'],
-        subject: `${name} — Portfolio Contact`,
+        subject: `${name} - Portfolio Contact`,
         html: htmlContent,
         reply_to: email,
       }),
