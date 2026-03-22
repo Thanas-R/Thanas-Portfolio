@@ -17,7 +17,7 @@ const ProjectsPage = () => {
   return (
     <>
       <SEOHead
-        title="Projects - Thanas R"
+        title="Projects | Thanas R"
         description="Explore projects built by Thanas R - from AI tools to creative web experiences and full-stack applications."
         path="/projects"
       />
