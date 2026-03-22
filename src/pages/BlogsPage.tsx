@@ -35,7 +35,7 @@ const BlogsPage = () => {
       style={{ backgroundColor: showDark ? '#0a0a0a' : '#f9f7f1' }}
     >
       <SEOHead
-        title="Blogs - Thanas R"
+        title="Blogs | Thanas R"
         description="Read articles and blog posts by Thanas R on development, AI, design, and creative problem-solving."
         path="/blogs"
       />
