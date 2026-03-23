@@ -11,7 +11,7 @@ const ResumePage = () => {
   return (
     <div className="relative min-h-screen bg-background flex flex-col">
       <SEOHead
-        title="Resume | Thanas R"
+        title="Resume - Thanas R"
         description="View and download the resume of Thanas R - developer, creative problem-solver, and full-stack builder."
         path="/resume"
       />
@@ -34,9 +34,6 @@ const ResumePage = () => {
         >
           Resume
         </h1>
-        <p className="mt-2 text-muted-foreground max-w-xl">
-        View the resume of Thanas R, including experience, skills, and projects in software development, AI, and design.
-        </p>
         <div className="flex items-center gap-2">
           <a
             href={resumePath}
@@ -80,13 +77,6 @@ const ResumePage = () => {
           />
         </div>
       </motion.div>
-      <div className="sr-only">
-  <h2>Resume Details</h2>
-  <p>
-    This page contains the resume of Thanas R, a developer and creative problem-solver
-    with experience in full-stack development, AI, and user interface design.
-  </p>
-</div>
     </div>
   );
 };
