@@ -14,7 +14,7 @@ const GlowingEffect = memo(
   ({
     proximity = 120,
     spread = 80,
-    blur = 12,
+    blur = 8,
     className,
     disabled = false,
     borderWidth = 0.5,
@@ -87,8 +87,8 @@ const GlowingEffect = memo(
     if (disabled) return null;
 
     const glowColor = isDark
-      ? "rgba(255,255,255,0.3)"
-      : "rgba(0,0,0,0.3)";
+      ? "rgba(255,255,255,0.35)"
+      : "rgba(0,0,0,0.35)";
 
     return (
       <div
@@ -122,7 +122,7 @@ const GlowingEffect = memo(
         <div
           className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-150"
           style={{
-            background: `radial-gradient(${spread * 6}px circle at var(--glow-x) var(--glow-y), ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'}, transparent 60%)`,
+            background: `radial-gradient(${spread * 5}px circle at var(--glow-x) var(--glow-y), ${isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)'}, transparent 70%)`,
           }}
         />
       </div>
