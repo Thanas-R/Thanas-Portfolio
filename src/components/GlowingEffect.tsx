@@ -107,7 +107,7 @@ const GlowingEffect = memo(
       >
         {/* Border glow */}
         <div
-          className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-750"
+          className="absolute inset-0 rounded-[inherit] opacity-[var(--glow-opacity)] transition-opacity duration-150"
           style={{
             background: `radial-gradient(${spread * 8}px circle at var(--glow-x) var(--glow-y), ${glowColor}, transparent 70%)`,
             mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
