@@ -17,11 +17,11 @@ const GradientCard = ({ children, className }: GradientCardProps) => {
       }}
     >
       <GlowingEffect
-        spread={80}
+        spread={40}
         disabled={false}
-        proximity={120}
+        proximity={64}
         borderWidth={1.5}
-        blur={12}
+        blur={0}
       />
       <div className="relative z-10 h-full">{children}</div>
     </div>
