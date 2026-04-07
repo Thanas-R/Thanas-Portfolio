@@ -8,12 +8,10 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Index from "./pages/Index";
 import PageLoader from "./components/PageLoader";
-import ScrollToTop from "./components/ScrollToTop";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ResumePage from "./pages/ResumePage";
 import BlogsPage from "./pages/BlogsPage";
-import BlogArticlePage from "./pages/BlogArticlePage";
 import NotFound from "./pages/NotFound";
 import CommandPalette from "./components/CommandPalette";
 import CommandButton from "./components/CommandButton";
@@ -59,11 +57,12 @@ const HashScrollHandler = () => {
 
   useEffect(() => {
     if (!location.hash) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, behavior: 'auto' });
       return;
     }
 
     const id = location.hash.replace('#', '');
+    // Delay to allow page transition animation to complete
     const timer = setTimeout(() => {
       const target = document.getElementById(id);
       if (target) {
@@ -93,7 +92,6 @@ const AnimatedRoutes = () => {
             <Route path="/projects/:slug" element={<ProjectDetailPage />} />
             <Route path="/resume" element={<ResumePage />} />
             <Route path="/blogs" element={<BlogsPage />} />
-            <Route path="/blogs/:slug" element={<BlogArticlePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
       </motion.div>
@@ -110,7 +108,6 @@ const App = () => (
       <GlowCardPointerTracker />
       <Analytics />
       <BrowserRouter>
-        <ScrollToTop />
         <HashScrollHandler />
         <CommandPalette />
         <CommandButton />
