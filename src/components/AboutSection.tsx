@@ -47,14 +47,14 @@ const AboutSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
           {/* About Me — first on mobile via order */}
           <BentoCard className="md:col-span-4 min-h-[10rem] order-1 md:order-2">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">About Me</h3>
-            <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Fredoka']">About Me</h3>
+            <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Fredoka']">
               I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
             </p>
-            <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
+            <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Fredoka']">
               While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
             </p>
-            <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
+            <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Fredoka']">
               I strive to be honest, supportive, and reliable, taking responsibility or leading when needed while contributing and learning with the team.
             </p>
           </BentoCard>
