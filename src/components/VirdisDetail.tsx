@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud, Github, Satellite, LineChart, Layers } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Map, BarChart3, Cpu, Cloud, Github, Satellite, Layers, Droplets, Mountain } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
@@ -43,19 +43,14 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
   const font = "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
   const monoFont = "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace";
 
-  // theme-aware grid color: subtle white on dark, greyish on light
   const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(120,120,120,0.18)';
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: pageBg }}>
-      {/* Grid Background */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `
-            linear-gradient(to right, ${gridColor} 1px, transparent 1px),
-            linear-gradient(to bottom, ${gridColor} 1px, transparent 1px)
-          `,
+          backgroundImage: `linear-gradient(to right, ${gridColor} 1px, transparent 1px), linear-gradient(to bottom, ${gridColor} 1px, transparent 1px)`,
           backgroundSize: '40px 40px'
         }}
       />
@@ -75,7 +70,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             </Link>
           </motion.div>
 
-          {/* Panel — 4px border */}
+          {/* Panel */}
           <motion.div
             {...fadeUp(0.08)}
             className="rounded-2xl p-5 sm:p-8 md:p-12 relative overflow-hidden"
@@ -87,13 +82,13 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 : '0 25px 60px -12px rgba(0,0,0,0.25), 0 0 30px -10px rgba(4,16,9,0.1)',
             }}
           >
-            {/* Inner glow overlay */}
             <div
               className="absolute inset-0 pointer-events-none rounded-2xl"
               style={{
                 background: 'radial-gradient(ellipse at 20% 0%, rgba(74,140,111,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(234,185,71,0.06) 0%, transparent 50%)',
               }}
             />
+
             <div className="relative z-10">
               {/* Header */}
               <h1
@@ -102,23 +97,22 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               >
                 Virdis
               </h1>
+
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                 <p
                   className="text-sm uppercase tracking-[0.2em] font-medium"
                   style={{ color: accent, fontFamily: font }}
                 >
-                  Satellite-Powered Precision Agriculture Platform
+                  Satellite-Powered Land & Agriculture Analytics
                 </p>
+
                 <div className="flex items-center gap-3 shrink-0">
                   <a
-                    href="https://github.com/Thanas-R/Virdis"
+                    href="https://github.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:scale-[1.03] active:scale-[0.98] transition-all"
-                    style={{
-                      backgroundColor: 'rgba(255,251,235,0.08)',
-                      border: '1px solid rgba(255,251,235,0.15)',
-                    }}
+                    style={{ backgroundColor: 'rgba(255,251,235,0.08)', border: '1px solid rgba(255,251,235,0.15)' }}
                   >
                     <Github className="w-4 h-4" style={{ color: text }} />
                   </a>
@@ -147,26 +141,28 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
                 style={{ color: textMuted, fontFamily: font }}
               >
-                A precision agriculture web platform that helps farmers and agronomists map fields, monitor crop health from satellite imagery, and receive AI-driven agronomic insights through an interactive geospatial dashboard.
+                Satellite-powered land analytics platform. Draw regions on a map and get NDVI vegetation analysis, climate data, soil profiling, land use classification, suitability scoring, and AI crop recommendations, all in one dashboard.
               </p>
 
               <div className="w-full h-px mb-10" style={{ backgroundColor: divider }} />
 
-              {/* Core Capabilities */}
+              {/* Key Features */}
               <SectionLabel label="Key Features" color={label} font={font} />
               <div className="grid md:grid-cols-2 gap-3 mb-10">
                 {[
-                  { icon: Map, title: 'Interactive Field Mapping', desc: 'Satellite map powered by Mapbox where users can draw and manage field polygons, switch map styles, and navigate fields with smooth fly-to interactions.' },
-                  { icon: BarChart3, title: 'NDVI Crop Health Monitoring', desc: 'Sentinel-2 imagery processed through Google Earth Engine to calculate NDVI (Normalized Difference Vegetation Index) and visualize crop health directly on the map.' },
-                  { icon: Cpu, title: 'AI Agronomic Insights', desc: 'Field data and vegetation metrics are analyzed using Gemini 2.5 Flash to generate crop health assessments, irrigation guidance, pest risk indicators, and crop recommendations.' },
-                  { icon: Cloud, title: 'Weather Integration', desc: 'Per-field weather data including temperature, rainfall, humidity, and wind sourced from Open-Meteo.' },
-                  { icon: LineChart, title: 'NDVI Time-Series Analysis', desc: 'Historical vegetation tracking used to estimate growth rate, canopy cover, and biomass trends over time.' },
-                  { icon: Layers, title: 'Geospatial Analytics', desc: 'Additional environmental layers derived from satellite data including land cover classification, elevation, slope, rainfall, and soil carbon.' },
+                  { icon: Map, title: 'Interactive Satellite Mapping', desc: 'Polygon drawing tools on Mapbox GL JS with satellite and dark basemaps, fly-to animations, geocoding search, and NDVI raster overlay.' },
+                  { icon: Satellite, title: 'NDVI Vegetation Analysis', desc: 'Sentinel-2 imagery processed through Google Earth Engine at 10m resolution. Color-coded raster layer with time-series tracking.' },
+                  { icon: Cloud, title: 'Climate & Air Quality', desc: 'Per-region weather analytics including temperature, precipitation, evapotranspiration, soil moisture, and air quality (PM2.5, AQI) via Open-Meteo.' },
+                  { icon: Droplets, title: 'Soil Health Profiling', desc: 'ISRIC SoilGrids data at 250m resolution covering pH, organic carbon, nitrogen, sand/silt/clay texture, water retention, and USDA classification.' },
+                  { icon: Layers, title: 'Land Use & Suitability', desc: 'ESA WorldCover 10m classification via GEE with radar chart scoring across soil quality, water access, climate, topography, drainage, and nutrients.' },
+                  { icon: Cpu, title: 'AI Crop Planning', desc: 'Local scoring engine with 50+ crop profiles for instant results, plus Gemini 2.5 Pro for detailed intercropping and rotation strategies.' },
+                  { icon: Mountain, title: 'Edge Case Detection', desc: 'Detects water bodies, deserts, polar regions, high altitude, and urban areas, then switches to the appropriate analytics mode.' },
+                  { icon: BarChart3, title: 'Region Comparison', desc: 'Side-by-side comparison of two regions with synchronized analytics charts.' },
                 ].map((item) => (
                   <div
                     key={item.title}
-                    className="p-5 rounded-xl flex gap-4 backdrop-blur-md"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.7)', border: `1px solid rgba(255,255,255,0.1)` }}
+                    className="p-5 rounded-xl flex gap-4"
+                    style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
                   >
                     <item.icon className="w-5 h-5 mt-0.5 shrink-0" style={{ color: green }} />
                     <div>
@@ -177,49 +173,62 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 ))}
               </div>
 
-              {/* Architecture — Flowchart */}
+              {/* Architecture */}
               <SectionLabel label="Architecture" color={label} font={font} />
               <div className="mb-10 flex justify-center">
                 <div
-                  className="p-6 md:p-8 rounded-xl w-full max-w-2xl font-mono text-sm leading-relaxed space-y-4"
-                  style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}`, color: textMuted }}
+                  className="p-6 md:p-8 rounded-xl w-full max-w-3xl"
+                  style={{ backgroundColor: codeBg, border: `1px solid ${cardBorder}`, fontFamily: monoFont, fontSize: '13px' }}
                 >
-                  <div className="flex flex-col items-center gap-2">
-                    <span className="px-4 py-2 rounded-lg text-center font-semibold" style={{ backgroundColor: 'rgba(255,251,235,0.08)', border: '1px solid rgba(255,251,235,0.15)', color: heading }}>
-                      User / Browser
-                    </span>
-                    <span style={{ color: green }}>↓</span>
-                    <span className="px-4 py-2 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.15)', border: `1px solid ${green}`, color: heading }}>
+                  <div className="flex flex-col items-center gap-0">
+                    <div className="px-5 py-2.5 rounded-lg text-center" style={{ backgroundColor: 'rgba(255,251,235,0.08)', border: '1px solid rgba(255,251,235,0.15)', color: heading }}>
+                      <span className="font-semibold">User / Browser</span>
+                    </div>
+                    <div className="text-center py-1" style={{ color: green }}>↓</div>
+                    <div className="px-5 py-2.5 rounded-lg text-center" style={{ backgroundColor: `rgba(74,140,111,0.15)`, border: `1px solid ${green}`, color: heading }}>
                       <span className="font-semibold">Frontend</span>
                       <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>React + Mapbox GL JS + Tailwind</span>
-                    </span>
-                    <span style={{ color: green }}>↓</span>
-                    <span className="px-4 py-3 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.1)', border: `1px solid ${cardBorder}`, color: heading }}>
-                      <span className="font-semibold">Edge Functions</span>
-                      <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>Deno / TypeScript</span>
-                    </span>
-                    <div className="flex items-center gap-6">
-                      <span style={{ color: green }}>↙</span>
-                      <span style={{ color: green }}>↓</span>
-                      <span style={{ color: green }}>↘</span>
                     </div>
-                    <div className="flex gap-3 flex-wrap justify-center">
+                    <div className="text-center py-1" style={{ color: green }}>↓</div>
+                    <div className="px-5 py-2.5 rounded-lg text-center" style={{ backgroundColor: 'rgba(74,140,111,0.1)', border: `1px solid ${cardBorder}`, color: heading }}>
+                      <span className="font-semibold">Edge Functions</span>
+                      <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>Supabase / Deno</span>
+                    </div>
+                    <div className="w-px h-4" style={{ backgroundColor: divider }} />
+
+                    {/* Function branches */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full mt-2">
                       {[
-                        { name: 'gee-ndvi-tiles', target: 'Earth Engine API' },
-                        { name: 'analyze-field', target: 'Gemini 2.5 Flash' },
+                        { name: 'analyze-field', target: 'GEE + Gemini' },
+                        { name: 'gee-analytics', target: 'Earth Engine' },
+                        { name: 'gee-ndvi-tiles', target: 'Earth Engine' },
+                        { name: 'ndvi-timeseries', target: 'Earth Engine' },
+                        { name: 'crop-planning', target: 'Gemini 2.5 Pro' },
+                        { name: 'soil-data', target: 'SoilGrids API' },
                         { name: 'get-mapbox-token', target: 'Mapbox API' },
+                        { name: 'keepalive', target: 'Health Check' },
                       ].map((fn) => (
-                        <span key={fn.name} className="px-3 py-2 rounded-lg text-center" style={{ backgroundColor: 'rgba(255,251,235,0.05)', border: `1px solid ${cardBorder}` }}>
-                          <span className="block text-[11px] font-semibold" style={{ color: green }}>{fn.name}</span>
-                          <span className="block text-[10px] mt-0.5" style={{ color: textMuted }}>→ {fn.target}</span>
-                        </span>
+                        <div key={fn.name} className="flex flex-col items-center gap-1">
+                          <span style={{ color: green, fontSize: '12px' }}>▼</span>
+                          <div className="px-3 py-2 rounded-md text-center w-full" style={{ backgroundColor: 'rgba(255,251,235,0.05)', border: `1px solid ${cardBorder}` }}>
+                            <span className="block text-[11px] font-semibold" style={{ color: green }}>{fn.name}</span>
+                            <span className="block text-[10px] mt-1" style={{ color: textMuted }}>→ {fn.target}</span>
+                          </div>
+                        </div>
                       ))}
                     </div>
-                    <span style={{ color: accent }}>↓</span>
-                    <span className="px-4 py-2 rounded-lg text-center" style={{ backgroundColor: 'rgba(234,185,71,0.1)', border: `1px solid ${accent}`, color: heading }}>
-                      <span className="font-semibold">Supabase</span>
-                      <span className="block text-[11px] mt-0.5" style={{ color: textMuted }}>PostgreSQL + Auth + Storage</span>
-                    </span>
+
+                    {/* External Data Sources */}
+                    <div className="w-px h-6 mt-3" style={{ backgroundColor: divider }} />
+                    <span style={{ color: accent, fontSize: '16px' }}>▼</span>
+                    <div className="w-px h-2" style={{ backgroundColor: divider }} />
+
+                    <div className="px-5 py-3 rounded-lg text-center w-full max-w-md" style={{ backgroundColor: 'rgba(198,183,126,0.1)', border: `1px solid ${accent}`, color: heading }}>
+                      <span className="font-semibold">External Data Sources</span>
+                      <span className="block text-[11px] mt-1" style={{ color: textMuted }}>
+                        Google Earth Engine · Open-Meteo · ISRIC SoilGrids · Mapbox · Sentinel-2 · ESA WorldCover · SRTM · CHIRPS
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -228,19 +237,22 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               <SectionLabel label="Tech Stack" color={label} font={font} />
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
                 {[
-                  { l: 'Frontend', v: 'React • TypeScript • Vite • Tailwind CSS • shadcn/ui • Mapbox GL JS' },
-                  { l: 'Data Visualization', v: 'Recharts' },
-                  { l: 'State & Routing', v: 'TanStack Query • React Router' },
+                  { l: 'Frontend', v: 'React 18 · TypeScript 5 · Vite 5 · Tailwind CSS · shadcn/ui' },
+                  { l: 'Mapping', v: 'Mapbox GL JS 3' },
+                  { l: 'Charts', v: 'Recharts' },
+                  { l: 'State & Routing', v: 'TanStack Query 5 · React Router 6' },
                   { l: 'Backend', v: 'Supabase Edge Functions (Deno)' },
-                  { l: 'Database', v: 'Supabase PostgreSQL' },
-                  { l: 'Satellite Data', v: 'Google Earth Engine (Sentinel-2)' },
-                  { l: 'AI', v: 'Gemini 2.5 Flash' },
-                  { l: 'Weather', v: 'Open-Meteo API' },
+                  { l: 'Satellite', v: 'Google Earth Engine (Sentinel-2 · ESA WorldCover · SRTM · CHIRPS)' },
+                  { l: 'AI', v: 'Google Gemini 2.5 Pro' },
+                  { l: 'Weather', v: 'Open-Meteo (Forecast · Archive · Air Quality)' },
+                  { l: 'Soil', v: 'ISRIC SoilGrids (250m)' },
+                  { l: 'PDF Export', v: 'jsPDF' },
+                  { l: 'Animations', v: 'tailwindcss-animate' },
                 ].map((item) => (
                   <div
                     key={item.l}
-                    className="p-3.5 rounded-lg backdrop-blur-md"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.7)', border: `1px solid rgba(255,255,255,0.1)` }}
+                    className="p-3.5 rounded-lg"
+                    style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
                   >
                     <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: label, fontFamily: font }}>{item.l}</p>
                     <p className="text-[13px] font-medium leading-snug" style={{ color: heading, fontFamily: font }}>{item.v}</p>
