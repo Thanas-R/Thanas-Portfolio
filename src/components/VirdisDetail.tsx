@@ -28,7 +28,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
 
   const panelBorder = '#041009';
   const panelBg = '#1D2A23';
-  const cardBg = '#24322C';
+  const cardBg = '#141F1A';
   const cardBorder = '#2E3F37';
 
   const text = '#FFFBEB';
