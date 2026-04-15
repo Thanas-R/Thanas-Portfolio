@@ -100,7 +100,7 @@ const TechCarousel = () => {
         <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4 text-center">
           Tech Stack
         </h3>
-        <div className="space-y-3 overflow-hidden">
+        <div className="space-y-5 overflow-hidden">
           <div
             onMouseEnter={() => setHoveredRow(0)}
             onMouseLeave={() => setHoveredRow(null)}
