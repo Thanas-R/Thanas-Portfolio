@@ -1,0 +1,11 @@
+/* TEAM */
+Name: Thanas R
+Site: https://thanas.vercel.app
+GitHub: https://github.com/Thanas-R
+LinkedIn: https://www.linkedin.com/in/thanasr/
+Medium: https://thanas.medium.com/
+Location: Bangalore, India
+
+/* SITE */
+Standards: HTML5, CSS3, TypeScript, React, Vite
+Components: Tailwind CSS, Framer Motion
