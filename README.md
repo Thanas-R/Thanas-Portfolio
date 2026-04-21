@@ -13,7 +13,7 @@ I strive to be honest, supportive, and reliable, taking responsibility or leadin
 
 **Connect with me:**
 <p align="left">
-<a href="https://thanas.vercel.app"><img src="Project-Images/favicon.png" width="30"></a><img width="10">
+<a href="https://thanas.vercel.app"><img src="public/profile.png" width="30"></a><img width="10">
 <a href="https://www.linkedin.com/in/thanasr/"><img src="https://skillicons.dev/icons?i=linkedin" width="30"></a><img width="10">
 <a href="mailto:thanas5.rd@gmail.com"><img src="https://skillicons.dev/icons?i=gmail" width="30"></a><img width="10">
 <a href="https://discord.com/users/677174403859087378"><img src="https://skillicons.dev/icons?i=discord" width="30"></a><img width="10">
