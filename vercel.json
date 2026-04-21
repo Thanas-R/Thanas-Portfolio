@@ -2,8 +2,13 @@
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/humans.txt", "destination": "/humans.txt" },
     { "source": "/profile.png", "destination": "/profile.png" },
     { "source": "/googlec39a2cba8e915527.html", "destination": "/googlec39a2cba8e915527.html" },
+    { "source": "/about.html", "destination": "/about.html" },
+    { "source": "/projects.html", "destination": "/projects.html" },
+    { "source": "/blogs.html", "destination": "/blogs.html" },
+    { "source": "/resume.html", "destination": "/resume.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
