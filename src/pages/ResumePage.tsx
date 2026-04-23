@@ -26,7 +26,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative z-10 max-w-5xl mx-auto w-full pb-4 flex items-center justify-between px-4 md:px-5 gap-3"
+        className="relative z-10 max-w-5xl mx-auto w-full pb-4 flex items-center justify-between px-4 md:px-5 gap-3 mt-4 md:mt-0"
       >
         <h1
           className="text-3xl md:text-5xl font-black text-foreground uppercase leading-none shrink-0"
