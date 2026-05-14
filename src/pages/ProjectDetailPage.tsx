@@ -569,7 +569,7 @@ const ProjectDetailPage = () => {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">
-                  macOS-themed interactive portfolio
+                  macOS-themed interactive website
                 </p>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
@@ -577,7 +577,7 @@ const ProjectDetailPage = () => {
                 <div className="mb-8">
                   <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">About this project</h2>
                   <p className="text-sm md:text-base text-foreground/80 leading-relaxed">
-                    A browser-based portfolio designed to recreate the macOS desktop experience. Visitors interact with a desktop-like interface &amp; opening apps, moving windows, and exploring sections like About, Projects, and Journey.
+                    A deliberate attempt to rebuild the macOS experience inside a single React application, without iframes, without screenshots, and without shortcuts. Every window, dock icon, menu, widget, animation, and keyboard shortcut is a real component running in your browser.
                   </p>
                   <p className="text-sm text-muted-foreground/80 leading-relaxed mt-4">
                     This was one of my first serious web projects where I experimented with UI design and interactions. The goal was to make a portfolio that feels more immersive and memorable than a standard webpage.
