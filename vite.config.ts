@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => ({
       renderer: "@prerenderer/renderer-puppeteer",
       rendererOptions: {
         renderAfterTime: 2500,
-        headless: "new",
+        headless: true,
         maxConcurrentRoutes: 2,
         launchOptions: {
           args: ["--no-sandbox", "--disable-setuid-sandbox"],
