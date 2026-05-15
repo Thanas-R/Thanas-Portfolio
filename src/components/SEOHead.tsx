@@ -5,6 +5,10 @@ interface SEOHeadProps {
   description: string;
   path?: string;
   type?: string;
+  /** Optional image URL for OG/Twitter cards. Defaults to /profile.png */
+  image?: string;
+  /** Extra JSON-LD blocks to inject (e.g. CreativeWork for a project page) */
+  extraJsonLd?: Record<string, unknown>[];
 }
 
 const SITE_URL = 'https://thanas.vercel.app';
@@ -67,7 +71,7 @@ const buildJsonLd = (title: string, description: string, url: string, type: stri
  * Sets document.title and updates meta tags dynamically per page.
  * Google uses these for search result titles & descriptions.
  */
-const SEOHead = ({ title, description, path = '/', type = 'website' }: SEOHeadProps) => {
+const SEOHead = ({ title, description, path = '/', type = 'website', image, extraJsonLd = [] }: SEOHeadProps) => {
   useEffect(() => {
     // Title
     document.title = title;
@@ -88,8 +92,10 @@ const SEOHead = ({ title, description, path = '/', type = 'website' }: SEOHeadPr
     setMeta('meta[property="og:description"]', description);
     setMeta('meta[property="og:url"]', url);
     setMeta('meta[property="og:type"]', type);
+    setMeta('meta[property="og:image"]', image ?? PROFILE_IMG);
     setMeta('meta[name="twitter:title"]', title);
     setMeta('meta[name="twitter:description"]', description);
+    setMeta('meta[name="twitter:image"]', image ?? PROFILE_IMG);
 
     // Canonical
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
@@ -102,8 +108,8 @@ const SEOHead = ({ title, description, path = '/', type = 'website' }: SEOHeadPr
       document.head.appendChild(canonical);
     }
 
-    // Inject per-page JSON-LD: Person, Organization, WebSite, WebPage
-    const blocks = buildJsonLd(title, description, url, type);
+    // Inject per-page JSON-LD: Person, Organization, WebSite, WebPage + extras
+    const blocks = [...buildJsonLd(title, description, url, type), ...extraJsonLd];
     const injected: HTMLScriptElement[] = [];
     blocks.forEach((data, i) => {
       const id = `${JSONLD_ID_PREFIX}${i}`;
@@ -121,7 +127,7 @@ const SEOHead = ({ title, description, path = '/', type = 'website' }: SEOHeadPr
       document.title = 'Thanas R';
       injected.forEach((s) => s.remove());
     };
-  }, [title, description, path, type]);
+  }, [title, description, path, type, image, extraJsonLd]);
 
   return null;
 };
