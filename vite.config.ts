@@ -17,7 +17,9 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    mode !== "development" && Boolean(process.env.VERCEL) && prerender({
+    mode !== "development" &&
+!process.env.VERCEL &&
+prerender({
       routes: [
         "/",
         "/projects",
