@@ -36,6 +36,17 @@ export const projects: Project[] = [
     github: 'https://github.com/Thanas-R/Nautilus',
 
   },
+    {
+    id: 'thanas-os',
+    title: 'ThanasOS',
+    description: 'macOS-themed interactive portfolio',
+    longDescription:
+      'An earlier iteration of my portfolio, styled as a full macOS desktop environment in the browser. Features a working dock, draggable windows, a simulated Finder, and interactive apps.',
+    imageSrc: projectThanasOS,
+    tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
+    live: 'https://thanas-os.vercel.app/',
+    github: 'https://github.com/Thanas-R/thanas-OS',
+  },
   {
     id: 'virdis',
     title: 'Virdis',
@@ -46,18 +57,6 @@ export const projects: Project[] = [
     tags: ['Mapbox', 'Earth Engine', 'TypeScript', 'React', 'Supabase', 'Gemini AI', 'shadcn/ui'],
     live: 'https://virdis.vercel.app',
     github: 'https://github.com/Thanas-R/Virdis',
-
-  },
-  {
-    id: 'spheal',
-    title: 'Spheal',
-    description: 'Smart AI travel planner with interactive map visualization',
-    longDescription:
-      'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences - then the AI designs the full itinerary.',
-    imageSrc: projectSpheal,
-    tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
-    live: 'https://spheal-worldwide.vercel.app/',
-    github: 'https://github.com/Thanas-R/Spheal',
 
   },
   {
@@ -72,28 +71,18 @@ export const projects: Project[] = [
     github: 'https://github.com/Thanas-R/PESU-MC-S2-Website',
   },
   {
-    id: 'askbookie',
-    title: 'AskBookie_',
-    description: 'Production-ready RAG API frontend for document Q&A',
+    id: 'spheal',
+    title: 'Spheal',
+    description: 'Smart AI travel planner with interactive map visualization',
     longDescription:
-      'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API.',
-    imageSrc: projectAskbookie,
-    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'RAG', 'Vite'],
-    live: 'https://ask-bookie.vercel.app',
-    github: 'https://github.com/dotpmm/askbookie-frontend',
+      'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences - then the AI designs the full itinerary.',
+    imageSrc: projectSpheal,
+    tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
+    live: 'https://spheal-worldwide.vercel.app/',
+    github: 'https://github.com/Thanas-R/Spheal',
+
   },
-  {
-    id: 'contour-flow',
-    title: 'Contour Flow',
-    description: 'Real-time procedural topographic map generator rendered to canvas',
-    longDescription:
-      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares - no images, no SVGs, pure math.',
-    imageSrc: projectContour,
-    tags: ['React', 'Canvas', 'TypeScript', 'Simplex Noise', 'Creative Coding'],
-    live: 'https://contour-flow.vercel.app/',
-    github: 'https://github.com/Thanas-R/contour-flow',
-  },
-{
+    {
   id: 'smart-chef',
   title: 'Smart Chef',
   description: 'In-memory Vector Space Model using TF-IDF',
@@ -104,16 +93,16 @@ export const projects: Project[] = [
   live: 'https://smart-chef-pesu.vercel.app/',
   github: 'https://github.com/Thanas-R/Smart-Chef',
 },
-  {
-    id: 'thanas-os',
-    title: 'ThanasOS',
-    description: 'macOS-themed interactive portfolio',
+    {
+    id: 'contour-flow',
+    title: 'Contour Flow',
+    description: 'Real-time procedural topographic map generator rendered to canvas',
     longDescription:
-      'An earlier iteration of my portfolio, styled as a full macOS desktop environment in the browser. Features a working dock, draggable windows, a simulated Finder, and interactive apps.',
-    imageSrc: projectThanasOS,
-    tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
-    live: 'https://thanas-os.vercel.app/',
-    github: 'https://github.com/Thanas-R/thanas-OS',
+      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares - no images, no SVGs, pure math.',
+    imageSrc: projectContour,
+    tags: ['React', 'Canvas', 'TypeScript', 'Simplex Noise', 'Creative Coding'],
+    live: 'https://contour-flow.vercel.app/',
+    github: 'https://github.com/Thanas-R/contour-flow',
   },
   {
     id: 'pesu-forge',
