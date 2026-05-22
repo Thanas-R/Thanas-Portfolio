@@ -25,6 +25,11 @@ Thanas R (also known as Thanas or Thanas Ramesh) is a developer studying at PES 
 - [ThanasOS](/projects/thanas-os): macOS-themed interactive portfolio.
 - [PESU Forge](/projects/pesu-forge): AI study tool — flashcards, quizzes, mind maps.
 
+# Also me
+
+- https://github.com/Thanas-R
+- https://www.linkedin.com/in/thanasr/
+- https://thanas.medium.com/
 
 ## Optional
 
