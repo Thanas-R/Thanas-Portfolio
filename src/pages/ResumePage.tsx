@@ -26,7 +26,7 @@ const ResumePage = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative z-10 max-w-5xl mx-auto w-full pb-4 flex items-center justify-between px-4 md:px-5 gap-3 mt-4 md:mt-0"
+        className="relative z-10 max-w-4xl mx-auto w-full pb-4 flex items-center justify-between px-4 md:px-5 gap-3 mt-4 md:mt-0"
       >
         <h1
           className="text-3xl md:text-5xl font-black text-foreground uppercase leading-none shrink-0"
@@ -39,7 +39,7 @@ const ResumePage = () => {
             href={resumePath}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-foreground/20 text-foreground text-sm font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
             aria-label="Open resume in new tab"
           >
             <FileText className="w-4 h-4" />
@@ -48,7 +48,7 @@ const ResumePage = () => {
           <a
             href={resumePath}
             download="Thanas-Resume.pdf"
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-opacity"
             aria-label="Download resume"
           >
             <Download className="w-4 h-4" />
