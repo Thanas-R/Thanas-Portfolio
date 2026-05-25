@@ -11,8 +11,8 @@ const ResumePage = () => {
   return (
     <div className="relative min-h-screen bg-background flex flex-col">
       <SEOHead
-        title="Resume - Thanas R"
-        description="View and download the resume of Thanas R - developer, creative problem-solver, and full-stack builder."
+        title="Resume | Thanas R"
+        description="View and download the resume of Thanas R - software developer"
         path="/resume"
       />
       <LightRays className="opacity-60" />
@@ -72,7 +72,7 @@ const ResumePage = () => {
         >
           <img
             src={resumePreview}
-            alt="Thanas R - Resume"
+            alt="Thanas R | Resume"
             className="w-full h-auto block"
           />
         </div>
