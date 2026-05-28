@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { DotGridSpotlight } from '@/components/dot-grid-spotlight';
+import { useTheme } from '@/hooks/use-theme';
+
 
 import projectPesuMC from '@/assets/project-pesumc.png';
 import projectAskbookie from '@/assets/project-askbookie.png';
@@ -153,8 +156,10 @@ const preloadedImages: HTMLImageElement[] = projects.map((p) => {
 void preloadedImages;
 
 const ProjectsSection = () => {
+  const { isDark } = useTheme();
   return (
     <section id="projects" className="relative py-20 overflow-hidden">
+
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
@@ -180,8 +185,17 @@ const ProjectsSection = () => {
       </div>
 
       <div className="w-full relative">
-        <div className="absolute inset-0 dotted-bg pointer-events-none z-0" />
+        <DotGridSpotlight
+          className="absolute inset-0 z-0"
+          dotColor={isDark ? '#272727' : '#DCDCDC'}
+          activeDotColor={isDark ? 'rgba(255,255,255,0.23)' : 'rgba(0,0,0,0.24)'}
+          spacing={10}
+          baseRadius={1}
+          activeRadius={2}
+          interactionRadius={140}
+        />
         <div className="relative z-10 max-w-5xl mx-auto px-6 pt-6">
+
           <motion.div
             initial={{ y: 12, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}

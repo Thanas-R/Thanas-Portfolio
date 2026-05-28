@@ -20,21 +20,23 @@ const queryClient = new QueryClient();
 
 const GlowCardPointerTracker = () => {
   useEffect(() => {
-    const handlePointerMove = (event: PointerEvent) => {
-      const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('.glow-card');
-      if (!target) return;
+    const getCard = (event: PointerEvent) => {
+      const t = event.target;
+      if (!t || !(t instanceof Element)) return null;
+      return t.closest<HTMLElement>('.glow-card');
+    };
 
+    const handlePointerMove = (event: PointerEvent) => {
+      const target = getCard(event);
+      if (!target) return;
       const bounds = target.getBoundingClientRect();
-      const x = event.clientX - bounds.left;
-      const y = event.clientY - bounds.top;
-      target.style.setProperty('--glow-x', `${x}px`);
-      target.style.setProperty('--glow-y', `${y}px`);
+      target.style.setProperty('--glow-x', `${event.clientX - bounds.left}px`);
+      target.style.setProperty('--glow-y', `${event.clientY - bounds.top}px`);
     };
 
     const handlePointerLeave = (event: PointerEvent) => {
-      const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('.glow-card');
+      const target = getCard(event);
       if (!target) return;
-
       target.style.removeProperty('--glow-x');
       target.style.removeProperty('--glow-y');
     };
