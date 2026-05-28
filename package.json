@@ -8,6 +8,7 @@
   "predev": "bunx tsx scripts/generate-sitemap.ts",
   "prebuild": "bunx tsx scripts/generate-sitemap.ts",
   "build": "vite build",
+  "build:dev": "vite build --mode development",
   "build:local": "vite build",
   "build:seo": "vite build",
   "lint": "eslint .",
