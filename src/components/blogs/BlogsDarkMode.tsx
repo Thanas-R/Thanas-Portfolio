@@ -67,25 +67,8 @@ const BlogsDarkMode = () => {
     <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#0a0a0a', color: '#e0e0e0' }}>
       <Scanlines />
 
-      {/* Subtle neon ambient glow */}
-      <div
-        className="pointer-events-none fixed inset-0 z-0"
-        style={{
-          background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,255,255,0.025) 0%, transparent 70%)',
-        }}
-      />
-      <div
-        className="pointer-events-none fixed inset-0 z-0"
-        style={{
-          background: 'radial-gradient(ellipse 30% 50% at 0% 50%, rgba(200,220,255,0.015) 0%, transparent 70%)',
-        }}
-      />
-      <div
-        className="pointer-events-none fixed inset-0 z-0"
-        style={{
-          background: 'radial-gradient(ellipse 30% 50% at 100% 60%, rgba(200,220,255,0.015) 0%, transparent 70%)',
-        }}
-      />
+      {/* (white bulb glow removed per request) */}
+
 
       {/* Grid overlay */}
       <div
