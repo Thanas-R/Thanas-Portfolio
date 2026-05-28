@@ -552,7 +552,7 @@ const ProjectDetailPage = () => {
                   {project.title}
                 </h1>
 <div className="flex items-center gap-6 mb-4 -ml-9">
-  <div className="w-[140px] md:w-[180px] h-8 md:h-12 shrink-0 flex items-center overflow-hidden">
+  <div className="w-[140px] md:w-[180px] h-8 md:h-12 shrink-0 flex items-center overflow-visible">
     <AppleHelloEffect
       className="h-full w-full text-foreground"
       speed={0.7}
