@@ -28,7 +28,7 @@ const socials = [
   label: 'GitHub',
   href: 'https://github.com/Thanas-R',
   tooltip: 'Thanas-R',
-  icon: <TbBrandGithubFilled className="w-8 h-8" />
+  icon: <TbBrandGithubFilled className="w-7 h-7" />
 },
 {
   label: 'LinkedIn',
@@ -62,7 +62,7 @@ const socials = [
     label: 'Medium',
     href: 'https://medium.com/@thanas',
     tooltip: '@thanas',
-    icon: <SiMedium className="w-8 h-8" />
+    icon: <SiMedium className="w-7 h-7" />
   },
 {
   label: 'Discord',
