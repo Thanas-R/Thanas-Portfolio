@@ -9,18 +9,56 @@ const BentoCard = ({ className, children }: { className?: string; children?: Rea
   </GradientCard>
 );
 
-const HighlightTag = ({ children }: { children: ReactNode }) => (
-  <span className="inline-flex items-center rounded-full border border-border bg-muted/70 px-2.5 py-0.5 text-[0.78em] font-medium text-foreground/80 align-middle whitespace-nowrap">
-    {children}
-  </span>
-);
+function HighlightTag({ children }: { children: ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-md border border-border bg-muted/70 px-2.5 py-0.5 text-[0.78em] font-medium text-foreground/80 align-middle whitespace-nowrap">
+      {children}
+    </span>
+  );
+}
 
 const journeyData = [
-  { year: '2026', suffix: '· Present', description: 'Adopted agentic AI tools, refined UI/UX design skills, and elevated prompt engineering for efficient project delivery.' },
-  { year: '2025', description: 'Began B.Tech in CSE (AI/ML) at PES University. Started building production-ready projects.' },
-  { year: '2023', description: 'Focused on C++ and data structures & algorithms, strengthening core CS fundamentals.' },
-  { year: '2021', description: 'Started learning Java, focusing on OOP principles and application development.' },
-  { year: '2020', description: 'First steps in programming with Python, building small applications and scripts.' },
+  {
+    year: '2026',
+    suffix: '· Present',
+    description: (
+      <>
+        Adopted agentic <HighlightTag>AI</HighlightTag> tools, refined <HighlightTag>UI/UX</HighlightTag> design skills, and elevated prompt engineering for efficient project delivery.
+      </>
+    )
+  },
+  {
+    year: '2025',
+    description: (
+      <>
+        Began B.Tech in CSE (AI/ML) at PES University. Started building production-ready projects.
+      </>
+    )
+  },
+  {
+    year: '2023',
+    description: (
+      <>
+        Focused on <HighlightTag>C++</HighlightTag> and data structures & algorithms, strengthening core CS fundamentals.
+      </>
+    )
+  },
+  {
+    year: '2021',
+    description: (
+      <>
+        Started learning <HighlightTag>Java</HighlightTag>, focusing on OOP principles and application development.
+      </>
+    )
+  },
+  {
+    year: '2020',
+    description: (
+      <>
+        First steps in programming with <HighlightTag>Python</HighlightTag>, building small applications and scripts.
+      </>
+    )
+  },
 ];
 
 const educationData = [
@@ -38,7 +76,7 @@ const TimelineItem = ({
 }: {
   year: string;
   suffix?: string;
-  description: string;
+  description: ReactNode;
   isFirst?: boolean;
   isLast?: boolean;
 }) => (
@@ -68,15 +106,15 @@ const AboutSection = () => {
             </h3>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I am a <HighlightTag>passionate learner</HighlightTag> who believes in growing a little every day. I'm genuinely interested in <HighlightTag>coding and problem-solving</HighlightTag>, and I enjoy turning <HighlightTag>complex challenges</HighlightTag> into simple, effective solutions.
+              I am a passionate learner who believes in growing a little every day. I'm genuinely interested in <HighlightTag>coding and problem-solving</HighlightTag>, and I enjoy turning <HighlightTag>complex challenges</HighlightTag> into simple, effective solutions.
             </p>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              While I take my work seriously, I also value creating a <HighlightTag>positive and cheerful environment</HighlightTag>. I believe <HighlightTag>a good laugh</HighlightTag> can go a long way in building strong, collaborative teams.
+              While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
             </p>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I strive to be <HighlightTag>honest</HighlightTag>, <HighlightTag>supportive</HighlightTag>, and <HighlightTag>reliable</HighlightTag>, taking responsibility or <HighlightTag>leading when needed</HighlightTag> while contributing and learning with the team.
+              I strive to be <HighlightTag>honest</HighlightTag>, <HighlightTag>supportive</HighlightTag>, and <HighlightTag>reliable</HighlightTag>, taking responsibility or leading when needed while contributing and learning with the team.
             </p>
           </BentoCard>
 
