@@ -1,5 +1,4 @@
-import React from 'react';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import GitHubActivityChart from '@/components/GitHubActivityChart';
 import GradientCard from '@/components/GradientCard';
@@ -8,6 +7,12 @@ const BentoCard = ({ className, children }: { className?: string; children?: Rea
   <GradientCard className={className}>
     {children}
   </GradientCard>
+);
+
+const HighlightTag = ({ children }: { children: ReactNode }) => (
+  <span className="inline-flex items-center rounded-full border border-border bg-muted/70 px-2.5 py-0.5 text-[0.78em] font-medium text-foreground/80 align-middle whitespace-nowrap">
+    {children}
+  </span>
 );
 
 const journeyData = [
@@ -24,7 +29,19 @@ const educationData = [
   { institution: 'Sri Vani Education Centre', detail: '1st – 10th', years: '2013 – 2023' },
 ];
 
-const TimelineItem = ({ year, suffix, description, isFirst, isLast }: { year: string; suffix?: string; description: string; isFirst?: boolean; isLast?: boolean }) => (
+const TimelineItem = ({
+  year,
+  suffix,
+  description,
+  isFirst,
+  isLast
+}: {
+  year: string;
+  suffix?: string;
+  description: string;
+  isFirst?: boolean;
+  isLast?: boolean;
+}) => (
   <div className="flex items-start gap-3">
     <div className="flex flex-col items-center mt-1.5">
       <div className={cn('w-2.5 h-2.5 rounded-full ring-2 ring-card', isFirst ? 'bg-foreground' : 'bg-muted-foreground/40')} />
@@ -45,57 +62,63 @@ const AboutSection = () => {
     <section id="about" className="relative py-12 w-full pt-0">
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-          {/* About Me — first on mobile via order */}
           <BentoCard className="md:col-span-4 min-h-[10rem] order-1 md:order-2">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">About Me</h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">
+              About Me
+            </h3>
+
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
+              I am a <HighlightTag>passionate learner</HighlightTag> who believes in growing a little every day. I'm genuinely interested in <HighlightTag>coding and problem-solving</HighlightTag>, and I enjoy turning <HighlightTag>complex challenges</HighlightTag> into simple, effective solutions.
             </p>
+
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
+              While I take my work seriously, I also value creating a <HighlightTag>positive and cheerful environment</HighlightTag>. I believe <HighlightTag>a good laugh</HighlightTag> can go a long way in building strong, collaborative teams.
             </p>
+
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I strive to be honest, supportive, and reliable, taking responsibility or leading when needed while contributing and learning with the team.
+              I strive to be <HighlightTag>honest</HighlightTag>, <HighlightTag>supportive</HighlightTag>, and <HighlightTag>reliable</HighlightTag>, taking responsibility or <HighlightTag>leading when needed</HighlightTag> while contributing and learning with the team.
             </p>
           </BentoCard>
 
-          {/* Journey — second on mobile */}
           <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem] order-2 md:order-1">
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Journey</p>
             <div className="space-y-4">
               {journeyData.map((item, idx) => (
-                <TimelineItem key={item.year} year={item.year} suffix={item.suffix} description={item.description} isFirst={idx === 0} isLast={idx === journeyData.length - 1} />
+                <TimelineItem
+                  key={item.year}
+                  year={item.year}
+                  suffix={item.suffix}
+                  description={item.description}
+                  isFirst={idx === 0}
+                  isLast={idx === journeyData.length - 1}
+                />
               ))}
             </div>
           </BentoCard>
 
-          {/* Education — third on mobile */}
           <BentoCard className="md:col-span-2 min-h-[8rem] order-3">
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">Education</p>
             <div className="space-y-3">
               {educationData.map((edu, idx) => (
-<div key={idx} className="space-y-1">
-  {/* Institution */}
-  <p className="font-semibold text-foreground font-sans text-base">
-    {edu.institution}
-  </p>
+                <div key={idx} className="space-y-1">
+                  <p className="font-semibold text-foreground font-sans text-base">
+                    {edu.institution}
+                  </p>
 
-  {/* Course + Year row */}
-  <div className="flex items-center justify-between">
-    <p className="text-muted-foreground font-['Inter'] text-sm">
-      {edu.detail}
-    </p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-muted-foreground font-['Inter'] text-sm">
+                      {edu.detail}
+                    </p>
 
-    <span className="text-muted-foreground/70 font-['JetBrains_Mono'] text-sm">
-      {edu.years}
-    </span>
-  </div>
-</div>
+                    <span className="text-muted-foreground/70 font-['JetBrains_Mono'] text-sm">
+                      {edu.years}
+                    </span>
+                  </div>
+                </div>
               ))}
             </div>
           </BentoCard>
 
-          {/* GitHub Activity — fourth on mobile */}
           <BentoCard className="md:col-span-2 min-h-[8rem] order-4">
             <GitHubActivityChart />
           </BentoCard>
