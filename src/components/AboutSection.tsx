@@ -119,7 +119,9 @@ const AboutSection = () => {
           </BentoCard>
 
           <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem] order-2 md:order-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Journey</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">
+              Journey
+            </p>
             <div className="space-y-4">
               {journeyData.map((item, idx) => (
                 <TimelineItem
@@ -135,11 +137,14 @@ const AboutSection = () => {
           </BentoCard>
 
           <BentoCard className="md:col-span-2 min-h-[8rem] order-3">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">Education</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">
+              Education
+            </p>
+
             <div className="space-y-3">
               {educationData.map((edu, idx) => (
                 <div key={idx} className="space-y-1">
-                  <p className="font-semibold text-foreground font-sans text-base">
+                  <p className="text-foreground text-base font-['Playwrite_England_Joined'] leading-tight">
                     {edu.institution}
                   </p>
 
