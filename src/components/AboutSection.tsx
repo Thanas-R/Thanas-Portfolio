@@ -144,7 +144,7 @@ const AboutSection = () => {
             <div className="space-y-3">
               {educationData.map((edu, idx) => (
                 <div key={idx} className="space-y-1">
-                  <p className="text-foreground font-varela text-lg leading-tight">
+                  <p className="text-foreground font-varela font-semibold text-sm leading-tight">
                   {edu.institution}
 
                   </p>
