@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import { useLanyard } from 'react-use-lanyard';
 import avatar from '@/assets/avatar.png';
 import { TbBrandGithubFilled } from "react-icons/tb";
+import { SiMedium } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useIsMobile } from '@/hooks/use-mobile';
 
