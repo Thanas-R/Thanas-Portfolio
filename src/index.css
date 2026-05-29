@@ -123,6 +123,9 @@
     font-family: 'Space Grotesk', sans-serif;
   }
 }
+.font-playwrite {
+  font-family: "Playwrite England Joined", cursive;
+}
 
 html {
   scroll-behavior: smooth;
