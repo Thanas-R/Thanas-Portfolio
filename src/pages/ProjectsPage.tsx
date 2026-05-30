@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
-import { projects } from '@/components/ProjectsSection';
+import { projectsPageList as projects } from '@/components/ProjectsSection';
 import defaultPreview from '@/assets/projects-default.png';
 import SEOHead from '@/components/SEOHead';
 
