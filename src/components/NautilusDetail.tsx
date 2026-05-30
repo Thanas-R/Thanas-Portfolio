@@ -385,9 +385,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               className="text-sm md:text-base leading-relaxed max-w-2xl"
               style={{ color: textColor, fontFamily: font }}
             >
-              An AI-powered canvas-based knowledge management and visual thinking platform.
-              Nautilus generates interconnected knowledge maps, flowcharts, and concept cards
-              from a simple prompt, all rendered on an infinite zoomable canvas.
+              Nautilus replaces linear, chat-style AI interaction with a node-based knowledge interface. Every prompt creates an independent concept Card. The system continuously analyses cards and uses a neural-network style vector pipeline to surface meaningful connections across multiple databases. Over time it builds a non-linear, evolving knowledge graph you can explore spatially instead of scrolling through chats. Heading deeper into neural networking and richer multi-source linking next. Still very much a work in progress, this round is a content overhaul.
             </p>
           </motion.div>
 
