@@ -14,6 +14,8 @@ import projectVirdis from '@/assets/project-virdis.png';
 import projectSpheal from '@/assets/project-spheal.png';
 import projectPesuForge from '@/assets/project-pesuforge.png';
 import projectContour from '@/assets/project-contour.png';
+import projectOdinTree from '@/assets/project-odintree.png';
+import projectAskPesu from '@/assets/project-askpesu.png';
 
 export interface Project {
   id: string;
@@ -26,18 +28,21 @@ export interface Project {
   github?: string;
 }
 
+/**
+ * `projects` is ordered for the HOMEPAGE preview (filtered to 6).
+ * The Projects PAGE uses `projectsPageList` below for a different order.
+ */
 export const projects: Project[] = [
   {
     id: 'nautilus',
     title: 'Nautilus',
-    description: 'AI knowledge tool with mindmaps, flowcharts & concept cards',
+    description: 'Neural-network style knowledge graph that links ideas across databases',
     longDescription:
-      'A canvas-based AI knowledge tool that lets users create interconnected mindmaps, flowcharts, and auto-linked concept cards forming dynamic knowledge graphs. Powered by AI, Nautilus automatically identifies relationships between concepts, generates summaries, and builds visual representations of complex topics.',
+      'Nautilus replaces linear, chat-style AI interaction with a node-based knowledge interface. Every prompt generates an independent concept Card, and the system uses neural-network style vector linking across multiple databases to automatically surface relationships between ideas. It is moving towards deeper neural networking and richer multi-source connections. Still very much a work in progress, this is mostly a content overhaul for now.',
     imageSrc: projectNautilus,
-    tags: ['React', 'Canvas', 'AI', 'TypeScript', 'Graph'],
+    tags: ['React', 'Canvas', 'Neural Networking', 'Vector Search', 'TypeScript', 'Graph'],
     live: 'https://nautilus-build.vercel.app',
     github: 'https://github.com/Thanas-R/Nautilus',
-
   },
   {
     id: 'virdis',
@@ -49,19 +54,17 @@ export const projects: Project[] = [
     tags: ['Mapbox', 'Earth Engine', 'TypeScript', 'React', 'Supabase', 'Gemini AI', 'shadcn/ui'],
     live: 'https://virdis.vercel.app',
     github: 'https://github.com/Thanas-R/Virdis',
-
   },
   {
     id: 'spheal',
     title: 'Spheal',
     description: 'Smart AI travel planner with interactive map visualization',
     longDescription:
-      'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences - then the AI designs the full itinerary.',
+      'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences then the AI designs the full itinerary.',
     imageSrc: projectSpheal,
     tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
     live: 'https://spheal-worldwide.vercel.app/',
     github: 'https://github.com/Thanas-R/Spheal',
-
   },
   {
     id: 'pesu-mc',
@@ -90,23 +93,23 @@ export const projects: Project[] = [
     title: 'Contour Flow',
     description: 'Real-time procedural topographic map generator rendered to canvas',
     longDescription:
-      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares - no images, no SVGs, pure math.',
+      'A procedural topographic map animation rendered in real time on canvas using Simplex Noise and Marching Squares. No images, no SVGs, pure math.',
     imageSrc: projectContour,
     tags: ['React', 'Canvas', 'TypeScript', 'Simplex Noise', 'Creative Coding'],
     live: 'https://contour-flow.vercel.app/',
     github: 'https://github.com/Thanas-R/contour-flow',
   },
-{
-  id: 'smart-chef',
-  title: 'Smart Chef',
-  description: 'In-memory Vector Space Model using TF-IDF',
-  longDescription:
-    'A recipe recommendation engine built entirely in-memory using a Vector Space Model and TF-IDF scoring. Enter ingredients you have on hand and the system ranks recipes by relevance using cosine similarity.',
-  imageSrc: projectSmartchef,
-  tags: ['Python', 'TF-IDF', 'VSM'],
-  live: 'https://smart-chef-pesu.vercel.app/',
-  github: 'https://github.com/Thanas-R/Smart-Chef',
-},
+  {
+    id: 'smart-chef',
+    title: 'Smart Chef',
+    description: 'In-memory Vector Space Model using TF-IDF',
+    longDescription:
+      'A recipe recommendation engine built entirely in-memory using a Vector Space Model and TF-IDF scoring. Enter ingredients you have on hand and the system ranks recipes by relevance using cosine similarity.',
+    imageSrc: projectSmartchef,
+    tags: ['Python', 'TF-IDF', 'VSM'],
+    live: 'https://smart-chef-pesu.vercel.app/',
+    github: 'https://github.com/Thanas-R/Smart-Chef',
+  },
   {
     id: 'thanas-os',
     title: 'ThanasOS',
@@ -119,11 +122,33 @@ export const projects: Project[] = [
     github: 'https://github.com/Thanas-R/thanas-OS',
   },
   {
+    id: 'odin-tree',
+    title: 'Odin Tree',
+    description: 'Explore any GitHub repository as an interactive node-based flowchart',
+    longDescription:
+      'Odin Tree turns any GitHub repository into an interactive node-based flowchart. Files, functions, classes and modules become draggable, zoomable nodes connected by their real import relationships. It is built to help developers visually traverse architecture, spot bottlenecks, and learn how good codebases are organised.',
+    imageSrc: projectOdinTree,
+    tags: ['React', 'TypeScript', 'AST', 'Graph', 'Tree-sitter', 'GitHub API'],
+    live: 'https://odintree.vercel.app/',
+    github: 'https://github.com/Thanas-R/odin',
+  },
+  {
+    id: 'askpesu',
+    title: 'AskPESU',
+    description: 'RAG-powered assistant that answers questions about PES University',
+    longDescription:
+      'AskPESU is a RAG pipeline for question answering about PES University. I built the frontend, mirroring the exact design language I used for AskBookie. The backend, RAG pipeline and infrastructure are owned by the PESU Dev team.',
+    imageSrc: projectAskPesu,
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'RAG', 'Python', 'FastAPI', 'Docker'],
+    live: 'https://huggingface.co/spaces/pesu-dev-org/askpesu',
+    github: 'https://github.com/pesu-dev/ask-pesu',
+  },
+  {
     id: 'pesu-forge',
     title: 'PESU Forge',
     description: 'AI-powered study tool that transforms notes into interactive learning experiences',
     longDescription:
-      'PESU Forge is an AI-powered study tool that transforms notes into interactive learning experiences such as flashcards, quizzes, memory games, and visual mind maps. This was my first ever project and the one that introduced me to building with AI. Working on this project exposed me to how modern AI systems can be integrated into applications, which eventually pushed me to explore and build more projects afterwards. It became the starting point of my development journey and helped me understand how to connect frontend interfaces with AI-powered backends. The idea behind PESU Forge was to make studying more interactive by turning static notes into dynamic learning formats that help with recall, understanding, and engagement.',
+      'PESU Forge is an AI-powered study tool that transforms notes into interactive learning experiences such as flashcards, quizzes, memory games, and visual mind maps. This was my first ever project and the one that introduced me to building with AI.',
     imageSrc: projectPesuForge,
     tags: ['First Project Ever', 'React', 'TypeScript', 'Tailwind CSS', 'Gemini AI', 'Zustand'],
     live: 'https://pesuforge.vercel.app',
@@ -131,13 +156,32 @@ export const projects: Project[] = [
   },
 ];
 
+/** Re-ordered list used by the Projects PAGE and prev/next nav.
+ *  Homepage uses the order defined in `projects` above. */
+const PAGE_ORDER = [
+  'nautilus',
+  'virdis',
+  'thanas-os',
+  'pesu-mc',
+  'askbookie',
+  'odin-tree',
+  'askpesu',
+  'spheal',
+  'contour-flow',
+  'smart-chef',
+  'pesu-forge',
+];
+
+export const projectsPageList: Project[] = PAGE_ORDER
+  .map((id) => projects.find((p) => p.id === id))
+  .filter((p): p is Project => Boolean(p));
+
 // 6 projects on homepage — scattered overlapping layout like the reference
 const homeProjects = projects.filter((p) =>
   ['nautilus', 'virdis', 'pesu-mc', 'askbookie', 'thanas-os', 'smart-chef'].includes(p.id)
 );
 
 // Absolute positions for scattered overlapping 2-col, 3-row layout
-// Each card: top, left, width, rotate, zIndex
 const cardPositions = [
   { top: '0%', left: '0%', width: '54%', rotate: -2, zIndex: 2 },
   { top: '3%', left: '46%', width: '56%', rotate: 1.5, zIndex: 3 },

@@ -4,7 +4,7 @@ import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight 
 import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
-import { projects } from '@/components/ProjectsSection';
+import { projects, projectsPageList } from '@/components/ProjectsSection';
 import { Mac } from '@/components/Mac';
 import thanasOsMac from '@/assets/thanasos-mac.png';
 import pesuForgeBg from '@/assets/pesuforge-bg.png';
@@ -67,9 +67,9 @@ const ProjectDetailPage = () => {
   const project = projects.find((p) => p.id === slug);
   const { isDark } = useTheme();
 
-  const currentIndex = projects.findIndex((p) => p.id === slug);
-  const prevProject = projects[currentIndex - 1] ?? null;
-  const nextProject = projects[currentIndex + 1] ?? null;
+  const currentIndex = projectsPageList.findIndex((p) => p.id === slug);
+  const prevProject = projectsPageList[currentIndex - 1] ?? null;
+  const nextProject = projectsPageList[currentIndex + 1] ?? null;
 
   const isThanasOS = project?.id === 'thanas-os';
   const isSmartChef = project?.id === 'smart-chef';
@@ -80,6 +80,8 @@ const ProjectDetailPage = () => {
   const isPesuMC = project?.id === 'pesu-mc';
   const isNautilus = project?.id === 'nautilus';
   const isSpheal = project?.id === 'spheal';
+  const isOdinTree = project?.id === 'odin-tree';
+  const isAskPesu = project?.id === 'askpesu';
 
   // Arrow key navigation
   useEffect(() => {

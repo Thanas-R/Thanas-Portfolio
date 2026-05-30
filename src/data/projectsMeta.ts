@@ -2,10 +2,6 @@
  * Pure-data project metadata — no React/asset imports.
  * Imported by both the React app (via ProjectsSection) and build-time
  * scripts (vite.config.ts, scripts/generate-sitemap.ts).
- * Adding a new entry here automatically:
- *   - extends the prerender route list
- *   - extends sitemap.xml
- *   - gets per-page canonical / OG / JSON-LD
  */
 export interface ProjectMeta {
   id: string;
@@ -20,8 +16,8 @@ export const projectsMeta: ProjectMeta[] = [
   {
     id: 'nautilus',
     title: 'Nautilus',
-    description: 'AI knowledge tool with mindmaps, flowcharts & concept cards.',
-    tags: ['React', 'Canvas', 'AI', 'TypeScript', 'Graph'],
+    description: 'Neural-network style knowledge graph that links ideas across databases.',
+    tags: ['React', 'Canvas', 'Neural Networking', 'Vector Search', 'TypeScript', 'Graph'],
     live: 'https://nautilus-build.vercel.app',
     github: 'https://github.com/Thanas-R/Nautilus',
   },
@@ -34,12 +30,12 @@ export const projectsMeta: ProjectMeta[] = [
     github: 'https://github.com/Thanas-R/Virdis',
   },
   {
-    id: 'spheal',
-    title: 'Spheal',
-    description: 'Smart AI travel planner with interactive map visualization.',
-    tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
-    live: 'https://spheal-worldwide.vercel.app/',
-    github: 'https://github.com/Thanas-R/Spheal',
+    id: 'thanas-os',
+    title: 'ThanasOS',
+    description: 'macOS-themed interactive portfolio.',
+    tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
+    live: 'https://thanas-os.vercel.app/',
+    github: 'https://github.com/Thanas-R/thanas-OS',
   },
   {
     id: 'pesu-mc',
@@ -58,6 +54,30 @@ export const projectsMeta: ProjectMeta[] = [
     github: 'https://github.com/dotpmm/askbookie-frontend',
   },
   {
+    id: 'odin-tree',
+    title: 'Odin Tree',
+    description: 'Explore any GitHub repository as an interactive node-based flowchart.',
+    tags: ['React', 'TypeScript', 'AST', 'Graph', 'Tree-sitter'],
+    live: 'https://odintree.vercel.app/',
+    github: 'https://github.com/Thanas-R/odin',
+  },
+  {
+    id: 'askpesu',
+    title: 'AskPESU',
+    description: 'RAG-powered assistant that answers questions about PES University.',
+    tags: ['React', 'RAG', 'Python', 'FastAPI', 'Docker', 'PES University'],
+    live: 'https://huggingface.co/spaces/pesu-dev-org/askpesu',
+    github: 'https://github.com/pesu-dev/ask-pesu',
+  },
+  {
+    id: 'spheal',
+    title: 'Spheal',
+    description: 'Smart AI travel planner with interactive map visualization.',
+    tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
+    live: 'https://spheal-worldwide.vercel.app/',
+    github: 'https://github.com/Thanas-R/Spheal',
+  },
+  {
     id: 'contour-flow',
     title: 'Contour Flow',
     description: 'Real-time procedural topographic map generator rendered to canvas.',
@@ -72,14 +92,6 @@ export const projectsMeta: ProjectMeta[] = [
     tags: ['Python', 'TF-IDF', 'VSM'],
     live: 'https://smart-chef-pesu.vercel.app/',
     github: 'https://github.com/Thanas-R/Smart-Chef',
-  },
-  {
-    id: 'thanas-os',
-    title: 'ThanasOS',
-    description: 'macOS-themed interactive portfolio.',
-    tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
-    live: 'https://thanas-os.vercel.app/',
-    github: 'https://github.com/Thanas-R/thanas-OS',
   },
   {
     id: 'pesu-forge',

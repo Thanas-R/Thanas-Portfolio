@@ -2,6 +2,7 @@ import TopographicBackground from '@/components/TopographicBackground';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
+import ExperienceSection from '@/components/ExperienceSection';
 import TechCarousel from '@/components/TechCarousel';
 import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
@@ -20,6 +21,7 @@ const Index = () => {
         <Navbar />
         <HeroSection />
         <AboutSection />
+        <ExperienceSection />
         <TechCarousel />
         <ProjectsSection />
         <ContactSection />
