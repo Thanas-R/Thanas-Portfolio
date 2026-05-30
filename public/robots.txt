@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thanas.vercel.app/sitemap.xml
+Sitemap: https://thanas.dev/sitemap.xml
 
 User-agent: Googlebot
 Allow: /
