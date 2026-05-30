@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://thanas.vercel.app/</loc>
+    <loc>https://thanas.dev/</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects</loc>
+    <loc>https://thanas.dev/projects</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/blogs</loc>
+    <loc>https://thanas.dev/blogs</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/resume</loc>
+    <loc>https://thanas.dev/resume</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/nautilus</loc>
+    <loc>https://thanas.dev/projects/nautilus</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/virdis</loc>
+    <loc>https://thanas.dev/projects/virdis</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/spheal</loc>
+    <loc>https://thanas.dev/projects/spheal</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/pesu-mc</loc>
+    <loc>https://thanas.dev/projects/pesu-mc</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/askbookie</loc>
+    <loc>https://thanas.dev/projects/askbookie</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/contour-flow</loc>
+    <loc>https://thanas.dev/projects/contour-flow</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/smart-chef</loc>
+    <loc>https://thanas.dev/projects/smart-chef</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/thanas-os</loc>
+    <loc>https://thanas.dev/projects/thanas-os</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thanas.vercel.app/projects/pesu-forge</loc>
+    <loc>https://thanas.dev/projects/pesu-forge</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

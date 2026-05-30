@@ -1,6 +1,6 @@
 /* TEAM */
 Name: Thanas R
-Site: https://thanas.vercel.app
+Site: https://thanas.dev
 GitHub: https://github.com/Thanas-R
 LinkedIn: https://www.linkedin.com/in/thanasr/
 Medium: https://thanas.medium.com/

@@ -7,7 +7,7 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { projectsMeta } from '../src/data/projectsMeta';
 
-const BASE_URL = 'https://thanas.vercel.app';
+const BASE_URL = 'https://thanas.dev';
 const today = new Date().toISOString().slice(0, 10);
 
 interface Entry {

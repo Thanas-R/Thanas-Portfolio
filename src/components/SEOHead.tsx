@@ -11,7 +11,7 @@ interface SEOHeadProps {
   extraJsonLd?: Record<string, unknown>[];
 }
 
-const SITE_URL = 'https://thanas.vercel.app';
+const SITE_URL = 'https://thanas.dev';
 const PROFILE_IMG = `${SITE_URL}/profile.png`;
 const SAME_AS = [
   'https://github.com/Thanas-R',
