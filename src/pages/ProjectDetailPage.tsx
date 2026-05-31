@@ -14,6 +14,8 @@ import ContourFlowBackground from '@/components/ContourFlowBackground';
 import VirdisDetail from '@/components/VirdisDetail';
 import NautilusDetail from '@/components/NautilusDetail';
 import SphealDetail from '@/components/SphealDetail';
+import OdinTreeDetail from '@/components/OdinTreeDetail';
+import AskPesuDetail from '@/components/AskPesuDetail';
 import ContourThemeToggle from '@/components/ContourThemeToggle';
 import contourDark from '@/assets/contour-dark.png';
 import contourLight from '@/assets/contour-light.png';
@@ -204,6 +206,24 @@ const ProjectDetailPage = () => {
         <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>);
 
+  }
+
+  if (isOdinTree) {
+    return (
+      <>
+        <SideNav />
+        <OdinTreeDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      </>
+    );
+  }
+
+  if (isAskPesu) {
+    return (
+      <>
+        <SideNav />
+        <AskPesuDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      </>
+    );
   }
 
   return (
