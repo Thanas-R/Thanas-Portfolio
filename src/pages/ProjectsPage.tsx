@@ -38,7 +38,7 @@ const ProjectsPage = () => {
         <div className="flex-1 flex flex-col md:flex-row max-w-6xl mx-auto w-full px-6 gap-8 pt-4 pb-6 md:overflow-hidden">
 
           {/* LEFT — preview */}
-          <div className="hidden md:flex md:w-[55%] md:self-start md:pt-16">
+          <div className="hidden md:flex md:w-[55%] md:self-start md:pt-2">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -89,7 +89,7 @@ const ProjectsPage = () => {
           </div>
 
           {/* RIGHT — scrollable list with fade mask + hidden scrollbar */}
-          <div className="flex-1 md:pt-16 md:h-full md:flex md:flex-col md:min-h-0">
+          <div className="flex-1 md:pt-2 md:h-full md:flex md:flex-col md:min-h-0">
             {/* Mobile header */}
             <div className="md:hidden mb-8">
               <h1 className="text-4xl font-black text-foreground uppercase font-['Space_Grotesk']">
