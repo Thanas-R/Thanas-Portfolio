@@ -1,21 +1,28 @@
 "use client";
 
-import React, { useMemo, useState, type ReactElement } from "react";
+import React, { useState, type ComponentProps, type ReactElement } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Briefcase, ChevronDown } from "lucide-react";
+import {
+  BriefcaseBusinessIcon,
+  ChevronsDownUpIcon,
+  ChevronsUpDownIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Separator } from "@/components/ui/separator";
 
 export type ExperiencePositionItemType = {
   id: string;
   title: string;
-  employmentPeriod: { start: string; end?: string };
+  employmentPeriod: {
+    start: string;
+    end?: string;
+  };
   employmentType?: string;
   description?: string;
-  bullets?: string[];
   icon?: ReactElement;
   skills?: string[];
   isExpanded?: boolean;
-  link?: { href: string; label: string; icon?: ReactElement };
 };
 
 export type ExperienceItemType = {
@@ -33,227 +40,180 @@ export type WorkExperienceProps = {
   experiences: ExperienceItemType[];
 };
 
-function formatPeriodValue(value: string): string {
-  if (!value) return "";
-  return value;
-}
-
-function splitDescription(description?: string): string[] {
-  if (!description) return [];
-  return description
-    .split("\n")
-    .map((line) => line.trim().replace(/^[-•]\s*/, ""))
-    .filter(Boolean);
-}
-
 export function WorkExperience({ className, experiences }: WorkExperienceProps) {
   return (
-    <div className={cn("w-full flex flex-col", className)}>
-      {experiences.map((experience, expIndex) => (
-        <ExperienceItem
-          key={experience.id}
-          experience={experience}
-          isFirst={expIndex === 0}
-        />
+    <div className={cn("w-full text-foreground", className)}>
+      {experiences.map((experience) => (
+        <ExperienceItem key={experience.id} experience={experience} />
       ))}
     </div>
   );
 }
 
-function ExperienceItem({
-  experience,
-  isFirst,
-}: {
-  experience: ExperienceItemType;
-  isFirst: boolean;
-}) {
-  const accent = experience.accentColor ?? "#3B82F6";
-
+function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
   return (
-    <div className="w-full">
-      {isFirst && (
-        <div className="mb-5 flex items-center gap-3 px-1">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-card">
-            {experience.companyLogo ? (
-              <img
-                src={experience.companyLogo}
-                alt={`${experience.companyName} logo`}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <Briefcase className="h-4 w-4 text-muted-foreground" />
-            )}
-          </div>
-
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="truncate text-sm font-medium text-foreground font-['JetBrains_Mono']">
-              {experience.companyWebsite ? (
-                <a
-                  href={experience.companyWebsite}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline underline-offset-4"
-                >
-                  {experience.companyName}
-                </a>
-              ) : (
-                experience.companyName
-              )}
-            </div>
-
-            {experience.isCurrentEmployer && (
-              <span className="relative inline-flex h-2 w-2 items-center justify-center" aria-label="Current">
-                <span
-                  className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
-                  style={{ backgroundColor: accent }}
-                />
-                <span
-                  className="relative inline-flex h-2 w-2 rounded-full"
-                  style={{ backgroundColor: accent }}
-                />
-              </span>
-            )}
-          </div>
+    <div className="space-y-4 py-4">
+      <div className="not-prose flex items-center gap-3">
+        <div className="flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-full">
+          {experience.companyLogo ? (
+            <img
+              src={experience.companyLogo}
+              alt={experience.companyName}
+              className="size-6 rounded-full object-cover"
+              aria-hidden
+            />
+          ) : (
+            <span className="flex size-2 rounded-full bg-zinc-300 dark:bg-zinc-600" />
+          )}
         </div>
-      )}
 
-      <div className="flex flex-col">
-        {experience.positions.map((position, index) => (
-          <ExperiencePositionItem
-            key={position.id}
-            position={position}
-            accent={accent}
-            isLast={index === experience.positions.length - 1}
-          />
+        <h3 className="text-lg leading-snug font-semibold text-foreground">
+          {experience.companyWebsite ? (
+            <a
+              className="underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current"
+              href={experience.companyWebsite}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {experience.companyName}
+            </a>
+          ) : (
+            experience.companyName
+          )}
+        </h3>
+
+        {experience.isCurrentEmployer && (
+          <span
+            className="relative flex items-center justify-center"
+            aria-label="Current Employer"
+          >
+            <span className="absolute inline-flex size-3 animate-ping rounded-full bg-sky-500 opacity-50" />
+            <span className="relative inline-flex size-2 rounded-full bg-sky-500" />
+            <span className="sr-only">Current Employer</span>
+          </span>
+        )}
+      </div>
+
+      <div className="relative space-y-4 before:absolute before:left-3 before:h-full before:w-px before:bg-border">
+        {experience.positions.map((position) => (
+          <ExperiencePositionItem key={position.id} position={position} />
         ))}
       </div>
     </div>
   );
 }
 
-function ExperiencePositionItem({
-  position,
-  accent,
-  isLast,
-}: {
-  position: ExperiencePositionItemType;
-  accent: string;
-  isLast: boolean;
-}) {
+function ExperiencePositionItem({ position }: { position: ExperiencePositionItemType }) {
   const [open, setOpen] = useState(Boolean(position.isExpanded));
+  const ExperienceIcon = position.icon ?? (
+    <BriefcaseBusinessIcon className="size-4" />
+  );
 
   const { start, end } = position.employmentPeriod;
-  const startLabel = formatPeriodValue(start);
-  const endLabel = end ? formatPeriodValue(end) : "Present";
-
-  const responsibilities = useMemo(() => {
-    const bullets = position.bullets?.filter(Boolean) ?? [];
-    if (bullets.length > 0) return bullets;
-    return splitDescription(position.description);
-  }, [position.bullets, position.description]);
 
   return (
-    <div className={cn("grid grid-cols-[40px_1fr] gap-3", !isLast && "pb-5")}>
-      <div className="relative flex flex-col items-center">
-        <div className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-muted/40 text-muted-foreground">
-          <div className="flex h-6 w-6 items-center justify-center rounded-sm border border-border/70 bg-background/80">
-            <span className="[&>svg]:h-4 [&>svg]:w-4">
-              {position.icon ?? <Briefcase className="h-4 w-4" />}
-            </span>
-          </div>
-        </div>
-
-        {!isLast && <div className="mt-1.5 w-px flex-1 bg-border/80" />}
-      </div>
-
-      <div className={cn("w-full", !isLast && "border-b border-border/50 pb-5")}>
-        <button
-          type="button"
-          onClick={() => setOpen((prev) => !prev)}
-          className="w-full text-left"
+    <Collapsible
+      open={open}
+      onOpenChange={setOpen}
+      disabled={!position.description}
+      asChild
+    >
+      <div className="relative last:before:absolute last:before:h-full last:before:w-4 last:before:bg-background">
+        <CollapsibleTrigger
+          className={cn(
+            "group not-prose block w-full select-none text-left",
+            "relative before:absolute before:-top-1 before:-right-1 before:-bottom-1.5 before:left-7 before:rounded-lg hover:before:bg-muted/30",
+            "data-disabled:before:content-none"
+          )}
         >
-          <div className="rounded-xl border border-border/60 bg-background/40 px-4 py-3 transition-colors hover:bg-muted/30">
-            <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <p className="truncate text-[15px] font-semibold text-foreground font-['Inter']">
-                  {position.title}
-                </p>
-                <p className="mt-0.5 text-xs text-muted-foreground font-['JetBrains_Mono']">
-                  {position.employmentType ? (
-                    <>
-                      {position.employmentType} <span className="opacity-50">•</span>{" "}
-                    </>
-                  ) : null}
-                  {startLabel} <span className="opacity-50">|</span> {endLabel}
-                </p>
-              </div>
+          <div className="relative z-1 mb-1 flex items-start gap-3">
+            <div
+              className={cn(
+                "flex size-6 shrink-0 items-center justify-center rounded-lg",
+                "bg-muted text-muted-foreground",
+                "border border-muted-foreground/15 ring-1 ring-edge ring-offset-1 ring-offset-background",
+                "[&_svg]:size-4"
+              )}
+            >
+              {ExperienceIcon}
+            </div>
 
-              <ChevronDown
-                className={cn(
-                  "mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
-                  open && "rotate-180"
+            <div className="flex-1">
+              <h4 className="text-balance text-base font-medium text-foreground">
+                {position.title}
+              </h4>
+
+              <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                {position.employmentType && (
+                  <>
+                    <span>{position.employmentType}</span>
+                    <Separator
+                      className="data-vertical:h-4 data-vertical:self-center"
+                      orientation="vertical"
+                    />
+                  </>
                 )}
-              />
+
+                <span className="tabular-nums">
+                  {start}
+                  <span className="mx-1 font-mono">—</span>
+                  {end ?? "Present"}
+                </span>
+              </div>
+            </div>
+
+            <div className="shrink-0 text-muted-foreground group-disabled:hidden [&_svg]:size-4">
+              <ChevronsDownUpIcon className="hidden group-data-[state=open]:block" />
+              <ChevronsUpDownIcon className="hidden group-data-[state=closed]:block" />
             </div>
           </div>
-        </button>
+        </CollapsibleTrigger>
 
-        <AnimatePresence initial={false}>
-          {open && (
-            <motion.div
-              key="content"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              className="overflow-hidden"
-            >
-              <div className="px-4 pt-3">
-                {responsibilities.length > 0 && (
-                  <ul className="space-y-1.5">
-                    {responsibilities.map((item, idx) => (
-                      <li
-                        key={`${position.id}-${idx}`}
-                        className="flex gap-2 text-sm leading-relaxed text-foreground/75 font-['Inter']"
-                      >
-                        <span className="select-none text-muted-foreground">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {position.link && (
-                  <a
-                    href={position.link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1.5 rounded-md border border-border bg-muted/30 px-2.5 py-1 text-xs font-semibold transition-colors hover:bg-muted font-['JetBrains_Mono']"
-                    style={{ color: accent }}
-                  >
-                    {position.link.icon}
-                    {position.link.label}
-                  </a>
-                )}
-
-                {position.skills && position.skills.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {position.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-muted-foreground font-['JetBrains_Mono']"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </motion.div>
+        <CollapsibleContent className="overflow-hidden">
+          {position.description && (
+            <div className="pt-2 pl-9">
+              <ul className="space-y-1.5">
+                {position.description
+                  .split("\n")
+                  .map((line) => line.trim().replace(/^[-•]\s*/, ""))
+                  .filter(Boolean)
+                  .map((item, index) => (
+                    <li
+                      key={`${position.id}-${index}`}
+                      className="flex gap-2 text-sm leading-relaxed text-foreground/75"
+                    >
+                      <span className="select-none text-muted-foreground">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           )}
-        </AnimatePresence>
+        </CollapsibleContent>
+
+        {Array.isArray(position.skills) && position.skills.length > 0 && (
+          <ul className="not-prose flex flex-wrap gap-1.5 pt-3 pl-9">
+            {position.skills.map((skill, index) => (
+              <li key={index} className="flex">
+                <Skill>{skill}</Skill>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-    </div>
+    </Collapsible>
+  );
+}
+
+function Skill({ className, ...props }: ComponentProps<"span">) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center rounded-lg border bg-muted/50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
   );
 }
 
