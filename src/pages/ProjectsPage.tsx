@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -14,8 +14,7 @@ const ProjectsPage = () => {
   const previewImage = activeProject ? activeProject.imageSrc : defaultPreview;
   const previewLabel = activeProject ? activeProject.title : '';
 
-  // CSS mask for top + bottom fade on the scroll container
-  const fadeMaskStyle: React.CSSProperties = {
+  const fadeMaskStyle: CSSProperties = {
     WebkitMaskImage:
       'linear-gradient(to bottom, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)',
     maskImage:
@@ -32,13 +31,13 @@ const ProjectsPage = () => {
         path="/projects"
       />
       <GridBackground />
-      {/* Fixed-height page on desktop. Body scroll allowed on mobile for stacked layout. */}
-      <div className="relative z-10 md:h-screen md:overflow-hidden flex flex-col">
-        <Navbar />
-        <div className="flex-1 flex flex-col md:flex-row max-w-6xl mx-auto w-full px-6 gap-8 pt-4 pb-6 md:overflow-hidden">
 
+      <div className="relative z-10 md:h-screen md:overflow-hidden overflow-x-hidden flex flex-col">
+        <Navbar />
+
+        <div className="flex-1 flex flex-col md:flex-row max-w-7xl mx-auto w-full px-6 gap-6 pt-4 pb-6 md:overflow-hidden">
           {/* LEFT — preview */}
-          <div className="hidden md:flex md:w-[55%] md:self-start md:pt-4">
+          <div className="hidden md:flex md:w-[50%] md:min-w-0 md:self-start md:pt-4">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -55,7 +54,9 @@ const ProjectsPage = () => {
                 >
                   Projects
                 </h1>
-                <p className="text-muted-foreground/40 font-mono text-sm mt-1">{projects.length} total</p>
+                <p className="text-muted-foreground/40 font-mono text-sm mt-1">
+                  {projects.length} total
+                </p>
               </div>
 
               <div className="relative rounded-2xl overflow-hidden border border-foreground/10 aspect-[16/10] bg-muted">
@@ -71,6 +72,7 @@ const ProjectsPage = () => {
                     transition={{ duration: 0.15, ease: 'easeInOut' }}
                   />
                 </AnimatePresence>
+
                 {activeProject && (
                   <motion.div
                     className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-black/70 to-transparent"
@@ -88,8 +90,8 @@ const ProjectsPage = () => {
             </motion.div>
           </div>
 
-          {/* RIGHT — scrollable list with fade mask + hidden scrollbar */}
-          <div className="flex-1 md:-mt-4 md:flex md:flex-col md:min-h-0 md:self-start">
+          {/* RIGHT — scrollable list */}
+          <div className="flex-1 md:min-w-0 md:-mt-4 md:flex md:flex-col md:self-start">
             {/* Mobile header */}
             <div className="md:hidden mb-8">
               <h1 className="text-4xl font-black text-foreground uppercase font-['Space_Grotesk']">
@@ -98,9 +100,9 @@ const ProjectsPage = () => {
             </div>
 
             <div
-  className="md:min-h-0 md:max-h-[550px] md:overflow-y-auto [&::-webkit-scrollbar]:hidden md:pt-8 md:pb-2"
-  style={fadeMaskStyle}
->
+              className="md:min-h-0 md:max-h-[550px] md:overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden md:pt-8 md:pb-2 pr-2"
+              style={fadeMaskStyle}
+            >
               <div className="md:border-t border-foreground/10">
                 {projects.map((project, i) => (
                   <motion.div
@@ -112,21 +114,29 @@ const ProjectsPage = () => {
                     onMouseEnter={() => setHoveredId(project.id)}
                     onMouseLeave={() => setHoveredId(null)}
                   >
-                    <Link to={`/projects/${project.id}`} className="flex items-center justify-between py-5 gap-4">
-                      <div className="flex items-baseline gap-4 min-w-0">
+                    <Link
+                      to={`/projects/${project.id}`}
+                      className="flex items-center justify-between py-5 gap-4 min-w-0"
+                    >
+                      <div className="flex items-baseline gap-4 min-w-0 flex-1">
                         <span className="text-xs text-muted-foreground/40 font-mono w-5 shrink-0">
                           {String(i + 1).padStart(2, '0')}
                         </span>
-                        <div className="min-w-0">
-                          <p className="text-xl md:text-2xl font-bold text-foreground group-hover:translate-x-1.5 transition-transform duration-200 truncate font-['Space_Grotesk']">
+
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xl md:text-2xl font-bold text-foreground group-hover:translate-x-1.5 transition-transform duration-200 font-['Space_Grotesk'] whitespace-normal leading-tight">
                             {project.title}
                           </p>
                         </div>
                       </div>
+
                       <div className="flex items-center gap-3 shrink-0">
                         <div className="flex gap-2">
                           {project.tags.slice(0, 2).map((tag) => (
-                            <span key={tag} className="hidden sm:block text-xs px-2 py-0.5 rounded-full border border-foreground/10 text-muted-foreground">
+                            <span
+                              key={tag}
+                              className="hidden sm:block text-xs px-2 py-0.5 rounded-full border border-foreground/10 text-muted-foreground"
+                            >
                               {tag}
                             </span>
                           ))}
