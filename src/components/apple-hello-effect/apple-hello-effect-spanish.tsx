@@ -29,7 +29,7 @@ export function AppleHelloEffectSpanish({
     <motion.svg
       className={cn("h-20", className)}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="-6 0 562 200"
+      viewBox="-20 0 562 200"
       fill="none"
       stroke="currentColor"
       strokeWidth="14.888"
