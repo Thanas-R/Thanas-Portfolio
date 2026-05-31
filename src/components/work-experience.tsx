@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, type ComponentProps, type ReactElement } from "react";
-import ReactMarkdown from "react-markdown";
+import React, { useState, type ComponentProps, type ReactElement, type ReactNode } from "react";
 import { BriefcaseBusinessIcon, ChevronDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -51,25 +50,15 @@ export function WorkExperience({ className, experiences }: WorkExperienceProps) 
 }
 
 function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
-  const threadColor = experience.accentColor ?? "#3B82F6";
-  const threadStyle = {
-    ["--thread-color" as any]: threadColor,
-  } as React.CSSProperties;
-
   return (
-    <div className="space-y-4 py-4" style={threadStyle}>
+    <div className="space-y-4 py-4">
       <div className="not-prose flex items-center gap-3">
-        <div
-          className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-background"
-          style={{
-            borderColor: threadColor,
-          }}
-        >
+        <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-md bg-background">
           {experience.companyLogo ? (
             <img
               src={experience.companyLogo}
               alt={experience.companyName}
-              className="size-full rounded-[10px] object-cover"
+              className="size-full rounded-md object-cover"
               aria-hidden
             />
           ) : (
@@ -80,7 +69,7 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
         <h3 className="text-lg leading-snug font-semibold text-foreground">
           {experience.companyWebsite ? (
             <a
-              className="underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current"
+              className="transition-opacity hover:opacity-80"
               href={experience.companyWebsite}
               target="_blank"
               rel="noopener noreferrer"
@@ -97,19 +86,20 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
             className="relative flex items-center justify-center"
             aria-label="Current Employer"
           >
-            <span className="absolute inline-flex size-3 animate-ping rounded-full bg-sky-500 opacity-50" />
-            <span className="relative inline-flex size-2 rounded-full bg-sky-500" />
+            {/* CHANGED: Replaced bg-sky-500 with bg-[#43B581] */}
+            <span className="absolute inline-flex size-3 animate-ping rounded-full bg-[#43B581] opacity-50" />
+            <span className="relative inline-flex size-2 rounded-full bg-[#43B581]" />
             <span className="sr-only">Current Employer</span>
           </span>
         )}
       </div>
 
-      <div className="relative space-y-4 before:absolute before:left-4 before:h-full before:w-px before:bg-[var(--thread-color)] before:opacity-30">
-        {experience.positions.map((position) => (
+      <div className="space-y-4">
+        {experience.positions.map((position, index) => (
           <ExperiencePositionItem
             key={position.id}
             position={position}
-            accentColor={threadColor}
+            isLast={index === experience.positions.length - 1}
           />
         ))}
       </div>
@@ -119,14 +109,14 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
 
 function ExperiencePositionItem({
   position,
-  accentColor,
+  isLast,
 }: {
   position: ExperiencePositionItemType;
-  accentColor: string;
+  isLast: boolean;
 }) {
-  const [open, setOpen] = useState(position.isExpanded ?? true);
+  const [open, setOpen] = useState(Boolean(position.isExpanded));
   const ExperienceIcon = position.icon ?? (
-    <BriefcaseBusinessIcon className="size-4.5" />
+    <BriefcaseBusinessIcon className="h-4 w-4" />
   );
 
   const { start, end } = position.employmentPeriod;
@@ -138,22 +128,22 @@ function ExperiencePositionItem({
       disabled={!position.description}
       asChild
     >
-      <div className="relative last:before:absolute last:before:h-full last:before:w-4 last:before:bg-background">
+      <div
+        className={cn(
+          "relative",
+          !isLast &&
+            "after:absolute after:left-4 after:top-4 after:-bottom-4 after:w-px after:bg-border after:content-['']"
+        )}
+      >
         <CollapsibleTrigger
           className={cn(
-            "group block w-full select-none text-left not-prose",
-            "relative before:absolute before:-top-1 before:-right-1 before:-bottom-1.5 before:left-9 before:rounded-lg hover:before:bg-muted/30",
+            "group not-prose block w-full select-none text-left",
+            "relative before:absolute before:-top-1 before:-right-1 before:-bottom-1.5 before:left-10 before:rounded-lg hover:before:bg-muted/30",
             "data-disabled:before:content-none"
           )}
         >
-          <div className="relative z-1 mb-1 flex items-start gap-3">
-            <div
-              className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground border border-muted-foreground/15 ring-1 ring-offset-1 ring-offset-background"
-              style={{
-                borderColor: accentColor,
-                boxShadow: `0 0 0 1px ${accentColor}22`,
-              }}
-            >
+          <div className="relative z-10 mb-1 flex items-start gap-3">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-xl border border-border bg-muted text-muted-foreground ring-1 ring-border/60 ring-offset-1 ring-offset-background [&_svg]:h-4 [&_svg]:w-4">
               {ExperienceIcon}
             </div>
 
@@ -175,7 +165,7 @@ function ExperiencePositionItem({
 
                 <span className="tabular-nums">
                   {start}
-                  <span className="mx-1 font-mono">—</span>
+                  <span className="mx-1 font-mono">-</span>
                   {end ?? "Present"}
                 </span>
               </div>
@@ -183,7 +173,7 @@ function ExperiencePositionItem({
 
             <div
               className={cn(
-                "shrink-0 text-muted-foreground transition-transform duration-200 [&_svg]:size-4.5",
+                "shrink-0 text-muted-foreground transition-transform duration-200 [&_svg]:h-4 [&_svg]:w-4",
                 open && "rotate-180",
                 "group-disabled:hidden"
               )}
@@ -193,47 +183,25 @@ function ExperiencePositionItem({
           </div>
         </CollapsibleTrigger>
 
-        <CollapsibleContent className="overflow-hidden">
+        {/* CHANGED: Added animation classes to CollapsibleContent */}
+        <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
           {position.description && (
             <div className="pt-2 pl-10">
-              <ReactMarkdown
-                components={{
-                  p: ({ children, ...props }) => (
-                    <p
-                      className="text-sm leading-relaxed text-foreground/75"
-                      {...props}
-                    >
-                      {children}
-                    </p>
-                  ),
-                  ul: ({ children, ...props }) => (
-                    <ul className="space-y-1.5 list-none p-0 m-0" {...props}>
-                      {children}
-                    </ul>
-                  ),
-                  li: ({ children, ...props }) => (
+              <ul className="space-y-1.5">
+                {position.description
+                  .split("\n")
+                  .map((line) => line.trim().replace(/^[-•]\s*/, ""))
+                  .filter(Boolean)
+                  .map((item, index) => (
                     <li
+                      key={`${position.id}-${index}`}
                       className="flex gap-2 text-sm leading-relaxed text-foreground/75"
-                      {...props}
                     >
                       <span className="select-none text-muted-foreground">•</span>
-                      <span>{children}</span>
+                      <span>{renderInlineText(item)}</span>
                     </li>
-                  ),
-                  a: ({ children, ...props }) => (
-                    <a
-                      className="text-[#924205] underline decoration-[#924205]/30 underline-offset-3 transition-colors hover:decoration-[#924205]"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      {...props}
-                    >
-                      {children}
-                    </a>
-                  ),
-                }}
-              >
-                {position.description}
-              </ReactMarkdown>
+                  ))}
+              </ul>
             </div>
           )}
         </CollapsibleContent>
@@ -252,11 +220,46 @@ function ExperiencePositionItem({
   );
 }
 
+function renderInlineText(text: string): ReactNode {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    const [fullMatch, label, href] = match;
+
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+
+    parts.push(
+      <a
+        key={`${href}-${match.index}`}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[#924205] underline decoration-[#924205]/30 underline-offset-3 transition-colors hover:decoration-[#924205]"
+      >
+        {label}
+      </a>
+    );
+
+    lastIndex = match.index + fullMatch.length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
+
 function Skill({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-lg border bg-muted/50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground",
+        "inline-flex items-center rounded-lg border border-border bg-muted/50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground",
         className
       )}
       {...props}

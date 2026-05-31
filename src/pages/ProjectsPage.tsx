@@ -100,9 +100,13 @@ const ProjectsPage = () => {
             </div>
 
             <div
-              className="md:min-h-0 md:max-h-[550px] md:overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden md:pt-8 md:pb-2 pr-2"
-              style={fadeMaskStyle}
-            >
+  className="md:min-h-0 md:max-h-[550px] md:overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden md:pt-8 md:pb-2 pr-2"
+  style={
+    typeof window !== 'undefined' && window.innerWidth >= 768
+      ? fadeMaskStyle
+      : undefined
+  }
+>
               <div className="md:border-t border-foreground/10">
                 {projects.map((project, i) => (
                   <motion.div
