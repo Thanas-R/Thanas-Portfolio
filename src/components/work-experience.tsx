@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, type ReactElement } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useMemo, useState, type ReactElement } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Briefcase, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -33,87 +33,99 @@ export type WorkExperienceProps = {
   experiences: ExperienceItemType[];
 };
 
-/** Parse "MM.YYYY" or "YYYY" → display year only ("2025"). */
-function formatYear(s: string): string {
-  if (!s) return "";
-  if (s.includes(".")) return s.split(".")[1];
-  return s;
+function formatPeriodValue(value: string): string {
+  if (!value) return "";
+  return value;
+}
+
+function splitDescription(description?: string): string[] {
+  if (!description) return [];
+  return description
+    .split("\n")
+    .map((line) => line.trim().replace(/^[-•]\s*/, ""))
+    .filter(Boolean);
 }
 
 export function WorkExperience({ className, experiences }: WorkExperienceProps) {
   return (
-    <div className={cn("flex flex-col divide-y divide-border/60 border-y border-border/60", className)}>
-      {experiences.map((exp) => (
-        <ExperienceItem key={exp.id} experience={exp} />
+    <div className={cn("w-full flex flex-col", className)}>
+      {experiences.map((experience, expIndex) => (
+        <ExperienceItem
+          key={experience.id}
+          experience={experience}
+          isFirst={expIndex === 0}
+        />
       ))}
     </div>
   );
 }
 
-function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
+function ExperienceItem({
+  experience,
+  isFirst,
+}: {
+  experience: ExperienceItemType;
+  isFirst: boolean;
+}) {
   const accent = experience.accentColor ?? "#3B82F6";
-  return (
-    <div className="py-4">
-      {/* Company header row */}
-      <div className="flex items-center gap-3 px-1 mb-2">
-        <div className="size-8 rounded-full overflow-hidden flex items-center justify-center bg-card border border-border shrink-0">
-          {experience.companyLogo ? (
-            <img
-              src={experience.companyLogo}
-              alt={`${experience.companyName} logo`}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <Briefcase className="w-4 h-4 text-muted-foreground" />
-          )}
-        </div>
-        <div className="flex items-center gap-2 min-w-0">
-          <span className="font-['JetBrains_Mono'] text-sm font-medium text-foreground truncate">
-            {experience.companyWebsite ? (
-              <a
-                href={experience.companyWebsite}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline underline-offset-4"
-              >
-                {experience.companyName}
-              </a>
-            ) : (
-              experience.companyName
-            )}
-          </span>
-          {experience.isCurrentEmployer && (
-            <span className="relative inline-flex size-2 items-center justify-center" aria-label="Current">
-              <span
-                className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
-                style={{ backgroundColor: accent }}
-              />
-              <span
-                className="relative inline-flex size-1.5 rounded-full"
-                style={{ backgroundColor: accent }}
-              />
-            </span>
-          )}
-        </div>
-      </div>
 
-      {/* Vertical thread + positions */}
-      <div className="relative pl-4 ml-3">
-        {experience.positions.length > 1 && (
-          <div
-            className="absolute left-[15px] top-5 bottom-5 w-px bg-border"
-            aria-hidden
-          />
-        )}
-        <div className="flex flex-col">
-          {experience.positions.map((position) => (
-            <ExperiencePositionItem
-              key={position.id}
-              position={position}
-              accent={accent}
-            />
-          ))}
+  return (
+    <div className="w-full">
+      {isFirst && (
+        <div className="mb-5 flex items-center gap-3 px-1">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-card">
+            {experience.companyLogo ? (
+              <img
+                src={experience.companyLogo}
+                alt={`${experience.companyName} logo`}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <Briefcase className="h-4 w-4 text-muted-foreground" />
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="truncate text-sm font-medium text-foreground font-['JetBrains_Mono']">
+              {experience.companyWebsite ? (
+                <a
+                  href={experience.companyWebsite}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline underline-offset-4"
+                >
+                  {experience.companyName}
+                </a>
+              ) : (
+                experience.companyName
+              )}
+            </div>
+
+            {experience.isCurrentEmployer && (
+              <span className="relative inline-flex h-2 w-2 items-center justify-center" aria-label="Current">
+                <span
+                  className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                  style={{ backgroundColor: accent }}
+                />
+                <span
+                  className="relative inline-flex h-2 w-2 rounded-full"
+                  style={{ backgroundColor: accent }}
+                />
+              </span>
+            )}
+          </div>
         </div>
+      )}
+
+      <div className="flex flex-col">
+        {experience.positions.map((position, index) => (
+          <ExperiencePositionItem
+            key={position.id}
+            position={position}
+            accent={accent}
+            isLast={index === experience.positions.length - 1}
+          />
+        ))}
       </div>
     </div>
   );
@@ -122,109 +134,125 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
 function ExperiencePositionItem({
   position,
   accent,
+  isLast,
 }: {
   position: ExperiencePositionItemType;
   accent: string;
+  isLast: boolean;
 }) {
-  const [open, setOpen] = useState(!!position.isExpanded);
+  const [open, setOpen] = useState(Boolean(position.isExpanded));
+
   const { start, end } = position.employmentPeriod;
-  const startYear = formatYear(start);
-  const endLabel = end ? formatYear(end) : "Present";
+  const startLabel = formatPeriodValue(start);
+  const endLabel = end ? formatPeriodValue(end) : "Present";
+
+  const responsibilities = useMemo(() => {
+    const bullets = position.bullets?.filter(Boolean) ?? [];
+    if (bullets.length > 0) return bullets;
+    return splitDescription(position.description);
+  }, [position.bullets, position.description]);
 
   return (
-    <div className="relative py-2">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-start gap-3 text-left group"
-      >
-        <div className="size-8 rounded-md flex items-center justify-center shrink-0 bg-muted/50 border border-border text-muted-foreground group-hover:text-foreground transition-colors relative z-[1]">
-          {position.icon ?? <Briefcase className="w-4 h-4" />}
-        </div>
-        <div className="flex-1 min-w-0 pt-0.5">
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0">
-              <p className="text-[15px] font-semibold text-foreground font-['Inter'] truncate">
-                {position.title}
-              </p>
-              <p className="text-xs text-muted-foreground font-['JetBrains_Mono'] mt-0.5">
-                {position.employmentType && (
-                  <>
-                    {position.employmentType}{" "}
-                    <span className="opacity-50">·</span>{" "}
-                  </>
-                )}
-                {startYear} <span className="opacity-50">|</span> {endLabel}
-              </p>
-            </div>
-            <ChevronDown
-              className={cn(
-                "w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200",
-                open && "rotate-180"
-              )}
-            />
+    <div className={cn("grid grid-cols-[40px_1fr] gap-3", !isLast && "pb-5")}>
+      <div className="relative flex flex-col items-center">
+        <div className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-muted/40 text-muted-foreground">
+          <div className="flex h-6 w-6 items-center justify-center rounded-sm border border-border/70 bg-background/80">
+            <span className="[&>svg]:h-4 [&>svg]:w-4">
+              {position.icon ?? <Briefcase className="h-4 w-4" />}
+            </span>
           </div>
         </div>
-      </button>
 
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="content"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="overflow-hidden"
-          >
-            <div className="pl-11 pt-3 space-y-3">
-              {(position.bullets && position.bullets.length > 0) ? (
-                <ul className="space-y-1.5">
-                  {position.bullets.map((b, i) => (
-                    <li
-                      key={i}
-                      className="text-sm text-foreground/75 font-['Inter'] leading-relaxed flex gap-2"
-                    >
-                      <span className="text-muted-foreground select-none">•</span>
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : position.description ? (
-                <p className="text-sm leading-relaxed text-foreground/75 font-['Inter'] whitespace-pre-line">
-                  {position.description}
+        {!isLast && <div className="mt-1.5 w-px flex-1 bg-border/80" />}
+      </div>
+
+      <div className={cn("w-full", !isLast && "border-b border-border/50 pb-5")}>
+        <button
+          type="button"
+          onClick={() => setOpen((prev) => !prev)}
+          className="w-full text-left"
+        >
+          <div className="rounded-xl border border-border/60 bg-background/40 px-4 py-3 transition-colors hover:bg-muted/30">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <p className="truncate text-[15px] font-semibold text-foreground font-['Inter']">
+                  {position.title}
                 </p>
-              ) : null}
+                <p className="mt-0.5 text-xs text-muted-foreground font-['JetBrains_Mono']">
+                  {position.employmentType ? (
+                    <>
+                      {position.employmentType} <span className="opacity-50">•</span>{" "}
+                    </>
+                  ) : null}
+                  {startLabel} <span className="opacity-50">|</span> {endLabel}
+                </p>
+              </div>
 
-              {position.link && (
-                <a
-                  href={position.link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-md border border-border bg-muted/40 px-2.5 py-1 hover:bg-muted transition-colors font-['JetBrains_Mono']"
-                  style={{ color: accent }}
-                >
-                  {position.link.icon}
-                  {position.link.label}
-                </a>
-              )}
-
-              {position.skills && position.skills.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {position.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="text-[11px] font-medium px-2 py-0.5 rounded-full border border-border text-muted-foreground font-['JetBrains_Mono']"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              )}
+              <ChevronDown
+                className={cn(
+                  "mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
+                  open && "rotate-180"
+                )}
+              />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              key="content"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="overflow-hidden"
+            >
+              <div className="px-4 pt-3">
+                {responsibilities.length > 0 && (
+                  <ul className="space-y-1.5">
+                    {responsibilities.map((item, idx) => (
+                      <li
+                        key={`${position.id}-${idx}`}
+                        className="flex gap-2 text-sm leading-relaxed text-foreground/75 font-['Inter']"
+                      >
+                        <span className="select-none text-muted-foreground">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {position.link && (
+                  <a
+                    href={position.link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-1.5 rounded-md border border-border bg-muted/30 px-2.5 py-1 text-xs font-semibold transition-colors hover:bg-muted font-['JetBrains_Mono']"
+                    style={{ color: accent }}
+                  >
+                    {position.link.icon}
+                    {position.link.label}
+                  </a>
+                )}
+
+                {position.skills && position.skills.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {position.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-muted-foreground font-['JetBrains_Mono']"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
