@@ -38,7 +38,7 @@ Soaking up the kind of things you don't get from a textbook.`,
         isExpanded: false,
         description: `Qualified for the research internship next year.
 Summer 2027 is the target.
-Looking forward to contributing more once that starts.`,
+Looking forward to contributing more when that starts.`,
       },
     ],
   },
@@ -54,17 +54,12 @@ Looking forward to contributing more once that starts.`,
         id: "virdis-founder",
         title: "Founder",
         employmentPeriod: { start: "07.2026" },
-        employmentType: "Hackathon Project",
+        employmentType: "Building",
         icon: <Lightbulb />,
         isExpanded: true,
         description: `Started Virdis as a hackathon project to help farmers.
 AI-assisted farm boundary mapping with crop-health analytics on satellite data.
-A Reddit post about it got really encouraging feedback and pushed me to keep building it.`,
-        link: {
-          href: "https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/",
-          label: "Read the Reddit post",
-          color: "#924205",
-        },
+A [Reddit](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) post about it received very encouraging feedback and pushed me to keep building it.`,
         skills: ["Ownership", "Sentinel 2", "Farmers", "Analytics"],
       },
     ],
@@ -84,7 +79,7 @@ const ExperienceSection = () => {
         >
           <div className="mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">
-              Currently
+              Experience
             </h2>
           </div>
 
