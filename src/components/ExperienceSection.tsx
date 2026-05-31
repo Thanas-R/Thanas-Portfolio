@@ -23,10 +23,13 @@ const EXPERIENCES: ExperienceItemType[] = [
         title: "Research Intern",
         employmentPeriod: { start: "06.2026" },
         employmentType: "Intern",
-        icon: <FlaskConical />,
+        icon: <FlaskConical className="w-4 h-4" />,
         isExpanded: true,
-        description:
-          "Hopped into the lab early as a summer research intern, way before college usually lets you. Currently helping rebuild the lab's official website while soaking up everything from research workflows to how real labs run day to day.",
+        bullets: [
+          "Joined as a summer research intern well before the usual eligibility window.",
+          "Currently helping rebuild the lab's official website with the dev team.",
+          "Picking up how a working research lab actually runs day to day.",
+        ],
         skills: ["React", "TypeScript", "Tailwind CSS", "Research", "UI/UX"],
       },
       {
@@ -34,9 +37,12 @@ const EXPERIENCES: ExperienceItemType[] = [
         title: "Member",
         employmentPeriod: { start: "05.2026" },
         employmentType: "Member",
-        icon: <CodeXml />,
-        description:
-          "Got selected into PIL as a member, which is honestly one of the cooler corners of campus. I get to be around people building genuinely curious projects, contribute to dev work, and pick up things you do not get from a textbook.",
+        icon: <CodeXml className="w-4 h-4" />,
+        bullets: [
+          "Selected into PIL, one of the more curious corners of campus.",
+          "Contributing to dev work and shipping things alongside the team.",
+          "Soaking up the kind of things you don't get from a textbook.",
+        ],
         skills: ["Collaboration", "Frontend", "Innovation", "Web Dev"],
       },
     ],
@@ -54,14 +60,17 @@ const EXPERIENCES: ExperienceItemType[] = [
         title: "Founder",
         employmentPeriod: { start: "07.2026" },
         employmentType: "Building",
-        icon: <Lightbulb />,
+        icon: <Lightbulb className="w-4 h-4" />,
         isExpanded: true,
-        description:
-          "Started Virdis as a work-in-progress side mission to actually help farmers. The idea is AI-assisted farm boundary mapping with crop-health analytics on top of satellite data, packaged in a way that does not require a PhD to use. Still very early, building loudly in public. More updates dropping soon.",
+        bullets: [
+          "Started Virdis as a side mission to actually help farmers.",
+          "AI-assisted farm boundary mapping with crop-health analytics on satellite data.",
+          "Still very early, building loudly in public — updates dropping soon.",
+        ],
         link: {
           href: "https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/",
           label: "Read the Reddit post",
-          icon: <FaReddit className="w-4 h-4" />,
+          icon: <FaReddit className="w-3.5 h-3.5" />,
         },
         skills: [
           "React",
@@ -80,15 +89,15 @@ const EXPERIENCES: ExperienceItemType[] = [
 const ExperienceSection = () => {
   return (
     <section id="experience" className="relative py-12 w-full">
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-2xl mx-auto px-6">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <div className="mb-8">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-1">
+          <div className="mb-6">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['JetBrains_Mono'] mb-1">
               What I'm up to
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">

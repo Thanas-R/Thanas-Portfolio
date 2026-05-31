@@ -14,6 +14,16 @@ const ProjectsPage = () => {
   const previewImage = activeProject ? activeProject.imageSrc : defaultPreview;
   const previewLabel = activeProject ? activeProject.title : '';
 
+  // CSS mask for top + bottom fade on the scroll container
+  const fadeMaskStyle: React.CSSProperties = {
+    WebkitMaskImage:
+      'linear-gradient(to bottom, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)',
+    maskImage:
+      'linear-gradient(to bottom, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)',
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
+  };
+
   return (
     <>
       <SEOHead
@@ -22,12 +32,13 @@ const ProjectsPage = () => {
         path="/projects"
       />
       <GridBackground />
-      <div className="relative z-10 min-h-screen flex flex-col">
+      {/* Fixed-height page on desktop. Body scroll allowed on mobile for stacked layout. */}
+      <div className="relative z-10 md:h-screen md:overflow-hidden flex flex-col">
         <Navbar />
-        <div className="flex-1 flex flex-col md:flex-row max-w-6xl mx-auto w-full px-6 gap-8 pt-4 pb-[40px]">
+        <div className="flex-1 flex flex-col md:flex-row max-w-6xl mx-auto w-full px-6 gap-8 pt-4 pb-6 md:overflow-hidden">
 
-          {/* LEFT — sticky image preview */}
-          <div className="hidden md:flex md:w-[55%] md:sticky md:top-24 md:self-start">
+          {/* LEFT — preview */}
+          <div className="hidden md:flex md:w-[55%] md:self-start md:pt-16">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -47,7 +58,6 @@ const ProjectsPage = () => {
                 <p className="text-muted-foreground/40 font-mono text-sm mt-1">{projects.length} total</p>
               </div>
 
-              {/* Preview image — wider */}
               <div className="relative rounded-2xl overflow-hidden border border-foreground/10 aspect-[16/10] bg-muted">
                 <AnimatePresence mode="popLayout">
                   <motion.img
@@ -78,8 +88,8 @@ const ProjectsPage = () => {
             </motion.div>
           </div>
 
-          {/* RIGHT — scrollable list */}
-          <div className="flex-1 md:pt-2">
+          {/* RIGHT — scrollable list with fade mask + hidden scrollbar */}
+          <div className="flex-1 md:pt-16 md:h-full md:flex md:flex-col md:min-h-0">
             {/* Mobile header */}
             <div className="md:hidden mb-8">
               <h1 className="text-4xl font-black text-foreground uppercase font-['Space_Grotesk']">
@@ -87,55 +97,60 @@ const ProjectsPage = () => {
               </h1>
             </div>
 
-            <div className="border-t border-foreground/10">
-              {projects.map((project, i) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.45, delay: i * 0.07 }}
-                  className="border-b border-foreground/10 group"
-                  onMouseEnter={() => setHoveredId(project.id)}
-                  onMouseLeave={() => setHoveredId(null)}
-                >
-                  <Link to={`/projects/${project.id}`} className="flex items-center justify-between py-5 gap-4">
-                    <div className="flex items-baseline gap-4 min-w-0">
-                      <span className="text-xs text-muted-foreground/40 font-mono w-5 shrink-0">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <div className="min-w-0">
-                        <p className="text-xl md:text-2xl font-bold text-foreground group-hover:translate-x-1.5 transition-transform duration-200 truncate font-['Space_Grotesk']">
-                          {project.title}
-                        </p>
+            <div
+              className="md:flex-1 md:min-h-0 md:overflow-y-auto [&::-webkit-scrollbar]:hidden md:py-6"
+              style={fadeMaskStyle}
+            >
+              <div className="md:border-t border-foreground/10">
+                {projects.map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.45, delay: i * 0.05 }}
+                    className="border-b border-foreground/10 group"
+                    onMouseEnter={() => setHoveredId(project.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                  >
+                    <Link to={`/projects/${project.id}`} className="flex items-center justify-between py-5 gap-4">
+                      <div className="flex items-baseline gap-4 min-w-0">
+                        <span className="text-xs text-muted-foreground/40 font-mono w-5 shrink-0">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-xl md:text-2xl font-bold text-foreground group-hover:translate-x-1.5 transition-transform duration-200 truncate font-['Space_Grotesk']">
+                            {project.title}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3 shrink-0">
-                      <div className="flex gap-2">
-                        {project.tags.slice(0, 2).map((tag) => (
-                          <span key={tag} className="hidden sm:block text-xs px-2 py-0.5 rounded-full border border-foreground/10 text-muted-foreground">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all duration-200" />
-                    </div>
-                  </Link>
-
-                  {/* Mobile preview image — clickable to project page */}
-                  <div className="md:hidden pb-4">
-                    <Link to={`/projects/${project.id}`}>
-                      <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-[16/10]">
-                        <img
-                          src={project.imageSrc}
-                          alt={project.title}
-                          className="w-full h-full object-cover"
-                          loading="eager"
-                        />
+                      <div className="flex items-center gap-3 shrink-0">
+                        <div className="flex gap-2">
+                          {project.tags.slice(0, 2).map((tag) => (
+                            <span key={tag} className="hidden sm:block text-xs px-2 py-0.5 rounded-full border border-foreground/10 text-muted-foreground">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all duration-200" />
                       </div>
                     </Link>
-                  </div>
-                </motion.div>
-              ))}
+
+                    {/* Mobile preview image */}
+                    <div className="md:hidden pb-4">
+                      <Link to={`/projects/${project.id}`}>
+                        <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-[16/10]">
+                          <img
+                            src={project.imageSrc}
+                            alt={project.title}
+                            className="w-full h-full object-cover"
+                            loading="eager"
+                          />
+                        </div>
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

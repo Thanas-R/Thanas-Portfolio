@@ -2,7 +2,7 @@
 
 import React, { useState, type ReactElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Briefcase, ChevronsUpDown } from "lucide-react";
+import { Briefcase, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type ExperiencePositionItemType = {
@@ -11,6 +11,7 @@ export type ExperiencePositionItemType = {
   employmentPeriod: { start: string; end?: string };
   employmentType?: string;
   description?: string;
+  bullets?: string[];
   icon?: ReactElement;
   skills?: string[];
   isExpanded?: boolean;
@@ -22,7 +23,6 @@ export type ExperienceItemType = {
   companyName: string;
   companyLogo?: string;
   companyWebsite?: string;
-  /** Optional dot/accent color for the company */
   accentColor?: string;
   positions: ExperiencePositionItemType[];
   isCurrentEmployer?: boolean;
@@ -33,28 +33,16 @@ export type WorkExperienceProps = {
   experiences: ExperienceItemType[];
 };
 
-/** Computes a human-readable duration like "1y 2m" or "5m". */
-function formatDuration(start: string, end?: string): string {
-  const parseDate = (s: string) => {
-    const [mm, yyyy] = s.includes(".") ? s.split(".") : ["01", s];
-    return new Date(Number(yyyy), Number(mm) - 1, 1);
-  };
-  const startDate = parseDate(start);
-  const endDate = end ? parseDate(end) : new Date();
-  const months =
-    (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-    (endDate.getMonth() - startDate.getMonth()) +
-    1;
-  if (months <= 0) return "";
-  if (months < 12) return `${months}m`;
-  const y = Math.floor(months / 12);
-  const m = months % 12;
-  return m === 0 ? `${y}y` : `${y}y ${m}m`;
+/** Parse "MM.YYYY" or "YYYY" → display year only ("2025"). */
+function formatYear(s: string): string {
+  if (!s) return "";
+  if (s.includes(".")) return s.split(".")[1];
+  return s;
 }
 
 export function WorkExperience({ className, experiences }: WorkExperienceProps) {
   return (
-    <div className={cn("flex flex-col gap-10", className)}>
+    <div className={cn("flex flex-col divide-y divide-border/60 border-y border-border/60", className)}>
       {experiences.map((exp) => (
         <ExperienceItem key={exp.id} experience={exp} />
       ))}
@@ -65,13 +53,10 @@ export function WorkExperience({ className, experiences }: WorkExperienceProps) 
 function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
   const accent = experience.accentColor ?? "#3B82F6";
   return (
-    <div className="flex flex-col gap-5">
-      {/* Company header */}
-      <div className="flex items-center gap-3">
-        <div
-          className="size-11 rounded-lg overflow-hidden flex items-center justify-center bg-card border border-border shrink-0"
-          style={{ boxShadow: `0 0 0 2px ${accent}22` }}
-        >
+    <div className="py-4">
+      {/* Company header row */}
+      <div className="flex items-center gap-3 px-1 mb-2">
+        <div className="size-8 rounded-full overflow-hidden flex items-center justify-center bg-card border border-border shrink-0">
           {experience.companyLogo ? (
             <img
               src={experience.companyLogo}
@@ -79,35 +64,32 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <Briefcase className="w-5 h-5 text-muted-foreground" />
+            <Briefcase className="w-4 h-4 text-muted-foreground" />
           )}
         </div>
-        <div className="flex items-center gap-2 flex-1 min-w-0">
-          <h3 className="text-base md:text-lg font-semibold text-foreground truncate font-['Inter']">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="font-['JetBrains_Mono'] text-sm font-medium text-foreground truncate">
             {experience.companyWebsite ? (
               <a
                 href={experience.companyWebsite}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline underline-offset-4 decoration-current/40"
+                className="hover:underline underline-offset-4"
               >
                 {experience.companyName}
               </a>
             ) : (
               experience.companyName
             )}
-          </h3>
+          </span>
           {experience.isCurrentEmployer && (
-            <span
-              className="relative inline-flex size-2.5 items-center justify-center"
-              aria-label="Current employer"
-            >
+            <span className="relative inline-flex size-2 items-center justify-center" aria-label="Current">
               <span
                 className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
                 style={{ backgroundColor: accent }}
               />
               <span
-                className="relative inline-flex size-2 rounded-full"
+                className="relative inline-flex size-1.5 rounded-full"
                 style={{ backgroundColor: accent }}
               />
             </span>
@@ -115,14 +97,15 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
         </div>
       </div>
 
-      {/* Thread of positions */}
-      <div className="relative pl-5">
-        <div
-          className="absolute left-[20px] top-2 bottom-2 w-px"
-          style={{ background: `linear-gradient(to bottom, ${accent}55, transparent)` }}
-          aria-hidden
-        />
-        <div className="flex flex-col gap-4">
+      {/* Vertical thread + positions */}
+      <div className="relative pl-4 ml-3">
+        {experience.positions.length > 1 && (
+          <div
+            className="absolute left-[15px] top-5 bottom-5 w-px bg-border"
+            aria-hidden
+          />
+        )}
+        <div className="flex flex-col">
           {experience.positions.map((position) => (
             <ExperiencePositionItem
               key={position.id}
@@ -145,56 +128,41 @@ function ExperiencePositionItem({
 }) {
   const [open, setOpen] = useState(!!position.isExpanded);
   const { start, end } = position.employmentPeriod;
-  const duration = formatDuration(start, end);
-  const isOngoing = !end;
+  const startYear = formatYear(start);
+  const endLabel = end ? formatYear(end) : "Present";
 
   return (
-    <div className="relative">
-      <div
-        className="absolute -left-[14px] top-3 size-3 rounded-full border-2 bg-background"
-        style={{ borderColor: accent }}
-        aria-hidden
-      />
+    <div className="relative py-2">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-start gap-3 text-left rounded-xl border border-border bg-card/70 hover:bg-card transition-colors p-4"
+        className="w-full flex items-start gap-3 text-left group"
       >
-        <div
-          className="size-9 rounded-md flex items-center justify-center shrink-0"
-          style={{ backgroundColor: `${accent}1a`, color: accent }}
-        >
+        <div className="size-8 rounded-md flex items-center justify-center shrink-0 bg-muted/50 border border-border text-muted-foreground group-hover:text-foreground transition-colors relative z-[1]">
           {position.icon ?? <Briefcase className="w-4 h-4" />}
         </div>
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 pt-0.5">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-sm md:text-base font-semibold text-foreground font-['Inter'] truncate">
-              {position.title}
-            </p>
-            <ChevronsUpDown
+            <div className="min-w-0">
+              <p className="text-[15px] font-semibold text-foreground font-['Inter'] truncate">
+                {position.title}
+              </p>
+              <p className="text-xs text-muted-foreground font-['JetBrains_Mono'] mt-0.5">
+                {position.employmentType && (
+                  <>
+                    {position.employmentType}{" "}
+                    <span className="opacity-50">·</span>{" "}
+                  </>
+                )}
+                {startYear} <span className="opacity-50">|</span> {endLabel}
+              </p>
+            </div>
+            <ChevronDown
               className={cn(
-                "w-4 h-4 text-muted-foreground transition-transform shrink-0",
+                "w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200",
                 open && "rotate-180"
               )}
             />
-          </div>
-          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground font-['JetBrains_Mono']">
-            {position.employmentType && (
-              <span className="px-1.5 py-0.5 rounded-md border border-border/70 bg-muted/40">
-                {position.employmentType}
-              </span>
-            )}
-            <span>
-              {start} <span className="opacity-50">to</span>{" "}
-              {isOngoing ? (
-                <span className="font-semibold" style={{ color: accent }}>
-                  Present
-                </span>
-              ) : (
-                end
-              )}
-            </span>
-            {duration && <span className="opacity-70">· {duration}</span>}
           </div>
         </div>
       </button>
@@ -206,33 +174,47 @@ function ExperiencePositionItem({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <div className="px-4 pt-3 pb-1 space-y-3">
-              {position.description && (
-                <p className="text-sm leading-relaxed text-foreground/80 font-['Inter'] whitespace-pre-line">
+            <div className="pl-11 pt-3 space-y-3">
+              {(position.bullets && position.bullets.length > 0) ? (
+                <ul className="space-y-1.5">
+                  {position.bullets.map((b, i) => (
+                    <li
+                      key={i}
+                      className="text-sm text-foreground/75 font-['Inter'] leading-relaxed flex gap-2"
+                    >
+                      <span className="text-muted-foreground select-none">•</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : position.description ? (
+                <p className="text-sm leading-relaxed text-foreground/75 font-['Inter'] whitespace-pre-line">
                   {position.description}
                 </p>
-              )}
+              ) : null}
+
               {position.link && (
                 <a
                   href={position.link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs font-semibold rounded-full border border-border bg-muted/40 px-3 py-1.5 hover:bg-muted transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-md border border-border bg-muted/40 px-2.5 py-1 hover:bg-muted transition-colors font-['JetBrains_Mono']"
                   style={{ color: accent }}
                 >
                   {position.link.icon}
                   {position.link.label}
                 </a>
               )}
+
               {position.skills && position.skills.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5 pt-1">
                   {position.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="text-[11px] font-medium px-2 py-1 rounded-md border border-border/70 bg-muted/40 text-foreground/80 font-['JetBrains_Mono']"
+                      className="text-[11px] font-medium px-2 py-0.5 rounded-full border border-border text-muted-foreground font-['JetBrains_Mono']"
                     >
                       {skill}
                     </span>
