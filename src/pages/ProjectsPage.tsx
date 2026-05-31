@@ -89,7 +89,7 @@ const ProjectsPage = () => {
           </div>
 
           {/* RIGHT — scrollable list with fade mask + hidden scrollbar */}
-          <div className="flex-1 md:pt-0 md:flex md:flex-col md:min-h-0 md:self-start">
+          <div className="flex-1 md:-mt-4 md:flex md:flex-col md:min-h-0 md:self-start">
             {/* Mobile header */}
             <div className="md:hidden mb-8">
               <h1 className="text-4xl font-black text-foreground uppercase font-['Space_Grotesk']">
