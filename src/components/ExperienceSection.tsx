@@ -58,12 +58,7 @@ const EXPERIENCES: ExperienceItemType[] = [
         isExpanded: true,
         description: `- Started Virdis as a side mission to actually help farmers.
 - AI-assisted farm boundary mapping with crop-health analytics on satellite data.
-- Still very early, building loudly in public — updates dropping soon.`,
-        link: {
-          href: "https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/",
-          label: "Read the Reddit post",
-          icon: <span className="text-sm">↗</span>,
-        },
+- Still very early, building in public and iterating fast.`,
         skills: [
           "React",
           "TypeScript",
@@ -81,7 +76,7 @@ const EXPERIENCES: ExperienceItemType[] = [
 const ExperienceSection = () => {
   return (
     <section id="experience" className="relative w-full py-16 md:py-20">
-      <div className="mx-auto w-full max-w-6xl px-6">
+      <div className="mx-auto w-full max-w-5xl px-6">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -93,7 +88,6 @@ const ExperienceSection = () => {
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['JetBrains_Mono'] mb-1">
               What I'm up to
             </p>
-
             <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">
               Experience
             </h2>
