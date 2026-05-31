@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CodeXml, Lightbulb } from "lucide-react";
+import { CodeXml, Lightbulb, FlaskConical } from "lucide-react";
 import type { ExperienceItemType } from "@/components/work-experience";
 import { WorkExperience } from "@/components/work-experience";
 
@@ -29,6 +29,17 @@ Picking up how a working research lab actually runs day to day.
 Soaking up the kind of things you don't get from a textbook.`,
         skills: ["Research", "Collaboration", "Data Analytics", "Web Dev"],
       },
+      {
+        id: "pil-summer-2027",
+        title: "Summer Internship",
+        employmentPeriod: { start: "06.2027" },
+        employmentType: "Research Internship",
+        icon: <FlaskConical />,
+        isExpanded: false,
+        description: `Qualified for the research internship next year.
+Summer 2027 is the target.
+Looking forward to contributing more once that starts.`,
+      },
     ],
   },
   {
@@ -48,7 +59,7 @@ Soaking up the kind of things you don't get from a textbook.`,
         isExpanded: true,
         description: `Started Virdis as a hackathon project to help farmers.
 AI-assisted farm boundary mapping with crop-health analytics on satellite data.
-A Reddit post about it received very encouraging feedback and pushed me to keep working on it.`,
+A Reddit post about it got really encouraging feedback and pushed me to keep building it.`,
         link: {
           href: "https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/",
           label: "Read the Reddit post",
