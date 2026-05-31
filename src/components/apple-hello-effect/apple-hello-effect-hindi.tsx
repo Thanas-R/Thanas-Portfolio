@@ -29,7 +29,7 @@ export function AppleHelloEffectHindi({
     <motion.svg
       className={cn("h-20", className)}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="30 0 605 273"
+      viewBox="90 0 605 273"
       fill="none"
       stroke="currentColor"
       strokeWidth="14.888"
