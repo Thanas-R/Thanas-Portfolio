@@ -98,7 +98,7 @@ const ProjectsPage = () => {
             </div>
 
             <div
-  className="md:min-h-0 md:max-h-[600px] md:overflow-y-auto [&::-webkit-scrollbar]:hidden md:pt-0 md:pb-2"
+  className="md:min-h-0 md:max-h-[550px] md:overflow-y-auto [&::-webkit-scrollbar]:hidden md:pt-8 md:pb-2"
   style={fadeMaskStyle}
 >
               <div className="md:border-t border-foreground/10">
