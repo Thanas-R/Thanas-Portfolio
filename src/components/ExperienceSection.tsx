@@ -17,28 +17,27 @@ const EXPERIENCES: ExperienceItemType[] = [
     isCurrentEmployer: true,
     positions: [
       {
+        id: "pil-intern",
+        title: "Research Intern",
+        employmentPeriod: { start: "06.2026" },
+        employmentType: "Intern",
+        icon: <FlaskConical />,
+        isExpanded: true,
+        description: `- Joined as a summer research intern well before the usual eligibility window.
+- Currently helping rebuild the lab's official website with the dev team.
+- Picking up how a working research lab actually runs day to day.`,
+        skills: ["React", "TypeScript", "Tailwind CSS", "Research", "UI/UX"],
+      },
+      {
         id: "pil-member",
         title: "Member",
         employmentPeriod: { start: "05.2026" },
-        employmentType: "Intern",
+        employmentType: "Member",
         icon: <CodeXml />,
-        isExpanded: true,
-        description: `Selected for PIL, the best lab on campus.
-Currently helping rebuild the lab's official website with the dev team.
-Picking up how a working research lab actually runs day to day.
-Soaking up the kind of things you don't get from a textbook.`,
-        skills: ["Research", "Collaboration", "Data Analytics", "Web Dev"],
-      },
-      {
-        id: "pil-summer-2027",
-        title: "Summer Internship",
-        employmentPeriod: { start: "06.2027" },
-        employmentType: "Research Internship",
-        icon: <FlaskConical />,
-        isExpanded: false,
-        description: `Qualified for the research internship next year.
-Summer 2027 is the target.
-Looking forward to contributing more when that starts.`,
+        description: `- Selected into PIL, one of the more curious corners of campus.
+- Contributing to dev work and shipping things alongside the team.
+- Soaking up the kind of things you don't get from a textbook.`,
+        skills: ["Collaboration", "Frontend", "Innovation", "Web Dev"],
       },
     ],
   },
@@ -57,10 +56,18 @@ Looking forward to contributing more when that starts.`,
         employmentType: "Building",
         icon: <Lightbulb />,
         isExpanded: true,
-        description: `Started Virdis as a hackathon project to help farmers.
-AI-assisted farm boundary mapping with crop-health analytics on satellite data.
-A [Reddit](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) post about it received very encouraging feedback and pushed me to keep building it.`,
-        skills: ["Ownership", "Sentinel 2", "Farmers", "Analytics"],
+        description: `- Started Virdis as a side mission to actually help farmers.
+- AI-assisted farm boundary mapping with crop-health analytics on satellite data.
+- Still very early, building in public and iterating fast.`,
+        skills: [
+          "React",
+          "TypeScript",
+          "Mapbox",
+          "Earth Engine",
+          "Supabase",
+          "Gemini AI",
+          "Product",
+        ],
       },
     ],
   },
@@ -78,6 +85,9 @@ const ExperienceSection = () => {
           className="w-full"
         >
           <div className="mb-8">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['JetBrains_Mono'] mb-1">
+              What I'm up to
+            </p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">
               Experience
             </h2>
