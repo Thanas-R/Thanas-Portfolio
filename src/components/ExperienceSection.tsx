@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CodeXml, Lightbulb, FlaskConical } from "lucide-react";
+import { CodeXml, Lightbulb } from "lucide-react";
 import type { ExperienceItemType } from "@/components/work-experience";
 import { WorkExperience } from "@/components/work-experience";
 
@@ -72,7 +72,7 @@ const ExperienceSection = () => {
           className="w-full"
         >
           <div className="mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">
               Currently
             </h2>
           </div>
