@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState, type ComponentProps, type ReactElement } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  BriefcaseBusinessIcon,
-  ChevronsDownUpIcon,
-  ChevronsUpDownIcon,
-} from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import { BriefcaseBusinessIcon, ChevronDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
 
 export type ExperiencePositionItemType = {
@@ -51,15 +51,25 @@ export function WorkExperience({ className, experiences }: WorkExperienceProps) 
 }
 
 function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
+  const threadColor = experience.accentColor ?? "#3B82F6";
+  const threadStyle = {
+    ["--thread-color" as any]: threadColor,
+  } as React.CSSProperties;
+
   return (
-    <div className="space-y-4 py-4">
+    <div className="space-y-4 py-4" style={threadStyle}>
       <div className="not-prose flex items-center gap-3">
-        <div className="flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-full">
+        <div
+          className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-background"
+          style={{
+            borderColor: threadColor,
+          }}
+        >
           {experience.companyLogo ? (
             <img
               src={experience.companyLogo}
               alt={experience.companyName}
-              className="size-6 rounded-full object-cover"
+              className="size-full rounded-[10px] object-cover"
               aria-hidden
             />
           ) : (
@@ -94,19 +104,29 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
         )}
       </div>
 
-      <div className="relative space-y-4 before:absolute before:left-3 before:h-full before:w-px before:bg-border">
+      <div className="relative space-y-4 before:absolute before:left-4 before:h-full before:w-px before:bg-[var(--thread-color)] before:opacity-30">
         {experience.positions.map((position) => (
-          <ExperiencePositionItem key={position.id} position={position} />
+          <ExperiencePositionItem
+            key={position.id}
+            position={position}
+            accentColor={threadColor}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function ExperiencePositionItem({ position }: { position: ExperiencePositionItemType }) {
-  const [open, setOpen] = useState(Boolean(position.isExpanded));
+function ExperiencePositionItem({
+  position,
+  accentColor,
+}: {
+  position: ExperiencePositionItemType;
+  accentColor: string;
+}) {
+  const [open, setOpen] = useState(position.isExpanded ?? true);
   const ExperienceIcon = position.icon ?? (
-    <BriefcaseBusinessIcon className="size-4" />
+    <BriefcaseBusinessIcon className="size-4.5" />
   );
 
   const { start, end } = position.employmentPeriod;
@@ -121,19 +141,18 @@ function ExperiencePositionItem({ position }: { position: ExperiencePositionItem
       <div className="relative last:before:absolute last:before:h-full last:before:w-4 last:before:bg-background">
         <CollapsibleTrigger
           className={cn(
-            "group not-prose block w-full select-none text-left",
-            "relative before:absolute before:-top-1 before:-right-1 before:-bottom-1.5 before:left-7 before:rounded-lg hover:before:bg-muted/30",
+            "group block w-full select-none text-left not-prose",
+            "relative before:absolute before:-top-1 before:-right-1 before:-bottom-1.5 before:left-9 before:rounded-lg hover:before:bg-muted/30",
             "data-disabled:before:content-none"
           )}
         >
           <div className="relative z-1 mb-1 flex items-start gap-3">
             <div
-              className={cn(
-                "flex size-6 shrink-0 items-center justify-center rounded-lg",
-                "bg-muted text-muted-foreground",
-                "border border-muted-foreground/15 ring-1 ring-edge ring-offset-1 ring-offset-background",
-                "[&_svg]:size-4"
-              )}
+              className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground border border-muted-foreground/15 ring-1 ring-offset-1 ring-offset-background"
+              style={{
+                borderColor: accentColor,
+                boxShadow: `0 0 0 1px ${accentColor}22`,
+              }}
             >
               {ExperienceIcon}
             </div>
@@ -162,37 +181,65 @@ function ExperiencePositionItem({ position }: { position: ExperiencePositionItem
               </div>
             </div>
 
-            <div className="shrink-0 text-muted-foreground group-disabled:hidden [&_svg]:size-4">
-              <ChevronsDownUpIcon className="hidden group-data-[state=open]:block" />
-              <ChevronsUpDownIcon className="hidden group-data-[state=closed]:block" />
+            <div
+              className={cn(
+                "shrink-0 text-muted-foreground transition-transform duration-200 [&_svg]:size-4.5",
+                open && "rotate-180",
+                "group-disabled:hidden"
+              )}
+            >
+              <ChevronDownIcon />
             </div>
           </div>
         </CollapsibleTrigger>
 
         <CollapsibleContent className="overflow-hidden">
           {position.description && (
-            <div className="pt-2 pl-9">
-              <ul className="space-y-1.5">
-                {position.description
-                  .split("\n")
-                  .map((line) => line.trim().replace(/^[-•]\s*/, ""))
-                  .filter(Boolean)
-                  .map((item, index) => (
+            <div className="pt-2 pl-10">
+              <ReactMarkdown
+                components={{
+                  p: ({ children, ...props }) => (
+                    <p
+                      className="text-sm leading-relaxed text-foreground/75"
+                      {...props}
+                    >
+                      {children}
+                    </p>
+                  ),
+                  ul: ({ children, ...props }) => (
+                    <ul className="space-y-1.5 list-none p-0 m-0" {...props}>
+                      {children}
+                    </ul>
+                  ),
+                  li: ({ children, ...props }) => (
                     <li
-                      key={`${position.id}-${index}`}
                       className="flex gap-2 text-sm leading-relaxed text-foreground/75"
+                      {...props}
                     >
                       <span className="select-none text-muted-foreground">•</span>
-                      <span>{item}</span>
+                      <span>{children}</span>
                     </li>
-                  ))}
-              </ul>
+                  ),
+                  a: ({ children, ...props }) => (
+                    <a
+                      className="text-[#924205] underline decoration-[#924205]/30 underline-offset-3 transition-colors hover:decoration-[#924205]"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      {...props}
+                    >
+                      {children}
+                    </a>
+                  ),
+                }}
+              >
+                {position.description}
+              </ReactMarkdown>
             </div>
           )}
         </CollapsibleContent>
 
         {Array.isArray(position.skills) && position.skills.length > 0 && (
-          <ul className="not-prose flex flex-wrap gap-1.5 pt-3 pl-9">
+          <ul className="not-prose flex flex-wrap gap-1.5 pt-3 pl-10">
             {position.skills.map((skill, index) => (
               <li key={index} className="flex">
                 <Skill>{skill}</Skill>
