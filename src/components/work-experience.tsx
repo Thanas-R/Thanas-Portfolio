@@ -55,20 +55,20 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
   return (
     <div className="space-y-4 py-4">
       <div className="not-prose flex items-center gap-3">
-        <div className="flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border/60 bg-background">
+        <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border/60 bg-background">
           {experience.companyLogo ? (
             <img
               src={experience.companyLogo}
               alt={experience.companyName}
-              className="size-6 object-cover"
+              className="size-8 object-cover"
               aria-hidden
             />
           ) : (
-            <span className="flex size-2 rounded-full bg-zinc-300 dark:bg-zinc-600" />
+            <span className="flex size-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />
           )}
         </div>
 
-        <h3 className="text-lg leading-snug font-semibold text-foreground">
+        <h3 className="text-xl leading-snug font-semibold text-foreground">
           {experience.companyWebsite ? (
             <a
               className="underline decoration-current/30 decoration-1 underline-offset-4 transition-colors hover:decoration-current"
@@ -84,7 +84,7 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
         </h3>
       </div>
 
-      <div className="relative space-y-4 before:absolute before:left-3 before:h-full before:w-px before:bg-border/80">
+      <div className="relative space-y-4 before:absolute before:left-[15px] before:top-2 before:h-[calc(100%-8px)] before:w-px before:bg-border/80">
         {experience.positions.map((position) => (
           <ExperiencePositionItem key={position.id} position={position} />
         ))}
@@ -110,7 +110,7 @@ function ExperiencePositionItem({
 
   return (
     <Collapsible open={open} onOpenChange={setOpen} disabled={!position.description} asChild>
-      <div className="relative last:before:absolute last:before:h-full last:before:w-4 last:before:bg-background">
+      <div className="relative last:before:absolute last:before:h-full last:before:w-5 last:before:bg-background">
         <CollapsibleTrigger
           className={cn(
             "group not-prose block w-full select-none text-left",
@@ -120,8 +120,8 @@ function ExperiencePositionItem({
           )}
         >
           <div className="relative z-1 mb-1 flex items-start gap-3">
-            <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-muted text-muted-foreground">
-              <span className="[&>svg]:size-4">{ExperienceIcon}</span>
+            <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-muted text-muted-foreground">
+              <span className="[&>svg]:size-5">{ExperienceIcon}</span>
             </div>
 
             <div className="flex-1">
@@ -156,7 +156,7 @@ function ExperiencePositionItem({
 
         <CollapsibleContent className="overflow-hidden">
           {lines.length > 0 && (
-            <div className="pt-2 pl-9">
+            <div className="pt-2 pl-10">
               <ul className="space-y-1.5">
                 {lines.map((item, index) => (
                   <li
@@ -186,7 +186,7 @@ function ExperiencePositionItem({
         </CollapsibleContent>
 
         {Array.isArray(position.skills) && position.skills.length > 0 && (
-          <ul className="not-prose flex flex-wrap gap-1.5 pt-3 pl-9">
+          <ul className="not-prose flex flex-wrap gap-1.5 pt-3 pl-10">
             {position.skills.map((skill, index) => (
               <li key={index} className="flex">
                 <Skill>{skill}</Skill>
