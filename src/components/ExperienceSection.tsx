@@ -21,7 +21,7 @@ const EXPERIENCES: ExperienceItemType[] = [
         title: "Research Intern",
         employmentPeriod: { start: "06.2026" },
         employmentType: "Intern",
-        icon: <FlaskConical className="w-4 h-4" />,
+        icon: <FlaskConical />,
         isExpanded: true,
         description: `- Joined as a summer research intern well before the usual eligibility window.
 - Currently helping rebuild the lab's official website with the dev team.
@@ -33,7 +33,7 @@ const EXPERIENCES: ExperienceItemType[] = [
         title: "Member",
         employmentPeriod: { start: "05.2026" },
         employmentType: "Member",
-        icon: <CodeXml className="w-4 h-4" />,
+        icon: <CodeXml />,
         description: `- Selected into PIL, one of the more curious corners of campus.
 - Contributing to dev work and shipping things alongside the team.
 - Soaking up the kind of things you don't get from a textbook.`,
@@ -54,7 +54,7 @@ const EXPERIENCES: ExperienceItemType[] = [
         title: "Founder",
         employmentPeriod: { start: "07.2026" },
         employmentType: "Building",
-        icon: <Lightbulb className="w-4 h-4" />,
+        icon: <Lightbulb />,
         isExpanded: true,
         description: `- Started Virdis as a side mission to actually help farmers.
 - AI-assisted farm boundary mapping with crop-health analytics on satellite data.
@@ -93,6 +93,7 @@ const ExperienceSection = () => {
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['JetBrains_Mono'] mb-1">
               What I'm up to
             </p>
+
             <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">
               Experience
             </h2>
