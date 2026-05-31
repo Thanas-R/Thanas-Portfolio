@@ -169,7 +169,6 @@ const PAGE_ORDER = [
   'smart-chef',
   'contour-flow',
   'spheal',
-  'smart-chef',
   'pesu-forge',
 ];
 
