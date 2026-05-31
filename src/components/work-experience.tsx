@@ -1,8 +1,12 @@
 "use client";
 
 import React, { useState, type ComponentProps, type ReactElement } from "react";
-import ReactMarkdown from "react-markdown";
-import { BriefcaseBusinessIcon, ChevronDown } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  BriefcaseBusinessIcon,
+  ChevronsDownUpIcon,
+  ChevronsUpDownIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
@@ -19,12 +23,6 @@ export type ExperiencePositionItemType = {
   icon?: ReactElement;
   skills?: string[];
   isExpanded?: boolean;
-  link?: {
-    href: string;
-    label: string;
-    icon?: ReactElement;
-    color?: string;
-  };
 };
 
 export type ExperienceItemType = {
@@ -56,23 +54,23 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
   return (
     <div className="space-y-4 py-4">
       <div className="not-prose flex items-center gap-3">
-        <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-zinc-500/35 bg-background">
+        <div className="flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-full">
           {experience.companyLogo ? (
             <img
               src={experience.companyLogo}
               alt={experience.companyName}
-              className="size-8 object-cover"
+              className="size-6 rounded-full object-cover"
               aria-hidden
             />
           ) : (
-            <span className="flex size-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />
+            <span className="flex size-2 rounded-full bg-zinc-300 dark:bg-zinc-600" />
           )}
         </div>
 
-        <h3 className="text-xl leading-snug font-semibold text-foreground">
+        <h3 className="text-lg leading-snug font-semibold text-foreground">
           {experience.companyWebsite ? (
             <a
-              className="underline decoration-current/30 decoration-1 underline-offset-4 transition-colors hover:decoration-current"
+              className="underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current"
               href={experience.companyWebsite}
               target="_blank"
               rel="noopener noreferrer"
@@ -96,7 +94,7 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
         )}
       </div>
 
-      <div className="relative space-y-4 before:absolute before:left-3 before:top-2 before:h-[calc(100%-8px)] before:w-px before:bg-zinc-500/30">
+      <div className="relative space-y-4 before:absolute before:left-3 before:h-full before:w-px before:bg-border">
         {experience.positions.map((position) => (
           <ExperiencePositionItem key={position.id} position={position} />
         ))}
@@ -105,13 +103,11 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
   );
 }
 
-function ExperiencePositionItem({
-  position,
-}: {
-  position: ExperiencePositionItemType;
-}) {
+function ExperiencePositionItem({ position }: { position: ExperiencePositionItemType }) {
   const [open, setOpen] = useState(Boolean(position.isExpanded));
-  const ExperienceIcon = position.icon ?? <BriefcaseBusinessIcon className="size-4" />;
+  const ExperienceIcon = position.icon ?? (
+    <BriefcaseBusinessIcon className="size-4" />
+  );
 
   const { start, end } = position.employmentPeriod;
 
@@ -131,12 +127,19 @@ function ExperiencePositionItem({
           )}
         >
           <div className="relative z-1 mb-1 flex items-start gap-3">
-            <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-zinc-500/35 bg-muted text-muted-foreground">
-              <span className="[&>svg]:size-5">{ExperienceIcon}</span>
+            <div
+              className={cn(
+                "flex size-6 shrink-0 items-center justify-center rounded-lg",
+                "bg-muted text-muted-foreground",
+                "border border-muted-foreground/15 ring-1 ring-edge ring-offset-1 ring-offset-background",
+                "[&_svg]:size-4"
+              )}
+            >
+              {ExperienceIcon}
             </div>
 
             <div className="flex-1">
-              <h4 className="text-lg font-medium text-foreground">
+              <h4 className="text-balance text-base font-medium text-foreground">
                 {position.title}
               </h4>
 
@@ -153,14 +156,15 @@ function ExperiencePositionItem({
 
                 <span className="tabular-nums">
                   {start}
-                  <span className="mx-1 font-mono">-</span>
+                  <span className="mx-1 font-mono">—</span>
                   {end ?? "Present"}
                 </span>
               </div>
             </div>
 
-            <div className="shrink-0 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180 group-disabled:hidden">
-              <ChevronDown className="size-4" />
+            <div className="shrink-0 text-muted-foreground group-disabled:hidden [&_svg]:size-4">
+              <ChevronsDownUpIcon className="hidden group-data-[state=open]:block" />
+              <ChevronsUpDownIcon className="hidden group-data-[state=closed]:block" />
             </div>
           </div>
         </CollapsibleTrigger>
@@ -168,25 +172,21 @@ function ExperiencePositionItem({
         <CollapsibleContent className="overflow-hidden">
           {position.description && (
             <div className="pt-2 pl-9">
-              <div className="space-y-2 text-sm leading-relaxed text-foreground/75">
-                <ReactMarkdown
-                  components={{
-                    p: ({ children }) => <p className="m-0">{children}</p>,
-                    a: ({ children, href }) => (
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#924205] underline decoration-current/30 decoration-1 underline-offset-4 transition-colors hover:decoration-current"
-                      >
-                        {children}
-                      </a>
-                    ),
-                  }}
-                >
-                  {position.description}
-                </ReactMarkdown>
-              </div>
+              <ul className="space-y-1.5">
+                {position.description
+                  .split("\n")
+                  .map((line) => line.trim().replace(/^[-•]\s*/, ""))
+                  .filter(Boolean)
+                  .map((item, index) => (
+                    <li
+                      key={`${position.id}-${index}`}
+                      className="flex gap-2 text-sm leading-relaxed text-foreground/75"
+                    >
+                      <span className="select-none text-muted-foreground">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+              </ul>
             </div>
           )}
         </CollapsibleContent>
