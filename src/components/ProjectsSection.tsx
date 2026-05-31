@@ -164,12 +164,13 @@ const PAGE_ORDER = [
   'thanas-os',
   'pesu-mc',
   'askbookie',
-  'odin-tree',
-  'askpesu',
   'smart-chef',
   'contour-flow',
   'spheal',
   'pesu-forge',
+  'odin-tree',
+  'askpesu',
+
 ];
 
 export const projectsPageList: Project[] = PAGE_ORDER
