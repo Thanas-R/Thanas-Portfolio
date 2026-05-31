@@ -17,27 +17,26 @@ const EXPERIENCES: ExperienceItemType[] = [
     isCurrentEmployer: true,
     positions: [
       {
+        id: "pil-member",
+        title: "Member",
+        employmentPeriod: { start: "05.2026" },
+        employmentType: "Member",
+        icon: <CodeXml />,
+        isExpanded: true,
+        description: `- Selected for PIL, the best lab on campus.
+- Currently helping rebuild the lab's official website with the dev team.
+- Picking up how a working research lab actually runs day to day.
+- Soaking up the kind of things you don't get from a textbook.`,
+        skills: ["Innovation Lab", "Research", "Collaboration", "Web Dev"],
+      },
+      {
         id: "pil-intern",
         title: "Research Intern",
         employmentPeriod: { start: "06.2026" },
         employmentType: "Intern",
         icon: <FlaskConical />,
         isExpanded: true,
-        description: `- Joined as a summer research intern well before the usual eligibility window.
-- Currently helping rebuild the lab's official website with the dev team.
-- Picking up how a working research lab actually runs day to day.`,
-        skills: ["React", "TypeScript", "Tailwind CSS", "Research", "UI/UX"],
-      },
-      {
-        id: "pil-member",
-        title: "Member",
-        employmentPeriod: { start: "05.2026" },
-        employmentType: "Member",
-        icon: <CodeXml />,
-        description: `- Selected into PIL, one of the more curious corners of campus.
-- Contributing to dev work and shipping things alongside the team.
-- Soaking up the kind of things you don't get from a textbook.`,
-        skills: ["Collaboration", "Frontend", "Innovation", "Web Dev"],
+        description: `I will add content soon.`,
       },
     ],
   },
@@ -53,21 +52,13 @@ const EXPERIENCES: ExperienceItemType[] = [
         id: "virdis-founder",
         title: "Founder",
         employmentPeriod: { start: "07.2026" },
-        employmentType: "Building",
+        employmentType: "Hackathon project",
         icon: <Lightbulb />,
         isExpanded: true,
-        description: `- Started Virdis as a side mission to actually help farmers.
-- AI-assisted farm boundary mapping with crop-health analytics on satellite data.
-- Still very early, building in public and iterating fast.`,
-        skills: [
-          "React",
-          "TypeScript",
-          "Mapbox",
-          "Earth Engine",
-          "Supabase",
-          "Gemini AI",
-          "Product",
-        ],
+        description: `- Started Virdis as a hackathon project to help farmers.
+- AI-assisted farm boundary mapping with crop-health analytics on Sentinel-2 satellite data.
+- I shared it on [Reddit](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) and the feedback was strong enough to push me to keep building.`,
+        skills: ["Ownership", "Sentinel-2", "Farmers", "Analytics"],
       },
     ],
   },
@@ -85,10 +76,10 @@ const ExperienceSection = () => {
           className="w-full"
         >
           <div className="mb-8">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['JetBrains_Mono'] mb-1">
+            <p className="mb-1 font-['JetBrains_Mono'] text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               What I'm up to
             </p>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight font-['Averia_Serif_Libre']">
+            <h2 className="font-['Averia_Serif_Libre'] text-2xl font-bold tracking-tight text-foreground md:text-3xl">
               Experience
             </h2>
           </div>
