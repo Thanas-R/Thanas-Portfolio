@@ -211,7 +211,7 @@ const CommandPalette = () => {
                 ref={inputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Type a command or search..."
+                placeholder="Search projects, pages, actions…"
                 className="flex-1 bg-transparent text-foreground text-sm placeholder:text-muted-foreground/60 outline-none"
               />
               <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-md bg-muted text-muted-foreground text-[11px] font-mono border border-border">
@@ -220,15 +220,15 @@ const CommandPalette = () => {
             </div>
 
             {/* Results */}
-            <div ref={listRef} className="max-h-[320px] overflow-y-auto py-2">
+            <div ref={listRef} className="max-h-[340px] overflow-y-auto py-2">
               {filtered.length === 0 && (
                 <p className="text-sm text-muted-foreground text-center py-8">
                   No results found.
                 </p>
               )}
               {Array.from(sections.entries()).map(([section, items]) => (
-                <div key={section}>
-                  <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground/50 px-5 pt-3 pb-1.5">
+                <div key={section} className="mb-1">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground/60 px-5 pt-3 pb-1.5 font-mono">
                     {section}
                   </p>
                   {items.map((item) => {
@@ -241,16 +241,17 @@ const CommandPalette = () => {
                         data-active={isActive}
                         onClick={() => item.action()}
                         onMouseEnter={() => setActiveIndex(idx)}
-                        className={`w-full flex items-center gap-3 px-5 py-2.5 text-left transition-colors duration-75 ${
-                          isActive ? 'bg-muted/70' : 'hover:bg-muted/40'
+                        className={`w-full flex items-center gap-3 px-4 mx-1 rounded-md py-2 text-left transition-colors duration-75 ${
+                          isActive ? 'bg-muted/80' : 'hover:bg-muted/40'
                         }`}
+                        style={{ width: 'calc(100% - 8px)' }}
                       >
                         <item.icon className="w-4 h-4 text-muted-foreground shrink-0" />
                         <span className="flex-1 text-sm font-medium text-foreground truncate">
                           {item.label}
                         </span>
                         {item.shortcut && (
-                          <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-muted text-muted-foreground text-[11px] font-mono border border-border">
+                          <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-muted text-muted-foreground text-[10px] font-mono border border-border">
                             {item.shortcut}
                           </kbd>
                         )}
@@ -262,21 +263,20 @@ const CommandPalette = () => {
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between px-5 py-2.5 border-t border-border text-[11px] text-muted-foreground/50">
+            <div className="flex items-center justify-between px-5 py-2.5 border-t border-border text-[11px] text-muted-foreground">
               <div className="flex items-center gap-4">
-                <span className="flex items-center gap-1">
-                  <kbd className="px-1 py-0.5 rounded bg-muted border border-border font-mono">↑↓</kbd>
+                <span className="flex items-center gap-1.5">
+                  <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">↑↓</kbd>
                   Navigate
                 </span>
-                <span className="flex items-center gap-1">
-                  <kbd className="px-1 py-0.5 rounded bg-muted border border-border font-mono">↵</kbd>
-                  Select
+                <span className="flex items-center gap-1.5">
+                  <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">↵</kbd>
+                  {filtered[activeIndex]?.section === 'Projects' ? 'Open project' : filtered[activeIndex]?.section === 'Actions' ? 'Run action' : 'Go to page'}
                 </span>
               </div>
               <span className="flex items-center gap-1">
-                <kbd className="px-1 py-0.5 rounded bg-muted border border-border font-mono">⌘</kbd>
-                <kbd className="px-1 py-0.5 rounded bg-muted border border-border font-mono">K</kbd>
-                to open
+                <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">⌘</kbd>
+                <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">K</kbd>
               </span>
             </div>
           </motion.div>
