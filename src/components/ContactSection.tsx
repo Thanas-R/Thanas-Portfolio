@@ -73,10 +73,10 @@ const ContactSection = () => {
 
   return (
     <section
-      id="contact"
-        className="relative py-16 px-6"
-      style={{ fontFamily: "'Quicksand', ui-sans-serif, system-ui" }}
-    >
+  id="contact"
+  className="relative py-16 px-6 scroll-mt-16"
+  style={{ fontFamily: "'Quicksand', ui-sans-serif, system-ui" }}
+>
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
