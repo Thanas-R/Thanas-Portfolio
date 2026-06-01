@@ -67,7 +67,6 @@ const BlogsPage = () => {
           onToggle={toggleMode}
         />
       )}
-      </AnimatePresence>
     </div>
   );
 };
