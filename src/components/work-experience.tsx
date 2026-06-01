@@ -53,7 +53,7 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
   return (
     <div className="space-y-4 py-4">
       <div className="not-prose flex items-center gap-3">
-        <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-md bg-background">
+        <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-background">
           {experience.companyLogo ? (
             <img
               src={experience.companyLogo}
@@ -143,7 +143,7 @@ function ExperiencePositionItem({
           )}
         >
           <div className="relative z-10 mb-1 flex items-start gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-border bg-muted text-muted-foreground ring-1 ring-border/60 ring-offset-1 ring-offset-background [&_svg]:h-4 [&_svg]:w-4">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-border bg-muted text-muted-foreground ring-1 ring-border/60 ring-offset-1 ring-offset-background [&_svg]:h-4 [&_svg]:w-4">
               {ExperienceIcon}
             </div>
 
