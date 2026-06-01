@@ -60,6 +60,14 @@ const BlogsPage = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {mounted && (
+        <BlogsModeSwitcher
+          currentMode={showDark ? 'dark' : 'light'}
+          onToggle={toggleMode}
+        />
+      )}
+      </AnimatePresence>
     </div>
   );
 };
