@@ -137,7 +137,7 @@ export const projects: Project[] = [
     title: 'AskPESU',
     description: 'RAG-powered assistant that answers questions about PES University',
     longDescription:
-      'AskPESU is a RAG pipeline for question answering about PES University. I built the frontend, mirroring the exact design language I used for AskBookie. The backend, RAG pipeline and infrastructure are owned by the PESU Dev team.',
+      'AskPESU is a RAG pipeline for question answering about PES University, built by the PESU Dev team. It works as a continuously updated knowledge base sourced from r/PESU discussions, FAQs and verified posts, helping current and prospective students get instant verified answers. I built the frontend and design.',
     imageSrc: projectAskPesu,
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'RAG', 'Python', 'FastAPI', 'Docker'],
     live: 'https://huggingface.co/spaces/pesu-dev-org/askpesu',
