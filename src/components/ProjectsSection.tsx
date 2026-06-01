@@ -15,7 +15,7 @@ import projectSpheal from '@/assets/project-spheal.png';
 import projectPesuForge from '@/assets/project-pesuforge.png';
 import projectContour from '@/assets/project-contour.png';
 import projectOdinTree from '@/assets/project-odintree.png';
-import projectAskPesu from '@/assets/project-askpesu.png';
+import projectAskPesu from '@/assets/project-askpesu-ui.png';
 
 export interface Project {
   id: string;

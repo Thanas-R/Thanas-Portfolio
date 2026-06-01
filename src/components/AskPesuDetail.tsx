@@ -3,7 +3,7 @@ import { ExternalLink, ArrowLeft, ArrowRight, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
-import askPesuUi from '@/assets/project-askpesu-ui.png';
+import askPesuUi from '@/assets/project-askpesu.png';
 import type { Project } from '@/components/ProjectsSection';
 
 interface Props {
