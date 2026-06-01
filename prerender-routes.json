@@ -1,0 +1,22 @@
+{
+  "routes": [
+    "/",
+    "/projects",
+    "/resume",
+    "/blogs",
+
+    "/projects/nautilus",
+    "/projects/virdis",
+    "/projects/thanasos"
+    "/projects/pesu-mc",
+    "/projects/askpesu",
+    "/projects/odin-tree",
+    "/projects/askbookie",
+    "/projects/smart-chef",
+    "/projects/contour-flow",
+    "/projects/spheal",
+    "/projects/pesu-forge",
+
+
+  ]
+}
