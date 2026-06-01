@@ -369,14 +369,32 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             </Link>
           </motion.div>
 
-          {/* Title — Caveat font */}
+          {/* Title - Caveat font */}
           <motion.div {...fadeUp(0.08)} className="mb-3">
-            <h1
-              className="text-6xl md:text-8xl leading-none"
-              style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, color: headingColor }}
-            >
-              Nautilus
-            </h1>
+            <div className="flex items-end justify-between gap-4 flex-wrap">
+              <h1
+                className="text-6xl md:text-8xl leading-none"
+                style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, color: headingColor }}
+              >
+                Nautilus
+              </h1>
+              <span
+                className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] px-3 py-1.5 rounded-full border mb-3"
+                style={{
+                  borderColor: '#FFF177',
+                  color: isDark ? '#FFF177' : '#8a7a14',
+                  backgroundColor: isDark ? 'rgba(255,241,119,0.08)' : 'rgba(255,241,119,0.18)',
+                  fontFamily: font,
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                Work in Progress
+              </span>
+            </div>
           </motion.div>
 
           {/* Description */}
@@ -385,7 +403,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               className="text-sm md:text-base leading-relaxed max-w-2xl"
               style={{ color: textColor, fontFamily: font }}
             >
-              Nautilus replaces linear, chat-style AI interaction with a node-based knowledge interface. Every prompt creates an independent concept Card. The system continuously analyses cards and uses a neural-network style vector pipeline to surface meaningful connections across multiple databases. Over time it builds a non-linear, evolving knowledge graph you can explore spatially instead of scrolling through chats. Heading deeper into neural networking and richer multi-source linking next. Still very much a work in progress, this round is a content overhaul.
+              Nautilus replaces linear, chat-style AI with a node-based knowledge interface built on neural networking. Every prompt becomes a concept Card, and the system vectorises content through bi-encoders for fast retrieval and re-ranks the most relevant links with a cross-encoder. The result is a graph that learns the semantic structure between your ideas across multiple databases instead of treating them as isolated messages. Still very much a work in progress, this round is a content overhaul.
             </p>
           </motion.div>
 
@@ -423,7 +441,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             </a>
           </motion.div>
 
-          {/* Flowchart — Key Features */}
+          {/* Flowchart - Key Features */}
           <motion.div {...fadeUp(0.2)}>
             <h2
               className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"

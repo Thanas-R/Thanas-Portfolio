@@ -7,6 +7,7 @@ import TechCarousel from '@/components/TechCarousel';
 import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
 import SEOHead from '@/components/SEOHead';
+import HomeSideOrnament from '@/components/HomeSideOrnament';
 
 const Index = () => {
   return (
@@ -19,10 +20,18 @@ const Index = () => {
       <TopographicBackground />
       <div className="relative z-10 overflow-x-hidden">
         <Navbar />
-        <HeroSection />
-        <AboutSection />
-        <ExperienceSection />
-        <TechCarousel />
+        {/* Ornament rail spans hero -> tech (desktop only) */}
+        <div className="relative">
+          <HomeSideOrnament />
+          <div className="relative z-10" id="hero">
+            <HeroSection />
+          </div>
+          <AboutSection />
+          <ExperienceSection />
+          <div id="tech">
+            <TechCarousel />
+          </div>
+        </div>
         <ProjectsSection />
         <ContactSection />
       </div>
