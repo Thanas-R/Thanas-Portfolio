@@ -281,7 +281,7 @@ const OdinTreeDetail = ({ project, prevProject, nextProject }: Props) => {
 
           {/* Tags */}
           <motion.div {...fadeUp(0.22)} className="flex flex-wrap gap-2 mb-16">
-            {(['React 18', 'TypeScript', 'React Flow', 'Vite 5', 'Tailwind', 'shadcn/ui', 'Supabase Edge', 'AI Gateway', 'OSV.dev', 'Vercel'] as const).map(tag => (
+            {(project.detailTags ?? project.tags).map(tag => (
               <span
                 key={tag}
                 className="text-[10px] px-3 py-1.5 uppercase tracking-[0.18em] border"
