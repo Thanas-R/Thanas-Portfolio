@@ -381,16 +381,17 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               <span
                 className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] px-3 py-1.5 rounded-full border mb-3"
                 style={{
-                  borderColor: isDark ? 'hsl(38 90% 55% / 0.4)' : 'hsl(32 90% 45% / 0.4)',
-                  color: isDark ? 'hsl(38 90% 65%)' : 'hsl(28 90% 42%)',
-                  backgroundColor: isDark ? 'hsl(38 90% 50% / 0.08)' : 'hsl(32 90% 50% / 0.08)',
+                  borderColor: '#FFF177',
+                  color: isDark ? '#FFF177' : '#8a7a14',
+                  backgroundColor: isDark ? 'rgba(255,241,119,0.08)' : 'rgba(255,241,119,0.18)',
                   fontFamily: font,
                 }}
               >
-                <span className="relative flex items-center justify-center">
-                  <span className="absolute inline-flex h-2 w-2 rounded-full opacity-60 animate-ping" style={{ backgroundColor: isDark ? 'hsl(38 90% 60%)' : 'hsl(28 90% 50%)' }} />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ backgroundColor: isDark ? 'hsl(38 90% 60%)' : 'hsl(28 90% 50%)' }} />
-                </span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
                 Work in Progress
               </span>
             </div>
