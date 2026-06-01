@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import BlogsLightMode from '@/components/blogs/BlogsLightMode';
 import BlogsDarkMode from '@/components/blogs/BlogsDarkMode';
+import BlogsModeSwitcher from '@/components/blogs/BlogsModeSwitcher';
 import SEOHead from '@/components/SEOHead';
 
 const BlogsPage = () => {
