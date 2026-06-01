@@ -8,16 +8,6 @@ import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
 import SEOHead from '@/components/SEOHead';
 import HomeSideOrnament from '@/components/HomeSideOrnament';
-import { TOCMinimap, type TOCItemType } from '@/components/toc-minimap';
-
-const TOC: TOCItemType[] = [
-  { title: 'Intro', url: '#hero', depth: 2 },
-  { title: 'About', url: '#about', depth: 2 },
-  { title: 'Experience', url: '#experience', depth: 2 },
-  { title: 'Tech', url: '#tech', depth: 3 },
-  { title: 'Projects', url: '#projects', depth: 2 },
-  { title: 'Contact', url: '#contact', depth: 2 },
-];
 
 const Index = () => {
   return (
@@ -28,7 +18,6 @@ const Index = () => {
         path="/"
       />
       <TopographicBackground />
-      <TOCMinimap items={TOC} />
       <div className="relative z-10 overflow-x-hidden">
         <Navbar />
         {/* Ornament rail spans hero -> tech (desktop only) */}

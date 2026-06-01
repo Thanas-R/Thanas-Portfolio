@@ -1,63 +1,71 @@
 import { useTheme } from '@/hooks/use-theme';
 
 /**
- * Decorative side rails shown on desktop only, anchored between hero start
- * and tech-carousel end (covers About + Experience zone). Minimal, theme-aware,
- * no color. Pattern is a mix: hairline diagonals (left rail) and dot-grid mosaic
- * (right rail), echoing the project pages.
+ * Decorative side rails (desktop only) between hero and tech sections.
+ * Refined minimalist: layered dot mosaic + hairline rule + corner crosshairs.
+ * No text. Theme-aware. Subtle, no color.
  */
 const HomeSideOrnament = () => {
   const { isDark } = useTheme();
-  const stroke = isDark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.10)';
-  const dot = isDark ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.14)';
-  const label = isDark ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.30)';
+  const line = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+  const dot = isDark ? 'rgba(255,255,255,0.13)' : 'rgba(0,0,0,0.13)';
+  const mark = isDark ? 'rgba(255,255,255,0.22)' : 'rgba(0,0,0,0.22)';
+
+  const Rail = ({ side }: { side: 'left' | 'right' }) => (
+    <div
+      className={`absolute top-[120px] bottom-[80px] ${side === 'left' ? 'left-0' : 'right-0'} w-[72px]`}
+    >
+      {/* dotted column */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `radial-gradient(circle, ${dot} 1px, transparent 1.4px)`,
+          backgroundSize: '14px 14px',
+          maskImage:
+            'linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)',
+          WebkitMaskImage:
+            'linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)',
+        }}
+      />
+      {/* hairline rule */}
+      <div
+        className={`absolute top-[6%] bottom-[6%] ${side === 'left' ? 'right-3' : 'left-3'} w-px`}
+        style={{
+          background: `linear-gradient(to bottom, transparent, ${line} 18%, ${line} 82%, transparent)`,
+        }}
+      />
+      {/* corner crosshair top */}
+      <svg
+        className={`absolute top-[6%] ${side === 'left' ? 'right-1.5' : 'left-1.5'}`}
+        width="11"
+        height="11"
+        viewBox="0 0 11 11"
+        aria-hidden
+      >
+        <path d="M5.5 0v11M0 5.5h11" stroke={mark} strokeWidth="1" />
+      </svg>
+      {/* corner dot middle */}
+      <span
+        className={`absolute top-1/2 -translate-y-1/2 ${side === 'left' ? 'right-2.5' : 'left-2.5'} w-1.5 h-1.5 rounded-full`}
+        style={{ background: mark }}
+      />
+      {/* corner crosshair bottom */}
+      <svg
+        className={`absolute bottom-[6%] ${side === 'left' ? 'right-1.5' : 'left-1.5'}`}
+        width="11"
+        height="11"
+        viewBox="0 0 11 11"
+        aria-hidden
+      >
+        <circle cx="5.5" cy="5.5" r="3" stroke={mark} strokeWidth="1" fill="none" />
+      </svg>
+    </div>
+  );
 
   return (
     <div className="pointer-events-none absolute inset-0 z-0 hidden xl:block" aria-hidden>
-      {/* LEFT rail: diagonal hairlines + vertical marker */}
-      <div
-        className="absolute top-[120px] bottom-[80px] left-0 w-[70px]"
-        style={{
-          backgroundImage: `repeating-linear-gradient(135deg, ${stroke} 0 1px, transparent 1px 12px)`,
-          maskImage: 'linear-gradient(to bottom, transparent, black 8%, black 92%, transparent)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 8%, black 92%, transparent)',
-        }}
-      />
-      <div className="absolute top-[180px] left-[40px] flex flex-col items-center gap-3">
-        <span className="h-12 w-px" style={{ backgroundColor: stroke }} />
-        <span
-          className="text-[9px] uppercase tracking-[0.35em] [writing-mode:vertical-rl] rotate-180"
-          style={{ color: label, fontFamily: "'JetBrains Mono', monospace" }}
-        >
-          // index / 001
-        </span>
-        <span className="h-24 w-px" style={{ backgroundColor: stroke }} />
-      </div>
-
-      {/* RIGHT rail: dot mosaic + crosshair markers */}
-      <div
-        className="absolute top-[120px] bottom-[80px] right-0 w-[70px]"
-        style={{
-          backgroundImage: `radial-gradient(circle, ${dot} 1px, transparent 1.4px)`,
-          backgroundSize: '12px 12px',
-          maskImage: 'linear-gradient(to bottom, transparent, black 8%, black 92%, transparent)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 8%, black 92%, transparent)',
-        }}
-      />
-      <div className="absolute top-[200px] right-[36px] flex flex-col items-center gap-4">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-          <path d="M7 0v14M0 7h14" stroke={stroke} strokeWidth="1" />
-        </svg>
-        <span
-          className="text-[9px] uppercase tracking-[0.35em] [writing-mode:vertical-rl]"
-          style={{ color: label, fontFamily: "'JetBrains Mono', monospace" }}
-        >
-          thanas-R // portfolio
-        </span>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-          <circle cx="7" cy="7" r="3" stroke={stroke} strokeWidth="1" fill="none" />
-        </svg>
-      </div>
+      <Rail side="left" />
+      <Rail side="right" />
     </div>
   );
 };
