@@ -650,6 +650,7 @@ const ProjectDetailPage = () => {
               {prevProject ? <Link to={`/projects/${prevProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors"><span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Previous</span><span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{prevProject.title}</span></Link> : <div />}
               {nextProject ? <Link to={`/projects/${nextProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full"><span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">Next <ArrowRight className="w-3 h-3" /></span><span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{nextProject.title}</span></Link> : <div />}
             </motion.div>
+            </div>
           </div>) :
         isSmartChef ? (
         /* ── Smart Chef ── */
