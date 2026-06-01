@@ -304,7 +304,7 @@ const ProjectDetailPage = () => {
 
               {/* Tags */}
               <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-14">
-                {project.tags.map((tag) =>
+                {(project.detailTags ?? project.tags).map((tag) =>
               <span
                 key={tag}
                 className="text-xs px-3 py-1.5 rounded-md font-medium uppercase tracking-wider"
@@ -600,7 +600,7 @@ const ProjectDetailPage = () => {
                   macOS-themed interactive website
                 </p>
                 <div className="flex flex-wrap gap-2 mb-8">
-                  {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
+                  {(project.detailTags ?? project.tags).map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
                 </div>
                 <div className="mb-8">
                   <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">About this project</h2>
@@ -687,7 +687,7 @@ const ProjectDetailPage = () => {
             </motion.div>
 
             <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-14">
-              {project.tags.map((tag) =>
+              {(project.detailTags ?? project.tags).map((tag) =>
             <span
               key={tag}
               className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
@@ -941,7 +941,7 @@ const ProjectDetailPage = () => {
 
               {/* Tags between hero and about */}
               <motion.div {...fadeUp(0.16)} className="flex flex-wrap gap-2 mb-8 justify-center">
-                {project.tags.map((tag, i) =>
+                {(project.detailTags ?? project.tags).map((tag, i) =>
                 <span
                   key={tag}
                   className={`text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider ${
@@ -1152,7 +1152,7 @@ const ProjectDetailPage = () => {
 
               {/* Tech tags — centered */}
               <motion.div {...fadeUp(0.18)} className="flex flex-wrap justify-center gap-2 mb-16">
-                {project.tags.map((tag) =>
+                {(project.detailTags ?? project.tags).map((tag) =>
                 <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
                 style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)' }}>
                     {tag}
@@ -1294,7 +1294,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               <motion.div {...fadeUp(0.14)} className="flex flex-wrap gap-2 mb-14">
-                {project.tags.map((tag) =>
+                {(project.detailTags ?? project.tags).map((tag) =>
                 <span
                   key={tag}
                   className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
@@ -1431,7 +1431,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               <motion.div {...fadeUp(0.2)} className="flex flex-wrap gap-2 mb-14">
-                {project.tags.map((tag) =>
+                {(project.detailTags ?? project.tags).map((tag) =>
               <span
                 key={tag}
                 className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
@@ -1445,7 +1445,7 @@ const ProjectDetailPage = () => {
                 <div>
                   <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Stack</p>
                   <p className="text-foreground/80 text-sm leading-relaxed">
-                    {project.tags.join(', ')}
+                    {(project.detailTags ?? project.tags).join(', ')}
                   </p>
                 </div>
                 <div>
