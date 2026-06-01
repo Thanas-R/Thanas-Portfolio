@@ -290,18 +290,18 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
           ))}
         </motion.div>
 
-        {/* Screenshot (16:10 UI) */}
+        {/* Screenshot (16:9 UI) */}
         <motion.div
           {...fadeUp(0.22)}
           className="mb-14 rounded-xl overflow-hidden border"
-          style={{ borderColor: theme.border, aspectRatio: '16 / 10' }}
+          style={{ borderColor: theme.border, aspectRatio: '16 / 9' }}
         >
           {project.live ? (
             <a href={project.live} target="_blank" rel="noopener noreferrer">
-              <img src={askPesuUi} alt="AskPESU UI preview" className="w-full h-full object-cover" />
+              <img src={askPesuUi} alt="AskPESU UI preview" className="w-full h-full object-contain" />
             </a>
           ) : (
-            <img src={askPesuUi} alt="AskPESU UI preview" className="w-full h-full object-cover" />
+            <img src={askPesuUi} alt="AskPESU UI preview" className="w-full h-full object-contain" />
           )}
         </motion.div>
 

@@ -229,7 +229,7 @@ const ProjectDetailPage = () => {
   return (
     <>
       <SideNav />
-      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && !isThanasOS && <GridBackground />}
+      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
         {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <Navbar />}
 
@@ -559,30 +559,6 @@ const ProjectDetailPage = () => {
         isThanasOS ? (
         /* ── ThanasOS ── */
         <div className="relative max-w-6xl mx-auto px-6 pt-12 pb-24">
-            {/* Dotted background with radial fade so content stays clean */}
-            <div
-              className="pointer-events-none fixed inset-0 z-0"
-              aria-hidden
-              style={{
-                backgroundImage: isDark
-                  ? 'radial-gradient(circle, rgba(255,255,255,0.16) 1.2px, transparent 1.4px)'
-                  : 'radial-gradient(circle, rgba(0,0,0,0.18) 1.2px, transparent 1.4px)',
-                backgroundSize: '22px 22px',
-              }}
-            />
-            <div
-              className="pointer-events-none fixed inset-0 z-0 backdrop-blur-[6px]"
-              aria-hidden
-              style={{
-                background: isDark
-                  ? 'radial-gradient(ellipse 60% 55% at 50% 50%, hsl(var(--background)) 0%, hsl(var(--background) / 0.92) 35%, hsl(var(--background) / 0.55) 60%, hsl(var(--background) / 0) 85%)'
-                  : 'radial-gradient(ellipse 60% 55% at 50% 50%, hsl(var(--background)) 0%, hsl(var(--background) / 0.92) 35%, hsl(var(--background) / 0.55) 60%, hsl(var(--background) / 0) 85%)',
-                WebkitMaskImage:
-                  'radial-gradient(ellipse 55% 50% at 50% 50%, black 0%, black 45%, transparent 80%)',
-                maskImage:
-                  'radial-gradient(ellipse 55% 50% at 50% 50%, black 0%, black 45%, transparent 80%)',
-              }}
-            />
             <div className="relative z-10">
             <motion.div {...fadeUp(0)}>
               <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
