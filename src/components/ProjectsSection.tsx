@@ -24,6 +24,8 @@ export interface Project {
   longDescription: string;
   imageSrc: string;
   tags: string[];
+  /** Optional override: tags shown only on the project detail page */
+  detailTags?: string[];
   live?: string;
   github?: string;
 }
@@ -162,15 +164,14 @@ const PAGE_ORDER = [
   'nautilus',
   'virdis',
   'thanas-os',
-  'pesu-mc',
+  'askpesu',
+  'odin-tree',
   'askbookie',
+  'pesu-mc',
   'smart-chef',
   'contour-flow',
   'spheal',
   'pesu-forge',
-  'odin-tree',
-  'askpesu',
-
 ];
 
 export const projectsPageList: Project[] = PAGE_ORDER
