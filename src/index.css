@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=League+Gothic&family=Averia+Serif+Libre:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=League+Gothic&family=Averia+Serif+Libre:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&family=Capriola&display=swap');
 /* Text selection: inverted colors */
 ::selection {
   background: hsl(var(--foreground));
@@ -15,7 +15,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 97.6%;
     --foreground: 0 0% 5.5%;
 
     --card: 0 0% 100%;
@@ -60,7 +60,7 @@
   }
 
   .dark {
-    --background: 0 0% 1.5%;
+    --background: 0 0% 5.9%;
     --foreground: 0 0% 96%;
 
     --card: 0 0% 6%;
