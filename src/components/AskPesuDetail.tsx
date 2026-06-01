@@ -275,7 +275,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
 
         {/* Tags */}
         <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-14">
-          {(project.detailTags ?? project.tags).map((tag) => (
+          {project.tags.map((tag) => (
             <span
               key={tag}
               className="text-[11px] px-3 py-1.5 rounded-full font-medium uppercase tracking-wider border"
