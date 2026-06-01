@@ -36,9 +36,9 @@ export const projects: Project[] = [
   {
     id: 'nautilus',
     title: 'Nautilus',
-    description: 'Neural-network style knowledge graph that links ideas across databases',
+    description: 'Neural-network knowledge graph with bi-encoder retrieval and cross-encoder re-ranking',
     longDescription:
-      'Nautilus replaces linear, chat-style AI interaction with a node-based knowledge interface. Every prompt generates an independent concept Card, and the system uses neural-network style vector linking across multiple databases to automatically surface relationships between ideas. It is moving towards deeper neural networking and richer multi-source connections. Still very much a work in progress, this is mostly a content overhaul for now.',
+      'Nautilus replaces linear chat with a node-based knowledge interface built on neural networking. Each prompt becomes a concept Card, vectorised through bi-encoders for retrieval and re-ranked by a cross-encoder to surface the most relevant links across multiple databases. Work in progress.',
     imageSrc: projectNautilus,
     tags: ['React', 'Canvas', 'Neural Networking', 'Vector Search', 'TypeScript', 'Graph'],
     live: 'https://nautilus-build.vercel.app',
@@ -177,7 +177,7 @@ export const projectsPageList: Project[] = PAGE_ORDER
   .map((id) => projects.find((p) => p.id === id))
   .filter((p): p is Project => Boolean(p));
 
-// 6 projects on homepage — scattered overlapping layout like the reference
+// 6 projects on homepage - scattered overlapping layout like the reference
 const homeProjects = projects.filter((p) =>
   ['nautilus', 'virdis', 'pesu-mc', 'askbookie', 'thanas-os', 'smart-chef'].includes(p.id)
 );

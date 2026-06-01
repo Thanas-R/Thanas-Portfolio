@@ -1,5 +1,5 @@
 /**
- * Pure-data project metadata — no React/asset imports.
+ * Pure-data project metadata, no React/asset imports.
  * Imported by both the React app (via ProjectsSection) and build-time
  * scripts (vite.config.ts, scripts/generate-sitemap.ts).
  */
