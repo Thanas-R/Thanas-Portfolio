@@ -369,14 +369,31 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             </Link>
           </motion.div>
 
-          {/* Title — Caveat font */}
+          {/* Title - Caveat font */}
           <motion.div {...fadeUp(0.08)} className="mb-3">
-            <h1
-              className="text-6xl md:text-8xl leading-none"
-              style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, color: headingColor }}
-            >
-              Nautilus
-            </h1>
+            <div className="flex items-end justify-between gap-4 flex-wrap">
+              <h1
+                className="text-6xl md:text-8xl leading-none"
+                style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, color: headingColor }}
+              >
+                Nautilus
+              </h1>
+              <span
+                className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] px-3 py-1.5 rounded-full border mb-3"
+                style={{
+                  borderColor: isDark ? 'hsl(38 90% 55% / 0.4)' : 'hsl(32 90% 45% / 0.4)',
+                  color: isDark ? 'hsl(38 90% 65%)' : 'hsl(28 90% 42%)',
+                  backgroundColor: isDark ? 'hsl(38 90% 50% / 0.08)' : 'hsl(32 90% 50% / 0.08)',
+                  fontFamily: font,
+                }}
+              >
+                <span className="relative flex items-center justify-center">
+                  <span className="absolute inline-flex h-2 w-2 rounded-full opacity-60 animate-ping" style={{ backgroundColor: isDark ? 'hsl(38 90% 60%)' : 'hsl(28 90% 50%)' }} />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ backgroundColor: isDark ? 'hsl(38 90% 60%)' : 'hsl(28 90% 50%)' }} />
+                </span>
+                Work in Progress
+              </span>
+            </div>
           </motion.div>
 
           {/* Description */}
@@ -385,7 +402,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               className="text-sm md:text-base leading-relaxed max-w-2xl"
               style={{ color: textColor, fontFamily: font }}
             >
-              Nautilus replaces linear, chat-style AI interaction with a node-based knowledge interface. Every prompt creates an independent concept Card. The system continuously analyses cards and uses a neural-network style vector pipeline to surface meaningful connections across multiple databases. Over time it builds a non-linear, evolving knowledge graph you can explore spatially instead of scrolling through chats. Heading deeper into neural networking and richer multi-source linking next. Still very much a work in progress, this round is a content overhaul.
+              Nautilus replaces linear, chat-style AI with a node-based knowledge interface built on neural networking. Every prompt becomes a concept Card, and the system vectorises content through bi-encoders for fast retrieval and re-ranks the most relevant links with a cross-encoder. The result is a graph that learns the semantic structure between your ideas across multiple databases instead of treating them as isolated messages. Still very much a work in progress, this round is a content overhaul.
             </p>
           </motion.div>
 
@@ -423,7 +440,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             </a>
           </motion.div>
 
-          {/* Flowchart — Key Features */}
+          {/* Flowchart - Key Features */}
           <motion.div {...fadeUp(0.2)}>
             <h2
               className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
