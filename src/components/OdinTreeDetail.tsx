@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Github, Folder, FileCode, Search, Network, Shield, GitCommit, Boxes, Users, FileText } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Github, FileCode, Search, Network, Shield, GitCommit, Boxes, Users, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '@/hooks/use-theme';
