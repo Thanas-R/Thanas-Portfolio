@@ -409,8 +409,8 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
             className="rounded-xl p-6"
             style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}` }}
           >
-            {/* Tier 1: core contributors, bigger */}
-            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-5">
+            {/* Core + other contributors on the same line, different sizes */}
+            <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3 mb-5">
               {CORE_CONTRIBUTORS.map((c) => (
                 <a
                   key={c.name}
@@ -423,9 +423,6 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
                   {c.name}
                 </a>
               ))}
-            </div>
-            {/* Tier 2: other contributors, smaller */}
-            <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
               {OTHER_CONTRIBUTORS.map((c) => (
                 <a
                   key={c.name}
