@@ -74,7 +74,7 @@ const ContactSection = () => {
   return (
     <section
   id="contact"
-  className="relative py-16 px-6 scroll-mt-16"
+  className="relative py-16 px-6 scroll-mt-8"
   style={{ fontFamily: "'Quicksand', ui-sans-serif, system-ui" }}
 >
       <div className="max-w-3xl mx-auto">
