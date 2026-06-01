@@ -3,7 +3,7 @@ import { ExternalLink, ArrowLeft, ArrowRight, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
-import askPesuUi from '@/assets/project-askpesu-ui.png';
+import askPesuUi from '@/assets/project-askpesu.png';
 import type { Project } from '@/components/ProjectsSection';
 
 interface Props {
@@ -183,7 +183,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
               style={{
                 fontFamily: display,
                 fontWeight: 400,
-                fontSize: 'clamp(56px, 11vw, 132px)',
+                fontSize: 'clamp(53px, 10.45vw, 125px)',
               }}
             >
               <span style={{ color: theme.askGray }}>ask</span>
@@ -205,7 +205,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
           className="text-[10px] uppercase tracking-[0.3em]"
           style={{ color: theme.textSubtle, fontFamily: font }}
         >
-          PESU Dev / model 2
+          PESU Dev / model Huggingface
         </span>
         <div className="flex gap-2">
           <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: ACCENT }} />
@@ -275,7 +275,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
 
         {/* Tags */}
         <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-14">
-          {['RAG Model', 'Docker', 'TypeScript', 'PESU', 'QA Bot', 'FastAPI', 'Python'].map((tag) => (
+          {(project.detailTags ?? project.tags).map((tag) => (
             <span
               key={tag}
               className="text-[11px] px-3 py-1.5 rounded-full font-medium uppercase tracking-wider border"
@@ -409,8 +409,8 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
             className="rounded-xl p-6"
             style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}` }}
           >
-            {/* Tier 1: core contributors, bigger */}
-            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-5">
+            {/* Core + other contributors on the same line, different sizes */}
+            <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3 mb-5">
               {CORE_CONTRIBUTORS.map((c) => (
                 <a
                   key={c.name}
@@ -423,9 +423,6 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
                   {c.name}
                 </a>
               ))}
-            </div>
-            {/* Tier 2: other contributors, smaller */}
-            <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
               {OTHER_CONTRIBUTORS.map((c) => (
                 <a
                   key={c.name}

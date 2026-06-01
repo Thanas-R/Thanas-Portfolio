@@ -229,7 +229,7 @@ const ProjectDetailPage = () => {
   return (
     <>
       <SideNav />
-      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
+      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && !isThanasOS && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
         {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <Navbar />}
 
@@ -304,7 +304,7 @@ const ProjectDetailPage = () => {
 
               {/* Tags */}
               <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-14">
-                {project.tags.map((tag) =>
+                {(project.detailTags ?? project.tags).map((tag) =>
               <span
                 key={tag}
                 className="text-xs px-3 py-1.5 rounded-md font-medium uppercase tracking-wider"
@@ -558,7 +558,32 @@ const ProjectDetailPage = () => {
           </div> :
         isThanasOS ? (
         /* ── ThanasOS ── */
-        <div className="max-w-6xl mx-auto px-6 pt-12 pb-24">
+        <div className="relative max-w-6xl mx-auto px-6 pt-12 pb-24">
+            {/* Dotted background with radial fade so content stays clean */}
+            <div
+              className="pointer-events-none fixed inset-0 z-0"
+              aria-hidden
+              style={{
+                backgroundImage: isDark
+                  ? 'radial-gradient(circle, rgba(255,255,255,0.16) 1.2px, transparent 1.4px)'
+                  : 'radial-gradient(circle, rgba(0,0,0,0.18) 1.2px, transparent 1.4px)',
+                backgroundSize: '22px 22px',
+              }}
+            />
+            <div
+              className="pointer-events-none fixed inset-0 z-0 backdrop-blur-[6px]"
+              aria-hidden
+              style={{
+                background: isDark
+                  ? 'radial-gradient(ellipse 60% 55% at 50% 50%, hsl(var(--background)) 0%, hsl(var(--background) / 0.92) 35%, hsl(var(--background) / 0.55) 60%, hsl(var(--background) / 0) 85%)'
+                  : 'radial-gradient(ellipse 60% 55% at 50% 50%, hsl(var(--background)) 0%, hsl(var(--background) / 0.92) 35%, hsl(var(--background) / 0.55) 60%, hsl(var(--background) / 0) 85%)',
+                WebkitMaskImage:
+                  'radial-gradient(ellipse 55% 50% at 50% 50%, black 0%, black 45%, transparent 80%)',
+                maskImage:
+                  'radial-gradient(ellipse 55% 50% at 50% 50%, black 0%, black 45%, transparent 80%)',
+              }}
+            />
+            <div className="relative z-10">
             <motion.div {...fadeUp(0)}>
               <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
                 <ArrowLeft className="w-4 h-4" />
@@ -600,7 +625,7 @@ const ProjectDetailPage = () => {
                   macOS-themed interactive website
                 </p>
                 <div className="flex flex-wrap gap-2 mb-8">
-                  {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
+                  {(project.detailTags ?? project.tags).map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
                 </div>
                 <div className="mb-8">
                   <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">About this project</h2>
@@ -625,6 +650,7 @@ const ProjectDetailPage = () => {
               {prevProject ? <Link to={`/projects/${prevProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors"><span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Previous</span><span className="text-sm font-bold text-foreground group-hover:translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{prevProject.title}</span></Link> : <div />}
               {nextProject ? <Link to={`/projects/${nextProject.id}`} className="group flex flex-col gap-1 p-5 rounded-xl border border-foreground/10 transition-colors text-right ml-auto w-full"><span className="text-xs uppercase tracking-widest text-muted-foreground flex items-center justify-end gap-1">Next <ArrowRight className="w-3 h-3" /></span><span className="text-sm font-bold text-foreground group-hover:-translate-x-0.5 transition-transform" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{nextProject.title}</span></Link> : <div />}
             </motion.div>
+            </div>
           </div>) :
         isSmartChef ? (
         /* ── Smart Chef ── */
@@ -687,7 +713,7 @@ const ProjectDetailPage = () => {
             </motion.div>
 
             <motion.div {...fadeUp(0.18)} className="flex flex-wrap gap-2 mb-14">
-              {project.tags.map((tag) =>
+              {(project.detailTags ?? project.tags).map((tag) =>
             <span
               key={tag}
               className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
@@ -941,7 +967,7 @@ const ProjectDetailPage = () => {
 
               {/* Tags between hero and about */}
               <motion.div {...fadeUp(0.16)} className="flex flex-wrap gap-2 mb-8 justify-center">
-                {project.tags.map((tag, i) =>
+                {(project.detailTags ?? project.tags).map((tag, i) =>
                 <span
                   key={tag}
                   className={`text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider ${
@@ -1152,7 +1178,7 @@ const ProjectDetailPage = () => {
 
               {/* Tech tags — centered */}
               <motion.div {...fadeUp(0.18)} className="flex flex-wrap justify-center gap-2 mb-16">
-                {project.tags.map((tag) =>
+                {(project.detailTags ?? project.tags).map((tag) =>
                 <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
                 style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)' }}>
                     {tag}
@@ -1294,7 +1320,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               <motion.div {...fadeUp(0.14)} className="flex flex-wrap gap-2 mb-14">
-                {project.tags.map((tag) =>
+                {(project.detailTags ?? project.tags).map((tag) =>
                 <span
                   key={tag}
                   className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
@@ -1431,7 +1457,7 @@ const ProjectDetailPage = () => {
               </motion.div>
 
               <motion.div {...fadeUp(0.2)} className="flex flex-wrap gap-2 mb-14">
-                {project.tags.map((tag) =>
+                {(project.detailTags ?? project.tags).map((tag) =>
               <span
                 key={tag}
                 className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">
@@ -1445,7 +1471,7 @@ const ProjectDetailPage = () => {
                 <div>
                   <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">Stack</p>
                   <p className="text-foreground/80 text-sm leading-relaxed">
-                    {project.tags.join(', ')}
+                    {(project.detailTags ?? project.tags).join(', ')}
                   </p>
                 </div>
                 <div>

@@ -15,7 +15,7 @@ import projectSpheal from '@/assets/project-spheal.png';
 import projectPesuForge from '@/assets/project-pesuforge.png';
 import projectContour from '@/assets/project-contour.png';
 import projectOdinTree from '@/assets/project-odintree.png';
-import projectAskPesu from '@/assets/project-askpesu.png';
+import projectAskPesu from '@/assets/project-askpesu-ui.png';
 
 export interface Project {
   id: string;
@@ -24,6 +24,8 @@ export interface Project {
   longDescription: string;
   imageSrc: string;
   tags: string[];
+  /** Optional override: tags shown only on the project detail page */
+  detailTags?: string[];
   live?: string;
   github?: string;
 }
@@ -41,6 +43,7 @@ export const projects: Project[] = [
       'Nautilus replaces linear chat with a node-based knowledge interface built on neural networking. Each prompt becomes a concept Card, vectorised through bi-encoders for retrieval and re-ranked by a cross-encoder to surface the most relevant links across multiple databases. Work in progress.',
     imageSrc: projectNautilus,
     tags: ['React', 'Canvas', 'Neural Networking', 'Vector Search', 'TypeScript', 'Graph'],
+    detailTags: ['Nautilus', 'Neural Networking', 'Encoder'],
     live: 'https://nautilus-build.vercel.app',
     github: 'https://github.com/Thanas-R/Nautilus',
   },
@@ -52,6 +55,7 @@ export const projects: Project[] = [
       'An AI-powered platform that automatically maps farm boundaries and analyzes crop health using satellite timeseries data. Virdis processes multispectral imagery to calculate vegetation indices, detect anomalies, and provide actionable insights for precision agriculture.',
     imageSrc: projectVirdis,
     tags: ['Mapbox', 'Earth Engine', 'TypeScript', 'React', 'Supabase', 'Gemini AI', 'shadcn/ui'],
+    detailTags: ['Satellite', 'Earth Engine'],
     live: 'https://virdis.vercel.app',
     github: 'https://github.com/Thanas-R/Virdis',
   },
@@ -63,6 +67,7 @@ export const projects: Project[] = [
       'A smart travel planner that generates personalized, day-by-day itineraries with routes and hotel suggestions, visualized on an interactive Mapbox map. Users select their destination, trip duration, and travel preferences then the AI designs the full itinerary.',
     imageSrc: projectSpheal,
     tags: ['React', 'Mapbox', 'Gemini AI', 'TypeScript'],
+    detailTags: ['Planner', 'Gemini'],
     live: 'https://spheal-worldwide.vercel.app/',
     github: 'https://github.com/Thanas-R/Spheal',
   },
@@ -74,6 +79,7 @@ export const projects: Project[] = [
       'A fully responsive website built to showcase and manage the PESU Minecraft Server Season 2 community. Features a live server status widget, player leaderboards, season recap, and event announcements.',
     imageSrc: projectPesuMC,
     tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
+    detailTags: ['PESU-MC', 'Data'],
     live: 'https://pesu-mc.vercel.app',
     github: 'https://github.com/Thanas-R/PESU-MC-S2-Website',
   },
@@ -85,6 +91,7 @@ export const projects: Project[] = [
       'A production-grade frontend for a Retrieval-Augmented Generation (RAG) pipeline. Users upload documents and interact with them via a conversational interface powered by a custom backend API.',
     imageSrc: projectAskbookie,
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'RAG', 'Vite'],
+    detailTags: ['RAG', 'TypeScript'],
     live: 'https://ask-bookie.vercel.app',
     github: 'https://github.com/dotpmm/askbookie-frontend',
   },
@@ -107,6 +114,7 @@ export const projects: Project[] = [
       'A recipe recommendation engine built entirely in-memory using a Vector Space Model and TF-IDF scoring. Enter ingredients you have on hand and the system ranks recipes by relevance using cosine similarity.',
     imageSrc: projectSmartchef,
     tags: ['Python', 'TF-IDF', 'VSM'],
+    detailTags: ['Python', 'Vector'],
     live: 'https://smart-chef-pesu.vercel.app/',
     github: 'https://github.com/Thanas-R/Smart-Chef',
   },
@@ -118,6 +126,7 @@ export const projects: Project[] = [
       'An earlier iteration of my portfolio, styled as a full macOS desktop environment in the browser. Features a working dock, draggable windows, a simulated Finder, and interactive apps.',
     imageSrc: projectThanasOS,
     tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
+    detailTags: ['macOS', 'Web'],
     live: 'https://thanas-os.vercel.app/',
     github: 'https://github.com/Thanas-R/thanas-OS',
   },
@@ -129,6 +138,7 @@ export const projects: Project[] = [
       'Odin Tree turns any GitHub repository into an interactive node-based flowchart. Files, functions, classes and modules become draggable, zoomable nodes connected by their real import relationships. It is built to help developers visually traverse architecture, spot bottlenecks, and learn how good codebases are organised.',
     imageSrc: projectOdinTree,
     tags: ['React', 'TypeScript', 'AST', 'Graph', 'Tree-sitter', 'GitHub API'],
+    detailTags: ['GitHub', 'Analysis'],
     live: 'https://odintree.vercel.app/',
     github: 'https://github.com/Thanas-R/odin',
   },
@@ -140,6 +150,7 @@ export const projects: Project[] = [
       'AskPESU is a RAG pipeline for question answering about PES University, built by the PESU Dev team. It works as a continuously updated knowledge base sourced from r/PESU discussions, FAQs and verified posts, helping current and prospective students get instant verified answers. I built the frontend and design.',
     imageSrc: projectAskPesu,
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'RAG', 'Python', 'FastAPI', 'Docker'],
+    detailTags: ['Docker', 'Design'],
     live: 'https://huggingface.co/spaces/pesu-dev-org/askpesu',
     github: 'https://github.com/pesu-dev/ask-pesu',
   },
@@ -162,15 +173,14 @@ const PAGE_ORDER = [
   'nautilus',
   'virdis',
   'thanas-os',
-  'pesu-mc',
+  'askpesu',
+  'odin-tree',
   'askbookie',
+  'pesu-mc',
   'smart-chef',
   'contour-flow',
   'spheal',
   'pesu-forge',
-  'odin-tree',
-  'askpesu',
-
 ];
 
 export const projectsPageList: Project[] = PAGE_ORDER
