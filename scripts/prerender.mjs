@@ -58,6 +58,36 @@ async function prerender() {
 
     await sleep(700);
 
+    await page.evaluate(() => {
+      const head = document.head;
+
+      const dedupe = (selector, keepFirst = true) => {
+        const elements = Array.from(head.querySelectorAll(selector));
+        if (elements.length <= 1) return;
+        elements.slice(keepFirst ? 1 : 0).forEach((el) => el.remove());
+      };
+
+      dedupe('meta[name="apple-mobile-web-app-title"]');
+      dedupe('link[rel="preload"][as="image"][href="/assets/avatar-gyWbctd.png"]');
+
+      const sonnerStyles = Array.from(head.querySelectorAll('style')).filter((style) =>
+        style.textContent?.includes('[data-sonner-toaster]')
+      );
+      sonnerStyles.slice(1).forEach((tag) => tag.remove());
+
+      const jsonLdBlocks = Array.from(head.querySelectorAll('script[type="application/ld+json"]'));
+      const seen = new Set();
+      jsonLdBlocks.forEach((block) => {
+        const content = block.textContent?.trim();
+        if (!content) return;
+        if (seen.has(content)) {
+          block.remove();
+        } else {
+          seen.add(content);
+        }
+      });
+    });
+
     const html = await page.content();
 
     const outputDir =
