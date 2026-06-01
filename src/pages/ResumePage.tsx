@@ -1,32 +1,12 @@
 import { motion } from 'framer-motion';
 import { Download, FileText } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
+import resumePreview from '@/assets/resume-preview.png';
 import SEOHead from '@/components/SEOHead';
 
-/**
- * Resume PDF embedded directly so links remain interactive.
- * The iframe height is computed from its width × A4 aspect (1.414) so the full
- * page is visible at the bottom. Internal PDF scrollbar is hidden using viewer
- * fragment params, and any residual scrollbar is masked by an overlay frame.
- * The browser/window scrolls if the rendered PDF is taller than the viewport.
- */
 const ResumePage = () => {
   const resumePath = '/Thanas-Resume.pdf';
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number>(900);
-
-  useEffect(() => {
-    const compute = () => {
-      const w = wrapRef.current?.clientWidth ?? 800;
-      // A4 portrait aspect: height = width * sqrt(2)
-      setHeight(Math.round(w * 1.414));
-    };
-    compute();
-    window.addEventListener('resize', compute);
-    return () => window.removeEventListener('resize', compute);
-  }, []);
 
   return (
     <div className="relative min-h-screen bg-background flex flex-col">
@@ -41,6 +21,7 @@ const ResumePage = () => {
         <Navbar />
       </div>
 
+      {/* Header row */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -76,6 +57,7 @@ const ResumePage = () => {
         </div>
       </motion.div>
 
+      {/* Resume as image — bigger on desktop */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -83,17 +65,15 @@ const ResumePage = () => {
         className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 w-full flex-1 pb-8"
       >
         <div
-          ref={wrapRef}
-          className="relative rounded-2xl overflow-hidden border border-border bg-card"
+          className="rounded-2xl overflow-hidden border border-border bg-card"
           style={{
             boxShadow: '0 8px 40px hsl(var(--foreground) / 0.06)',
-            height,
           }}
         >
-          <iframe
-            src={`${resumePath}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-            title="Thanas R | Resume"
-            className="absolute inset-0 w-full h-full block border-0"
+          <img
+            src={resumePreview}
+            alt="Thanas R | Resume"
+            className="w-full h-auto block"
           />
         </div>
       </motion.div>
