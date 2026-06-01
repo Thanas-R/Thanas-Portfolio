@@ -3,6 +3,7 @@ import { ExternalLink, ArrowLeft, ArrowRight, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
+import askPesuUi from '@/assets/project-askpesu-ui.png';
 import type { Project } from '@/components/ProjectsSection';
 
 interface Props {
@@ -19,10 +20,13 @@ const fadeUp = (delay = 0) => ({
 
 const ACCENT = '#ED7C31';
 
-const CONTRIBUTORS = [
+const CORE_CONTRIBUTORS = [
   { name: 'Joshua-Raj', url: 'https://github.com/joshua-rajj' },
   { name: 'Achyuth S.S', url: 'https://github.com/achyu-dev' },
   { name: 'Aditeya Baral', url: 'https://github.com/aditeyabaral' },
+];
+
+const OTHER_CONTRIBUTORS = [
   { name: 'Arjun', url: 'https://github.com/arjun-com' },
   { name: 'Shreyas V', url: 'https://github.com/woterr' },
   { name: 'Anmol Vyas', url: 'https://github.com/TheAverageDetective' },
@@ -30,37 +34,37 @@ const CONTRIBUTORS = [
 
 const FEATURES = [
   {
-    title: 'Vectorised Knowledge Base',
-    desc: 'Subreddit threads, FAQs and verified posts are chunked and vectorised so every query is matched against the real PESU corpus, not a vague LLM memory.',
+    title: 'Instant PESU Answers',
+    desc: 'Get quick, verified responses on CGPA rules, ISA policies, faculty notes, admissions, and campus life without scrolling through old threads.',
   },
   {
-    title: 'Bi-Encoder Retrieval',
-    desc: 'A bi-encoder embeds query and documents into the same vector space for fast nearest-neighbour search across thousands of community-sourced answers.',
+    title: 'Subreddit-Backed Knowledge',
+    desc: 'The knowledge base is sourced from r/PESU. Verified discussions, FAQs and posts feed AskPESU so answers reflect the real student community.',
   },
   {
-    title: 'Cross-Encoder Re-ranking',
-    desc: 'A cross-encoder re-scores the top candidates by jointly attending to the question and each passage, sharpening the final ranking before generation.',
+    title: 'Reduces Redundant Posts',
+    desc: 'Common questions get answered instantly, keeping r/PESU a curated, high-quality knowledge repository instead of a general chat forum.',
   },
   {
-    title: 'Auto-updating Corpus',
-    desc: 'New r/PESU discussions get pulled, deduplicated and re-embedded continuously, keeping AskPESU current without manual retraining.',
+    title: 'Auto-Updating Corpus',
+    desc: 'New subreddit content is continuously aggregated and refreshed into the knowledge base, so AskPESU stays current without manual retraining.',
   },
   {
-    title: 'RAG-Backed Generation',
-    desc: 'Retrieved passages are passed as grounded context to the LLM, so answers stay anchored in real student-verified content.',
+    title: 'For Current and Prospective Students',
+    desc: 'Supports both enrolled students and admission seekers, helping them make informed decisions about academics, life and policy at PESU.',
   },
   {
-    title: 'Built for Students',
-    desc: 'CGPA rules, ISA policies, faculty notes, admissions, campus life. Anything that would normally need a redundant subreddit post.',
+    title: 'Open Source and Community Driven',
+    desc: 'Built and maintained by the PESU Dev team with contributions from students, alumni and developers across the community.',
   },
 ];
 
 const TECH = [
   { l: 'Frontend', v: 'React, TypeScript, Tailwind CSS' },
   { l: 'Backend', v: 'FastAPI, Python' },
-  { l: 'Retrieval', v: 'Bi-encoder, Cross-encoder, Vector Store' },
-  { l: 'LLM', v: 'RAG pipeline' },
+  { l: 'LLM', v: 'RAG Pipeline' },
   { l: 'Infra', v: 'Docker, Hugging Face Spaces' },
+  { l: 'Source', v: 'r/PESU Subreddit' },
   { l: 'Team', v: 'PESU Dev' },
 ];
 
@@ -96,7 +100,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
   const font = "'Inter', sans-serif";
   const display = "'Capriola', 'Inter', sans-serif";
 
-  // Vintage TV hero frame
+  // Vintage TV hero - side panel on the LEFT (flipped horizontally)
   const TvFrame = () => (
     <div
       className="relative rounded-[36px] p-5 md:p-7"
@@ -108,74 +112,8 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
           : '0 30px 80px -30px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.6)',
       }}
     >
-      {/* Antenna */}
-      <div className="hidden md:block absolute -top-16 left-1/2 -translate-x-1/2 pointer-events-none" aria-hidden>
-        <div className="relative w-40 h-16">
-          <div
-            className="absolute left-1/2 top-full -translate-x-1/2 -translate-y-1 w-3 h-3 rounded-full"
-            style={{ backgroundColor: theme.tvBezel, border: `1px solid ${theme.borderStrong}` }}
-          />
-          <div
-            className="absolute left-1/2 top-1/2 origin-bottom-left h-[2px] w-20"
-            style={{ background: theme.borderStrong, transform: 'rotate(-30deg) translateY(-50%)' }}
-          />
-          <div
-            className="absolute right-1/2 top-1/2 origin-bottom-right h-[2px] w-20"
-            style={{ background: theme.borderStrong, transform: 'rotate(30deg) translateY(-50%)' }}
-          />
-          <div className="absolute top-0 left-[18%] w-1.5 h-1.5 rounded-full" style={{ backgroundColor: ACCENT }} />
-          <div className="absolute top-0 right-[18%] w-1.5 h-1.5 rounded-full" style={{ backgroundColor: ACCENT }} />
-        </div>
-      </div>
-
       <div className="flex gap-5 md:gap-7">
-        {/* Screen */}
-        <div
-          className="relative flex-1 rounded-[22px] overflow-hidden flex items-center justify-center"
-          style={{
-            backgroundColor: theme.screenBg,
-            border: `1px solid ${theme.border}`,
-            minHeight: 280,
-            boxShadow: `inset 0 0 60px ${isDark ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.05)'}`,
-          }}
-        >
-          {/* CRT scanlines */}
-          <div
-            className="absolute inset-0 pointer-events-none opacity-[0.06]"
-            style={{
-              backgroundImage: `repeating-linear-gradient(0deg, ${theme.text} 0px, ${theme.text} 1px, transparent 1px, transparent 3px)`,
-            }}
-            aria-hidden
-          />
-          {/* Glow corner */}
-          <div
-            className="absolute -top-10 -left-10 w-40 h-40 rounded-full pointer-events-none opacity-50"
-            style={{ background: `radial-gradient(circle, ${ACCENT}22, transparent 70%)` }}
-            aria-hidden
-          />
-
-          <div className="relative z-10 py-12 md:py-20 px-6 text-center">
-            <h1
-              className="leading-none tracking-tight select-none"
-              style={{
-                fontFamily: display,
-                fontWeight: 400,
-                fontSize: 'clamp(56px, 11vw, 132px)',
-              }}
-            >
-              <span style={{ color: theme.askGray }}>ask</span>
-              <span style={{ color: ACCENT }}>PESU</span>
-            </h1>
-            <p
-              className="mt-4 text-xs md:text-sm uppercase tracking-[0.35em]"
-              style={{ color: theme.textSubtle, fontFamily: font }}
-            >
-              Channel 04 &middot; PESU Dev
-            </p>
-          </div>
-        </div>
-
-        {/* Right side panel: speaker grille + knobs */}
+        {/* Left side panel: speaker grille + knobs */}
         <div className="hidden md:flex flex-col justify-between w-20 lg:w-24 py-1">
           {/* Speaker */}
           <div
@@ -213,6 +151,52 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
             ))}
           </div>
         </div>
+
+        {/* Screen */}
+        <div
+          className="relative flex-1 rounded-[22px] overflow-hidden flex items-center justify-center"
+          style={{
+            backgroundColor: theme.screenBg,
+            border: `1px solid ${theme.border}`,
+            minHeight: 280,
+            boxShadow: `inset 0 0 60px ${isDark ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.05)'}`,
+          }}
+        >
+          {/* CRT scanlines */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.06]"
+            style={{
+              backgroundImage: `repeating-linear-gradient(0deg, ${theme.text} 0px, ${theme.text} 1px, transparent 1px, transparent 3px)`,
+            }}
+            aria-hidden
+          />
+          {/* Glow corner */}
+          <div
+            className="absolute -top-10 -right-10 w-40 h-40 rounded-full pointer-events-none opacity-50"
+            style={{ background: `radial-gradient(circle, ${ACCENT}22, transparent 70%)` }}
+            aria-hidden
+          />
+
+          <div className="relative z-10 py-12 md:py-20 px-6 text-center">
+            <h1
+              className="leading-none tracking-tight select-none"
+              style={{
+                fontFamily: display,
+                fontWeight: 400,
+                fontSize: 'clamp(56px, 11vw, 132px)',
+              }}
+            >
+              <span style={{ color: theme.askGray }}>ask</span>
+              <span style={{ color: ACCENT }}>PESU</span>
+            </h1>
+            <p
+              className="mt-4 text-xs md:text-sm uppercase tracking-[0.35em]"
+              style={{ color: theme.textSubtle, fontFamily: font }}
+            >
+              PESU Dev
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Bottom plate */}
@@ -221,7 +205,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
           className="text-[10px] uppercase tracking-[0.3em]"
           style={{ color: theme.textSubtle, fontFamily: font }}
         >
-          PESU Dev / model 25
+          PESU Dev / model 2
         </span>
         <div className="flex gap-2">
           <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: ACCENT }} />
@@ -253,42 +237,40 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
           <TvFrame />
         </motion.div>
 
-        {/* Tagline */}
-        <motion.div {...fadeUp(0.12)} className="mb-8">
+        {/* Tagline + buttons side by side */}
+        <motion.div {...fadeUp(0.12)} className="mb-10 grid md:grid-cols-[1fr_auto] gap-6 md:gap-8 items-start">
           <p
-            className="text-base md:text-lg leading-relaxed max-w-2xl"
+            className="text-base md:text-lg leading-relaxed"
             style={{ color: theme.textMuted, fontFamily: font }}
           >
-            askPESU is a RAG pipeline built by the PESU Dev team for instant, verified answers about PES University. It learns from r/PESU, vectorises the corpus, retrieves with a bi-encoder and re-ranks with a cross-encoder before generating a grounded reply. I built the frontend and design.
+            askPESU is a RAG pipeline for question answering about PES University. Built by the PESU Dev team as a continuously updated knowledge base for current and prospective students, sourced from verified r/PESU discussions, FAQs and posts. I built the frontend and design.
           </p>
-        </motion.div>
-
-        {/* Links */}
-        <motion.div {...fadeUp(0.16)} className="flex flex-wrap gap-3 mb-10">
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90 no-underline"
-              style={{ backgroundColor: ACCENT, color: '#fff', fontFamily: font }}
-            >
-              <ExternalLink className="w-4 h-4" />
-              Live Demo
-            </a>
-          )}
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border text-sm font-semibold transition-opacity hover:opacity-75 no-underline"
-              style={{ borderColor: theme.borderStrong, color: theme.text, fontFamily: font }}
-            >
-              <Github className="w-4 h-4" />
-              GitHub
-            </a>
-          )}
+          <div className="flex flex-col gap-3 md:min-w-[160px]">
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90 no-underline"
+                style={{ backgroundColor: ACCENT, color: '#fff', fontFamily: font }}
+              >
+                <ExternalLink className="w-4 h-4" />
+                Live Demo
+              </a>
+            )}
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border text-sm font-semibold transition-opacity hover:opacity-75 no-underline"
+                style={{ borderColor: theme.borderStrong, color: theme.text, fontFamily: font }}
+              >
+                <Github className="w-4 h-4" />
+                GitHub
+              </a>
+            )}
+          </div>
         </motion.div>
 
         {/* Tags */}
@@ -308,18 +290,18 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
           ))}
         </motion.div>
 
-        {/* Screenshot */}
+        {/* Screenshot (16:10 UI) */}
         <motion.div
           {...fadeUp(0.22)}
           className="mb-14 rounded-xl overflow-hidden border"
-          style={{ borderColor: theme.border }}
+          style={{ borderColor: theme.border, aspectRatio: '16 / 10' }}
         >
           {project.live ? (
             <a href={project.live} target="_blank" rel="noopener noreferrer">
-              <img src={project.imageSrc} alt="AskPESU preview" className="w-full object-cover" />
+              <img src={askPesuUi} alt="AskPESU UI preview" className="w-full h-full object-cover" />
             </a>
           ) : (
-            <img src={project.imageSrc} alt="AskPESU preview" className="w-full object-cover" />
+            <img src={askPesuUi} alt="AskPESU UI preview" className="w-full h-full object-cover" />
           )}
         </motion.div>
 
@@ -335,19 +317,19 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
             className="text-base leading-relaxed mb-4"
             style={{ color: theme.textMuted, fontFamily: font }}
           >
-            askPESU is an AI-powered chatbot developed by the PESU Dev team. It works as a continuously updated knowledge base for current and prospective students, covering academics, campus life, policies, faculty and admissions. The knowledge base is built from r/PESU, where verified discussions and FAQs are ingested, vectorised and made searchable so the bot can answer with grounded context instead of guessing.
+            askPESU is an AI-powered chatbot developed by the PESU Dev team to provide instant, accurate and verified answers to questions related to PES University. It functions as a knowledge base and is specifically designed to assist both current and prospective students with information about academics, campus life, policies, faculty, admissions and more.
           </p>
           <p
             className="text-base leading-relaxed mb-4"
             style={{ color: theme.textMuted, fontFamily: font }}
           >
-            Under the hood it is a retrieval pipeline first and a language model second. A bi-encoder turns every question into the same embedding space as the corpus to surface candidate passages quickly. A cross-encoder then re-ranks those candidates by reading the query and each passage together, producing a tighter top-k that gets passed to the LLM as context. The corpus itself is refreshed automatically as new subreddit content lands, so the answers track the community.
+            The chatbot is powered by a large language model and its knowledge base is continuously updated from content aggregated across the r/PESU subreddit. All the discussions, FAQs and verified posts on the subreddit contribute to updating the AskPESU database, making it a real-time, searchable and reliable source of information that helps reduce repetitive or redundant posts on the subreddit.
           </p>
           <p
             className="text-base leading-relaxed"
             style={{ color: theme.textMuted, fontFamily: font }}
           >
-            My contribution is the frontend and design. The retrieval pipeline, ingestion, infrastructure and FastAPI backend are owned by the PESU Dev team.
+            The team emphasises that users should first search the subreddit, read the FAQs, and use AskPESU only when necessary, so the subreddit remains a curated, high-quality knowledge repository. My contribution is the frontend and design. The backend, pipeline and infrastructure are owned by the PESU Dev team.
           </p>
         </motion.div>
 
@@ -415,7 +397,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
           </div>
         </motion.div>
 
-        {/* Contributors */}
+        {/* Contributors - tiered */}
         <motion.div {...fadeUp(0.34)} className="mb-14">
           <h2
             className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-5"
@@ -424,11 +406,27 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
             Contributors
           </h2>
           <div
-            className="rounded-xl p-5"
+            className="rounded-xl p-6"
             style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}` }}
           >
-            <div className="flex flex-wrap gap-x-5 gap-y-3 mb-5">
-              {CONTRIBUTORS.map((c) => (
+            {/* Tier 1: core contributors, bigger */}
+            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-5">
+              {CORE_CONTRIBUTORS.map((c) => (
+                <a
+                  key={c.name}
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-lg md:text-xl font-semibold hover:opacity-70 transition-opacity no-underline"
+                  style={{ color: ACCENT, fontFamily: font, textDecoration: 'none' }}
+                >
+                  {c.name}
+                </a>
+              ))}
+            </div>
+            {/* Tier 2: other contributors, smaller */}
+            <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
+              {OTHER_CONTRIBUTORS.map((c) => (
                 <a
                   key={c.name}
                   href={c.url}
@@ -441,6 +439,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
                 </a>
               ))}
             </div>
+            {/* Tier 3: me */}
             <div
               className="pt-5 border-t flex items-center gap-3 flex-wrap"
               style={{ borderColor: theme.border }}
