@@ -136,7 +136,7 @@ const ProjectsPage = () => {
 
                       <div className="flex items-center gap-3 shrink-0">
                         <div className="flex gap-2">
-                          {project.tags.slice(0, 2).map((tag) => (
+                          {(project.detailTags ?? project.tags.slice(0, 2)).map((tag) => (
                             <span
                               key={tag}
                               className="hidden sm:block text-xs px-2 py-0.5 rounded-full border border-foreground/10 text-muted-foreground"
