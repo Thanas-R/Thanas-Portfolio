@@ -116,7 +116,7 @@ const HeroSection = () => {
                       />
                     )}
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="font-['Inter'] tracking-normal">
+                  <TooltipContent side="bottom" sideOffset={8} className="px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap shadow-md font-['Inter'] tracking-normal">
                     {statusLabel}
                   </TooltipContent>
                 </Tooltip>
