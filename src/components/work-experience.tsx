@@ -239,7 +239,7 @@ function renderInlineText(text: string): ReactNode {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-[#FEDE79] underline decoration-[#FEDE79]/30 underline-offset-3 transition-colors hover:decoration-[#FEDE79]"
+        className="text-[#924205] dark:text-[#FEDE79] underline decoration-[#924205]/30 dark:decoration-[#FEDE79]/30 underline-offset-3 transition-colors hover:decoration-[#924205] dark:hover:decoration-[#FEDE79]"
       >
         {label}
       </a>
