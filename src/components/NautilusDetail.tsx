@@ -371,7 +371,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
 
           {/* Title - Caveat font */}
           <motion.div {...fadeUp(0.08)} className="mb-3">
-            <div className="flex items-end justify-between gap-4 flex-wrap">
+            <div className="flex items-end justify-start gap-4 flex-wrap max-w-2xl">
               <h1
                 className="text-6xl md:text-8xl leading-none"
                 style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, color: headingColor }}
@@ -379,7 +379,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                 Nautilus
               </h1>
               <span
-                className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] px-3 py-1.5 rounded-full border mb-3"
+                className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] px-3 py-1.5 rounded-full border mb-3 ml-auto"
                 style={{
                   borderColor: '#FFF177',
                   color: isDark ? '#FFF177' : '#8a7a14',
