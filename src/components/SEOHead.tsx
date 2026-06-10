@@ -14,9 +14,14 @@ interface SEOHeadProps {
 const SITE_URL = 'https://thanas.dev';
 const PROFILE_IMG = `${SITE_URL}/profile.png`;
 const SAME_AS = [
-  'https://github.com/Thanas-R',
-  'https://www.linkedin.com/in/thanasr/',
-  'https://thanas.medium.com/'
+        "https://www.linkedin.com/in/thanasr/",
+        "https://github.com/Thanas-R",
+        "https://thanas.medium.com/",
+        "https://huggingface.co/Thanas-R",
+        "https://in.pinterest.com/thanas007/",
+        "https://www.instagram.com/thanas007/",
+        "https://www.reddit.com/user/DarkSpacePirate007/",
+        "https://x.com/thanas007"
 ];
 const JSONLD_ID_PREFIX = 'seo-jsonld-';
 
@@ -25,7 +30,7 @@ const buildJsonLd = (title: string, description: string, url: string, type: stri
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Thanas R',
-    alternateName: ['Thanas', 'Thanas Ramesh'],
+    "alternateName": ["Thanas", "Thanas Ramesh", "DarkSpacePirate", "thanas.dev", "Thanas-r", "dark-vecto", "thanas007", "Thanas-Ramesh","DSP","thanasr"],
     url: SITE_URL,
     image: PROFILE_IMG,
     jobTitle: 'Developer',
@@ -38,7 +43,7 @@ const buildJsonLd = (title: string, description: string, url: string, type: stri
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Thanas R',
-    alternateName: ['Thanas', 'Thanas Ramesh'],
+    "alternateName": ["Thanas", "Thanas Ramesh", "DarkSpacePirate", "thanas.dev", "Thanas-r", "dark-vecto", "thanas007", "Thanas-Ramesh","DSP","thanasr"],
     url: SITE_URL,
     logo: PROFILE_IMG,
     image: PROFILE_IMG,
@@ -49,9 +54,9 @@ const buildJsonLd = (title: string, description: string, url: string, type: stri
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Thanas R',
-    alternateName: ['Thanas', 'Thanas Ramesh'],
+    "alternateName": ["Thanas", "Thanas Ramesh", "DarkSpacePirate", "thanas.dev", "Thanas-r", "dark-vecto", "thanas007", "Thanas-Ramesh","DSP","thanasr"],
     url: SITE_URL,
-    description: 'Portfolio of Thanas R — developer & creative problem-solver.',
+    description: 'Portfolio of Thanas R - developer & creative problem solver.',
     publisher: { '@type': 'Person', name: 'Thanas R', url: SITE_URL, image: PROFILE_IMG, sameAs: SAME_AS }
   };
   const webpage = {
