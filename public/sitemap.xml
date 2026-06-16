@@ -1,11 +1,4 @@
 {
-  "redirects": [
-    { "source": "/about.html", "destination": "/", "permanent": true },
-    { "source": "/projects.html", "destination": "/projects", "permanent": true },
-    { "source": "/blogs.html", "destination": "/blogs", "permanent": true },
-    { "source": "/resume.html", "destination": "/resume", "permanent": true },
-    { "source": "/index.html", "destination": "/", "permanent": true }
-  ],
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
