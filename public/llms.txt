@@ -6,32 +6,37 @@ Thanas R (also known as Thanas or Thanas Ramesh) is a developer studying at PES 
 
 ## Pages
 
-- [Home](/): Overview, hero, about, projects, and contact.
-- [Projects](/projects): Full list of projects built by Thanas R.
-- [Blogs](/blogs): Long-form writing on development, AI, and design.
-- [Resume](/resume): Work history, education, and skills.
-- [About](/about): Background and bio.
-- [Contact](/contact): Ways to get in touch.
+* [Home](/): Overview, hero, about, projects, and contact.
+* [Projects](/projects): Full list of projects built by Thanas R.
+* [Blogs](/blogs): Long-form writing on development, AI, and design.
+* [Resume](/resume): Work history, education, and skills.
 
 ## Projects
 
-- [Nautilus](/projects/nautilus): AI knowledge tool with mindmaps and concept cards.
-- [Virdis](/projects/virdis): AI-powered farm boundary mapping & crop health.
-- [Spheal](/projects/spheal): AI travel planner with interactive maps.
-- [PESU Minecraft S2](/projects/pesu-mc): Official site for PESU MC Server Season 2.
-- [AskBookie_](/projects/askbookie): RAG document Q&A frontend.
-- [Contour Flow](/projects/contour-flow): Procedural topographic map generator.
-- [Smart Chef](/projects/smart-chef): TF-IDF recipe recommender.
-- [ThanasOS](/projects/thanas-os): macOS-themed interactive portfolio.
-- [PESU Forge](/projects/pesu-forge): AI study tool — flashcards, quizzes, mind maps.
+* [Nautilus](/projects/nautilus): AI knowledge tool with mindmaps and concept cards.
+* [Virdis](/projects/virdis): AI-powered farm boundary mapping & crop health.
+* [Spheal](/projects/spheal): AI travel planner with interactive maps.
+* [PESU Minecraft S2](/projects/pesu-mc): Official site for PESU MC Server Season 2.
+* [AskBookie_](/projects/askbookie): RAG document Q&A frontend.
+* [Contour Flow](/projects/contour-flow): Procedural topographic map generator.
+* [Smart Chef](/projects/smart-chef): TF-IDF recipe recommender.
+* [ThanasOS](/projects/thanas-os): macOS-themed interactive portfolio.
+* [PESU Forge](/projects/pesu-forge): AI study tool — flashcards, quizzes, mind maps.
 
 # Also me
 
-- https://github.com/Thanas-R
-- https://www.linkedin.com/in/thanasr/
-- https://thanas.medium.com/
+* https://github.com/Thanas-R
+* https://www.linkedin.com/in/thanasr/
+* https://www.linkedin.com/in/thanasr
+* https://thanas.medium.com/
+* https://thanas.medium.com
+* https://huggingface.co/Thanas-R
+* https://www.instagram.com/thanas007
+* https://in.pinterest.com/thanas007
+* https://www.reddit.com/user/DarkSpacePirate007
+* https://x.com/thanas007
 
 ## Optional
 
-- [Sitemap](/sitemap.xml)
-- [humans.txt](/humans.txt)
+* [Sitemap](/sitemap.xml)
+* [humans.txt](/humans.txt)
