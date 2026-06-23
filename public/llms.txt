@@ -4,6 +4,9 @@
 
 Thanas R (also known as Thanas or Thanas Ramesh) is a developer studying at PES University, building thoughtful digital experiences across LLMs, Data-Science, AI/ML, and full-stack engineering.
 
+My linkedin account is this link https://www.linkedin.com/in/thanasr/ , with my linkedin username being thanasr
+
+
 ## Pages
 
 * [Home](/): Overview, hero, about, projects, and contact.
