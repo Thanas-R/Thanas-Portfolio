@@ -42,7 +42,7 @@ const EXPERIENCES: ExperienceItemType[] = [
   id: "qsg-technologies",
   companyName: "QSG Technologies",
   companyLogo: expQsg,
-  isCurrentEmployer: false,
+  isCurrentEmployer: true,
   positions: [
     {
       id: "qsg-intern",
@@ -66,19 +66,18 @@ const EXPERIENCES: ExperienceItemType[] = [
     id: "virdis",
     companyName: "Virdis",
     companyLogo: virdisLogo,
-    companyWebsite: "https://virdis.vercel.app",
-    isCurrentEmployer: true,
+    companyWebsite: "https://virdis.thanas.dev",
+    isCurrentEmployer: false,
     positions: [
       {
         id: "virdis-founder",
-        title: "Founder",
-        employmentPeriod: { start: "July 2026" },
+        title: "Creator",
+        employmentPeriod: { start: "February 2026" },
         employmentType: "Building",
         icon: <Lightbulb />,
         isExpanded: true,
-        description: `- Started Virdis as a project to help farmers.
-- AI-assisted farm boundary mapping with crop-health analytics on Sentinel-2 satellite data.
-- I shared a [Reddit post](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) and the feedback was strong enough to push me to keep building it.`,
+        description: `- Started Virdis as a project to help farmers, an AI-assisted farm boundary mapping with crop-health analytics on Sentinel-2 satellite data.
+- I shared it o [Reddit](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) and got lots on love on this project.`,
         skills: ["Owner", "Data Analytics", "Satellite", "Sentinel-2"],
       },
     ],
