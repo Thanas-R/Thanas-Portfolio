@@ -1,7 +1,8 @@
-import { CodeXml, Lightbulb, FlaskConical } from "lucide-react";
+import { CodeXml, Lightbulb, FlaskConical,  Briefcase } from "lucide-react";
 import type { ExperienceItemType } from "@/components/work-experience";
 import { WorkExperience } from "@/components/work-experience";
 
+import expQsg from "@/assets/exp-qsg.png";
 import pilLogo from "@/assets/exp-pesu-il.png";
 import virdisLogo from "@/assets/exp-virdis.png";
 
@@ -37,15 +38,29 @@ const EXPERIENCES: ExperienceItemType[] = [
       },
     ],
   },
-  {
-  id: "qsg-intern",
-  title: "Summer Intern",
-  employmentPeriod: { start: "June 2026", end: "July 2026" },
-  employmentType: "Full-time",
-  icon: <Briefcase />,
-  description: `- Will be working on building an AI model with the company.
-- Getting first-hand industry experience working at World Trade Center.`,
-  skills: ["AI", "Machine Learning", "Model Building", "Industry Experience"],
+ {
+  id: "qsg-technologies",
+  companyName: "QSG Technologies",
+  companyLogo: expQsg,
+  isCurrentEmployer: false,
+  positions: [
+    {
+      id: "qsg-intern",
+      title: "Summer Intern",
+      employmentPeriod: { start: "June 2026", end: "July 2026" },
+      employmentType: "Full-time",
+      icon: <Briefcase />,
+      isExpanded: true,
+      description: `- Worked on building an AI model with the company.
+- Gained first-hand industry experience while working at the World Trade Center.`,
+      skills: [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Model Development",
+        "Industry Experience",
+      ],
+    },
+  ],
 },
   {
     id: "virdis",
