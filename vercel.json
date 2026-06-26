@@ -9,7 +9,7 @@
     { "source": "/projects", "destination": "/projects" },
     { "source": "/blogs", "destination": "/blogs" },
     { "source": "/resume", "destination": "/resume" },
-    { "source": "/(.*)", "destination": "/index" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {
