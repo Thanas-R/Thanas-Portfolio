@@ -2,7 +2,7 @@ import { CodeXml, Lightbulb, FlaskConical,  Briefcase } from "lucide-react";
 import type { ExperienceItemType } from "@/components/work-experience";
 import { WorkExperience } from "@/components/work-experience";
 
-import expQsg from "@/assets/exp-qsg.png";
+import expQsg from "@/assets/exp-qsg.jpg";
 import pilLogo from "@/assets/exp-pesu-il.png";
 import virdisLogo from "@/assets/exp-virdis.png";
 
