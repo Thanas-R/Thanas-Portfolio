@@ -51,8 +51,8 @@ const EXPERIENCES: ExperienceItemType[] = [
       employmentType: "Full-time",
       icon: <Briefcase />,
       isExpanded: true,
-      description: `- Worked on building an AI model with the company.
-- Gained first-hand industry experience while working at the World Trade Center.`,
+      description: `- Will be working on building ai models with the company.
+- Hoping to gain first-hand industry experience while working at the World Trade Cente.`,
       skills: [
         "Artificial Intelligence",
         "Machine Learning",
