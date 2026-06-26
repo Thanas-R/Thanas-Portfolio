@@ -38,6 +38,16 @@ const EXPERIENCES: ExperienceItemType[] = [
     ],
   },
   {
+  id: "qsg-intern",
+  title: "Summer Intern",
+  employmentPeriod: { start: "June 2026", end: "July 2026" },
+  employmentType: "Full-time",
+  icon: <Briefcase />,
+  description: `- Will be working on building an AI model with the company.
+- Getting first-hand industry experience working at World Trade Center.`,
+  skills: ["AI", "Machine Learning", "Model Building", "Industry Experience"],
+},
+  {
     id: "virdis",
     companyName: "Virdis",
     companyLogo: virdisLogo,
