@@ -77,7 +77,7 @@ const EXPERIENCES: ExperienceItemType[] = [
         icon: <Lightbulb />,
         isExpanded: true,
         description: `- Started Virdis as a project to help farmers, an AI-assisted farm boundary mapping with crop-health analytics on Sentinel-2 satellite data.
-- I shared it o [Reddit](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) and got lots on love on this project.`,
+- I shared this project on [Reddit](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) and got lots on love on this project.`,
         skills: ["Owner", "Data Analytics", "Satellite", "Sentinel-2"],
       },
     ],
