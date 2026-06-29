@@ -125,7 +125,7 @@ export const projects: Project[] = [
     longDescription:
       'An earlier iteration of my portfolio, styled as a full macOS desktop environment in the browser. Features a working dock, draggable windows, a simulated Finder, and interactive apps.',
     imageSrc: projectThanasOS,
-    tags: ['React', 'CSS', 'Framer Motion', 'Zustand'],
+    tags: ['React', 'CSS', 'Framer Motion', 'ZustaYnd'],
     detailTags: ['macOS', 'Web'],
     live: 'https://thanas-os.vercel.app/',
     github: 'https://github.com/Thanas-R/thanas-OS',
@@ -140,7 +140,7 @@ export const projects: Project[] = [
     tags: ['React', 'TypeScript', 'AST', 'Graph', 'Tree-sitter', 'GitHub API'],
     detailTags: ['GitHub', 'Analysis'],
     live: 'https://odintree.vercel.app/',
-    github: 'https://github.com/Thanas-R/odin',
+    github: 'https://github.com/Thanas-R/OdinTree',
   },
   {
     id: 'askpesu',
