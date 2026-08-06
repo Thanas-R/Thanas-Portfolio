@@ -21,8 +21,7 @@ const EXPERIENCES: ExperienceItemType[] = [
         employmentType: "Full-time",
         icon: <CodeXml />,
         isExpanded: true,
-        description: `- Selected as a member of the PESU Innovation Lab, where I collaborate
-with talented peers and work on research and software projects.`,
+        description: `- Selected as a member of the PESU Innovation Lab, where I collaborate with talented peers and work on research and software projects.`,
         skills: ["Research", "Lab", "Technical", "Networking"],
       },
       {
@@ -48,12 +47,8 @@ with talented peers and work on research and software projects.`,
       employmentType: "Full-time",
       icon: <Briefcase />,
       isExpanded: true,
-      description: `- Worked on two software projects involving full-stack web development
-and automation using Go (Golang), Angular, TypeScript, SQL, HTML,
-CSS, Git, AWS, Bickbucket, Oauth and REST APIs.
-- Collaborated on developing, testing, and optimizing scalable
-applications while gaining hands-on experience with modern software
-development practices.`,
+      description: `- Worked on two software projects involving full-stack web development and automation using Go (Golang), Angular, TypeScript, SQL, HTML, CSS, Git, AWS, Bickbucket, Oauth and REST APIs.
+- Collaborated on developing, testing, and optimizing scalable applications while gaining hands-on experience with modern software development practices.`,
       skills: [
         "Automation",
         "Machine Learning",
