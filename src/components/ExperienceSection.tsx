@@ -21,20 +21,17 @@ const EXPERIENCES: ExperienceItemType[] = [
         employmentType: "Full-time",
         icon: <CodeXml />,
         isExpanded: true,
-        description: `- Selected for PIL, the best lab on campus.
-- Currently helping rebuild the lab's official website with the dev team.
-- Picking up how a working research lab actually runs day to day.
-- Soaking up the kind of things you don't get from a textbook.`,
-        skills: ["AI", "Collaboration", "Web Dev", "Networking"],
+        description: `- Selected as a member of the PESU Innovation Lab, where I collaborate
+with talented peers and work on research and software projects.`,
+        skills: ["Research", "Lab", "Technical", "Networking"],
       },
       {
         id: "pil-intern",
         title: "Research Intern",
-        employmentPeriod: { start: "June 2026" },
+        employmentPeriod: { start: "2027?????" },
         employmentType: "Internship",
         icon: <FlaskConical />,
         description: `I will add it soon from experience.`,
-        skills: ["Research", "Data", "Analysis", "Machine Learning"],
       },
     ],
   },
@@ -51,12 +48,16 @@ const EXPERIENCES: ExperienceItemType[] = [
       employmentType: "Full-time",
       icon: <Briefcase />,
       isExpanded: true,
-      description: `- Will be working on building ai models with the company.
-- Hoping to gain first-hand industry experience while working at the World Trade Cente.`,
+      description: `- Worked on two software projects involving full-stack web development
+and automation using Go (Golang), Angular, TypeScript, SQL, HTML,
+CSS, Git, AWS, Bickbucket, Oauth and REST APIs.
+- Collaborated on developing, testing, and optimizing scalable
+applications while gaining hands-on experience with modern software
+development practices.`,
       skills: [
-        "Artificial Intelligence",
+        "Automation",
         "Machine Learning",
-        "Model Development",
+        "Web-dev", "AI Agents",
         "Industry Experience",
       ],
     },
