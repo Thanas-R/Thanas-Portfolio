@@ -17,7 +17,7 @@ export const projectsMeta: ProjectMeta[] = [
     id: 'nautilus',
     title: 'Nautilus',
     description: 'Neural-network style knowledge graph that links ideas across databases.',
-    tags: ['React', 'Canvas', 'Neural Networking', 'Vector Search', 'TypeScript', 'Graph'],
+    tags: ['React', 'Canvas', 'GNNs', 'Encoders', 'Vector Search', 'Graph'],
     live: 'https://nautilus-build.vercel.app',
     github: 'https://github.com/Thanas-R/Nautilus',
   },
@@ -39,11 +39,11 @@ export const projectsMeta: ProjectMeta[] = [
   },
   {
     id: 'pesu-mc',
-    title: 'PESU Minecraft S2',
-    description: 'Official website for PESU Minecraft Server – Season 2.',
-    tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
-    live: 'https://pesu-mc.vercel.app',
-    github: 'https://github.com/Thanas-R/PESU-MC-S2-Website',
+    title: 'PESU Minecraft',
+    description: 'Official website for PESU Minecraft Server, Season 3.',
+    tags: ['React', 'Tailwind', 'Vercel', 'REST API', 'community', 'stats'],
+    live: 'https://pesumc.top',
+    github: 'https://github.com/Thanas-R/PESU-Minecraft-S3',
   },
   {
     id: 'askbookie',
@@ -92,6 +92,14 @@ export const projectsMeta: ProjectMeta[] = [
     tags: ['Python', 'TF-IDF', 'VSM'],
     live: 'https://smart-chef-pesu.vercel.app/',
     github: 'https://github.com/Thanas-R/Smart-Chef',
+  },
+
+  {
+    id: 'slate',
+    title: 'SLATE',
+    description: 'Spectral Latent Analysis & Trajectory Exploration of RNN hidden states.',
+    tags: ['Python', 'NumPy', 'SymPy', 'Three.js', 'FastAPI', 'Linear Algebra'],
+    github: 'https://github.com/Thanas-R/SLATE',
   },
   {
     id: 'pesu-forge',

@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { useLanyard } from 'react-use-lanyard';
-import avatar from '@/assets/avatar.png';
+import avatar from '@/assets/avatar.webp';
 import { TbBrandGithubFilled } from "react-icons/tb";
 import { SiMedium } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';

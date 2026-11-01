@@ -5,17 +5,18 @@ import { DotGridSpotlight } from '@/components/dot-grid-spotlight';
 import { useTheme } from '@/hooks/use-theme';
 
 
-import projectPesuMC from '@/assets/project-pesumc.png';
-import projectAskbookie from '@/assets/project-askbookie.png';
-import projectSmartchef from '@/assets/project-smartchef.png';
-import projectThanasOS from '@/assets/project-thanasOS.png';
-import projectNautilus from '@/assets/project-nautilus.png';
-import projectVirdis from '@/assets/project-virdis.png';
-import projectSpheal from '@/assets/project-spheal.png';
-import projectPesuForge from '@/assets/project-pesuforge.png';
-import projectContour from '@/assets/project-contour.png';
-import projectOdinTree from '@/assets/project-odintree.png';
-import projectAskPesu from '@/assets/project-askpesu-ui.png';
+import projectPesuMC from '@/assets/project-pesumc.webp';
+import projectAskbookie from '@/assets/project-askbookie.webp';
+import projectSmartchef from '@/assets/project-smartchef.webp';
+import projectThanasOS from '@/assets/project-thanasOS.webp';
+import projectNautilus from '@/assets/project-nautilus.webp';
+import projectVirdis from '@/assets/project-virdis.webp';
+import projectSpheal from '@/assets/project-spheal.webp';
+import projectPesuForge from '@/assets/project-pesuforge.webp';
+import projectContour from '@/assets/project-contour.webp';
+import projectOdinTree from '@/assets/project-odintree.webp';
+import projectAskPesu from '@/assets/project-askpesu-ui.webp';
+import projectSlate from '@/assets/project-slate.webp';
 
 export interface Project {
   id: string;
@@ -42,8 +43,8 @@ export const projects: Project[] = [
     longDescription:
       'Nautilus replaces linear chat with a node-based knowledge interface built on neural networking. Each prompt becomes a concept Card, vectorised through bi-encoders for retrieval and re-ranked by a cross-encoder to surface the most relevant links across multiple databases. Work in progress.',
     imageSrc: projectNautilus,
-    tags: ['React', 'Canvas', 'Neural Networking', 'Vector Search', 'TypeScript', 'Graph'],
-    detailTags: ['Neural Networking', 'Encoder'],
+    tags: ['React', 'Canvas', 'GNNs', 'Encoders', 'Vector Search', 'Graph'],
+    detailTags: ['GNNs', 'Sub-GNNs', 'Encoders'],
     live: 'https://nautilus-build.vercel.app',
     github: 'https://github.com/Thanas-R/Nautilus',
   },
@@ -73,15 +74,15 @@ export const projects: Project[] = [
   },
   {
     id: 'pesu-mc',
-    title: 'PESU Minecraft S2',
-    description: 'Official website for PESU Minecraft Server – Season 2',
+    title: 'PESU Minecraft',
+    description: 'Official website I developed for the PESU Minecraft Server community , a student-run Minecraft server at PES University.',
     longDescription:
-      'A fully responsive website built to showcase and manage the PESU Minecraft Server Season 2 community. Features a live server status widget, player leaderboards, season recap, and event announcements.',
+      'Official website I developed for the PESU Minecraft Server community , a student-run Minecraft server at PES University.',
     imageSrc: projectPesuMC,
-    tags: ['React', 'Tailwind', 'Vercel', 'REST API'],
-    detailTags: ['Data'],
-    live: 'https://pesu-mc.vercel.app',
-    github: 'https://github.com/Thanas-R/PESU-MC-S2-Website',
+    tags: ['Google Cloud', '26.1.2', 'Fabric', 'Survival', 'Modded'],
+    detailTags: ['Community'],
+    live: 'https://pesumc.top',
+    github: 'https://github.com/Thanas-R/PESU-Minecraft-S3',
   },
   {
     id: 'askbookie',
@@ -165,6 +166,17 @@ export const projects: Project[] = [
     live: 'https://pesuforge.vercel.app',
     github: 'https://github.com/Thanas-R/PESU-Forge',
   },
+  {
+    id: 'slate',
+    title: 'SLATE',
+    description: 'Reservoir-computing dashboard for air-quality state-space analysis',
+    longDescription:
+      'SLATE is a project done for a mathematics course in semester 3. It uses reservoir computing and echo state networks to model PM2.5 air-quality series, visualising the reconstructed state space as a 3D constellation with stability spectra, surrogate tests, RREF steps and pollution predictions in a dark instrument-style dashboard.',
+    imageSrc: projectSlate,
+    tags: ['Python', 'Reservoir Computing', 'Echo State Networks', 'NumPy', 'Streamlit'],
+    detailTags: ['Math', 'Sem 3'],
+    github: 'https://github.com/Thanas-R/SLATE',
+  },
 ];
 
 /** Re-ordered list used by the Projects PAGE and prev/next nav.
@@ -178,6 +190,7 @@ const PAGE_ORDER = [
   'askbookie',
   'pesu-mc',
   'smart-chef',
+  'slate',
   'contour-flow',
   'spheal',
   'pesu-forge',

@@ -2,9 +2,9 @@ import { CodeXml, Lightbulb, FlaskConical,  Briefcase } from "lucide-react";
 import type { ExperienceItemType } from "@/components/work-experience";
 import { WorkExperience } from "@/components/work-experience";
 
-import expQsg from "@/assets/exp-qsg.jpg";
-import pilLogo from "@/assets/exp-pesu-il.png";
-import virdisLogo from "@/assets/exp-virdis.png";
+import expQsg from "@/assets/exp-qsg.webp";
+import pilLogo from "@/assets/exp-pesu-il.webp";
+import virdisLogo from "@/assets/exp-virdis.webp";
 
 const EXPERIENCES: ExperienceItemType[] = [
   {
@@ -12,6 +12,8 @@ const EXPERIENCES: ExperienceItemType[] = [
     companyName: "PESU Innovation Lab",
     companyLogo: pilLogo,
     companyWebsite: "https://www.theinnovationlab.in/",
+    logoBordered: true,
+    logoBorderColor: "ring-white",
     isCurrentEmployer: true,
     positions: [
       {
@@ -20,14 +22,14 @@ const EXPERIENCES: ExperienceItemType[] = [
         employmentPeriod: { start: "May 2026" },
         employmentType: "Full-time",
         icon: <CodeXml />,
-        isExpanded: true,
+        isExpanded: false,
         description: `- Selected as a member of the PESU Innovation Lab, where I collaborate with talented peers and work on research and software projects.`,
         skills: ["Research", "Lab", "Technical", "Networking"],
       },
       {
         id: "pil-intern",
         title: "Research Intern",
-        employmentPeriod: { start: "2027?????" },
+        employmentPeriod: { start: "2027?????", end: " " },
         employmentType: "Internship",
         icon: <FlaskConical />,
         description: `I will add it soon from experience.`,
@@ -38,6 +40,8 @@ const EXPERIENCES: ExperienceItemType[] = [
   id: "qsg-technologies",
   companyName: "QSG Technologies",
   companyLogo: expQsg,
+  logoBordered: true,
+  logoBorderColor: "ring-black",
   isCurrentEmployer: true,
   positions: [
     {
@@ -51,8 +55,8 @@ const EXPERIENCES: ExperienceItemType[] = [
 - Collaborated on developing, testing, and optimizing scalable applications while gaining hands-on experience with modern software development practices.`,
       skills: [
         "Automation",
-        "Machine Learning",
-        "Web-dev", "AI Agents",
+        "ML",
+        "Web-dev", "Agentic Workflow",
         "Industry Experience",
       ],
     },
@@ -71,7 +75,7 @@ const EXPERIENCES: ExperienceItemType[] = [
         employmentPeriod: { start: "February 2026" },
         employmentType: "Building",
         icon: <Lightbulb />,
-        isExpanded: true,
+        isExpanded: false,
         description: `- Started Virdis as a project to help farmers, an AI-assisted farm boundary mapping with crop-health analytics on Sentinel-2 satellite data.
 - I shared this project on [Reddit](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) and got lots on love on this project.`,
         skills: ["Owner", "Data Analytics", "Satellite", "Sentinel-2"],
@@ -88,9 +92,11 @@ export default function ExperienceSection() {
           <p className="mb-1 font-['JetBrains_Mono'] text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             What I'm up to
           </p>
-          <h2 className="font-['Averia_Serif_Libre'] text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-            Experience
-          </h2>
+          <div className="flex items-baseline gap-3 flex-wrap">
+            <h2 className="font-['Averia_Serif_Libre'] text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              Experience
+            </h2>
+          </div>
         </div>
 
         <WorkExperience className="w-full" experiences={EXPERIENCES} />

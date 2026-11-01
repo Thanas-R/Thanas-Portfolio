@@ -3,7 +3,7 @@ import { ExternalLink, ArrowLeft, ArrowRight, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
-import askPesuUi from '@/assets/project-askpesu.png';
+import askPesuUi from '@/assets/project-askpesu.webp';
 import type { Project } from '@/components/ProjectsSection';
 
 interface Props {
@@ -183,7 +183,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
               style={{
                 fontFamily: display,
                 fontWeight: 400,
-                fontSize: 'clamp(53px, 10.45vw, 125px)',
+                fontSize: 'clamp(53px, 10.45vw, 100px)',
               }}
             >
               <span style={{ color: theme.askGray }}>ask</span>
