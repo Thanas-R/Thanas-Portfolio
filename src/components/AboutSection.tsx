@@ -23,7 +23,7 @@ const journeyData = [
     suffix: '· Present',
     description: (
       <>
-        Started by working with <HighlightTag>Agentic AI</HighlightTag> and developed a deeper interest in research, now exploring more into <HighlightTag>Neural Networks</HighlightTag> and <HighlightTag>Deep Learning</HighlightTag>
+        Started by working with Agentic AI and developed a deeper interest in research, now exploring more into Neural Networks and Deep Learning
       </>
     )
   },
@@ -31,7 +31,7 @@ const journeyData = [
     year: '2025',
     description: (
       <>
-        Began my B.Tech in CSE (AI/ML) at PES University & started building fun and useful <HighlightTag>full-stack</HighlightTag> projects
+        Began my B.Tech in CSE (AI/ML) at PES University & started building fun and useful full-stack projects
       </>
     )
   },
@@ -39,7 +39,7 @@ const journeyData = [
     year: '2023',
     description: (
       <>
-        Learned <HighlightTag>C++</HighlightTag> and worked on improving my problem solving skills by implementing it in real-world
+        Learned C++ and worked on improving my problem solving skills by implementing it in real-world
       </>
     )
   },
@@ -47,7 +47,7 @@ const journeyData = [
     year: '2021',
     description: (
       <>
-        Started learning <HighlightTag>Java</HighlightTag>, focusing on basic OOP principles and exploring
+        Started learning Java, focusing on basic OOP principles and exploring
       </>
     )
   },
@@ -55,7 +55,7 @@ const journeyData = [
     year: '2020',
     description: (
       <>
-        Began my programming journey with <HighlightTag>Python</HighlightTag>, building hobby applications and scripts for fun 
+        Began my programming journey with Python, building hobby applications and scripts for fun 
       </>
     )
   },
@@ -127,7 +127,7 @@ const AboutSection = () => {
             </h3>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I am a passionate learner who believes in growing a little every day. I'm genuinely interested in <HighlightTag>coding and problem-solving</HighlightTag>, and I enjoy turning <HighlightTag>complex challenges</HighlightTag> into simple, effective solutions.
+              I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
             </p>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
@@ -135,7 +135,7 @@ const AboutSection = () => {
             </p>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I strive to be <HighlightTag>honest</HighlightTag>, <HighlightTag>supportive</HighlightTag>, and <HighlightTag>reliable</HighlightTag>, taking responsibility or leading when needed while contributing and learning with the team.
+              I strive to be honest, supportive, and reliable, taking responsibility or leading when needed while contributing and learning with the team.
             </p>
           </BentoCard>
 
