@@ -302,3 +302,55 @@ html {
   75% { transform: translate(-10px, 3px); }
   100% { transform: translate(4px, -2px); }
 }
+/* ── Hand-drawn sketch frame (blueprint/planning style) ── */
+.sketch-frame {
+  position: relative;
+  border: 1.5px dashed hsl(var(--foreground) / 0.38);
+  border-radius: 0.9rem;
+  background: hsl(var(--card));
+}
+
+/* registration corner marks, like a drafted plan */
+.sketch-frame::before,
+.sketch-frame::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+.sketch-frame::before {
+  top: -7px;
+  left: -7px;
+  border-left: 1.5px solid hsl(var(--foreground) / 0.45);
+  border-top: 1.5px solid hsl(var(--foreground) / 0.45);
+  border-top-left-radius: 2px;
+}
+.sketch-frame::after {
+  bottom: -7px;
+  right: -7px;
+  border-right: 1.5px solid hsl(var(--foreground) / 0.45);
+  border-bottom: 1.5px solid hsl(var(--foreground) / 0.45);
+  border-bottom-right-radius: 2px;
+}
+
+.sketch-note {
+  font-family: 'Caveat', cursive;
+  color: hsl(var(--foreground) / 0.55);
+}
+
+/* Tech pill grid (Skills & stacks) */
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 1rem 0.5rem 0.75rem;
+  border-radius: 9999px;
+  background: hsl(var(--secondary) / 0.6);
+  border: 1px solid hsl(var(--foreground) / 0.1);
+  transition: border-color 0.2s, background 0.2s;
+}
+.skill-pill:hover {
+  border-color: hsl(var(--foreground) / 0.25);
+  background: hsl(var(--secondary));
+}

@@ -6,8 +6,8 @@ import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projects, projectsPageList } from '@/components/ProjectsSection';
 import { Mac } from '@/components/Mac';
-import thanasOsMac from '@/assets/thanasos-mac.png';
-import pesuForgeBg from '@/assets/pesuforge-bg.png';
+import thanasOsMac from '@/assets/thanasos-mac.webp';
+import pesuForgeBg from '@/assets/pesuforge-bg.webp';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
@@ -16,12 +16,15 @@ import NautilusDetail from '@/components/NautilusDetail';
 import SphealDetail from '@/components/SphealDetail';
 import OdinTreeDetail from '@/components/OdinTreeDetail';
 import AskPesuDetail from '@/components/AskPesuDetail';
+import SlateDetail from '@/components/SlateDetail';
 import ContourThemeToggle from '@/components/ContourThemeToggle';
-import contourDark from '@/assets/contour-dark.png';
-import contourLight from '@/assets/contour-light.png';
-import pesuMcHero from '@/assets/pesumc-hero.png';
-import pesuMcBackdrop from '@/assets/pesumc-backdrop.png';
-import pesuMcIcon from '@/assets/pesumc-icon.png';
+import contourDark from '@/assets/contour-dark.webp';
+import contourLight from '@/assets/contour-light.webp';
+import pesuMcHero from '@/assets/pesumc-hero.webp';
+import pesuMcBackdrop from '@/assets/pesumc-backdrop.webp';
+import pesuMcNether from '@/assets/nether.webp';
+import pesuMcEnd from '@/assets/end.webp';
+import pesuMcWordmark from '@/assets/pesumc-wordmark.png';
 
 /** Blur-to-sharp background image that works even when the image is already cached */
 const ProgressiveBgImg = ({ src }: {src: string;}) => {
@@ -50,8 +53,45 @@ const ProgressiveBgImg = ({ src }: {src: string;}) => {
         transform: loaded ? 'scale(1)' : 'scale(1.02)',
         transition: 'filter 700ms ease-out, transform 700ms ease-out'
       }} />);
+};
 
+/** Fixed backdrop that crossfades Overworld → Nether → End as you scroll down the page */
+const DIMENSION_LAYERS = [pesuMcBackdrop, pesuMcNether, pesuMcEnd];
+const PesuDimensionBg = () => {
+  const [stage, setStage] = useState(0);
 
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const p = max > 0 ? window.scrollY / max : 0;
+      setStage(p < 0.38 ? 0 : p < 0.72 ? 1 : 2);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-0" style={{ backgroundColor: '#0a0a0a' }}>
+      {DIMENSION_LAYERS.map((src, i) => (
+        <div
+          key={i}
+          className="absolute inset-0"
+          style={{
+            opacity: stage === i ? 1 : 0,
+            transition: 'opacity 1200ms ease-in-out',
+          }}
+        >
+          <ProgressiveBgImg src={src} />
+        </div>
+      ))}
+      <div
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%)' }}
+      />
+    </div>
+  );
 };
 
 const fadeUp = (delay = 0) => ({
@@ -84,6 +124,7 @@ const ProjectDetailPage = () => {
   const isSpheal = project?.id === 'spheal';
   const isOdinTree = project?.id === 'odin-tree';
   const isAskPesu = project?.id === 'askpesu';
+  const isSlate = project?.id === 'slate';
 
   // Arrow key navigation
   useEffect(() => {
@@ -114,7 +155,7 @@ const ProjectDetailPage = () => {
     if (isPesuForge) {
       preload([pesuForgeBg, project.imageSrc]);
     } else if (isPesuMC) {
-      preload([pesuMcBackdrop, pesuMcHero, pesuMcIcon, project.imageSrc]);
+      preload([pesuMcBackdrop, pesuMcNether, pesuMcEnd, pesuMcHero, pesuMcWordmark, project.imageSrc]);
     } else if (isSpheal) {
       preload([project.imageSrc]);
       void (window as any).__globeDataPromise?.catch?.(() => null);
@@ -222,6 +263,15 @@ const ProjectDetailPage = () => {
       <>
         <SideNav />
         <AskPesuDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      </>
+    );
+  }
+
+  if (isSlate) {
+    return (
+      <>
+        <SideNav />
+        <SlateDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
@@ -1079,10 +1129,7 @@ const ProjectDetailPage = () => {
         /* ── PESU MC — dark glassmorphism with Minecraft backdrop ── */
         <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
           {/* Fixed backdrop */}
-          <div className="fixed inset-0 z-0" style={{ backgroundColor: '#0a0a0a' }}>
-            <ProgressiveBgImg src={pesuMcBackdrop} />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%)' }} />
-          </div>
+          <PesuDimensionBg />
 
           <div className="relative z-10">
             <Navbar forceDark />
@@ -1096,100 +1143,100 @@ const ProjectDetailPage = () => {
                 </Link>
               </motion.div>
 
-              {/* Title — center-aligned, big */}
-<motion.div {...fadeUp(0.08)} className="text-center mb-10">
-  <h1
-    className="text-[2.8rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.5rem] font-black text-white leading-[0.85] tracking-tight uppercase lg:whitespace-nowrap"
-    style={{
-      fontFamily: "'Poppins', sans-serif",
-      fontWeight: 900,
-      textShadow: '0 4px 40px rgba(0,0,0,0.6)'
-    }}
-  >
-    PESU MINECRAFT
-  </h1>
+              {/* Title — wordmark logo, center-aligned */}
+              <motion.div {...fadeUp(0.08)} className="text-center mb-10">
+                <img
+                  src={pesuMcWordmark}
+                  alt="PESU Minecraft Season 3"
+                  className="mx-auto w-full max-w-[320px] sm:max-w-md md:max-w-xl lg:max-w-2xl drop-shadow-[0_8px_40px_rgba(0,0,0,0.6)]"
+                />
+              </motion.div>
 
-  <p
-    className="text-lg sm:text-2xl md:text-3xl lg:text-5xl mt-4 inline-flex items-center gap-2 md:gap-3 tracking-wider"
-    style={{
-      fontFamily: "'Poppins', sans-serif",
-      fontWeight: 300,
-      color: 'rgba(255,255,255,0.5)'
-    }}
-  >
-    SEASON 2
-    <img
-      src={pesuMcIcon}
-      alt="Server icon"
-      className="inline-block rounded-full"
-      style={{ height: '1.1em' }}
-    />
-  </p>
-</motion.div>
-
-              {/* Description left + Live Site + GitHub right */}
+              {/* Description left + pesumc.top + GitHub right */}
               <motion.div {...fadeUp(0.14)} className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
                 <p className="text-base text-white/50 max-w-lg leading-relaxed">
                   Official website I developed for the PESU Minecraft Server community , a student-run Minecraft server at PES University.
                 </p>
                 <div className="flex items-center gap-3 shrink-0">
-                  {project.live &&
-                  <a href={project.live} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
-                  style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
-                      <ExternalLink className="w-4 h-4" />
-                      Live Site
-                    </a>
-                  }
-                  {project.github &&
-                  <a href={project.github} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
-                  style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}>
+                  <a
+                    href="https://pesumc.top"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    pesumc.top
+                  </a>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-85 transition-opacity backdrop-blur-md"
+                      style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', border: '1px solid rgba(255,255,255,0.18)' }}
+                    >
                       <Github className="w-4 h-4" />
                       GitHub
                     </a>
-                  }
+                  )}
                 </div>
               </motion.div>
 
               {/* Tech tags — centered */}
               <motion.div {...fadeUp(0.18)} className="flex flex-wrap justify-center gap-2 mb-16">
-                {project.tags.map((tag) =>
-                <span key={tag} className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
-                style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs px-3 py-1.5 rounded-full font-medium uppercase tracking-wider backdrop-blur-md"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)', border: '1px solid rgba(255,255,255,0.08)' }}
+                  >
                     {tag}
                   </span>
-                )}
+                ))}
               </motion.div>
-
 
               {/* My Role — liquid glass */}
               <motion.div
                 {...fadeUp(0.26)}
                 className="rounded-2xl p-8 md:p-10 mb-6 backdrop-blur-2xl"
-                style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+                style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)' }}
+              >
                 <h2 className="text-xs font-bold uppercase tracking-widest text-white/35 mb-5">My Role</h2>
                 <p className="text-base leading-relaxed text-white/55">
-                  Designed and developed the entire website from scratch for the PESU Minecraft community. Built a glassmorphism-themed landing page with real-time server status polling, a countdown timer to Season 2 launch, gallery carousel, and a full server contents breakdown.
+                  Designed and developed the Season 3 website from scratch with a glassmorphism aesthetic blended with a Minecraft theme and custom animations. I serve as the main Marketing Head and Support Head for PESU Minecraft, and played a major role in the overall development and launch of Season 3. Built in collaboration with my friend Wood, who engineered the backend infrastructure powering all real-time stats data for the server.
                 </p>
               </motion.div>
 
               {/* Key Features — liquid glass cards */}
               <motion.div {...fadeUp(0.3)} className="grid md:grid-cols-2 gap-4 mb-6">
                 {[
-                { title: 'Real-time Status', desc: 'Live server status polling every 30s via mcsrvstat API' },
-                { title: 'Launch Countdown', desc: 'Countdown timer with confetti celebration on Season 2 launch' },
-                { title: 'Gallery & Trailer', desc: 'Swipeable image carousel with YouTube trailer modal' },
-                { title: 'Glassmorphism UI', desc: 'Dark-only theme with backdrop-blur cards and custom design tokens' }].
-                map((item) =>
-                <div
-                  key={item.title}
-                  className="rounded-2xl p-6 backdrop-blur-2xl"
-                  style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+                  {
+                    title: 'Live Stats',
+                    desc: 'Real-time server statistics and live status polling for pesumc.top powered by custom backend services.',
+                  },
+                  {
+                    title: 'Enhanced Vanilla Experience',
+                    desc: 'A well-crafted website coupled with a modded world that enhances the vanilla experience while staying true to its core essence.',
+                  },
+                  {
+                    title: 'World Generation',
+                    desc: 'Overworld, Nether, and End rebuilt with custom terrain and 90+ structures across a 30k×30k world.',
+                  },
+                  {
+                    title: 'Discord & Voice',
+                    desc: 'DiscordSRV real-time in-game chat sync and proximity voice chat integration.',
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-2xl p-6 backdrop-blur-2xl"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
+                  >
                     <h3 className="font-bold text-white/85 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</h3>
                     <p className="text-sm text-white/35 leading-relaxed">{item.desc}</p>
                   </div>
-                )}
+                ))}
               </motion.div>
 
               {/* Tech Stack — liquid glass */}

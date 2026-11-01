@@ -4,14 +4,14 @@ import "./index.css";
 import { ThemeProvider } from "next-themes";
 
 // Eagerly preload all project images so they're cached before navigation
-const imageModules = import.meta.glob('./assets/project-*.png', { eager: true, import: 'default' }) as Record<string, string>;
+const imageModules = import.meta.glob('./assets/project-*.webp', { eager: true, import: 'default' }) as Record<string, string>;
 Object.values(imageModules).forEach((src) => {
   const img = new Image();
   img.src = src;
 });
 
 // Preload other key assets including PESU MC and PESU Forge backgrounds
-const otherAssets = import.meta.glob('./assets/{avatar,thanasos-mac,contour-dark,contour-light,pesumc-hero,pesumc-backdrop,pesumc-icon,pesuforge-bg,hero-bg,resume-preview}.png', { eager: true, import: 'default' }) as Record<string, string>;
+const otherAssets = import.meta.glob('./assets/{avatar,thanasos-mac,contour-dark,contour-light,pesumc-hero,pesumc-backdrop,pesuforge-bg,resume-preview}.webp', { eager: true, import: 'default' }) as Record<string, string>;
 
 // Preload avatar with high priority so it's ready before loader finishes
 const avatarSrc = Object.entries(otherAssets).find(([k]) => k.includes('avatar'))?.[1];

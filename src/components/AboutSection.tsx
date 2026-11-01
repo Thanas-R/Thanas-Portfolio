@@ -11,7 +11,7 @@ const BentoCard = ({ className, children }: { className?: string; children?: Rea
 
 function HighlightTag({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-md border border-border bg-muted/70 px-2.5 py-0.5 text-[0.78em] font-medium text-foreground/80 align-middle whitespace-nowrap">
+    <span className="inline-flex items-center rounded-md border border-border bg-muted/70 px-2 py-0.5 text-[0.78em] font-medium text-foreground/80 align-middle whitespace-nowrap">
       {children}
     </span>
   );
@@ -23,7 +23,7 @@ const journeyData = [
     suffix: '· Present',
     description: (
       <>
-        Adopted agentic <HighlightTag>AI</HighlightTag> tools, refined <HighlightTag>UI/UX</HighlightTag> design skills, and elevated prompt engineering for efficient project delivery.
+        Started by working with <HighlightTag>Agentic AI</HighlightTag> and developed a deeper interest in research, now exploring more into <HighlightTag>Neural Networks</HighlightTag> and <HighlightTag>Deep Learning</HighlightTag>
       </>
     )
   },
@@ -31,7 +31,7 @@ const journeyData = [
     year: '2025',
     description: (
       <>
-        Began B.Tech in CSE (AI/ML) at PES University. Started building production-ready projects.
+        Began my B.Tech in CSE (AI/ML) at PES University & started building fun and useful <HighlightTag>full-stack</HighlightTag> projects
       </>
     )
   },
@@ -39,7 +39,7 @@ const journeyData = [
     year: '2023',
     description: (
       <>
-        Focused on <HighlightTag>C++</HighlightTag> and data structures & algorithms, strengthening core CS fundamentals.
+        Learned <HighlightTag>C++</HighlightTag> and worked on improving my problem solving skills by implementing it in real-world
       </>
     )
   },
@@ -47,7 +47,7 @@ const journeyData = [
     year: '2021',
     description: (
       <>
-        Started learning <HighlightTag>Java</HighlightTag>, focusing on OOP principles and application development.
+        Started learning <HighlightTag>Java</HighlightTag>, focusing on basic OOP principles and exploring
       </>
     )
   },
@@ -55,16 +55,16 @@ const journeyData = [
     year: '2020',
     description: (
       <>
-        First steps in programming with <HighlightTag>Python</HighlightTag>, building small applications and scripts.
+        Began my programming journey with <HighlightTag>Python</HighlightTag>, building hobby applications and scripts for fun 
       </>
     )
   },
 ];
 
 const educationData = [
-  { institution: 'PES University', detail: 'B.Tech CSE (AIML)', years: '2025 – 2029' },
-  { institution: 'Allen Career Institute', detail: '11th – 12th', years: '2023 – 2025' },
-  { institution: 'Sri Vani Education Centre', detail: '1st – 10th', years: '2013 – 2023' },
+  { institution: 'PES University', detail: 'B.Tech CSE (AIML)', years: '2025 - 2029' },
+  { institution: 'Allen Career Institute', detail: '11th - 12th Grade', years: '2023 - 2025' },
+  { institution: 'Sri Vani Education Centre', detail: '1st - 10th Grade', years: '2013 - 2023' },
 ];
 
 const TimelineItem = ({
@@ -80,17 +80,38 @@ const TimelineItem = ({
   isFirst?: boolean;
   isLast?: boolean;
 }) => (
-  <div className="flex items-start gap-3">
-    <div className="flex flex-col items-center mt-1.5">
-      <div className={cn('w-2.5 h-2.5 rounded-full ring-2 ring-card', isFirst ? 'bg-foreground' : 'bg-muted-foreground/40')} />
-      {!isLast && <div className="w-px h-8 bg-border mt-1" />}
+  <div className="flex items-stretch gap-3 flex-1">
+    <div className="flex flex-col items-center">
+      {/* Circle dot aligned directly to the center of the year text */}
+      <div className="h-4 flex items-center justify-center shrink-0">
+        <div
+          className={cn(
+            'rounded-full',
+            isFirst
+              ? 'w-2.5 h-2.5 bg-foreground ring-4 ring-card'
+              : 'w-2.5 h-2.5 border-[1.5px] border-muted-foreground/50 bg-card'
+          )}
+        />
+      </div>
+      {/* Vertical dotted connector line */}
+      {!isLast && (
+        <div className="w-0 flex-1 border-l-2 border-dotted border-muted-foreground/40 my-1" />
+      )}
     </div>
-    <div className="flex-1 -mt-0.5">
-      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter']">
-        {year}
-        {suffix && <span className="text-foreground/40 normal-case font-['Averia_Serif_Libre']"> {suffix}</span>}
+    <div className={cn("flex-1", !isLast ? "pb-4" : "pb-1")}>
+      <div className="h-4 flex items-center">
+        <p className="text-sm font-bold text-foreground font-['Inter'] leading-none">
+          {year}
+          {suffix && (
+            <span className="ml-1.5 text-sm font-medium italic text-muted-foreground/80 font-['Averia_Serif_Libre']">
+              {suffix}
+            </span>
+          )}
+        </p>
+      </div>
+      <p className="mt-1.5 text-sm text-foreground/80 leading-relaxed font-['Inter']">
+        {description}
       </p>
-      <p className="mt-1 text-sm text-foreground/80 leading-relaxed font-['Inter']">{description}</p>
     </div>
   </div>
 );
@@ -118,9 +139,11 @@ const AboutSection = () => {
             </p>
           </BentoCard>
 
-          <BentoCard className="md:col-span-2 md:row-span-2 min-h-[22rem] order-2 md:order-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4">Journey</p>
-            <div className="space-y-4">
+          <BentoCard className="md:col-span-2 md:row-span-2 order-2 md:order-1 flex flex-col justify-between">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-4 shrink-0">
+              Journey
+            </p>
+            <div className="flex flex-col justify-between flex-1">
               {journeyData.map((item, idx) => (
                 <TimelineItem
                   key={item.year}
@@ -135,20 +158,22 @@ const AboutSection = () => {
           </BentoCard>
 
           <BentoCard className="md:col-span-2 min-h-[8rem] order-3">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">Education</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground font-['Inter'] mb-3">
+              Education
+            </p>
             <div className="space-y-3">
               {educationData.map((edu, idx) => (
                 <div key={idx} className="space-y-1">
-                  <p className="font-semibold text-foreground font-['Inter'] text-base">
+                  <p className="font-['Averia_Serif_Libre'] font-bold text-foreground text-base tracking-tight">
                     {edu.institution}
                   </p>
 
-                  <div className="flex items-center justify-between">
-                    <p className="text-muted-foreground font-['Inter'] text-sm">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="font-['Inter'] text-sm text-muted-foreground">
                       {edu.detail}
                     </p>
 
-                    <span className="text-muted-foreground/70 font-['JetBrains_Mono'] text-sm">
+                    <span className="inline-flex items-center rounded-md border border-border bg-muted/70 px-2 py-0.5 text-xs font-medium text-foreground/80 font-['JetBrains_Mono'] tabular-nums shrink-0">
                       {edu.years}
                     </span>
                   </div>

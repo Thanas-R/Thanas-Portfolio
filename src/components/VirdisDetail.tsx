@@ -51,7 +51,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(to right, ${gridColor} 1px, transparent 1px), linear-gradient(to bottom, ${gridColor} 1px, transparent 1px)`,
-          backgroundSize: '40px 40px'
+          backgroundSize: '40px 40px',
         }}
       />
 
@@ -108,7 +108,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
 
                 <div className="flex items-center gap-3 shrink-0">
                   <a
-                    href="https://github.com"
+                    href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:scale-[1.03] active:scale-[0.98] transition-all"

@@ -154,7 +154,7 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
             <TextRoll>thanas.</TextRoll>
           </Link>
 
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 mr-10">
             <button
               onClick={() => window.dispatchEvent(new Event('open-command-palette'))}
               className={`text-base font-medium ${textMuted} transition-colors duration-200`}

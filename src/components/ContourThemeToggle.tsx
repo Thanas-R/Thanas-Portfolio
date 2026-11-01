@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import contourDark from '@/assets/contour-dark.png';
-import contourLight from '@/assets/contour-light.png';
+import contourDark from '@/assets/contour-dark.webp';
+import contourLight from '@/assets/contour-light.webp';
 
 interface Props {
   isDark: boolean;

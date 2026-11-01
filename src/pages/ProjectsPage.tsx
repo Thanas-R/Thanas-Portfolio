@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
 import { projectsPageList as projects } from '@/components/ProjectsSection';
-import defaultPreview from '@/assets/projects-default.png';
+import defaultPreview from '@/assets/projects-default.webp';
 import SEOHead from '@/components/SEOHead';
 
 const ProjectsPage = () => {
@@ -45,9 +45,7 @@ const ProjectsPage = () => {
               className="w-full"
             >
               <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">
-                  Thanas R
-                </p>
+                <p className="sketch-note text-xl mt-2 -rotate-1 origin-left">hover to peek →</p>
                 <h1
                   className="text-5xl font-black text-foreground leading-none"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
@@ -59,7 +57,7 @@ const ProjectsPage = () => {
                 </p>
               </div>
 
-              <div className="relative rounded-2xl overflow-hidden border border-foreground/10 aspect-[16/10] bg-muted">
+              <div className="relative sketch-frame overflow-hidden aspect-[16/10] bg-muted">
                 <AnimatePresence mode="popLayout">
                   <motion.img
                     key={previewImage}
@@ -97,6 +95,7 @@ const ProjectsPage = () => {
               <h1 className="text-4xl font-black text-foreground uppercase font-['Space_Grotesk']">
                 Projects <span className="text-muted-foreground/30 font-mono text-2xl">{projects.length}</span>
               </h1>
+              <p className="sketch-note text-xl mt-1 -rotate-1 origin-left">all of them, in order</p>
             </div>
 
             <div
@@ -107,14 +106,14 @@ const ProjectsPage = () => {
       : undefined
   }
 >
-              <div className="md:border-t border-foreground/10">
+              <div className="md:border-t border-dashed border-foreground/25">
                 {projects.map((project, i) => (
                   <motion.div
                     key={project.id}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.45, delay: i * 0.05 }}
-                    className="border-b border-foreground/10 group"
+                    className="border-b border-dashed border-foreground/25 group"
                     onMouseEnter={() => setHoveredId(project.id)}
                     onMouseLeave={() => setHoveredId(null)}
                   >
@@ -152,7 +151,7 @@ const ProjectsPage = () => {
                     {/* Mobile preview image */}
                     <div className="md:hidden pb-4">
                       <Link to={`/projects/${project.id}`}>
-                        <div className="rounded-xl overflow-hidden border border-foreground/10 aspect-[16/10]">
+                        <div className="rounded-xl overflow-hidden border border-dashed border-foreground/30 aspect-[16/10]">
                           <img
                             src={project.imageSrc}
                             alt={project.title}

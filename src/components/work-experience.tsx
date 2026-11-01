@@ -29,7 +29,10 @@ export type ExperienceItemType = {
   companyName: string;
   companyLogo?: string;
   companyWebsite?: string;
-  accentColor?: string;
+  /** Adds a small theme-contrasting outline around the logo */
+  logoBordered?: boolean;
+  /** Tailwind ring color for the logo outline, e.g. "ring-black" or "ring-white" */
+  logoBorderColor?: string;
   positions: ExperiencePositionItemType[];
   isCurrentEmployer?: boolean;
 };
@@ -58,7 +61,11 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
             <img
               src={experience.companyLogo}
               alt={experience.companyName}
-              className="size-full rounded-md object-cover"
+              className={cn(
+                "size-full rounded-md object-cover",
+                experience.logoBordered && "ring-3 ring-inset",
+                experience.logoBordered && (experience.logoBorderColor ?? "ring-foreground/30")
+              )}
               aria-hidden
             />
           ) : (

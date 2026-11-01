@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Download, FileText } from 'lucide-react';
 import LightRays from '@/components/LightRays';
 import Navbar from '@/components/Navbar';
-import resumePreview from '@/assets/resume-preview.png';
+import resumePreview from '@/assets/resume-preview.webp';
 import SEOHead from '@/components/SEOHead';
 
 const ResumePage = () => {

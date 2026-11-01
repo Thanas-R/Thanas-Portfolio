@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Github, Brain, Layout, PenTool, GitBranch, Save, MessageSquare } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Github, Brain, Layout, PenTool, GitBranch, Save, MessageSquare, Network, GitFork, Waves, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
@@ -44,42 +44,42 @@ const FEATURES: FlowNode[] = [
     title: 'Infinite Canvas',
     content: 'Pan, zoom, and freehand drawing on an infinite zoomable canvas with smooth interactions.',
     highlights: [{ text: 'infinite', color: '#3B82F6' }],
-    x: 10, y: 0, width: 250, height: 105,
+    x: 50, y: 0, width: 250, height: 105,
   },
   {
     id: 'ai-gen',
     title: 'AI-Generated Cards',
     content: 'Topic cards, concept cards, and flowcharts generated from a simple prompt using AI.',
     highlights: [{ text: 'AI', color: '#8B5CF6' }],
-    x: 320, y: 0, width: 250, height: 105,
+    x: 390, y: 20, width: 205, height: 105,
   },
   {
     id: 'nodes',
     title: 'Multiple Node Types',
     content: 'Content cards, topic nodes, and flowchart shapes with full markdown rendering support.',
     highlights: [{ text: 'markdown', color: '#10B981' }],
-    x: 165, y: 160, width: 250, height: 105,
+    x: 165, y: 170, width: 300, height: 85,
   },
   {
     id: 'edges',
     title: 'Smart Labeled Edges',
-    content: 'Automatic layout with labeled connections between nodes using the Dagre algorithm.',
+    content: 'Automatic layout with labeled  between nodes using the Dagre algorithm.',
     highlights: [{ text: 'Dagre', color: '#F59E0B' }],
-    x: 10, y: 320, width: 250, height: 105,
+    x: 80, y: 340, width: 230, height: 105,
   },
   {
     id: 'explain',
     title: 'AI Chain Explanations',
     content: 'Select connected nodes and get AI-generated explanations for the entire chain of concepts.',
     highlights: [{ text: 'chain', color: '#8B5CF6' }],
-    x: 320, y: 320, width: 250, height: 105,
+    x: 350, y: 305, width: 210, height: 105,
   },
   {
     id: 'save',
     title: 'Auto-save & Undo/Redo',
-    content: 'Session management with persistent auto-save, full undo/redo history, and state recovery.',
+    content: 'Session management with persistent auto-save, full undo/redo',
     highlights: [{ text: 'auto-save', color: '#EC4899' }],
-    x: 100, y: 480, width: 260, height: 105,
+    x: 295, y: 490, width: 250, height: 85,
   },
 ];
 
@@ -357,88 +357,87 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
       <div className="relative z-10 min-h-screen">
         <Navbar />
         <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
-          {/* Back link */}
-          <motion.div {...fadeUp(0)}>
+          {/* Top navigation row: Back link on left, Work in Progress badge on far right */}
+          <motion.div {...fadeUp(0)} className="flex items-center justify-between gap-4 mb-8">
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 text-sm hover:opacity-70 transition-opacity mb-10"
+              className="inline-flex items-center gap-2 text-sm hover:opacity-70 transition-opacity"
               style={{ color: textColor, fontFamily: font }}
             >
               <ArrowLeft className="w-4 h-4" />
               All Projects
             </Link>
+
+            <span
+              className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] px-3 py-1 rounded-full border shadow-sm -rotate-2 hover:rotate-0 transition-transform select-none"
+              style={{
+                borderColor: isDark ? 'rgba(255,241,119,0.5)' : '#e5d752',
+                color: isDark ? '#FFF177' : '#8a7a14',
+                backgroundColor: isDark ? 'rgba(255,241,119,0.12)' : 'rgba(255,241,119,0.22)',
+                fontFamily: font,
+              }}
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              Work in Progress
+            </span>
           </motion.div>
 
-          {/* Title - Caveat font */}
-          <motion.div {...fadeUp(0.08)} className="mb-3">
-            <div className="flex items-end justify-start gap-4 flex-wrap max-w-2xl">
+          {/* Title Row: Nautilus on left, Live Demo & GitHub on right */}
+          <motion.div {...fadeUp(0.08)} className="mb-4">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
               <h1
                 className="text-6xl md:text-8xl leading-none"
                 style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, color: headingColor }}
               >
                 Nautilus
               </h1>
-              <span
-                className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] px-3 py-1.5 rounded-full border mb-3 ml-auto"
-                style={{
-                  borderColor: '#FFF177',
-                  color: isDark ? '#FFF177' : '#8a7a14',
-                  backgroundColor: isDark ? 'rgba(255,241,119,0.08)' : 'rgba(255,241,119,0.18)',
-                  fontFamily: font,
-                }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
-                  <line x1="12" y1="9" x2="12" y2="13" />
-                  <line x1="12" y1="17" x2="12.01" y2="17" />
-                </svg>
-                Work in Progress
-              </span>
+
+              <div className="flex items-center gap-2.5">
+                {project.live && (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-opacity hover:opacity-85 shadow-sm"
+                    style={{
+                      backgroundColor: headingColor,
+                      color: isDark ? 'hsl(0 0% 4%)' : 'hsl(0 0% 100%)',
+                      fontFamily: font,
+                    }}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Live Demo
+                  </a>
+                )}
+                <a
+                  href="https://github.com/Thanas-R/Nautilus"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-semibold transition-opacity hover:opacity-75"
+                  style={{
+                    borderColor: cardBorder,
+                    color: headingColor,
+                    fontFamily: font,
+                  }}
+                >
+                  <Github className="w-4 h-4" />
+                  GitHub
+                </a>
+              </div>
             </div>
           </motion.div>
-
-          {/* Description */}
-          <motion.div {...fadeUp(0.12)} className="mb-8">
+          {/* Description — full width from left to right */}
+          <motion.div {...fadeUp(0.12)} className="mb-10">
             <p
-              className="text-sm md:text-base leading-relaxed max-w-2xl"
+              className="text-sm md:text-base leading-relaxed w-full"
               style={{ color: textColor, fontFamily: font }}
             >
               Nautilus replaces linear, chat-style AI with a node-based knowledge interface built on neural networking. Every prompt becomes a concept Card, and the system vectorises content through bi-encoders for fast retrieval and re-ranks the most relevant links with a cross-encoder. The result is a graph that learns the semantic structure between your ideas across multiple databases instead of treating them as isolated messages. Still very much a work in progress, this round is a content overhaul.
             </p>
-          </motion.div>
-
-          {/* Links */}
-          <motion.div {...fadeUp(0.16)} className="flex gap-3 mb-12">
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-opacity hover:opacity-85"
-                style={{
-                  backgroundColor: headingColor,
-                  color: isDark ? 'hsl(0 0% 4%)' : 'hsl(0 0% 100%)',
-                  fontFamily: font,
-                }}
-              >
-                <ExternalLink className="w-4 h-4" />
-                Live Demo
-              </a>
-            )}
-            <a
-              href="https://github.com/Thanas-R/Nautilus"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border text-sm font-semibold transition-opacity hover:opacity-75"
-              style={{
-                borderColor: cardBorder,
-                color: headingColor,
-                fontFamily: font,
-              }}
-            >
-              <Github className="w-4 h-4" />
-              GitHub
-            </a>
           </motion.div>
 
           {/* Flowchart - Key Features */}
@@ -453,6 +452,80 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               className="mb-12 overflow-hidden flex justify-center"
             >
               <FlowchartCanvas isDark={isDark} />
+            </div>
+          </motion.div>
+
+          {/* Neural Retrieval — GNNs */}
+          <motion.div {...fadeUp(0.24)}>
+            <h2
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
+              style={{ color: labelColor, fontFamily: font }}
+            >
+              Neural Retrieval
+            </h2>
+            <div className="grid md:grid-cols-3 gap-3 mb-3">
+              {[
+                {
+                  icon: Network,
+                  title: 'GNNs',
+                  desc: 'Graph Neural Networks pass messages along the edges of the knowledge graph, so every concept card\u2019s embedding is shaped by the ideas it connects to \u2014 the structure of the graph itself becomes part of the representation.',
+                },
+                {
+                  icon: GitFork,
+                  title: 'Sub-GNNs',
+                  desc: 'Sub-graph neural networks reason over sampled neighbourhoods instead of the whole graph. That lets Nautilus retrieve and link local clusters of ideas efficiently, even as the canvas grows into thousands of nodes.',
+                },
+                {
+                  icon: Waves,
+                  title: 'Spatio-Temporal GNNs',
+                  desc: 'Spatio-temporal GNNs model both structure and time \u2014 how the links between your concepts evolve across sessions \u2014 so retrieval can surface what you were actively building recently, not just what is statically connected.',
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="p-5 rounded-xl"
+                  style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+                >
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <item.icon className="w-4 h-4" style={{ color: headingColor }} />
+                    <h3
+                      className="text-sm font-semibold"
+                      style={{ color: headingColor, fontFamily: font }}
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+                  <p
+                    className="text-[13px] leading-relaxed"
+                    style={{ color: textColor, fontFamily: font }}
+                  >
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div
+              className="p-5 rounded-xl mb-12"
+              style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
+            >
+              <div className="flex items-center gap-2 mb-2.5">
+                <Layers className="w-4 h-4" style={{ color: headingColor }} />
+                <h3
+                  className="text-sm font-semibold"
+                  style={{ color: headingColor, fontFamily: font }}
+                >
+                  Bi-Encoders & Cross-Encoders
+                </h3>
+              </div>
+              <p
+                className="text-[13px] leading-relaxed"
+                style={{ color: textColor, fontFamily: font }}
+              >
+                A bi-encoder embeds every card up front so vector search stays fast, then a
+                cross-encoder re-ranks the top candidates against your prompt for precision.
+                Together with the GNN layers this gives Nautilus retrieval that understands both
+                what a card says and where it sits in your graph.
+              </p>
             </div>
           </motion.div>
 
@@ -506,12 +579,13 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               className="p-5 rounded-xl mb-12"
               style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
             >
-              <div className="space-y-2">
-                <p className="text-sm" style={{ color: headingColor, fontFamily: font }}>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm" style={{ fontFamily: font }}>
+                <p style={{ color: headingColor }}>
                   <span className="font-medium" style={{ color: isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)' }}>Full-stack development and integration:</span>{' '}
                   <span className="font-semibold">Thanas R</span>
                 </p>
-                <p className="text-sm" style={{ color: headingColor, fontFamily: font }}>
+                <span className="hidden sm:inline text-muted-foreground/40">•</span>
+                <p style={{ color: headingColor }}>
                   <span className="font-medium" style={{ color: isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)' }}>Concept and Converge mode:</span>{' '}
                   <a
                     href="https://github.com/Tanay-s5"
