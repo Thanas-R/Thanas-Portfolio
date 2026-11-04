@@ -171,6 +171,8 @@ const ProjectDetailPage = () => {
       preload([pesuForgeBg, project.imageSrc]);
     } else if (isPesuMC) {
       preload([pesuMcBackdrop, pesuMcNether, pesuMcEnd, pesuMcHero, pesuMcWordmark, project.imageSrc]);
+    } else if (isNautilus) {
+      preload([nautilusBg, project.imageSrc]);
     } else if (isSpheal) {
       preload([project.imageSrc]);
       void (window as any).__globeDataPromise?.catch?.(() => null);

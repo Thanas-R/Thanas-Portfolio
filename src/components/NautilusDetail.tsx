@@ -218,7 +218,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                   transition={{ duration: 0.6, delay: 0.3 + edgeIdx * 0.12, ease: 'easeOut' }}
                 />
                 <path d={arrow} fill="none" stroke={edgeColor} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </motion.g>
+              </g>
             );
           })}
         </svg>
