@@ -27,34 +27,7 @@ import pesuMcNether from '@/assets/nether.webp';
 import pesuMcEnd from '@/assets/end.webp';
 import pesuMcWordmark from '@/assets/pesumc-wordmark.png';
 
-/** Blur-to-sharp background image that works even when the image is already cached */
-const ProgressiveBgImg = ({ src }: {src: string;}) => {
-  const [loaded, setLoaded] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  const handleLoad = useCallback(() => {requestAnimationFrame(() => setLoaded(true));}, []);
-
-  useEffect(() => {
-    // If image is already cached/complete on mount, trigger transition after one frame
-    if (imgRef.current?.complete) {
-      requestAnimationFrame(() => setLoaded(true));
-    }
-  }, []);
-
-  return (
-    <img
-      ref={imgRef}
-      src={src}
-      alt=""
-      className="w-full h-full object-cover"
-      loading="eager"
-      onLoad={handleLoad}
-      style={{
-        opacity: loaded ? 1 : 0,
-        transform: loaded ? 'scale(1)' : 'scale(1.015)',
-        transition: 'opacity 700ms ease-out, transform 700ms ease-out'
-      }} />);
-};
+import ProgressiveBgImg from '@/components/ProgressiveBgImg';
 
 /** Fixed backdrop that crossfades Overworld → Nether → End as you scroll down the page */
 const DIMENSION_LAYERS = [pesuMcBackdrop, pesuMcNether, pesuMcEnd];
@@ -614,7 +587,7 @@ const ProjectDetailPage = () => {
     </div>
     <div className="shrink-0">
       {project.live &&
-        <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
+        <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0 min-w-[140px]">
           <ExternalLink className="w-4 h-4" />
           Live Site
         </a>
@@ -633,7 +606,7 @@ const ProjectDetailPage = () => {
         href={project.github}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0"
+        className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-lg border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0 min-w-[140px]"
       >
         <Github className="w-4 h-4" />
         GitHub
