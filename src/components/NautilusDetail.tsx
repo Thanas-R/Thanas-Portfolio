@@ -179,14 +179,14 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
               <div className="flex items-center gap-2 mb-2">
                 <Icon className="w-4 h-4 shrink-0" style={{ color: node.iconColor }} />
                 <h3
-                  className="text-[15px] leading-tight text-left"
+                  className="text-[18  px] leading-tight text-left"
                   style={{ color: titleColor, fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
                 >
                   {node.title}
                 </h3>
               </div>
               <p
-                className="text-[13px] leading-relaxed text-left"
+                className="text-[15px] leading-relaxed text-left"
                 style={{ color: bodyColor, fontFamily: "'Inter', sans-serif" }}
               >
                 {node.content}
@@ -384,7 +384,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             </div>
           </motion.div>
           {/* Description — taken from the Nautilus GitHub readme */}
-          <motion.div {...fadeUp(0.12)} className="mb-10">
+          <motion.div {...fadeUp(0.12)} className="mb-3">
             <p
               className="text-sm md:text-base leading-relaxed w-full"
               style={{ color: textColor, fontFamily: font }}
@@ -394,7 +394,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
           </motion.div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+        <div className="max-w-4xl mx-auto px-6 pt-3 pb-24">
           {/* Key features flowchart, inside the page column */}
           <motion.div {...fadeUp(0.2)} className="mb-14">
             <h2
