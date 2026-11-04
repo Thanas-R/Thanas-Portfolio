@@ -116,7 +116,7 @@ const SlateDetail = ({ project, prevProject, nextProject }: Props) => {
       />
 
       <div className="relative z-10">
-        <Navbar forceDark />
+        <Navbar />
 
         <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
           <motion.div {...fadeUp(0)}>
