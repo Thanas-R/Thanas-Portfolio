@@ -144,12 +144,12 @@ const ProjectDetailPage = () => {
 
   // Dark-themed page scrollbar for backdrop pages (nautilus / pesu mc / pesu forge / contour)
   useEffect(() => {
-    const darkScroll = isPesuForge || isPesuMC || isContourFlow || isNautilus;
+    const darkScroll = isPesuForge || isPesuMC || isContourFlow || isNautilus || isVirdis;
     if (darkScroll) {
       document.documentElement.setAttribute('data-darkscroll', 'true');
       return () => document.documentElement.removeAttribute('data-darkscroll');
     }
-  }, [isPesuForge, isPesuMC, isContourFlow, isNautilus]);
+  }, [isPesuForge, isPesuMC, isContourFlow, isNautilus, isVirdis]);
 
   useEffect(() => {
     if (!project) return;
@@ -604,32 +604,35 @@ const ProjectDetailPage = () => {
                 <h1 className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {project.title}
                 </h1>
-<div className="flex items-center gap-6 mb-4 -ml-9">
-  <div className="w-[140px] md:w-[180px] h-8 md:h-12 shrink-0 flex items-center overflow-visible">
-    <AppleHelloEffect
-      className="h-full w-full text-foreground"
-      speed={0.7}
-    />
+<div className="flex flex-col gap-3 mb-4 -ml-9">
+  <div className="flex items-center gap-6">
+    <div className="w-[140px] md:w-[180px] h-8 md:h-12 shrink-0 flex items-center overflow-visible">
+      <AppleHelloEffect
+        className="h-full w-full text-foreground"
+        speed={0.7}
+      />
+    </div>
+    <div className="shrink-0">
+      {project.live &&
+        <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
+          <ExternalLink className="w-4 h-4" />
+          Live Site
+        </a>
+      }
+    </div>
   </div>
-
-  <div className="flex items-center gap-3 shrink-0">
-                    {project.github &&
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0">
-                        <Github className="w-4 h-4" />
-                        GitHub
-                      </a>
-                  }
-                    {project.live &&
-                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
-                        <ExternalLink className="w-4 h-4" />
-                        Live Site
-                      </a>
-                  }
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground mb-6">
-                  macOS-themed interactive website
-                </p>
+  <div className="flex items-center gap-4 pl-[164px] md:pl-[204px]">
+    {project.github &&
+      <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0">
+        <Github className="w-4 h-4" />
+        GitHub
+      </a>
+    }
+    <p className="text-sm text-muted-foreground">
+      macOS-themed interactive website
+    </p>
+  </div>
+</div>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
                 </div>

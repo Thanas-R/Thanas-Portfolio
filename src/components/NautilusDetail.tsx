@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowLeft, ArrowRight, Github, Brain, Layout, PenTool, GitBranch, Save, MessageSquare, Network, GitFork, Waves, Layers } from 'lucide-react';
+import { ExternalLink, ArrowLeft, ArrowRight, Github, Brain, Layout, Layers, GitBranch, Save, MessageSquare, Network, GitFork, Waves, Cpu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
@@ -20,152 +20,112 @@ interface NautilusDetailProps {
   nextProject: Project | null;
 }
 
-/* ── Flowchart node data ── */
+/* ── Flowchart node data (taken from the Nautilus GitHub readme) ── */
 interface FlowNode {
   id: string;
   title: string;
   content: string;
-  highlights?: { text: string; color: string }[];
+  icon: React.ElementType;
+  iconColor: string;
   x: number;
   y: number;
   width: number;
   height: number;
-  tilt: number; // slight hand-placed rotation, like a sketched card
 }
 
 interface FlowEdge {
   from: string;
   to: string;
-  label?: string;
 }
 
 const FEATURES: FlowNode[] = [
   {
     id: 'canvas',
-    title: 'Infinite Canvas',
-    content: 'Pan, zoom, and freehand drawing on an infinite zoomable canvas with smooth interactions.',
-    highlights: [{ text: 'infinite', color: '#3B82F6' }],
-    x: 50, y: 0, width: 250, height: 105, tilt: -0.8,
+    title: 'Knowledge Canvas',
+    content: 'Every prompt becomes one independent card with a short title, a summary and an explanation. Cards never extend each other.',
+    icon: Layout,
+    iconColor: '#7E97C9',
+    x: 60, y: 20, width: 260, height: 118,
   },
   {
-    id: 'ai-gen',
-    title: 'AI-Generated Cards',
-    content: 'Topic cards, concept cards, and flowcharts generated from a simple prompt using AI.',
-    highlights: [{ text: 'AI', color: '#8B5CF6' }],
-    x: 390, y: 20, width: 205, height: 105, tilt: 0.6,
+    id: 'fields',
+    title: 'Nine Linking Fields',
+    content: 'Each card is embedded on nine separate fields with all MiniLM L6 v2, and every field carries its own weight in the final score.',
+    icon: Layers,
+    iconColor: '#B5854F',
+    x: 380, y: 20, width: 250, height: 118,
   },
   {
-    id: 'nodes',
-    title: 'Multiple Node Types',
-    content: 'Content cards, topic nodes, and flowchart shapes with full markdown rendering support.',
-    highlights: [{ text: 'markdown', color: '#10B981' }],
-    x: 165, y: 170, width: 300, height: 85, tilt: 0.4,
-  },
-  {
-    id: 'edges',
-    title: 'Smart Labeled Edges',
-    content: 'Automatic layout with labeled edges between nodes using the Dagre algorithm.',
-    highlights: [{ text: 'Dagre', color: '#F59E0B' }],
-    x: 80, y: 340, width: 230, height: 105, tilt: -0.5,
+    id: 'scoring',
+    title: 'Weighted Cosine Scoring',
+    content: 'A pair of cards is scored as a weighted sum of per field cosine similarities. Pairs above 0.4 become links.',
+    icon: GitBranch,
+    iconColor: '#4E9A7C',
+    x: 60, y: 218, width: 260, height: 118,
   },
   {
     id: 'explain',
-    title: 'AI Chain Explanations',
-    content: 'Select connected nodes and get AI-generated explanations for the entire chain of concepts.',
-    highlights: [{ text: 'chain', color: '#8B5CF6' }],
-    x: 350, y: 305, width: 210, height: 105, tilt: 0.7,
+    title: 'LLM Explained Links',
+    content: 'Only linked pairs reach the LLM. It writes a short label plus a reason for why and how the two concepts connect.',
+    icon: Brain,
+    iconColor: '#C4704F',
+    x: 380, y: 218, width: 250, height: 118,
   },
   {
-    id: 'save',
-    title: 'Auto-save & Undo/Redo',
-    content: 'Session management with persistent auto-save, full undo/redo',
-    highlights: [{ text: 'auto-save', color: '#EC4899' }],
-    x: 295, y: 490, width: 250, height: 85, tilt: -0.4,
+    id: 'boundary',
+    title: 'Boundary Band Rating',
+    content: 'Links scoring between 0.4 and 0.55 are flagged as boundary links and prompt you to rate the connection.',
+    icon: MessageSquare,
+    iconColor: '#8E7FD1',
+    x: 60, y: 416, width: 260, height: 118,
+  },
+  {
+    id: 'nnls',
+    title: 'NNLS Personalisation',
+    content: 'Rate links out of 100 and non negative least squares refits the nine field weights to match your judgement.',
+    icon: Network,
+    iconColor: '#6FAE8C',
+    x: 380, y: 416, width: 250, height: 118,
   },
 ];
 
 const EDGES: FlowEdge[] = [
-  { from: 'canvas', to: 'nodes' },
-  { from: 'ai-gen', to: 'nodes' },
-  { from: 'nodes', to: 'edges' },
-  { from: 'nodes', to: 'explain' },
-  { from: 'edges', to: 'save' },
-  { from: 'explain', to: 'save' },
+  { from: 'canvas', to: 'fields' },
+  { from: 'fields', to: 'scoring' },
+  { from: 'scoring', to: 'explain' },
+  { from: 'scoring', to: 'boundary' },
+  { from: 'boundary', to: 'nnls' },
 ];
 
-const ICON_MAP: Record<string, React.ElementType> = {
-  'ai-gen': Brain,
-  'canvas': Layout,
-  'nodes': PenTool,
-  'edges': GitBranch,
-  'save': Save,
-  'explain': MessageSquare,
-};
+/* ── Smooth connector paths, like the reference: cards joined by one soft green curve ── */
+function getEdgePath(from: FlowNode, to: FlowNode): string {
+  const sameRow = Math.abs(from.y - to.y) < 5;
 
-/* ── Hand-drawn SVG edge path helper (wobbly bezier, like pen strokes) ── */
-function getEdgePath(from: FlowNode, to: FlowNode, seed: number): { path: string; labelX: number; labelY: number } {
-  const fx = from.x + from.width / 2;
-  const fy = from.y + from.height / 2;
-  const tx = to.x + to.width / 2;
-  const ty = to.y + to.height / 2;
-
-  let sx = fx, sy = fy, ex = tx, ey = ty;
-
-  if (ty > fy) {
-    sy = from.y + from.height;
-    ey = to.y;
-  } else if (Math.abs(tx - fx) > Math.abs(ty - fy)) {
-    sx = tx > fx ? from.x + from.width : from.x;
-    ex = tx > fx ? to.x : to.x + to.width;
-    sy = fy;
-    ey = ty;
-  } else {
-    sy = ty > fy ? from.y + from.height : from.y;
-    ey = ty > fy ? to.y : to.y + to.height;
-    sx = fx;
-    ex = tx;
+  if (sameRow) {
+    const sy = from.y + from.height / 2;
+    const sx = from.x + from.width;
+    const ex = to.x;
+    return `M ${sx} ${sy} C ${sx + 48} ${sy}, ${ex - 48} ${sy}, ${ex} ${sy}`;
   }
 
-  const midY = (sy + ey) / 2;
-  const midX = (sx + ex) / 2;
-  // deterministic wobble so strokes look hand-drawn
-  const w1 = (Math.sin(seed * 12.9898) * 43758.5453 % 1) * 22 - 11;
-  const w2 = (Math.sin(seed * 78.233) * 43758.5453 % 1) * 22 - 11;
-  const path =
-    `M ${sx + w1 * 0.4} ${sy + w2 * 0.2} ` +
-    `C ${sx + w1} ${midY + w2}, ${ex + w2} ${midY + w1}, ${ex + w1 * 0.3} ${ey}`;
-  const labelX = midX + w1 * 0.5;
-  const labelY = midY + w2 * 0.5;
-  return { path, labelX, labelY };
-}
-
-/* ── Hand-drawn arrowhead (open V, like a pen flick) ── */
-function getArrowhead(from: FlowNode, to: FlowNode, seed: number): string {
+  const sx = from.x + from.width / 2;
+  const sy = from.y + from.height;
   const ex = to.x + to.width / 2;
   const ey = to.y;
-  const w = (Math.sin(seed * 12.9898) * 43758.5453 % 1) * 6 - 3;
-  return `M ${ex - 6 + w} ${ey - 8} L ${ex} ${ey} L ${ex + 5 - w} ${ey - 9}`;
+  const dy = ey - sy;
+  return `M ${sx} ${sy} C ${sx} ${sy + dy * 0.5}, ${ex} ${ey - dy * 0.5}, ${ex} ${ey}`;
 }
 
-/* ── Survey sheet: hand-drawn flowchart of key features ── */
-const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
+/* ── Key features graph: always dark, dotted grid extends across the full page width ── */
+const FlowchartCanvas = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
-
-  const cardBg = isDark ? 'hsl(150 8% 7%)' : 'hsl(40 33% 97%)';
-  const cardBorder = isDark ? 'rgba(120, 190, 155, 0.45)' : 'rgba(40, 80, 60, 0.55)';
-  const edgeColor = isDark ? 'rgba(120, 190, 155, 0.55)' : 'rgba(40, 80, 60, 0.6)';
-  const titleColor = isDark ? '#EDE9DC' : '#2B2B24';
-  const contentColor = isDark ? 'rgba(237,233,220,0.6)' : 'rgba(43,43,36,0.62)';
-  const sheetBg = isDark ? 'transparent' : 'transparent';
-  const dotColor = isDark ? 'rgba(120,190,155,0.28)' : 'rgba(40,80,60,0.25)';
 
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
-        const s = Math.min(1, (w - 16) / 580);
-        setScale(s);
+        setScale(Math.min(1, (w - 8) / 680));
       }
     };
     handleResize();
@@ -173,8 +133,9 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const canvasW = 580;
-  const canvasH = 600;
+  const canvasW = 680;
+  const canvasH = 574;
+  const edgeColor = 'rgba(120, 190, 155, 0.6)';
 
   return (
     <div ref={containerRef} className="w-full overflow-hidden">
@@ -184,54 +145,37 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
           height: canvasH * scale,
           transform: `scale(${scale})`,
           transformOrigin: 'top left',
-          background: sheetBg,
         }}
         className="relative"
       >
-        {/* faint survey dot grid */}
-        <svg className="absolute inset-0 pointer-events-none" width={canvasW} height={canvasH}>
-          <defs>
-            <pattern id="nautilus-survey-dots" width="26" height="26" patternUnits="userSpaceOnUse">
-              <circle cx="1.2" cy="1.2" r="1.2" fill={dotColor} />
-            </pattern>
-          </defs>
-          <rect width={canvasW} height={canvasH} fill="url(#nautilus-survey-dots)" />
-        </svg>
-
-        {/* Hand-drawn edges + arrowheads */}
+        {/* edges first, cards sit on top */}
         <svg className="absolute inset-0 pointer-events-none" width={canvasW} height={canvasH}>
           {EDGES.map((edge, edgeIdx) => {
             const fromNode = FEATURES.find(n => n.id === edge.from)!;
             const toNode = FEATURES.find(n => n.id === edge.to)!;
-            const { path } = getEdgePath(fromNode, toNode, edgeIdx + 1);
-            const arrow = getArrowhead(fromNode, toNode, edgeIdx + 1);
             return (
-              <g key={`${edge.from}-${edge.to}`}>
-                <motion.path
-                  d={path}
-                  fill="none"
-                  stroke={edgeColor}
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 0.6, delay: 0.3 + edgeIdx * 0.12, ease: 'easeOut' }}
-                />
-                <path d={arrow} fill="none" stroke={edgeColor} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </g>
+              <motion.path
+                key={`${edge.from}-${edge.to}`}
+                d={getEdgePath(fromNode, toNode)}
+                fill="none"
+                stroke={edgeColor}
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 + edgeIdx * 0.12, ease: 'easeOut' }}
+              />
             );
           })}
         </svg>
 
-        {/* Sketched cards */}
         {FEATURES.map((node, i) => {
-          const Icon = ICON_MAP[node.id];
-          const highlightColor = node.highlights?.[0]?.color || '#8B5CF6';
+          const Icon = node.icon;
           return (
             <motion.div
               key={node.id}
-              initial={{ opacity: 0, scale: 0.92, rotate: node.tilt * 2 }}
-              animate={{ opacity: 1, scale: 1, rotate: node.tilt }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
               className="absolute p-4"
               style={{
@@ -239,29 +183,25 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 top: node.y,
                 width: node.width,
                 height: node.height,
-                backgroundColor: cardBg,
-                border: `1.5px dashed ${cardBorder}`,
-                borderRadius: '14px 10px 15px 9px',
+                backgroundColor: '#1D1D1D',
+                border: '1px solid rgba(255, 255, 255, 0.09)',
+                borderRadius: '12px',
               }}
             >
               <div className="flex items-center gap-2 mb-2">
-                <Icon className="w-4 h-4 shrink-0" style={{ color: highlightColor }} />
+                <Icon className="w-4 h-4 shrink-0" style={{ color: node.iconColor }} />
                 <h3
-                  className="text-xl leading-none"
-                  style={{ color: titleColor, fontFamily: "'Caveat', cursive", fontWeight: 700 }}
+                  className="text-[15px] leading-tight"
+                  style={{ color: '#EDEDED', fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
                 >
                   {node.title}
                 </h3>
               </div>
               <p
-                className="text-[13px] leading-relaxed"
-                style={{ color: contentColor, fontFamily: "'Inter', sans-serif" }}
+                className="text-[13px] leading-relaxed text-left"
+                style={{ color: 'rgba(255, 255, 255, 0.55)', fontFamily: "'Inter', sans-serif" }}
               >
-                {node.content.split(new RegExp(`(${node.highlights?.map(h => h.text).join('|') || '$$'})`, 'gi')).map((part, pi) => {
-                  const hl = node.highlights?.find(h => h.text.toLowerCase() === part.toLowerCase());
-                  if (hl) return <span key={pi} style={{ color: hl.color, fontWeight: 600 }}>{part}</span>;
-                  return part;
-                })}
+                {node.content}
               </p>
             </motion.div>
           );
@@ -287,7 +227,6 @@ const MERMAID_CHART = `graph TD
 `;
 
 const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState('');
 
   useEffect(() => {
@@ -307,14 +246,13 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
 
   return (
     <div
-      ref={containerRef}
       className="w-full flex justify-center [&_svg]:max-w-full [&_svg]:h-auto"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );
 };
 
-/* ── Side-edge backdrop: image peeks in only at the far left & right ── */
+/* ── Side-edge backdrop: image peeks in only at the far left & right, with a wide smooth fade ── */
 const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
   const pageCover = isDark ? '#0C0F0D' : '#F4F2EE';
   return (
@@ -325,12 +263,13 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
         className="absolute inset-0 w-full h-full object-cover"
         loading="eager"
         decoding="async"
+        style={{ filter: 'blur(6px)', transform: 'scale(1.03)' }}
       />
-      {/* cover the middle, leave only the outer edges visible */}
+      {/* cover the middle with a long, smooth gradient so only soft edge strips remain */}
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(to right, transparent 0%, transparent 4%, ${pageCover} 9%, ${pageCover} 91%, transparent 96%, transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, transparent 2%, ${pageCover} 26%, ${pageCover} 74%, transparent 98%, transparent 100%)`,
         }}
       />
       {/* soften the image behind the edge strips */}
@@ -356,18 +295,18 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
   const cardBorder = isDark ? 'hsl(150 10% 16%)' : 'hsl(40 15% 85%)';
   const dashedBorder = isDark ? 'rgba(120, 190, 155, 0.4)' : 'rgba(40, 80, 60, 0.45)';
   const labelColor = isDark ? 'hsl(0 0% 45%)' : 'hsl(0 0% 55%)';
-  const draftGreen = isDark ? 'rgba(120, 190, 155, 0.75)' : 'rgba(47, 104, 74, 0.8)';
 
   const font = "'Inter', sans-serif";
   const hand = "'Caveat', cursive";
 
   const techStack = [
-    { l: 'Frontend', v: 'React • TypeScript • Vite • Tailwind CSS • shadcn/ui' },
-    { l: 'Canvas', v: 'React Flow (@xyflow/react) • Dagre' },
-    { l: 'Animation', v: 'Framer Motion' },
-    { l: 'Backend', v: 'Supabase Edge Functions (Deno)' },
-    { l: 'Database', v: 'Supabase PostgreSQL' },
-    { l: 'State & Routing', v: 'React Query • React Router' },
+    { l: 'Backend', v: 'Python 3.12 · FastAPI · Uvicorn · Pydantic' },
+    { l: 'Database', v: 'PostgreSQL 16 · pgvector · psycopg 3' },
+    { l: 'Embeddings', v: 'sentence-transformers · all-MiniLM-L6-v2 (384-d)' },
+    { l: 'Personalisation', v: 'SciPy · NumPy (NNLS)' },
+    { l: 'LLM', v: 'Groq · gpt-oss-20b' },
+    { l: 'Frontend', v: 'React 18 · TypeScript · Vite · Tailwind CSS · @xyflow/react' },
+    { l: 'Deployment', v: 'Docker Compose · Caddy 2 · Google Compute Engine' },
   ];
 
   return (
@@ -449,65 +388,67 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               </div>
             </div>
           </motion.div>
-          {/* Description — full width from left to right */}
+          {/* Description — taken from the Nautilus GitHub readme */}
           <motion.div {...fadeUp(0.12)} className="mb-10">
             <p
               className="text-sm md:text-base leading-relaxed w-full"
               style={{ color: textColor, fontFamily: font }}
             >
-              Nautilus replaces linear, chat-style AI with a node-based knowledge interface built on neural networking. Every prompt becomes a concept Card, and the system vectorises content through bi-encoders for fast retrieval and re-ranks the most relevant links with a cross-encoder. The result is a graph that learns the semantic structure between your ideas across multiple databases instead of treating them as isolated messages. Still very much a work in progress, this round is a content overhaul.
+              Nautilus replaces the linear chat thread with a node based canvas. Every prompt becomes one independent card with a short title, a summary and an explanation, and the system continuously compares each new card against everything already on the canvas. Each card is embedded as nine separate field vectors with a MiniLM embedding model, and a weighted cosine score decides when two concepts are related. Above the threshold Nautilus draws a labelled link, and only then does the LLM explain why and how the ideas connect. Links can be rated out of 100, and non negative least squares refits the field weights so the graph slowly learns from your judgement. Built with FastAPI, PostgreSQL with pgvector and React Flow, and still very much a work in progress.
             </p>
           </motion.div>
+        </div>
 
-          {/* Flowchart - Key Features (survey sheet) */}
-          <motion.div {...fadeUp(0.2)}>
-            <div className="flex items-baseline justify-between gap-3 mb-2">
+        {/* Key features graph: full-bleed dark band, dotted grid runs across the whole width */}
+        <div className="w-screen relative left-1/2 -translate-x-1/2" style={{ backgroundColor: '#141414' }}>
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.09) 1.2px, transparent 1.3px)',
+              backgroundSize: '26px 26px',
+            }}
+            aria-hidden
+          />
+          <div className="relative max-w-4xl mx-auto px-6 py-14">
+            <motion.div {...fadeUp(0.2)}>
               <h2
-                className="text-[11px] font-semibold uppercase tracking-[0.15em]"
-                style={{ color: labelColor, fontFamily: font }}
+                className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-6"
+                style={{ color: 'rgba(255, 255, 255, 0.45)', fontFamily: font }}
               >
                 Key Features
               </h2>
-              <span className="text-lg" style={{ color: draftGreen, fontFamily: hand }}>
-                fig. 01 — survey of the canvas
-              </span>
-            </div>
-            <div className="relative mb-12 overflow-hidden rounded-2xl" style={{ border: `1.5px dashed ${dashedBorder}` }}>
-              <FlowchartCanvas isDark={isDark} />
-            </div>
-          </motion.div>
+              <FlowchartCanvas />
+            </motion.div>
+          </div>
+        </div>
 
-          {/* Neural Retrieval — GNNs */}
+        <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+          {/* Neural Retrieval */}
           <motion.div {...fadeUp(0.24)}>
-            <div className="flex items-baseline justify-between gap-3 mb-5">
-              <h2
-                className="text-[11px] font-semibold uppercase tracking-[0.15em]"
-                style={{ color: labelColor, fontFamily: font }}
-              >
-                Neural Retrieval
-              </h2>
-              <span className="text-lg" style={{ color: draftGreen, fontFamily: hand }}>
-                fig. 02 — how it reads
-              </span>
-            </div>
+            <h2
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
+              style={{ color: labelColor, fontFamily: font }}
+            >
+              Neural Retrieval
+            </h2>
             <div className="grid md:grid-cols-3 gap-3 mb-3">
               {[
                 {
                   icon: Network,
                   title: 'GNNs',
-                  desc: 'Graph Neural Networks pass messages along the edges of the knowledge graph, so every concept card\u2019s embedding is shaped by the ideas it connects to \u2014 the structure of the graph itself becomes part of the representation.',
+                  desc: 'Graph neural networks pass messages along the edges of the knowledge graph, so every card\u2019s embedding is shaped by the ideas it connects to. The structure of the graph itself becomes part of the representation.',
                   tilt: -0.6,
                 },
                 {
                   icon: GitFork,
                   title: 'Sub-GNNs',
-                  desc: 'Sub-graph neural networks reason over sampled neighbourhoods instead of the whole graph. That lets Nautilus retrieve and link local clusters of ideas efficiently, even as the canvas grows into thousands of nodes.',
+                  desc: 'Sub graph neural networks reason over sampled neighbourhoods instead of the whole graph, so local clusters of ideas can be retrieved efficiently even as the canvas grows into thousands of nodes.',
                   tilt: 0.5,
                 },
                 {
                   icon: Waves,
                   title: 'Spatio-Temporal GNNs',
-                  desc: 'Spatio-temporal GNNs model both structure and time \u2014 how the links between your concepts evolve across sessions \u2014 so retrieval can surface what you were actively building recently, not just what is statically connected.',
+                  desc: 'Spatio temporal GNNs model both structure and time, tracking how the links between your concepts evolve across sessions, so retrieval can surface what you were actively building recently.',
                   tilt: -0.4,
                 },
               ].map((item) => (
@@ -522,10 +463,10 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                   }}
                 >
                   <div className="flex items-center gap-2 mb-2.5">
-                    <item.icon className="w-4 h-4" style={{ color: draftGreen }} />
+                    <item.icon className="w-4 h-4" style={{ color: 'rgba(120, 190, 155, 0.75)' }} />
                     <h3
-                      className="text-xl leading-none"
-                      style={{ color: headingColor, fontFamily: hand, fontWeight: 700 }}
+                      className="text-[15px] leading-tight"
+                      style={{ color: headingColor, fontFamily: font, fontWeight: 600 }}
                     >
                       {item.title}
                     </h3>
@@ -544,22 +485,19 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
             >
               <div className="flex items-center gap-2 mb-2.5">
-                <Layers className="w-4 h-4" style={{ color: draftGreen }} />
+                <Cpu className="w-4 h-4" style={{ color: 'rgba(120, 190, 155, 0.75)' }} />
                 <h3
-                  className="text-xl leading-none"
-                  style={{ color: headingColor, fontFamily: hand, fontWeight: 700 }}
+                  className="text-[15px] leading-tight"
+                  style={{ color: headingColor, fontFamily: font, fontWeight: 600 }}
                 >
-                  Bi-Encoders & Cross-Encoders
+                  Embeddings & NNLS
                 </h3>
               </div>
               <p
                 className="text-[13px] leading-relaxed"
                 style={{ color: textColor, fontFamily: font }}
               >
-                A bi-encoder embeds every card up front so vector search stays fast, then a
-                cross-encoder re-ranks the top candidates against your prompt for precision.
-                Together with the GNN layers this gives Nautilus retrieval that understands both
-                what a card says and where it sits in your graph.
+                Embeddings run locally in process with all MiniLM L6 v2, one normalised 384 dimension vector per field, so scoring never waits on an external API. A single embedding blends everything, so a shared example would look the same as a shared mechanism, and the nine per field vectors keep every match explainable. After enough link ratings, non negative least squares refits the field weights, and the learned weights are blended with the defaults so a field can matter more or less but never count negatively.
               </p>
             </div>
           </motion.div>
@@ -593,20 +531,15 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
 
           {/* Architecture Diagram */}
           <motion.div {...fadeUp(0.32)}>
-            <div className="flex items-baseline justify-between gap-3 mb-5">
-              <h2
-                className="text-[11px] font-semibold uppercase tracking-[0.15em]"
-                style={{ color: labelColor, fontFamily: font }}
-              >
-                Architecture
-              </h2>
-              <span className="text-lg" style={{ color: draftGreen, fontFamily: hand }}>
-                fig. 03 — the wiring
-              </span>
-            </div>
+            <h2
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
+              style={{ color: labelColor, fontFamily: font }}
+            >
+              Architecture
+            </h2>
             <div
               className="rounded-2xl p-6 mb-12 overflow-x-auto"
-              style={{ border: `1.5px dashed ${dashedBorder}`, backgroundColor: cardBg }}
+              style={{ border: `1px solid ${cardBorder}`, backgroundColor: cardBg }}
             >
               <MermaidDiagram isDark={isDark} />
             </div>
@@ -665,9 +598,6 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                   <img src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
                 )}
               </div>
-              <p className="text-lg text-center mt-1.5 mb-0.5" style={{ color: draftGreen, fontFamily: hand }}>
-                the interface, pinned down
-              </p>
             </div>
           </motion.div>
 
