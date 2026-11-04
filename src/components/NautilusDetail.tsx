@@ -448,19 +448,16 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                   icon: Network,
                   title: 'GNNs',
                   desc: 'Graph neural networks pass messages along the edges of the knowledge graph, so every card\u2019s embedding is shaped by the ideas it connects to. The structure of the graph itself becomes part of the representation.',
-                  tilt: -0.6,
                 },
                 {
                   icon: GitFork,
                   title: 'Sub-GNNs',
                   desc: 'Sub graph neural networks reason over sampled neighbourhoods instead of the whole graph, so local clusters of ideas can be retrieved efficiently even as the canvas grows into thousands of nodes.',
-                  tilt: 0.5,
                 },
                 {
                   icon: Waves,
                   title: 'Spatio-Temporal GNNs',
                   desc: 'Spatio temporal GNNs model both structure and time, tracking how the links between your concepts evolve across sessions, so retrieval can surface what you were actively building recently.',
-                  tilt: -0.4,
                 },
               ].map((item) => (
                 <div
@@ -470,11 +467,10 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                     backgroundColor: cardBg,
                     border: `1.5px dashed ${dashedBorder}`,
                     borderRadius: '14px 10px 15px 9px',
-                    transform: `rotate(${item.tilt}deg)`,
                   }}
                 >
                   <div className="flex items-center gap-2 mb-2.5">
-                    <item.icon className="w-4 h-4" style={{ color: 'rgba(120, 190, 155, 0.75)' }} />
+                    <item.icon className="w-4 h-4 shrink-0" style={{ color: isDark ? 'rgba(180, 180, 180, 0.85)' : 'rgba(70, 70, 70, 0.75)' }} />
                     <h3
                       className="text-[15px] leading-tight"
                       style={{ color: headingColor, fontFamily: font, fontWeight: 600 }}
@@ -496,7 +492,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
             >
               <div className="flex items-center gap-2 mb-2.5">
-                <Cpu className="w-4 h-4" style={{ color: 'rgba(120, 190, 155, 0.75)' }} />
+                <Cpu className="w-4 h-4 shrink-0" style={{ color: isDark ? 'rgba(180, 180, 180, 0.85)' : 'rgba(70, 70, 70, 0.75)' }} />
                 <h3
                   className="text-[15px] leading-tight"
                   style={{ color: headingColor, fontFamily: font, fontWeight: 600 }}
