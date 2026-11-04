@@ -8,6 +8,7 @@ import { projects, projectsPageList } from '@/components/ProjectsSection';
 import { Mac } from '@/components/Mac';
 import thanasOsMac from '@/assets/thanasos-mac.webp';
 import pesuForgeBg from '@/assets/pesuforge-bg.webp';
+import nautilusBg from '@/assets/nautilus_bg.webp';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
