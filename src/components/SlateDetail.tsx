@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Github, Sigma, Waves, Activity, Grid3x3, Scan, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
+import { useTheme } from '@/hooks/use-theme';
 import slate1 from '@/assets/slate1.webp';
 import slate2 from '@/assets/slate2.webp';
 import slate3 from '@/assets/slate3.webp';
@@ -23,7 +24,7 @@ interface Props {
   nextProject: Project | null;
 }
 
-const C = {
+const C_DARK = {
   bg: '#0B0B10',
   panel: '#12121A',
   panelSoft: '#16161F',
@@ -35,6 +36,22 @@ const C = {
   accent: '#D8C9A3',
   accentDim: 'rgba(216,201,163,0.55)',
   good: '#7FBF8E',
+  gridLine: 'rgba(240,234,220,0.035)',
+};
+
+const C_LIGHT = {
+  bg: '#F5F3ED',
+  panel: '#FFFFFF',
+  panelSoft: '#FBFAF7',
+  border: 'rgba(28,28,34,0.08)',
+  borderStrong: 'rgba(28,28,34,0.18)',
+  text: '#1C1C22',
+  muted: 'rgba(28,28,34,0.64)',
+  faint: 'rgba(28,28,34,0.42)',
+  accent: '#8A7A4E',
+  accentDim: 'rgba(138,122,78,0.65)',
+  good: '#3E7D4E',
+  gridLine: 'rgba(28,28,34,0.05)',
 };
 
 const TABS = [
