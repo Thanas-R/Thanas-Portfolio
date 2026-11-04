@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Github, Sigma, Waves, Activity, Grid3x3, Scan, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
+import { useTheme } from '@/hooks/use-theme';
 import slate1 from '@/assets/slate1.webp';
 import slate2 from '@/assets/slate2.webp';
 import slate3 from '@/assets/slate3.webp';
@@ -23,7 +24,7 @@ interface Props {
   nextProject: Project | null;
 }
 
-const C = {
+const C_DARK = {
   bg: '#0B0B10',
   panel: '#12121A',
   panelSoft: '#16161F',
@@ -35,6 +36,22 @@ const C = {
   accent: '#D8C9A3',
   accentDim: 'rgba(216,201,163,0.55)',
   good: '#7FBF8E',
+  gridLine: 'rgba(240,234,220,0.035)',
+};
+
+const C_LIGHT = {
+  bg: '#F5F3ED',
+  panel: '#FFFFFF',
+  panelSoft: '#FBFAF7',
+  border: 'rgba(28,28,34,0.08)',
+  borderStrong: 'rgba(28,28,34,0.18)',
+  text: '#1C1C22',
+  muted: 'rgba(28,28,34,0.64)',
+  faint: 'rgba(28,28,34,0.42)',
+  accent: '#8A7A4E',
+  accentDim: 'rgba(138,122,78,0.65)',
+  good: '#3E7D4E',
+  gridLine: 'rgba(28,28,34,0.05)',
 };
 
 const TABS = [
@@ -64,6 +81,8 @@ const FACTS = [
 
 const SlateDetail = ({ project, prevProject, nextProject }: Props) => {
   const [tab, setTab] = useState(0);
+  const { isDark } = useTheme();
+  const C = isDark ? C_DARK : C_LIGHT;
   const mono = "'JetBrains Mono', monospace";
   const display = "'Space Grotesk', sans-serif";
 
@@ -91,13 +110,13 @@ const SlateDetail = ({ project, prevProject, nextProject }: Props) => {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(to right, rgba(240,234,220,0.035) 1px, transparent 1px), linear-gradient(to bottom, rgba(240,234,220,0.035) 1px, transparent 1px)',
+            `linear-gradient(to right, ${C.gridLine} 1px, transparent 1px), linear-gradient(to bottom, ${C.gridLine} 1px, transparent 1px)`,
           backgroundSize: '48px 48px',
         }}
       />
 
       <div className="relative z-10">
-        <Navbar forceDark />
+        <Navbar />
 
         <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
           <motion.div {...fadeUp(0)}>
@@ -157,7 +176,7 @@ const SlateDetail = ({ project, prevProject, nextProject }: Props) => {
           <motion.div {...fadeUp(0.12)} className="mb-14">
             <div
               className="rounded-2xl overflow-hidden"
-              style={{ border: `1px solid ${C.borderStrong}`, backgroundColor: C.panel, boxShadow: '0 30px 80px -30px rgba(0,0,0,0.7)' }}
+              style={{ border: `1px solid ${C.borderStrong}`, backgroundColor: C.panel, boxShadow: isDark ? '0 30px 80px -30px rgba(0,0,0,0.7)' : '0 30px 80px -30px rgba(28,28,34,0.25)' }}
             >
               {/* macOS traffic lights + tab strip in one titlebar row */}
               <div

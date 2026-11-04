@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
@@ -8,6 +8,7 @@ import { projects, projectsPageList } from '@/components/ProjectsSection';
 import { Mac } from '@/components/Mac';
 import thanasOsMac from '@/assets/thanasos-mac.webp';
 import pesuForgeBg from '@/assets/pesuforge-bg.webp';
+import nautilusBg from '@/assets/nautilus_bg.webp';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
@@ -26,34 +27,7 @@ import pesuMcNether from '@/assets/nether.webp';
 import pesuMcEnd from '@/assets/end.webp';
 import pesuMcWordmark from '@/assets/pesumc-wordmark.png';
 
-/** Blur-to-sharp background image that works even when the image is already cached */
-const ProgressiveBgImg = ({ src }: {src: string;}) => {
-  const [loaded, setLoaded] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  const handleLoad = useCallback(() => {requestAnimationFrame(() => setLoaded(true));}, []);
-
-  useEffect(() => {
-    // If image is already cached/complete on mount, trigger transition after one frame
-    if (imgRef.current?.complete) {
-      requestAnimationFrame(() => setLoaded(true));
-    }
-  }, []);
-
-  return (
-    <img
-      ref={imgRef}
-      src={src}
-      alt=""
-      className="w-full h-full object-cover"
-      loading="eager"
-      onLoad={handleLoad}
-      style={{
-        filter: loaded ? 'blur(0px)' : 'blur(20px)',
-        transform: loaded ? 'scale(1)' : 'scale(1.02)',
-        transition: 'filter 700ms ease-out, transform 700ms ease-out'
-      }} />);
-};
+import ProgressiveBgImg from '@/components/ProgressiveBgImg';
 
 /** Fixed backdrop that crossfades Overworld → Nether → End as you scroll down the page */
 const DIMENSION_LAYERS = [pesuMcBackdrop, pesuMcNether, pesuMcEnd];
@@ -141,11 +115,26 @@ const ProjectDetailPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevProject, nextProject, navigate]);
 
+  // Dark-themed page scrollbar for backdrop pages (nautilus / pesu mc / pesu forge / contour)
+  useEffect(() => {
+    const darkScroll = isPesuForge || isPesuMC || isContourFlow || isNautilus || isVirdis;
+    if (darkScroll) {
+      document.documentElement.setAttribute('data-darkscroll', 'true');
+      return () => document.documentElement.removeAttribute('data-darkscroll');
+    }
+  }, [isPesuForge, isPesuMC, isContourFlow, isNautilus, isVirdis]);
+
   useEffect(() => {
     if (!project) return;
 
     const preload = (srcs: string[]) => {
       srcs.forEach((src) => {
+        // Link preload starts the download before JS even renders the backdrop
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
         const img = new Image();
         img.decoding = 'async';
         img.src = src;
@@ -156,6 +145,8 @@ const ProjectDetailPage = () => {
       preload([pesuForgeBg, project.imageSrc]);
     } else if (isPesuMC) {
       preload([pesuMcBackdrop, pesuMcNether, pesuMcEnd, pesuMcHero, pesuMcWordmark, project.imageSrc]);
+    } else if (isNautilus) {
+      preload([nautilusBg, project.imageSrc]);
     } else if (isSpheal) {
       preload([project.imageSrc]);
       void (window as any).__globeDataPromise?.catch?.(() => null);
@@ -201,85 +192,47 @@ const ProjectDetailPage = () => {
   // Smart Chef background removed per user request
   const smartChefBg = undefined;
 
-  const SideNav = () =>
-  <>
-      {prevProject &&
-    <Link
-      to={`/projects/${prevProject.id}`}
-      className="fixed left-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
-      style={{
-        backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
-        borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)'
-      }}
-      aria-label="Previous project">
-      
-          <ChevronLeft className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
-        </Link>
-    }
-      {nextProject &&
-    <Link
-      to={`/projects/${nextProject.id}`}
-      className="fixed right-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
-      style={{
-        backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
-        borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)'
-      }}
-      aria-label="Next project">
-      
-          <ChevronRight className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
-        </Link>
-    }
-    </>;
+
 
 
   if (isVirdis) {
-    return <><SideNav /><VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+    return <><VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   if (isNautilus) {
-    return <><SideNav /><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+    return <><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   if (isSpheal) {
     return (
-      <>
-        <SideNav />
-        <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>);
 
   }
 
   if (isOdinTree) {
     return (
-      <>
-        <SideNav />
-        <OdinTreeDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <OdinTreeDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   if (isAskPesu) {
     return (
-      <>
-        <SideNav />
-        <AskPesuDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <AskPesuDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   if (isSlate) {
     return (
-      <>
-        <SideNav />
-        <SlateDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <SlateDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   return (
-    <>
-      <SideNav />
-      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
+    <>      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
         {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <Navbar />}
 
@@ -624,32 +577,44 @@ const ProjectDetailPage = () => {
                 <h1 className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {project.title}
                 </h1>
-<div className="flex items-center gap-6 mb-4 -ml-9">
-  <div className="w-[140px] md:w-[180px] h-8 md:h-12 shrink-0 flex items-center overflow-visible">
-    <AppleHelloEffect
-      className="h-full w-full text-foreground"
-      speed={0.7}
-    />
+<div className="flex flex-col gap-3 mb-4 -ml-9">
+  <div className="flex items-center gap-6">
+    <div className="w-[140px] md:w-[180px] h-8 md:h-12 shrink-0 flex items-center overflow-visible">
+      <AppleHelloEffect
+        className="h-full w-full text-foreground"
+        speed={0.7}
+      />
+    </div>
+    <div className="shrink-0">
+      {project.live &&
+        <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0 min-w-[140px]">
+          <ExternalLink className="w-4 h-4" />
+          Live Site
+        </a>
+      }
+    </div>
   </div>
-
-  <div className="flex items-center gap-3 shrink-0">
-                    {project.github &&
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0">
-                        <Github className="w-4 h-4" />
-                        GitHub
-                      </a>
-                  }
-                    {project.live &&
-                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0">
-                        <ExternalLink className="w-4 h-4" />
-                        Live Site
-                      </a>
-                  }
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground mb-6">
-                  macOS-themed interactive website
-                </p>
+<div className="flex items-center gap-4">
+  <div className="w-[148px] md:w-[188px] flex items-center justify-end shrink-0">
+    <p className="text-xs text-muted-foreground whitespace-nowrap">
+      macOS-themed interactive website
+    </p>
+  </div>
+  <div className="shrink-0">
+    {project.github && (
+      <a
+        href={project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-lg border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0 min-w-[140px]"
+      >
+        <Github className="w-4 h-4" />
+        GitHub
+      </a>
+    )}
+  </div>
+</div>
+</div>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
                 </div>
@@ -659,16 +624,24 @@ const ProjectDetailPage = () => {
                     A deliberate attempt to rebuild the macOS experience inside a single React application, without iframes, without screenshots, and without shortcuts. Every window, dock icon, menu, widget, animation, and keyboard shortcut is a real component running in your browser.
                   </p>
                   <p className="text-sm text-muted-foreground/80 leading-relaxed mt-4">
-                    This was one of my first serious web projects where I experimented with UI design and interactions. The goal was to make a portfolio that feels more immersive and memorable than a standard webpage.
+                    This was one of my first serious web projects where I experimented with UI design and interactions. The goal was to make a portfolio that feels more immersive & memorable than a standard webpage.
                   </p>
                 </div>
               </motion.div>
 
-              {/* Right: Mac mockup */}
+              {/* Right: Mac mockup — cropped-in reveal, layout unchanged */}
               <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex items-start justify-center mt-8 md:mt-0">
-                <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer w-full max-w-[650px]">
-                  <Mac src={thanasOsMac} className="w-full h-auto text-background" />
-                </a>
+                <motion.div
+                  initial={{ clipPath: 'inset(6% 10% 26% 10% round 28px)', scale: 0.97 }}
+                  whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 28px)', scale: 1 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.9, ease: 'easeOut' }}
+                  className="w-full max-w-[650px]"
+                >
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer w-full">
+                    <Mac src={thanasOsMac} className="w-full h-auto text-background" />
+                  </a>
+                </motion.div>
               </motion.div>
             </div>
 

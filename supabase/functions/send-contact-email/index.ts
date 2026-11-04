@@ -152,6 +152,40 @@ serve(async (req) => {
       );
     }
 
+    // Per-IP rate limit: at most 5 messages per rolling hour
+    const ip =
+      req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      req.headers.get('cf-connecting-ip') ||
+      'unknown';
+    const bucketKey = `contact-rl:${ip}`;
+    const nowMs = Date.now();
+    const windowMs = 60 * 60 * 1000; // 1 hour
+    try {
+      const kv = await Deno.openKv();
+      const bucket = await kv.get<{ count: number; first: number }>([bucketKey]);
+      let count = 1;
+      let first = nowMs;
+      if (bucket.value && nowMs - bucket.value.first < windowMs) {
+        count = bucket.value.count + 1;
+        first = bucket.value.first;
+      }
+      if (count > 5) {
+        const waitMin = Math.ceil((windowMs - (nowMs - first)) / 60000);
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: `Too many messages sent. Please try again in about ${waitMin} minute${waitMin === 1 ? '' : 's'}.`,
+            rateLimited: true,
+          }),
+          { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      await kv.set([bucketKey], { count, first }, { expireIn: windowMs });
+    } catch (rlErr) {
+      // Never block a real message because the rate limiter itself failed
+      console.error('rate limit check failed (allowing through):', rlErr);
+    }
+
     if (!name || !email || !message) {
       return new Response(
         JSON.stringify({ error: 'Name, email, and message are required' }),

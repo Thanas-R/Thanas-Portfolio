@@ -45,27 +45,28 @@ const contactLinks = [
 ];
 
 const ContactSection = () => {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', message: '', username: '', location: '' });
   const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+    let data: { success?: boolean; error?: string } = {};
     try {
       const response = await fetch('/api/send-contact-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      const data = await response.json();
+      data = await response.json();
       if (!response.ok || !data.success) {
         throw new Error(data?.error || 'Failed to send');
       }
       toast.success('Message sent successfully!');
-      setForm({ name: '', email: '', message: '' });
+      setForm({ name: '', email: '', message: '', username: '', location: '' });
     } catch (err: any) {
       console.error(err);
-      toast.error('Failed to send message. Please try again.');
+      toast.error(data?.error || 'Failed to send message. Please try again.');
     } finally {
       setSending(false);
     }
@@ -100,12 +101,33 @@ const ContactSection = () => {
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full px-5 py-4 rounded-xl 
-                bg-[#F8F8F8] dark:bg-secondary/30 
-                border border-[#F6F6F6] dark:border-border
+                bg-secondary/50 
+                border border-border
                 text-foreground text-lg font-medium dark:font-semibold 
                 placeholder:text-muted-foreground/70 placeholder:font-medium 
                 focus:outline-none focus:ring-1 focus:ring-ring"
                 required
+              />
+              {/* Honeypot fields — hidden from humans, bait for bots */}
+              <input
+                type="text"
+                name="username"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={form.username}
+                onChange={(e) => setForm({ ...form, username: e.target.value })}
+                className="absolute opacity-0 -z-10 pointer-events-none h-0 w-0 p-0 border-0"
+              />
+              <input
+                type="text"
+                name="location"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={form.location}
+                onChange={(e) => setForm({ ...form, location: e.target.value })}
+                className="absolute opacity-0 -z-10 pointer-events-none h-0 w-0 p-0 border-0"
               />
 
               <input
@@ -115,7 +137,7 @@ const ContactSection = () => {
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full px-5 py-4 rounded-xl 
                 bg-secondary/50 dark:bg-secondary/30 
-                border border-[#F6F6F6] dark:border-border
+                border border-border dark:border-border
                 text-foreground text-lg font-medium dark:font-semibold 
                 placeholder:text-muted-foreground/70 placeholder:font-medium 
                 focus:outline-none focus:ring-1 focus:ring-ring"
@@ -129,7 +151,7 @@ const ContactSection = () => {
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full px-5 py-5 rounded-xl 
               bg-secondary/50 dark:bg-secondary/30 
-              border border-[#F6F6F6] dark:border-border
+              border border-border dark:border-border
               text-foreground text-lg font-medium dark:font-semibold 
               placeholder:text-muted-foreground/70 placeholder:font-medium 
               focus:outline-none focus:ring-1 focus:ring-ring 
