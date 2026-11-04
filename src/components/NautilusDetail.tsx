@@ -179,14 +179,14 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
               <div className="flex items-center gap-2 mb-2">
                 <Icon className="w-4 h-4 shrink-0" style={{ color: node.iconColor }} />
                 <h3
-                  className="text-[18  px] leading-tight text-left"
+                  className="text-[16px] leading-tight text-left"
                   style={{ color: titleColor, fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
                 >
                   {node.title}
                 </h3>
               </div>
               <p
-                className="text-[15px] leading-relaxed text-left"
+                className="text-[14px] leading-relaxed text-left"
                 style={{ color: bodyColor, fontFamily: "'Inter', sans-serif" }}
               >
                 {node.content}
@@ -309,7 +309,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
       <NautilusSideBg isDark={isDark} />
       <div className="relative z-10 min-h-screen">
         <Navbar />
-        <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+        <div className="max-w-4xl mx-auto px-6 pt-12 pb-2">
           {/* Top navigation row: Back link on left, Work in Progress badge on far right */}
           <motion.div {...fadeUp(0)} className="flex items-center justify-between gap-4 mb-8">
             <Link
@@ -394,7 +394,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
           </motion.div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-6 pt-3 pb-24">
+        <div className="max-w-4xl mx-auto px-6 pt-2 pb-24">
           {/* Key features flowchart, inside the page column */}
           <motion.div {...fadeUp(0.2)} className="mb-14">
             <h2
