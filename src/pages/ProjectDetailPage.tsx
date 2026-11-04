@@ -641,6 +641,7 @@ const ProjectDetailPage = () => {
     )}
   </div>
 </div>
+</div>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
                 </div>
