@@ -62,7 +62,7 @@ const ContactSection = () => {
         throw new Error(data?.error || 'Failed to send');
       }
       toast.success('Message sent successfully!');
-      setForm({ name: '', email: '', message: '' });
+      setForm({ name: '', email: '', message: '', username: '', location: '' });
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to send message. Please try again.');
@@ -136,7 +136,7 @@ const ContactSection = () => {
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full px-5 py-4 rounded-xl 
                 bg-secondary/50 dark:bg-secondary/30 
-                border border-[#F6F6F6] dark:border-border
+                border border-border dark:border-border
                 text-foreground text-lg font-medium dark:font-semibold 
                 placeholder:text-muted-foreground/70 placeholder:font-medium 
                 focus:outline-none focus:ring-1 focus:ring-ring"
@@ -150,7 +150,7 @@ const ContactSection = () => {
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full px-5 py-5 rounded-xl 
               bg-secondary/50 dark:bg-secondary/30 
-              border border-[#F6F6F6] dark:border-border
+              border border-border dark:border-border
               text-foreground text-lg font-medium dark:font-semibold 
               placeholder:text-muted-foreground/70 placeholder:font-medium 
               focus:outline-none focus:ring-1 focus:ring-ring 
