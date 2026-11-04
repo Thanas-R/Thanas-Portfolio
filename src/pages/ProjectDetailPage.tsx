@@ -50,9 +50,9 @@ const ProgressiveBgImg = ({ src }: {src: string;}) => {
       loading="eager"
       onLoad={handleLoad}
       style={{
-        filter: loaded ? 'blur(0px)' : 'blur(20px)',
-        transform: loaded ? 'scale(1)' : 'scale(1.02)',
-        transition: 'filter 700ms ease-out, transform 700ms ease-out'
+        opacity: loaded ? 1 : 0,
+        transform: loaded ? 'scale(1)' : 'scale(1.015)',
+        transition: 'opacity 700ms ease-out, transform 700ms ease-out'
       }} />);
 };
 
