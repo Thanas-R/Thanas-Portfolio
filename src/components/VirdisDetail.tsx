@@ -208,10 +208,10 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             <div className="relative z-10">
               {/* Header */}
               <h1
-                className="text-4xl md:text-6xl leading-none tracking-tight mb-2"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: heading }}
+                className="text-5xl md:text-7xl leading-none tracking-tight mb-2"
+                style={{ fontFamily: "'Caesar Dressing', system-ui", fontWeight: 400, color: heading }}
               >
-                Virdis
+                ViRDIS
               </h1>
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
@@ -254,7 +254,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
 
               {/* Description */}
               <p
-                className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
+                className="text-base md:text-lg leading-relaxed text-justify mb-8"
                 style={{ color: textMuted, fontFamily: font }}
               >
                 Satellite-powered land analytics platform. Draw regions on a map and get NDVI vegetation analysis, climate data, soil profiling, land use classification, suitability scoring, and AI crop recommendations, all in one dashboard.
