@@ -51,13 +51,14 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+    let data: { success?: boolean; error?: string } = {};
     try {
       const response = await fetch('/api/send-contact-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      const data = await response.json();
+      data = await response.json();
       if (!response.ok || !data.success) {
         throw new Error(data?.error || 'Failed to send');
       }
