@@ -206,12 +206,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
             const { path } = getEdgePath(fromNode, toNode, edgeIdx + 1);
             const arrow = getArrowhead(fromNode, toNode, edgeIdx + 1);
             return (
-              <motion.g
-                key={`${edge.from}-${edge.to}`}
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 + edgeIdx * 0.12, ease: 'easeOut' }}
-              >
+              <g key={`${edge.from}-${edge.to}`}>
                 <motion.path
                   d={path}
                   fill="none"
