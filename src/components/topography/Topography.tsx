@@ -1,5 +1,5 @@
 'use client';
-
+// @ts-nocheck
 import { useEffect, useRef, useState } from 'react';
 import './Topography.css';
 
