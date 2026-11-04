@@ -526,7 +526,6 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                     backgroundColor: cardBg,
                     border: `1.5px dashed ${dashedBorder}`,
                     borderRadius: '12px 9px 13px 8px',
-                    transform: `rotate(${(i % 3) - 1 === -1 ? -0.4 : (i % 3) === 1 ? 0.4 : 0}deg)`,
                   }}
                 >
                   <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: labelColor, fontFamily: font }}>{item.l}</p>
