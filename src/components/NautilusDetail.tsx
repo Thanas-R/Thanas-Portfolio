@@ -5,7 +5,8 @@ import { useTheme } from '@/hooks/use-theme';
 import Navbar from '@/components/Navbar';
 import nautilusBg from '@/assets/nautilus_bg.webp';
 import { Project } from '@/components/ProjectsSection';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
+import ProgressiveBgImg from '@/components/ProgressiveBgImg';
 import mermaid from 'mermaid';
 
 const fadeUp = (delay = 0) => ({
@@ -240,35 +241,83 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-/* ── Edge backdrop: crisp background at far edges, wide pure-white center ── */
+/* ── Halftone dot fade: dots grow from tiny at the outer edge to fully merged where they meet the solid centre ── */
+const SPACING = 13;
+const HalftoneEdge = ({ side, color, viewportW, viewportH }: { side: 'left' | 'right'; color: string; viewportW: number; viewportH: number }) => {
+  const band = Math.max(90, Math.round(viewportW * 0.09));
+  const dots = useMemo(() => {
+    const cols = Math.ceil(band / SPACING);
+    const rows = Math.ceil(viewportH / SPACING) + 1;
+    const out: ReactElement[] = [];
+    let seed = side === 'left' ? 11 : 37;
+    const rand = () => {
+      seed = (seed * 16807) % 2147483647;
+      return seed / 2147483647;
+    };
+    for (let c = 0; c <= cols; c++) {
+      // t: 0 at the outer edge (background fully visible), 1 where the solid centre begins
+      const raw = side === 'left' ? (c * SPACING) / band : 1 - (c * SPACING) / band;
+      const t = Math.min(1, Math.max(0, raw));
+      const growth = Math.pow(t, 0.8);
+      for (let r = 0; r < rows; r++) {
+        // At the merged boundary drop the jitter so the band seals cleanly into the solid
+        const radius = t >= 0.98 ? SPACING * 0.75 : SPACING * 0.62 * growth * (0.8 + rand() * 0.4);
+        if (radius < 0.35) continue;
+        const staggerX = r % 2 === 1 ? SPACING * 0.5 : 0;
+        out.push(
+          <circle
+            key={`${c}-${r}`}
+            cx={c * SPACING + staggerX}
+            cy={r * SPACING}
+            r={Math.min(radius, SPACING * 0.75)}
+            fill={color}
+          />
+        );
+      }
+    }
+    return out;
+  }, [band, viewportH, side, color]);
+
+  return (
+    <svg
+      className="absolute top-0 bottom-0"
+      style={side === 'left' ? { left: '4%' } : { right: '4%' }}
+      width={band}
+      height="100%"
+      aria-hidden
+    >
+      {dots}
+    </svg>
+  );
+};
+
+/* ── Edge backdrop: background image at the far edges, halftone dot fade, wide solid centre ── */
 const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
-  // Pure crisp white instead of cream #F4F2EE
   const pageCover = isDark ? '#0C0F0D' : '#FFFFFF';
-  const [bgLoaded, setBgLoaded] = useState(false);
+  const [viewport, setViewport] = useState({ w: 1280, h: 900 });
+
+  useEffect(() => {
+    const onResize = () => setViewport({ w: window.innerWidth, h: window.innerHeight });
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
-      <img
-        src={nautilusBg}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover"
-        loading="eager"
-        decoding="async"
-        onLoad={() => setBgLoaded(true)}
-        style={{
-          opacity: bgLoaded ? 1 : 0,
-          transition: 'opacity 500ms ease-out',
-        }}
-      />
+      <ProgressiveBgImg src={nautilusBg} />
 
-      {/* Side stripes reduced in half: inner solid region covers 92% of screen width */}
+      {/* Solid centre, hard stops exactly where the dot fade finishes merging */}
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(to right, transparent 0%, transparent 4%, ${pageCover} 4%, ${pageCover} 96%, transparent 96%, transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, transparent 13%, ${pageCover} 13%, ${pageCover} 87%, transparent 87%, transparent 100%)`,
         }}
       />
 
+      {/* Halftone dot transition, sits inside the former solid band (4% to 13%) */}
+      <HalftoneEdge side="left" color={pageCover} viewportW={viewport.w} viewportH={viewport.h} />
+      <HalftoneEdge side="right" color={pageCover} viewportW={viewport.w} viewportH={viewport.h} />
     </div>
   );
 };
