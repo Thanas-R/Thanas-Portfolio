@@ -40,15 +40,15 @@ const FEATURES: FlowNode[] = [
     content: 'Every prompt becomes one independent card with a short title, a summary and an explanation. Cards never extend each other.',
     icon: Layout,
     iconColor: '#7E97C9',
-    x: 24, y: 26, width: 348, height: 148,
+    x: 24, y: 20, width: 348, height: 128,
   },
   {
     id: 'fields',
     title: 'Nine Linking Fields',
-    content: 'Each card is embedded on nine separate fields with all MiniLM L6 v2, and every field carries its own weight in the final score.',
+    content: 'Each card is embedded on 9 separate fields with all MiniLM L6, & every field carries its own weight in the final score.',
     icon: Layers,
     iconColor: '#B5854F',
-    x: 430, y: 48, width: 306, height: 152,
+    x: 430, y: 48, width: 306, height: 132,
   },
   {
     id: 'scoring',
@@ -56,7 +56,7 @@ const FEATURES: FlowNode[] = [
     content: 'A pair of cards is scored as a weighted sum of per field cosine similarities. Pairs above 0.4 become links.',
     icon: GitBranch,
     iconColor: '#4E9A7C',
-    x: 48, y: 248, width: 296, height: 140,
+    x: 48, y: 248, width: 296, height: 130,
   },
   {
     id: 'explain',
@@ -64,7 +64,7 @@ const FEATURES: FlowNode[] = [
     content: 'Only linked pairs reach the LLM. It writes a short label plus a reason for why and how the two concepts connect.',
     icon: Brain,
     iconColor: '#C4704F',
-    x: 420, y: 244, width: 316, height: 152,
+    x: 420, y: 260, width: 316, height: 125,
   },
   {
     id: 'boundary',
@@ -177,7 +177,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
               }}
             >
               <div className="flex items-center gap-2 mb-2">
-                <Icon className="w-4 h-4 shrink-0" style={{ color: node.iconColor }} />
+                <Icon className="w-5 h-5 shrink-0" style={{ color: node.iconColor }} />
                 <h3
                   className="text-[16px] leading-tight text-left"
                   style={{ color: titleColor, fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
@@ -240,12 +240,14 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-/* ── Side-edge backdrop: image peeks in only at the far left & right, with a smooth fade-in ── */
+/* ── Direct edge backdrop: crisp background at the sides, clean solid center ── */
 const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
   const pageCover = isDark ? '#0C0F0D' : '#F4F2EE';
   const [bgLoaded, setBgLoaded] = useState(false);
+
   return (
-    <div className="fixed inset-0 z-0" aria-hidden>
+    <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
+      {/* Crisp unblurred image across the screen */}
       <img
         src={nautilusBg}
         alt=""
@@ -254,27 +256,16 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
         decoding="async"
         onLoad={() => setBgLoaded(true)}
         style={{
-          filter: 'blur(6px)',
-          transform: 'scale(1.03)',
           opacity: bgLoaded ? 1 : 0,
-          transition: 'opacity 700ms ease-out',
+          transition: 'opacity 500ms ease-out',
         }}
       />
-      {/* cover the middle with a long, smooth gradient so only narrow edge strips remain */}
+
+      {/* Solid center block with direct sharp edges matching the max-w-4xl (56rem) content column */}
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(to right, transparent 0%, transparent 3%, ${pageCover} 12%, ${pageCover} 88%, transparent 97%, transparent 100%)`,
-        }}
-      />
-      {/* soften the image behind the edge strips */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: isDark
-            ? 'linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.15))'
-            : 'linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.28))',
-          mixBlendMode: isDark ? 'multiply' : 'normal',
+          background: `linear-gradient(to right, transparent 0%, transparent calc(50% - 28rem), ${pageCover} calc(50% - 28rem), ${pageCover} calc(50% + 28rem), transparent calc(50% + 28rem), transparent 100%)`,
         }}
       />
     </div>
