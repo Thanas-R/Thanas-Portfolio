@@ -33,88 +33,19 @@ interface FlowNode {
   height: number;
 }
 
-interface FlowEdge {
-  from: string;
-  to: string;
-}
-
-const FEATURES: FlowNode[] = [
-  {
-    id: 'canvas',
-    title: 'Knowledge Canvas',
-    content: 'Every prompt becomes one independent card with a short title, a summary and an explanation. Cards never extend each other.',
-    icon: Layout,
-    iconColor: '#7E97C9',
-    x: 10, y: 8, width: 360, height: 170,
-  },
-  {
-    id: 'fields',
-    title: 'Nine Linking Fields',
-    content: 'Each card is embedded on nine separate fields with all MiniLM L6 v2, and every field carries its own weight in the final score.',
-    icon: Layers,
-    iconColor: '#B5854F',
-    x: 390, y: 8, width: 360, height: 170,
-  },
-  {
-    id: 'scoring',
-    title: 'Weighted Cosine Scoring',
-    content: 'A pair of cards is scored as a weighted sum of per field cosine similarities. Pairs above 0.4 become links.',
-    icon: GitBranch,
-    iconColor: '#4E9A7C',
-    x: 10, y: 224, width: 360, height: 170,
-  },
-  {
-    id: 'explain',
-    title: 'LLM Explained Links',
-    content: 'Only linked pairs reach the LLM. It writes a short label plus a reason for why and how the two concepts connect.',
-    icon: Brain,
-    iconColor: '#C4704F',
-    x: 390, y: 224, width: 360, height: 170,
-  },
-  {
-    id: 'boundary',
-    title: 'Boundary Band Rating',
-    content: 'Links scoring between 0.4 and 0.55 are flagged as boundary links and prompt you to rate the connection.',
-    icon: MessageSquare,
-    iconColor: '#8E7FD1',
-    x: 10, y: 440, width: 360, height: 170,
-  },
-  {
-    id: 'nnls',
-    title: 'NNLS Personalisation',
-    content: 'Rate links out of 100 and non negative least squares refits the nine field weights to match your judgement.',
-    icon: Network,
-    iconColor: '#6FAE8C',
-    x: 390, y: 440, width: 360, height: 170,
-  },
-];
-
-const EDGES: FlowEdge[] = [
-  { from: 'canvas', to: 'fields' },
-  { from: 'fields', to: 'scoring' },
-  { from: 'scoring', to: 'explain' },
-  { from: 'scoring', to: 'boundary' },
-  { from: 'boundary', to: 'nnls' },
-];
-
-/* ── Smooth connector paths, like the reference: cards joined by one soft green curve ── */
-function getEdgePath(from: FlowNode, to: FlowNode): string {
-  const sameRow = Math.abs(from.y - to.y) < 5;
-
-  if (sameRow) {
-    const sy = from.y + from.height / 2;
-    const sx = from.x + from.width;
-    const ex = to.x;
-    return `M ${sx} ${sy} C ${sx + 48} ${sy}, ${ex - 48} ${sy}, ${ex} ${sy}`;
-  }
-
-  const sx = from.x + from.width / 2;
-  const sy = from.y + from.height;
-  const ex = to.x + to.width / 2;
-  const ey = to.y;
-  const dy = ey - sy;
-  return `M ${sx} ${sy} C ${sx} ${sy + dy * 0.5}, ${ex} ${ey - dy * 0.5}, ${ex} ${ey}`;
-}
+/* ── Hand-drawn curvy connectors: each edge gets its own relaxed bezier, no two alike ── */
+const EDGE_PATHS: Record<string, string> = {
+  // canvas -> fields: dips low, then lifts into the side of the card
+  'canvas-fields': 'M 372 96 C 400 168, 396 58, 430 118',
+  // fields -> scoring: long sweeping droop across the canvas
+  'fields-scoring': 'M 462 200 C 492 262, 330 208, 214 248',
+  // scoring -> explain: lazy wave sideways
+  'scoring-explain': 'M 344 314 C 372 356, 386 280, 420 316',
+  // scoring -> boundary: gentle drop with a lean
+  'scoring-boundary': 'M 152 388 C 138 430, 176 428, 178 460',
+  // boundary -> nnls: rising swoop into the side
+  'boundary-nnls': 'M 334 528 C 362 574, 366 506, 402 540',
+};
 
 /* ── Key features graph: dotted grid on the page background, cards adapt to the theme ── */
 const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
