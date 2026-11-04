@@ -651,7 +651,7 @@ const ProjectDetailPage = () => {
                     A deliberate attempt to rebuild the macOS experience inside a single React application, without iframes, without screenshots, and without shortcuts. Every window, dock icon, menu, widget, animation, and keyboard shortcut is a real component running in your browser.
                   </p>
                   <p className="text-sm text-muted-foreground/80 leading-relaxed mt-4">
-                    This was one of my first serious web projects where I experimented with UI design and interactions. The goal was to make a portfolio that feels more immersive and memorable than a standard webpage.
+                    This was one of my first serious web projects where I experimented with UI design and interactions. The goal was to make a portfolio that feels more immersive & memorable than a standard webpage.
                   </p>
                 </div>
               </motion.div>
