@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, ArrowLeft, ArrowRight, Github, Map, BarChart3, Cpu, Cloud, Satellite, Layers, Droplets, Mountain } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '@/hooks/use-theme';
+import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import TopoLinesBackground from '@/components/TopoLinesBackground';
+import mermaid from 'mermaid';
 import { Project } from '@/components/ProjectsSection';
 
 const fadeUp = (delay = 0) => ({
@@ -18,14 +19,67 @@ interface VirdisDetailProps {
   nextProject: Project | null;
 }
 
+/* ── Architecture: Mermaid flow, themed to the page's dark green palette ── */
+const VIRDIS_CHART = `graph TD
+    U["User / Browser"] --> FE["React 18 Frontend<br/>Mapbox GL JS · TanStack Query · Recharts"]
+    FE --> EF["Supabase Edge Functions<br/>Deno Runtime"]
+    EF --> F1["analyze-field"]
+    EF --> F2["gee-analytics"]
+    EF --> F3["gee-ndvi-tiles"]
+    EF --> F4["ndvi-timeseries"]
+    EF --> F5["crop-planning"]
+    EF --> F6["soil-data"]
+    EF --> F7["get-mapbox-token"]
+    EF --> F8["keepalive<br/>health check"]
+    F1 --> X2["Google Earth Engine<br/>+ Gemini 2.5 Pro"]
+    F2 --> X2
+    F3 --> X2
+    F4 --> X2
+    F5 --> X3["Gemini 2.5 Pro"]
+    F6 --> X4["ISRIC SoilGrids API"]
+    F7 --> X5["Mapbox API"]
+`;
+
+const ArchitectureDiagram = () => {
+  const [svg, setSvg] = useState('');
+
+  useEffect(() => {
+    const id = 'virdis-arch-' + Date.now();
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#1D2A23',
+        primaryBorderColor: 'rgba(74, 140, 111, 0.65)',
+        primaryTextColor: '#FFFBEB',
+        lineColor: 'rgba(74, 140, 111, 0.6)',
+        secondaryColor: '#141F1A',
+        tertiaryColor: '#182420',
+        fontSize: '14px',
+      },
+      flowchart: { curve: 'basis', padding: 16 },
+    });
+    mermaid.render(id, VIRDIS_CHART).then(({ svg: renderedSvg }) => {
+      setSvg(renderedSvg);
+    });
+  }, []);
+
+  return (
+    <div
+      className="w-full flex justify-center [&_svg]:max-w-full [&_svg]:h-auto"
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  );
+};
+
 /* ── Field survey diagram: satellite frame with sketched farm polygons ── */
-const FieldSectionDiagram = ({ isDark }: { isDark: boolean }) => {
-  const line = isDark ? 'rgba(74, 140, 111, 0.85)' : 'rgba(31, 74, 53, 0.75)';
-  const faint = isDark ? 'rgba(74, 140, 111, 0.35)' : 'rgba(31, 74, 53, 0.3)';
-  const fillA = isDark ? 'rgba(74, 140, 111, 0.18)' : 'rgba(74, 140, 111, 0.16)';
-  const fillB = isDark ? 'rgba(198, 183, 126, 0.16)' : 'rgba(198, 183, 126, 0.3)';
-  const label = isDark ? '#C9D6CB' : '#22382C';
-  const note = isDark ? '#8A9B8F' : '#4C6152';
+const FieldSectionDiagram = () => {
+  const line = 'rgba(74, 140, 111, 0.85)';
+  const faint = 'rgba(74, 140, 111, 0.35)';
+  const fillA = 'rgba(74, 140, 111, 0.18)';
+  const fillB = 'rgba(198, 183, 126, 0.16)';
+  const label = '#C9D6CB';
+  const note = '#8A9B8F';
 
   return (
     <svg viewBox="0 0 640 420" className="w-full h-auto" fill="none" style={{ fontFamily: "'Caveat', cursive" }}>
@@ -54,49 +108,50 @@ const FieldSectionDiagram = ({ isDark }: { isDark: boolean }) => {
         ))}
       </g>
 
-      {/* field labels */}
-      <text x="130" y="150" fontSize="24" fill={label} fontWeight="700">Field A · NDVI 0.71</text>
-      <text x="150" y="172" fontSize="18" fill={note}>groundnut · rabi</text>
-      <text x="340" y="140" fontSize="24" fill={label} fontWeight="700">Field B · NDVI 0.64</text>
-      <text x="360" y="162" fontSize="18" fill={note}>ragi · kharif</text>
-      <text x="110" y="300" fontSize="24" fill={label} fontWeight="700">Field C · NDVI 0.38</text>
-      <text x="130" y="322" fontSize="18" fill={note}>fallow · moisture low</text>
-      <text x="330" y="300" fontSize="24" fill={label} fontWeight="700">Field D · NDVI 0.58</text>
-      <text x="350" y="322" fontSize="18" fill={note}>coconut · mixed</text>
+      {/* field labels, centred inside each polygon */}
+      <g textAnchor="middle">
+        <text x="165" y="140" fontSize="24" fill={label} fontWeight="700">Field A · NDVI 0.71</text>
+        <text x="165" y="164" fontSize="18" fill={note}>groundnut · rabi</text>
+        <text x="382" y="140" fontSize="24" fill={label} fontWeight="700">Field B · NDVI 0.64</text>
+        <text x="382" y="164" fontSize="18" fill={note}>ragi · kharif</text>
+        <text x="165" y="296" fontSize="24" fill={label} fontWeight="700">Field C · NDVI 0.38</text>
+        <text x="165" y="320" fontSize="18" fill={note}>fallow · moisture low</text>
+        <text x="402" y="296" fontSize="24" fill={label} fontWeight="700">Field D · NDVI 0.58</text>
+        <text x="402" y="320" fontSize="18" fill={note}>coconut · mixed</text>
+      </g>
 
       {/* satellite pass */}
       <g stroke={line} strokeWidth="1.4">
         <path d="M40 40 L600 400" strokeDasharray="2 9" />
-        <rect x="540" y="44" width="26" height="18" rx="4" fill={isDark ? 'rgba(74,140,111,0.2)' : 'rgba(255,255,255,0.7)'} />
+        <rect x="540" y="44" width="26" height="18" rx="4" fill="rgba(74,140,111,0.2)" />
         <rect x="544" y="36" width="18" height="10" rx="2" />
       </g>
-      <text x="470" y="34" fontSize="18" fill={note}>Sentinel-2 pass</text>
+      <text x="470" y="34" fontSize="18" fill={note} textAnchor="end">Sentinel-2 pass</text>
 
       {/* north arrow + scale bar */}
       <g stroke={line} strokeWidth="1.4">
         <line x1="576" y1="120" x2="576" y2="96" />
         <path d="M570 104 L576 96 L582 104" fill="none" />
       </g>
-      <text x="566" y="140" fontSize="17" fill={note}>N</text>
+      <text x="576" y="140" fontSize="17" fill={note} textAnchor="middle">N</text>
       <g stroke={line} strokeWidth="1.4">
         <line x1="480" y1="392" x2="580" y2="392" />
         <line x1="480" y1="387" x2="480" y2="397" />
         <line x1="530" y1="388" x2="530" y2="396" />
         <line x1="580" y1="387" x2="580" y2="397" />
       </g>
-      <text x="492" y="386" fontSize="16" fill={note}>0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100 m</text>
+      <text x="530" y="384" fontSize="16" fill={note} textAnchor="middle">0 · 100 m</text>
     </svg>
   );
 };
 
 const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) => {
-  const { isDark } = useTheme();
-
-  const pageBg = isDark ? '#22392E' : '#FFFFFF';
-  const outsideText = isDark ? 'hsl(150 10% 65%)' : 'hsl(0 0% 40%)';
-  const outsideHeading = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
-  const outsideBorder = isDark ? 'hsl(150 15% 22%)' : 'hsl(0 0% 90%)';
-  const outsideCardBg = isDark ? 'hsl(150 18% 14%)' : 'hsl(0 0% 97%)';
+  /* The page is always dark green, no theme switching. */
+  const pageBg = '#22392E';
+  const outsideText = 'hsl(150 10% 65%)';
+  const outsideHeading = 'hsl(0 0% 96%)';
+  const outsideBorder = 'hsl(150 15% 22%)';
+  const outsideCardBg = 'hsl(150 18% 14%)';
 
   const panelBorder = '#041009';
   const panelBg = '#1D2A23';
@@ -107,32 +162,19 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
   const heading = '#FFFBEB';
   const label = '#6B7D72';
   const green = '#4A8C6F';
-  const codeBg = '#182420';
   const accent = '#C6B77E';
 
-  const font = "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+  const font = "'Inter', sans-serif";
   const hand = "'Caveat', cursive";
 
-  const dashedGreen = isDark ? 'rgba(74, 140, 111, 0.55)' : 'rgba(31, 74, 53, 0.5)';
-  const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(120,120,120,0.18)';
+  const dashedGreen = 'rgba(74, 140, 111, 0.55)';
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: pageBg }}>
-      {/* grid + hand-drawn topographic contour lines in green */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(to right, ${gridColor} 1px, transparent 1px), linear-gradient(to bottom, ${gridColor} 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-        }}
-      />
-      <TopoLinesBackground
-        stroke={isDark ? 'rgba(74, 140, 111, 0.35)' : 'rgba(31, 74, 53, 0.28)'}
-        className="z-0"
-      />
+      <TopoLinesBackground stroke="rgba(74, 140, 111, 0.35)" className="z-0" />
 
       <div className="relative z-10">
-        <Navbar />
+        <Navbar forceDark />
 
         <div className="max-w-5xl mx-auto px-6 pt-12 pb-24">
           <motion.div {...fadeUp(0)}>
@@ -152,10 +194,8 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             className="rounded-2xl p-5 sm:p-8 md:p-12 relative overflow-hidden"
             style={{
               backgroundColor: panelBg,
-              border: `4px solid ${panelBorder}`,
-              boxShadow: isDark
-                ? '0 25px 60px -12px rgba(0,0,0,0.5), 0 0 40px -10px rgba(74,140,111,0.15)'
-                : '0 25px 60px -12px rgba(0,0,0,0.25), 0 0 30px -10px rgba(4,16,9,0.1)',
+              border: `3px solid ${panelBorder}`,
+              boxShadow: '0 25px 60px -12px rgba(0,0,0,0.5), 0 0 40px -10px rgba(74,140,111,0.15)',
             }}
           >
             <div
@@ -169,7 +209,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               {/* Header */}
               <h1
                 className="text-4xl md:text-6xl leading-none tracking-tight mb-2"
-                style={{ fontFamily: hand, fontWeight: 700, color: heading }}
+                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: heading }}
               >
                 Virdis
               </h1>
@@ -226,7 +266,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               <div className="flex items-baseline justify-between gap-3 mb-5">
                 <SectionLabel label="Key Features" color={label} font={font} />
                 <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 01 — what it does
+                  fig. 01 · what it does
                 </span>
               </div>
               <div className="grid md:grid-cols-2 gap-3 mb-10">
@@ -252,7 +292,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                   >
                     <item.icon className="w-5 h-5 mt-0.5 shrink-0" style={{ color: green }} />
                     <div>
-                      <h3 className="text-xl leading-none mb-1.5" style={{ color: heading, fontFamily: hand, fontWeight: 700 }}>{item.title}</h3>
+                      <h3 className="text-[15px] leading-tight mb-1.5" style={{ color: heading, fontFamily: font, fontWeight: 600 }}>{item.title}</h3>
                       <p className="text-[13px] leading-relaxed" style={{ color: textMuted, fontFamily: font }}>{item.desc}</p>
                     </div>
                   </div>
@@ -263,7 +303,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               <div className="flex items-baseline justify-between gap-3 mb-5">
                 <SectionLabel label="Field Section" color={label} font={font} />
                 <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 02 — survey of the fields
+                  fig. 02 · survey of the fields
                 </span>
               </div>
               <div
@@ -271,96 +311,34 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 style={{
                   border: `1.5px dashed ${dashedGreen}`,
                   borderRadius: '16px 12px 18px 10px',
-                  backgroundColor: codeBg,
+                  backgroundColor: cardBg,
                 }}
               >
-                <FieldSectionDiagram isDark={isDark} />
-                <p className="text-lg text-center mt-2" style={{ color: textMuted, fontFamily: hand }}>
-                  each field is drawn on the map, then scored — vegetation, soil, climate, suitability
+                <FieldSectionDiagram />
+                <p className="text-lg text-center mt-3" style={{ color: textMuted, fontFamily: hand }}>
+                  each field is drawn on the map, then scored: vegetation, soil, climate, suitability
                 </p>
               </div>
 
-              {/* Architecture — hand-drawn survey flow */}
+              {/* Architecture — Mermaid flow, themed dark green */}
               <div className="flex items-baseline justify-between gap-3 mb-5">
                 <SectionLabel label="Architecture" color={label} font={font} />
                 <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 03 — the wiring
+                  fig. 03 · the wiring
                 </span>
               </div>
               <div
-                className="mb-10 p-6 md:p-8 w-full max-w-3xl mx-auto"
-                style={{ backgroundColor: codeBg, border: `1.5px dashed ${dashedGreen}`, borderRadius: '16px 12px 18px 10px' }}
+                className="mb-10 p-6 md:p-8 rounded-2xl overflow-x-auto"
+                style={{ backgroundColor: cardBg, border: `1px solid rgba(74, 140, 111, 0.35)` }}
               >
-                <div className="flex flex-col items-center gap-1">
-                  <div
-                    className="px-5 py-2.5 text-center text-sm font-semibold"
-                    style={{ color: heading, border: `1.5px dashed ${dashedGreen}`, borderRadius: '12px 9px 13px 8px', backgroundColor: 'rgba(255,251,235,0.05)' }}
-                  >
-                    User / Browser
-                  </div>
-                  <FlowArrow color={green} />
-                  <div
-                    className="px-5 py-2.5 text-center text-sm font-semibold"
-                    style={{ color: heading, border: `1.5px solid ${green}`, borderRadius: '12px 9px 13px 8px', backgroundColor: 'rgba(74,140,111,0.15)' }}
-                  >
-                    Frontend
-                    <span className="block text-[11px] mt-0.5 font-normal" style={{ color: textMuted }}>React + Mapbox GL JS + Tailwind</span>
-                  </div>
-                  <FlowArrow color={green} />
-                  <div
-                    className="px-5 py-2.5 text-center text-sm font-semibold"
-                    style={{ color: heading, border: `1.5px dashed ${dashedGreen}`, borderRadius: '12px 9px 13px 8px', backgroundColor: 'rgba(74,140,111,0.1)' }}
-                  >
-                    Edge Functions
-                    <span className="block text-[11px] mt-0.5 font-normal" style={{ color: textMuted }}>Supabase / Deno</span>
-                  </div>
-
-                  {/* Function branches */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full mt-2">
-                    {[
-                      { name: 'analyze-field', target: 'GEE + Gemini' },
-                      { name: 'gee-analytics', target: 'Earth Engine' },
-                      { name: 'gee-ndvi-tiles', target: 'Earth Engine' },
-                      { name: 'ndvi-timeseries', target: 'Earth Engine' },
-                      { name: 'crop-planning', target: 'Gemini 2.5 Pro' },
-                      { name: 'soil-data', target: 'SoilGrids API' },
-                      { name: 'get-mapbox-token', target: 'Mapbox API' },
-                      { name: 'keepalive', target: 'Health Check' },
-                    ].map((fn, i) => (
-                      <div key={fn.name} className="flex flex-col items-center gap-1">
-                        <FlowArrow color={green} small />
-                        <div
-                          className="px-3 py-2 text-center w-full"
-                          style={{ backgroundColor: 'rgba(255,251,235,0.05)', border: `1px dashed ${dashedGreen}`, borderRadius: '10px 7px 11px 7px', transform: `rotate(${i % 2 === 0 ? -0.3 : 0.3}deg)` }}
-                        >
-                          <span className="block text-[11px] font-semibold" style={{ color: green }}>{fn.name}</span>
-                          <span className="block text-[10px] mt-1" style={{ color: textMuted }}>→ {fn.target}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* External Data Sources */}
-                  <div className="w-full flex flex-col items-center mt-3">
-                    <FlowArrow color={accent} />
-                    <div
-                      className="px-5 py-3 text-center w-full max-w-md"
-                      style={{ backgroundColor: 'rgba(198,183,126,0.1)', border: `1.5px dashed ${accent}`, borderRadius: '12px 9px 13px 8px', color: heading }}
-                    >
-                      <span className="text-sm font-semibold">External Data Sources</span>
-                      <span className="block text-[11px] mt-1" style={{ color: textMuted }}>
-                        Google Earth Engine · Open-Meteo · ISRIC SoilGrids · Mapbox · Sentinel-2 · ESA WorldCover · SRTM · CHIRPS
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <ArchitectureDiagram />
               </div>
 
               {/* Tech Stack */}
               <div className="flex items-baseline justify-between gap-3 mb-5">
                 <SectionLabel label="Tech Stack" color={label} font={font} />
                 <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 04 — the kit
+                  fig. 04 · the kit
                 </span>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
@@ -371,10 +349,8 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                   { l: 'State & Routing', v: 'TanStack Query 5 · React Router 6' },
                   { l: 'Backend', v: 'Supabase Edge Functions (Deno)' },
                   { l: 'Satellite', v: 'Google Earth Engine (Sentinel-2 · ESA WorldCover · SRTM · CHIRPS)' },
-                  { l: 'AI', v: 'Google Gemini 2.5 Pro' },
                   { l: 'Weather', v: 'Open-Meteo (Forecast · Archive · Air Quality)' },
                   { l: 'Soil', v: 'ISRIC SoilGrids (250m)' },
-                  { l: 'PDF Export', v: 'jsPDF' },
                   { l: 'Animations', v: 'tailwindcss-animate' },
                 ].map((item, i) => (
                   <div
@@ -445,7 +421,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 className="group flex flex-col gap-1 p-5 rounded-xl transition-colors text-right ml-auto w-full"
                 style={{ backgroundColor: outsideCardBg, border: `1px solid ${outsideBorder}` }}
               >
-                <span className="text-[11px] uppercase tracking-widest flex items-center justify-end gap-1" style={{ color: outsideText, fontFamily: font }}>
+                <span className="text-[11px] uppercase tracking-widest flex items-center gap-1" style={{ color: outsideText, fontFamily: font }}>
                   Next <ArrowRight className="w-3 h-3" />
                 </span>
                 <span className="text-sm font-semibold group-hover:-translate-x-0.5 transition-transform" style={{ color: outsideHeading, fontFamily: font }}>
@@ -459,19 +435,6 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
     </div>
   );
 };
-
-/* hand-drawn down arrow */
-const FlowArrow = ({ color, small }: { color: string; small?: boolean }) => (
-  <svg width={small ? 12 : 16} height={small ? 14 : 22} viewBox="0 0 16 22" fill="none" aria-hidden>
-    <path
-      d={small ? 'M8 0 C 6 6, 10 8, 8 13 L8 14 M4 10 L8 14 L12 10' : 'M8 0 C 6.5 8, 9.5 12, 8 20 M3.5 15 L8 20 L12.5 15'}
-      stroke={color}
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 const SectionLabel = ({ label, color, font }: { label: string; color: string; font: string }) => (
   <h2
