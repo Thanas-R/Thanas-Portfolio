@@ -187,23 +187,23 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 top: node.y,
                 width: node.width,
                 height: node.height,
-                backgroundColor: '#1D1D1D',
-                border: '1px solid rgba(255, 255, 255, 0.09)',
+                backgroundColor: cardBg,
+                border: `1px solid ${cardBorder}`,
                 borderRadius: '12px',
               }}
             >
               <div className="flex items-center gap-2 mb-2">
                 <Icon className="w-4 h-4 shrink-0" style={{ color: node.iconColor }} />
                 <h3
-                  className="text-[15px] leading-tight"
-                  style={{ color: '#EDEDED', fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
+                  className="text-[15px] leading-tight text-left"
+                  style={{ color: titleColor, fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
                 >
                   {node.title}
                 </h3>
               </div>
               <p
                 className="text-[13px] leading-relaxed text-left"
-                style={{ color: 'rgba(255, 255, 255, 0.55)', fontFamily: "'Inter', sans-serif" }}
+                style={{ color: bodyColor, fontFamily: "'Inter', sans-serif" }}
               >
                 {node.content}
               </p>
@@ -410,12 +410,12 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
           </motion.div>
         </div>
 
-        {/* Key features graph: full-bleed dark band, dotted grid runs across the whole width */}
-        <div className="w-screen relative left-1/2 -translate-x-1/2" style={{ backgroundColor: '#141414' }}>
+        {/* Key features graph: dotted grid sits on the page background, blending into the page */}
+        <div className="w-screen relative left-1/2 -translate-x-1/2" style={{ backgroundColor: isDark ? '#0C0F0D' : '#F4F2EE' }}>
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.09) 1.2px, transparent 1.3px)',
+              backgroundImage: `radial-gradient(circle, ${isDark ? 'rgba(255,255,255,0.09)' : 'rgba(0,0,0,0.08)'} 1.2px, transparent 1.3px)`,
               backgroundSize: '26px 26px',
             }}
             aria-hidden
@@ -424,11 +424,11 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             <motion.div {...fadeUp(0.2)}>
               <h2
                 className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-6"
-                style={{ color: 'rgba(255, 255, 255, 0.45)', fontFamily: font }}
+                style={{ color: isDark ? 'rgba(255, 255, 255, 0.45)' : 'rgba(0, 0, 0, 0.5)', fontFamily: font }}
               >
                 Key Features
               </h2>
-              <FlowchartCanvas />
+              <FlowchartCanvas isDark={isDark} />
             </motion.div>
           </div>
         </div>
