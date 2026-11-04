@@ -176,7 +176,7 @@ const SlateDetail = ({ project, prevProject, nextProject }: Props) => {
           <motion.div {...fadeUp(0.12)} className="mb-14">
             <div
               className="rounded-2xl overflow-hidden"
-              style={{ border: `1px solid ${C.borderStrong}`, backgroundColor: C.panel, boxShadow: '0 30px 80px -30px rgba(0,0,0,0.7)' }}
+              style={{ border: `1px solid ${C.borderStrong}`, backgroundColor: C.panel, boxShadow: isDark ? '0 30px 80px -30px rgba(0,0,0,0.7)' : '0 30px 80px -30px rgba(28,28,34,0.25)' }}
             >
               {/* macOS traffic lights + tab strip in one titlebar row */}
               <div
