@@ -644,11 +644,19 @@ const ProjectDetailPage = () => {
                 </div>
               </motion.div>
 
-              {/* Right: Mac mockup */}
+              {/* Right: Mac mockup — cropped-in reveal, layout unchanged */}
               <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex items-start justify-center mt-8 md:mt-0">
-                <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer w-full max-w-[650px]">
-                  <Mac src={thanasOsMac} className="w-full h-auto text-background" />
-                </a>
+                <motion.div
+                  initial={{ clipPath: 'inset(6% 10% 26% 10% round 28px)', scale: 0.97 }}
+                  whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 28px)', scale: 1 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.9, ease: 'easeOut' }}
+                  className="w-full max-w-[650px]"
+                >
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer w-full">
+                    <Mac src={thanasOsMac} className="w-full h-auto text-background" />
+                  </a>
+                </motion.div>
               </motion.div>
             </div>
 
