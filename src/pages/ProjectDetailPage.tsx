@@ -621,16 +621,24 @@ const ProjectDetailPage = () => {
       }
     </div>
   </div>
-  <div className="flex items-center gap-4 pl-[164px] md:pl-[204px]">
-    {project.github &&
-      <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0">
-        <Github className="w-4 h-4" />
-        GitHub
-      </a>
-    }
+<div className="flex items-center gap-4">
+  <div className="w-[148px] md:w-[188px] flex items-center justify-end shrink-0">
     <p className="text-xs text-muted-foreground whitespace-nowrap">
       macOS-themed interactive website
     </p>
+  </div>
+  <div className="shrink-0">
+    {project.github && (
+      <a
+        href={project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0"
+      >
+        <Github className="w-4 h-4" />
+        GitHub
+      </a>
+    )}
   </div>
 </div>
                 <div className="flex flex-wrap gap-2 mb-8">
