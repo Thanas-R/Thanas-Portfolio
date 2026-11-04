@@ -394,30 +394,18 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
           </motion.div>
         </div>
 
-        {/* Key features graph: dotted grid sits on the page background, blending into the page */}
-        <div className="w-screen relative left-1/2 -translate-x-1/2" style={{ backgroundColor: isDark ? '#0C0F0D' : '#F4F2EE' }}>
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage: `radial-gradient(circle, ${isDark ? 'rgba(255,255,255,0.09)' : 'rgba(0,0,0,0.08)'} 1.2px, transparent 1.3px)`,
-              backgroundSize: '26px 26px',
-            }}
-            aria-hidden
-          />
-          <div className="relative max-w-4xl mx-auto px-6 py-14">
-            <motion.div {...fadeUp(0.2)}>
-              <h2
-                className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-6"
-                style={{ color: isDark ? 'rgba(255, 255, 255, 0.45)' : 'rgba(0, 0, 0, 0.5)', fontFamily: font }}
-              >
-                Key Features
-              </h2>
-              <FlowchartCanvas isDark={isDark} />
-            </motion.div>
-          </div>
-        </div>
-
         <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+          {/* Key features flowchart, inside the page column */}
+          <motion.div {...fadeUp(0.2)} className="mb-14">
+            <h2
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-6"
+              style={{ color: labelColor, fontFamily: font }}
+            >
+              Key Features
+            </h2>
+            <FlowchartCanvas isDark={isDark} />
+          </motion.div>
+
           {/* Neural Retrieval */}
           <motion.div {...fadeUp(0.24)}>
             <h2
