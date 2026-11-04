@@ -40,7 +40,7 @@ const FEATURES: FlowNode[] = [
     content: 'Every prompt becomes one independent card with a short title, a summary and an explanation. Cards never extend each other.',
     icon: Layout,
     iconColor: '#7E97C9',
-    x: 24, y: 20, width: 348, height: 128,
+    x: 24, y: 20, width: 348, height: 126,
   },
   {
     id: 'fields',
@@ -48,15 +48,15 @@ const FEATURES: FlowNode[] = [
     content: 'Each card is embedded on 9 separate fields with all MiniLM L6, & every field carries its own weight in the final score.',
     icon: Layers,
     iconColor: '#B5854F',
-    x: 430, y: 68, width: 306, height: 132,
+    x: 430, y: 75, width: 306, height: 125,
   },
   {
     id: 'scoring',
     title: 'Weighted Cosine Scoring',
-    content: 'A pair of cards is scored as a weighted sum of per field cosine similarities across all nine embeddings. Pairs above 0.4 automatically become links on the canvas.',
+    content: 'A pair of cards is scored as a weighted sum of per field cosine similarities to measure semantic overlap. Pairs above the 0.4 threshold become links.',
     icon: GitBranch,
     iconColor: '#4E9A7C',
-    x: 48, y: 250, width: 296, height: 155,
+    x: 48, y: 247, width: 296, height: 150,
   },
   {
     id: 'explain',
@@ -261,13 +261,14 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
         }}
       />
 
-      {/* Expanded center width by 60% (from 28rem each side up to 45rem / 90rem total) */}
+      {/* Side stripes reduced in half: inner solid region covers 92% of screen width */}
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(to right, transparent 0%, transparent calc(50% - 45rem), ${pageCover} calc(50% - 45rem), ${pageCover} calc(50% + 45rem), transparent calc(50% + 45rem), transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, transparent 4%, ${pageCover} 4%, ${pageCover} 96%, transparent 96%, transparent 100%)`,
         }}
       />
+
     </div>
   );
 };
