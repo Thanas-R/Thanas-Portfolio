@@ -265,7 +265,7 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(to right, transparent 0%, transparent 4%, ${pageCover} 4%, ${pageCover} 90%, transparent 96%, transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, transparent 4%, ${pageCover} 7%, ${pageCover} 93%, transparent 95%, transparent 100%)`,
         }}
       />
 
