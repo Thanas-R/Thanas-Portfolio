@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
@@ -216,85 +216,47 @@ const ProjectDetailPage = () => {
   // Smart Chef background removed per user request
   const smartChefBg = undefined;
 
-  const SideNav = () =>
-  <>
-      {prevProject &&
-    <Link
-      to={`/projects/${prevProject.id}`}
-      className="fixed left-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
-      style={{
-        backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
-        borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)'
-      }}
-      aria-label="Previous project">
-      
-          <ChevronLeft className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
-        </Link>
-    }
-      {nextProject &&
-    <Link
-      to={`/projects/${nextProject.id}`}
-      className="fixed right-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
-      style={{
-        backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
-        borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)'
-      }}
-      aria-label="Next project">
-      
-          <ChevronRight className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
-        </Link>
-    }
-    </>;
+
 
 
   if (isVirdis) {
-    return <><SideNav /><VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+    return <><VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   if (isNautilus) {
-    return <><SideNav /><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+    return <><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   if (isSpheal) {
     return (
-      <>
-        <SideNav />
-        <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>);
 
   }
 
   if (isOdinTree) {
     return (
-      <>
-        <SideNav />
-        <OdinTreeDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <OdinTreeDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   if (isAskPesu) {
     return (
-      <>
-        <SideNav />
-        <AskPesuDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <AskPesuDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   if (isSlate) {
     return (
-      <>
-        <SideNav />
-        <SlateDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <SlateDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   return (
-    <>
-      <SideNav />
-      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
+    <>      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
         {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <Navbar />}
 
