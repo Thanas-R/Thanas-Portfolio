@@ -45,7 +45,7 @@ const contactLinks = [
 ];
 
 const ContactSection = () => {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', message: '', username: '', location: '' });
   const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
