@@ -45,7 +45,7 @@ const FEATURES: FlowNode[] = [
     content: 'Every prompt becomes one independent card with a short title, a summary and an explanation. Cards never extend each other.',
     icon: Layout,
     iconColor: '#7E97C9',
-    x: 60, y: 20, width: 260, height: 118,
+    x: 10, y: 8, width: 360, height: 170,
   },
   {
     id: 'fields',
@@ -53,7 +53,7 @@ const FEATURES: FlowNode[] = [
     content: 'Each card is embedded on nine separate fields with all MiniLM L6 v2, and every field carries its own weight in the final score.',
     icon: Layers,
     iconColor: '#B5854F',
-    x: 380, y: 20, width: 250, height: 118,
+    x: 390, y: 8, width: 360, height: 170,
   },
   {
     id: 'scoring',
@@ -61,7 +61,7 @@ const FEATURES: FlowNode[] = [
     content: 'A pair of cards is scored as a weighted sum of per field cosine similarities. Pairs above 0.4 become links.',
     icon: GitBranch,
     iconColor: '#4E9A7C',
-    x: 60, y: 218, width: 260, height: 118,
+    x: 10, y: 224, width: 360, height: 170,
   },
   {
     id: 'explain',
@@ -69,7 +69,7 @@ const FEATURES: FlowNode[] = [
     content: 'Only linked pairs reach the LLM. It writes a short label plus a reason for why and how the two concepts connect.',
     icon: Brain,
     iconColor: '#C4704F',
-    x: 380, y: 218, width: 250, height: 118,
+    x: 390, y: 224, width: 360, height: 170,
   },
   {
     id: 'boundary',
@@ -77,7 +77,7 @@ const FEATURES: FlowNode[] = [
     content: 'Links scoring between 0.4 and 0.55 are flagged as boundary links and prompt you to rate the connection.',
     icon: MessageSquare,
     iconColor: '#8E7FD1',
-    x: 60, y: 416, width: 260, height: 118,
+    x: 10, y: 440, width: 360, height: 170,
   },
   {
     id: 'nnls',
@@ -85,7 +85,7 @@ const FEATURES: FlowNode[] = [
     content: 'Rate links out of 100 and non negative least squares refits the nine field weights to match your judgement.',
     icon: Network,
     iconColor: '#6FAE8C',
-    x: 380, y: 416, width: 250, height: 118,
+    x: 390, y: 440, width: 360, height: 170,
   },
 ];
 
@@ -116,8 +116,8 @@ function getEdgePath(from: FlowNode, to: FlowNode): string {
   return `M ${sx} ${sy} C ${sx} ${sy + dy * 0.5}, ${ex} ${ey - dy * 0.5}, ${ex} ${ey}`;
 }
 
-/* ── Key features graph: always dark, dotted grid extends across the full page width ── */
-const FlowchartCanvas = () => {
+/* ── Key features graph: dotted grid on the page background, cards adapt to the theme ── */
+const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
 
@@ -125,7 +125,7 @@ const FlowchartCanvas = () => {
     const handleResize = () => {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
-        setScale(Math.min(1, (w - 8) / 680));
+        setScale(Math.min(1, (w - 8) / 760));
       }
     };
     handleResize();
@@ -133,9 +133,13 @@ const FlowchartCanvas = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const canvasW = 680;
-  const canvasH = 574;
-  const edgeColor = 'rgba(120, 190, 155, 0.6)';
+  const canvasW = 760;
+  const canvasH = 618;
+  const edgeColor = isDark ? 'rgba(150, 200, 175, 0.55)' : 'rgba(70, 90, 80, 0.45)';
+  const cardBg = isDark ? '#1D1D1D' : '#FFFFFF';
+  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.09)' : 'rgba(0, 0, 0, 0.09)';
+  const titleColor = isDark ? '#EDEDED' : '#1A1A1A';
+  const bodyColor = isDark ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 0, 0, 0.58)';
 
   return (
     <div ref={containerRef} className="w-full overflow-hidden">
