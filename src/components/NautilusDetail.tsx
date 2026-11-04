@@ -45,7 +45,7 @@ const FEATURES: FlowNode[] = [
     content: 'Every prompt becomes one independent card with a short title, a summary and an explanation. Cards never extend each other.',
     icon: Layout,
     iconColor: '#7E97C9',
-    x: 60, y: 20, width: 260, height: 118,
+    x: 10, y: 8, width: 360, height: 170,
   },
   {
     id: 'fields',
@@ -53,7 +53,7 @@ const FEATURES: FlowNode[] = [
     content: 'Each card is embedded on nine separate fields with all MiniLM L6 v2, and every field carries its own weight in the final score.',
     icon: Layers,
     iconColor: '#B5854F',
-    x: 380, y: 20, width: 250, height: 118,
+    x: 390, y: 8, width: 360, height: 170,
   },
   {
     id: 'scoring',
@@ -61,7 +61,7 @@ const FEATURES: FlowNode[] = [
     content: 'A pair of cards is scored as a weighted sum of per field cosine similarities. Pairs above 0.4 become links.',
     icon: GitBranch,
     iconColor: '#4E9A7C',
-    x: 60, y: 218, width: 260, height: 118,
+    x: 10, y: 224, width: 360, height: 170,
   },
   {
     id: 'explain',
@@ -69,7 +69,7 @@ const FEATURES: FlowNode[] = [
     content: 'Only linked pairs reach the LLM. It writes a short label plus a reason for why and how the two concepts connect.',
     icon: Brain,
     iconColor: '#C4704F',
-    x: 380, y: 218, width: 250, height: 118,
+    x: 390, y: 224, width: 360, height: 170,
   },
   {
     id: 'boundary',
@@ -77,7 +77,7 @@ const FEATURES: FlowNode[] = [
     content: 'Links scoring between 0.4 and 0.55 are flagged as boundary links and prompt you to rate the connection.',
     icon: MessageSquare,
     iconColor: '#8E7FD1',
-    x: 60, y: 416, width: 260, height: 118,
+    x: 10, y: 440, width: 360, height: 170,
   },
   {
     id: 'nnls',
@@ -85,7 +85,7 @@ const FEATURES: FlowNode[] = [
     content: 'Rate links out of 100 and non negative least squares refits the nine field weights to match your judgement.',
     icon: Network,
     iconColor: '#6FAE8C',
-    x: 380, y: 416, width: 250, height: 118,
+    x: 390, y: 440, width: 360, height: 170,
   },
 ];
 
@@ -116,8 +116,8 @@ function getEdgePath(from: FlowNode, to: FlowNode): string {
   return `M ${sx} ${sy} C ${sx} ${sy + dy * 0.5}, ${ex} ${ey - dy * 0.5}, ${ex} ${ey}`;
 }
 
-/* ── Key features graph: always dark, dotted grid extends across the full page width ── */
-const FlowchartCanvas = () => {
+/* ── Key features graph: dotted grid on the page background, cards adapt to the theme ── */
+const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
 
@@ -125,7 +125,7 @@ const FlowchartCanvas = () => {
     const handleResize = () => {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
-        setScale(Math.min(1, (w - 8) / 680));
+        setScale(Math.min(1, (w - 8) / 760));
       }
     };
     handleResize();
@@ -133,9 +133,13 @@ const FlowchartCanvas = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const canvasW = 680;
-  const canvasH = 574;
-  const edgeColor = 'rgba(120, 190, 155, 0.6)';
+  const canvasW = 760;
+  const canvasH = 618;
+  const edgeColor = isDark ? 'rgba(150, 200, 175, 0.55)' : 'rgba(70, 90, 80, 0.45)';
+  const cardBg = isDark ? '#1D1D1D' : '#FFFFFF';
+  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.09)' : 'rgba(0, 0, 0, 0.09)';
+  const titleColor = isDark ? '#EDEDED' : '#1A1A1A';
+  const bodyColor = isDark ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 0, 0, 0.58)';
 
   return (
     <div ref={containerRef} className="w-full overflow-hidden">
@@ -183,23 +187,23 @@ const FlowchartCanvas = () => {
                 top: node.y,
                 width: node.width,
                 height: node.height,
-                backgroundColor: '#1D1D1D',
-                border: '1px solid rgba(255, 255, 255, 0.09)',
+                backgroundColor: cardBg,
+                border: `1px solid ${cardBorder}`,
                 borderRadius: '12px',
               }}
             >
               <div className="flex items-center gap-2 mb-2">
                 <Icon className="w-4 h-4 shrink-0" style={{ color: node.iconColor }} />
                 <h3
-                  className="text-[15px] leading-tight"
-                  style={{ color: '#EDEDED', fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
+                  className="text-[15px] leading-tight text-left"
+                  style={{ color: titleColor, fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
                 >
                   {node.title}
                 </h3>
               </div>
               <p
                 className="text-[13px] leading-relaxed text-left"
-                style={{ color: 'rgba(255, 255, 255, 0.55)', fontFamily: "'Inter', sans-serif" }}
+                style={{ color: bodyColor, fontFamily: "'Inter', sans-serif" }}
               >
                 {node.content}
               </p>
@@ -252,9 +256,10 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-/* ── Side-edge backdrop: image peeks in only at the far left & right, with a wide smooth fade ── */
+/* ── Side-edge backdrop: image peeks in only at the far left & right, with a smooth fade-in ── */
 const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
   const pageCover = isDark ? '#0C0F0D' : '#F4F2EE';
+  const [bgLoaded, setBgLoaded] = useState(false);
   return (
     <div className="fixed inset-0 z-0" aria-hidden>
       <img
@@ -263,13 +268,19 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
         className="absolute inset-0 w-full h-full object-cover"
         loading="eager"
         decoding="async"
-        style={{ filter: 'blur(6px)', transform: 'scale(1.03)' }}
+        onLoad={() => setBgLoaded(true)}
+        style={{
+          filter: 'blur(6px)',
+          transform: 'scale(1.03)',
+          opacity: bgLoaded ? 1 : 0,
+          transition: 'opacity 700ms ease-out',
+        }}
       />
-      {/* cover the middle with a long, smooth gradient so only soft edge strips remain */}
+      {/* cover the middle with a long, smooth gradient so only narrow edge strips remain */}
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(to right, transparent 0%, transparent 2%, ${pageCover} 26%, ${pageCover} 74%, transparent 98%, transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, transparent 3%, ${pageCover} 12%, ${pageCover} 88%, transparent 97%, transparent 100%)`,
         }}
       />
       {/* soften the image behind the edge strips */}
@@ -399,12 +410,12 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
           </motion.div>
         </div>
 
-        {/* Key features graph: full-bleed dark band, dotted grid runs across the whole width */}
-        <div className="w-screen relative left-1/2 -translate-x-1/2" style={{ backgroundColor: '#141414' }}>
+        {/* Key features graph: dotted grid sits on the page background, blending into the page */}
+        <div className="w-screen relative left-1/2 -translate-x-1/2" style={{ backgroundColor: isDark ? '#0C0F0D' : '#F4F2EE' }}>
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.09) 1.2px, transparent 1.3px)',
+              backgroundImage: `radial-gradient(circle, ${isDark ? 'rgba(255,255,255,0.09)' : 'rgba(0,0,0,0.08)'} 1.2px, transparent 1.3px)`,
               backgroundSize: '26px 26px',
             }}
             aria-hidden
@@ -413,11 +424,11 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
             <motion.div {...fadeUp(0.2)}>
               <h2
                 className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-6"
-                style={{ color: 'rgba(255, 255, 255, 0.45)', fontFamily: font }}
+                style={{ color: isDark ? 'rgba(255, 255, 255, 0.45)' : 'rgba(0, 0, 0, 0.5)', fontFamily: font }}
               >
                 Key Features
               </h2>
-              <FlowchartCanvas />
+              <FlowchartCanvas isDark={isDark} />
             </motion.div>
           </div>
         </div>
@@ -437,19 +448,16 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                   icon: Network,
                   title: 'GNNs',
                   desc: 'Graph neural networks pass messages along the edges of the knowledge graph, so every card\u2019s embedding is shaped by the ideas it connects to. The structure of the graph itself becomes part of the representation.',
-                  tilt: -0.6,
                 },
                 {
                   icon: GitFork,
                   title: 'Sub-GNNs',
                   desc: 'Sub graph neural networks reason over sampled neighbourhoods instead of the whole graph, so local clusters of ideas can be retrieved efficiently even as the canvas grows into thousands of nodes.',
-                  tilt: 0.5,
                 },
                 {
                   icon: Waves,
                   title: 'Spatio-Temporal GNNs',
                   desc: 'Spatio temporal GNNs model both structure and time, tracking how the links between your concepts evolve across sessions, so retrieval can surface what you were actively building recently.',
-                  tilt: -0.4,
                 },
               ].map((item) => (
                 <div
@@ -459,11 +467,10 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                     backgroundColor: cardBg,
                     border: `1.5px dashed ${dashedBorder}`,
                     borderRadius: '14px 10px 15px 9px',
-                    transform: `rotate(${item.tilt}deg)`,
                   }}
                 >
                   <div className="flex items-center gap-2 mb-2.5">
-                    <item.icon className="w-4 h-4" style={{ color: 'rgba(120, 190, 155, 0.75)' }} />
+                    <item.icon className="w-4 h-4 shrink-0" style={{ color: isDark ? 'rgba(180, 180, 180, 0.85)' : 'rgba(70, 70, 70, 0.75)' }} />
                     <h3
                       className="text-[15px] leading-tight"
                       style={{ color: headingColor, fontFamily: font, fontWeight: 600 }}
@@ -485,7 +492,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
             >
               <div className="flex items-center gap-2 mb-2.5">
-                <Cpu className="w-4 h-4" style={{ color: 'rgba(120, 190, 155, 0.75)' }} />
+                <Cpu className="w-4 h-4 shrink-0" style={{ color: isDark ? 'rgba(180, 180, 180, 0.85)' : 'rgba(70, 70, 70, 0.75)' }} />
                 <h3
                   className="text-[15px] leading-tight"
                   style={{ color: headingColor, fontFamily: font, fontWeight: 600 }}
@@ -519,7 +526,6 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                     backgroundColor: cardBg,
                     border: `1.5px dashed ${dashedBorder}`,
                     borderRadius: '12px 9px 13px 8px',
-                    transform: `rotate(${(i % 3) - 1 === -1 ? -0.4 : (i % 3) === 1 ? 0.4 : 0}deg)`,
                   }}
                 >
                   <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: labelColor, fontFamily: font }}>{item.l}</p>

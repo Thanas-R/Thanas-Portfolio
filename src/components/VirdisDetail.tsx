@@ -208,10 +208,10 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
             <div className="relative z-10">
               {/* Header */}
               <h1
-                className="text-4xl md:text-6xl leading-none tracking-tight mb-2"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: heading }}
+                className="text-5xl md:text-7xl leading-none tracking-tight mb-2"
+                style={{ fontFamily: "'Caesar Dressing', system-ui", fontWeight: 400, color: heading }}
               >
-                Virdis
+                ViRDIS
               </h1>
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
@@ -254,7 +254,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
 
               {/* Description */}
               <p
-                className="text-sm md:text-base leading-relaxed max-w-2xl mb-8"
+                className="text-base md:text-lg leading-relaxed text-justify mb-8"
                 style={{ color: textMuted, fontFamily: font }}
               >
                 Satellite-powered land analytics platform. Draw regions on a map and get NDVI vegetation analysis, climate data, soil profiling, land use classification, suitability scoring, and AI crop recommendations, all in one dashboard.
@@ -263,12 +263,9 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               <div className="w-px mb-10" style={{ borderBottom: `1.5px dashed ${dashedGreen}` }} />
 
               {/* Key Features */}
-              <div className="flex items-baseline justify-between gap-3 mb-5">
-                <SectionLabel label="Key Features" color={label} font={font} />
-                <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 01 · what it does
-                </span>
-              </div>
+              <h2 className="text-2xl md:text-3xl mb-5" style={{ fontFamily: "'Caesar Dressing', system-ui", color: heading }}>
+                Key Features
+              </h2>
               <div className="grid md:grid-cols-2 gap-3 mb-10">
                 {[
                   { icon: Map, title: 'Interactive Satellite Mapping', desc: 'Polygon drawing tools on Mapbox GL JS with satellite and dark basemaps, fly-to animations, geocoding search, and NDVI raster overlay.' },
@@ -300,14 +297,9 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               </div>
 
               {/* Field section — satellite survey sheet */}
-              <div className="flex items-baseline justify-between gap-3 mb-5">
-                <SectionLabel label="Field Section" color={label} font={font} />
-                <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 02 · survey of the fields
-                </span>
-              </div>
+              <SectionLabel label="Field Section" color={label} font={font} />
               <div
-                className="mb-10 p-4 md:p-6"
+                className="mb-10 mt-5 p-4 md:p-6"
                 style={{
                   border: `1.5px dashed ${dashedGreen}`,
                   borderRadius: '16px 12px 18px 10px',
@@ -321,27 +313,17 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               </div>
 
               {/* Architecture — Mermaid flow, themed dark green */}
-              <div className="flex items-baseline justify-between gap-3 mb-5">
-                <SectionLabel label="Architecture" color={label} font={font} />
-                <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 03 · the wiring
-                </span>
-              </div>
+              <SectionLabel label="Architecture" color={label} font={font} />
               <div
-                className="mb-10 p-6 md:p-8 rounded-2xl overflow-x-auto"
+                className="mb-10 mt-5 p-6 md:p-8 rounded-2xl overflow-x-auto"
                 style={{ backgroundColor: cardBg, border: `1px solid rgba(74, 140, 111, 0.35)` }}
               >
                 <ArchitectureDiagram />
               </div>
 
               {/* Tech Stack */}
-              <div className="flex items-baseline justify-between gap-3 mb-5">
-                <SectionLabel label="Tech Stack" color={label} font={font} />
-                <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 04 · the kit
-                </span>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
+              <SectionLabel label="Tech Stack" color={label} font={font} />
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10 mt-5">
                 {[
                   { l: 'Frontend', v: 'React 18 · TypeScript 5 · Vite 5 · Tailwind CSS · shadcn/ui' },
                   { l: 'Mapping', v: 'Mapbox GL JS 3' },
@@ -388,9 +370,6 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                     <img src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
                   )}
                 </div>
-                <p className="text-lg text-center mt-1.5 mb-0.5" style={{ color: green, fontFamily: hand }}>
-                  the dashboard, pinned down
-                </p>
               </div>
             </div>
           </motion.div>
