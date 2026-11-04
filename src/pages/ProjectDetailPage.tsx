@@ -628,7 +628,7 @@ const ProjectDetailPage = () => {
         GitHub
       </a>
     }
-    <p className="text-sm text-muted-foreground">
+    <p className="text-xs text-muted-foreground whitespace-nowrap">
       macOS-themed interactive website
     </p>
   </div>
