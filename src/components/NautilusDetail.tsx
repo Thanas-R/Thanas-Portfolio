@@ -33,6 +33,57 @@ interface FlowNode {
   height: number;
 }
 
+const FEATURES: FlowNode[] = [
+  {
+    id: 'canvas',
+    title: 'Knowledge Canvas',
+    content: 'Every prompt becomes one independent card with a short title, a summary and an explanation. Cards never extend each other.',
+    icon: Layout,
+    iconColor: '#7E97C9',
+    x: 24, y: 26, width: 348, height: 148,
+  },
+  {
+    id: 'fields',
+    title: 'Nine Linking Fields',
+    content: 'Each card is embedded on nine separate fields with all MiniLM L6 v2, and every field carries its own weight in the final score.',
+    icon: Layers,
+    iconColor: '#B5854F',
+    x: 430, y: 48, width: 306, height: 152,
+  },
+  {
+    id: 'scoring',
+    title: 'Weighted Cosine Scoring',
+    content: 'A pair of cards is scored as a weighted sum of per field cosine similarities. Pairs above 0.4 become links.',
+    icon: GitBranch,
+    iconColor: '#4E9A7C',
+    x: 48, y: 248, width: 296, height: 140,
+  },
+  {
+    id: 'explain',
+    title: 'LLM Explained Links',
+    content: 'Only linked pairs reach the LLM. It writes a short label plus a reason for why and how the two concepts connect.',
+    icon: Brain,
+    iconColor: '#C4704F',
+    x: 420, y: 244, width: 316, height: 152,
+  },
+  {
+    id: 'boundary',
+    title: 'Boundary Band Rating',
+    content: 'Links scoring between 0.4 and 0.55 are flagged as boundary links and prompt you to rate the connection.',
+    icon: MessageSquare,
+    iconColor: '#8E7FD1',
+    x: 32, y: 460, width: 302, height: 140,
+  },
+  {
+    id: 'nnls',
+    title: 'NNLS Personalisation',
+    content: 'Rate links out of 100 and non negative least squares refits the nine field weights to match your judgement.',
+    icon: Network,
+    iconColor: '#6FAE8C',
+    x: 402, y: 478, width: 334, height: 132,
+  },
+];
+
 /* ── Hand-drawn curvy connectors: each edge gets its own relaxed bezier, no two alike ── */
 const EDGE_PATHS: Record<string, string> = {
   // canvas -> fields: dips low, then lifts into the side of the card
