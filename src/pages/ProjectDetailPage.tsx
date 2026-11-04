@@ -141,11 +141,26 @@ const ProjectDetailPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevProject, nextProject, navigate]);
 
+  // Dark-themed page scrollbar for backdrop pages (nautilus / pesu mc / pesu forge / contour)
+  useEffect(() => {
+    const darkScroll = isPesuForge || isPesuMC || isContourFlow || isNautilus;
+    if (darkScroll) {
+      document.documentElement.setAttribute('data-darkscroll', 'true');
+      return () => document.documentElement.removeAttribute('data-darkscroll');
+    }
+  }, [isPesuForge, isPesuMC, isContourFlow, isNautilus]);
+
   useEffect(() => {
     if (!project) return;
 
     const preload = (srcs: string[]) => {
       srcs.forEach((src) => {
+        // Link preload starts the download before JS even renders the backdrop
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
         const img = new Image();
         img.decoding = 'async';
         img.src = src;

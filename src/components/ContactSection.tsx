@@ -65,7 +65,7 @@ const ContactSection = () => {
       setForm({ name: '', email: '', message: '', username: '', location: '' });
     } catch (err: any) {
       console.error(err);
-      toast.error('Failed to send message. Please try again.');
+      toast.error(data?.error || 'Failed to send message. Please try again.');
     } finally {
       setSending(false);
     }
