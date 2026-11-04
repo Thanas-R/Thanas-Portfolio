@@ -118,12 +118,12 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   const canvasW = 760;
   const canvasH = 640;
   const edgeColor = isDark ? 'rgba(126, 178, 152, 0.55)' : 'rgba(64, 104, 84, 0.5)';
-  const cardBg = isDark ? '#161A18' : '#FFFFFF';
-  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+  const cardBg = isDark ? '#242424' : '#FFFFFF';
+  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.1)';
   const titleColor = isDark ? '#EDEDED' : '#1A1A1A';
-  const bodyColor = isDark ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 0, 0, 0.58)';
+  const bodyColor = isDark ? 'rgba(255, 255, 255, 0.65)' : 'rgba(0, 0, 0, 0.58)';
   const cardShadow = isDark
-    ? '0 12px 30px -16px rgba(0, 0, 0, 0.75)'
+    ? '0 12px 30px -16px rgba(0, 0, 0, 0.85)'
     : '0 12px 28px -16px rgba(0, 0, 0, 0.18)';
 
   return (
@@ -223,7 +223,7 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
       startOnLoad: false,
       theme: isDark ? 'dark' : 'default',
       themeVariables: isDark
-        ? { primaryColor: '#1a1a1a', primaryBorderColor: '#333', primaryTextColor: '#e5e5e5', lineColor: '#444', secondaryColor: '#111' }
+        ? { primaryColor: '#242424', primaryBorderColor: '#3a3a3a', primaryTextColor: '#EDEDED', lineColor: '#555555', secondaryColor: '#1A1A1A' }
         : { primaryColor: '#f5f5f5', primaryBorderColor: '#ddd', primaryTextColor: '#1a1a1a', lineColor: '#bbb', secondaryColor: '#fafafa' },
       flowchart: { curve: 'basis', padding: 16 },
     });
@@ -240,11 +240,11 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-/* ── Edge backdrop: crisp background at far edges, wide pure-white center ── */
 const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
-  // Pure crisp white instead of cream #F4F2EE
-  const pageCover = isDark ? '#0C0F0D' : '#FFFFFF';
+  const pageCover = isDark ? '#1A1A1A' : '#FFFFFF';
   const [bgLoaded, setBgLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
@@ -276,14 +276,15 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
 const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailProps) => {
   const { isDark } = useTheme();
 
-  const textColor = isDark ? 'hsl(0 0% 65%)' : 'hsl(0 0% 35%)';
-  const headingColor = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
-  // Pure white card background (previously hsl(40 33% 97%) cream)
-  const cardBg = isDark ? 'hsl(150 8% 7%)' : '#FFFFFF';
-  // Neutral gray border (previously warm brown hsl(40 15% 85%))
-  const cardBorder = isDark ? 'hsl(150 10% 16%)' : 'hsl(0 0% 88%)';
-  const dashedBorder = isDark ? 'rgba(120, 190, 155, 0.4)' : 'rgba(40, 80, 60, 0.45)';
-  const labelColor = isDark ? 'hsl(0 0% 45%)' : 'hsl(0 0% 50%)';
+  // Neutral dark mode text against #1A1A1A
+  const textColor = isDark ? '#A3A3A3' : 'hsl(0 0% 35%)';
+  const headingColor = isDark ? '#F5F5F5' : 'hsl(0 0% 10%)';
+
+  // Cards elevated above the #1A1A1A background
+  const cardBg = isDark ? '#222222' : '#FFFFFF';
+  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.1)' : 'hsl(0 0% 88%)';
+  const dashedBorder = isDark ? 'rgba(120, 190, 155, 0.45)' : 'rgba(40, 80, 60, 0.45)';
+  const labelColor = isDark ? '#888888' : 'hsl(0 0% 50%)';
 
 
   const font = "'Inter', sans-serif";
@@ -346,17 +347,17 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
 
               <div className="flex items-center gap-2.5">
                 {project.live && (
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-opacity hover:opacity-85 shadow-sm"
-                    style={{
-                      backgroundColor: headingColor,
-                      color: isDark ? 'hsl(0 0% 4%)' : 'hsl(0 0% 100%)',
-                      fontFamily: font,
-                    }}
-                  >
+<a
+  href={project.live}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-opacity hover:opacity-85 shadow-sm"
+  style={{
+    backgroundColor: headingColor,
+    color: isDark ? '#1A1A1A' : 'hsl(0 0% 100%)',
+    fontFamily: font,
+  }}
+>
                     <ExternalLink className="w-4 h-4" />
                     Live Demo
                   </a>
