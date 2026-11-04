@@ -157,7 +157,13 @@ const ProjectDetailPage = () => {
     const root = document.documentElement;
     const wasDark = root.classList.contains('dark');
     root.classList.add('dark');
+    // the theme provider re-applies the stored theme after mount, so keep re-asserting dark
+    const observer = new MutationObserver(() => {
+      if (!root.classList.contains('dark')) root.classList.add('dark');
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
     return () => {
+      observer.disconnect();
       if (!wasDark) root.classList.remove('dark');
     };
   }, [isVirdis]);
