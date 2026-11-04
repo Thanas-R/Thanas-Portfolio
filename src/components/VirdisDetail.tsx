@@ -313,27 +313,17 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               </div>
 
               {/* Architecture — Mermaid flow, themed dark green */}
-              <div className="flex items-baseline justify-between gap-3 mb-5">
-                <SectionLabel label="Architecture" color={label} font={font} />
-                <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 03 · the wiring
-                </span>
-              </div>
+              <SectionLabel label="Architecture" color={label} font={font} />
               <div
-                className="mb-10 p-6 md:p-8 rounded-2xl overflow-x-auto"
+                className="mb-10 mt-5 p-6 md:p-8 rounded-2xl overflow-x-auto"
                 style={{ backgroundColor: cardBg, border: `1px solid rgba(74, 140, 111, 0.35)` }}
               >
                 <ArchitectureDiagram />
               </div>
 
               {/* Tech Stack */}
-              <div className="flex items-baseline justify-between gap-3 mb-5">
-                <SectionLabel label="Tech Stack" color={label} font={font} />
-                <span className="text-xl shrink-0" style={{ color: green, fontFamily: hand }}>
-                  fig. 04 · the kit
-                </span>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
+              <SectionLabel label="Tech Stack" color={label} font={font} />
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10 mt-5">
                 {[
                   { l: 'Frontend', v: 'React 18 · TypeScript 5 · Vite 5 · Tailwind CSS · shadcn/ui' },
                   { l: 'Mapping', v: 'Mapbox GL JS 3' },
@@ -380,9 +370,6 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                     <img src={project.imageSrc} alt={`${project.title} preview`} className="w-full object-cover" style={{ maxHeight: 480 }} />
                   )}
                 </div>
-                <p className="text-lg text-center mt-1.5 mb-0.5" style={{ color: green, fontFamily: hand }}>
-                  the dashboard, pinned down
-                </p>
               </div>
             </div>
           </motion.div>
