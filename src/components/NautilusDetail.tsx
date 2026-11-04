@@ -252,9 +252,10 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-/* ── Side-edge backdrop: image peeks in only at the far left & right, with a wide smooth fade ── */
+/* ── Side-edge backdrop: image peeks in only at the far left & right, with a smooth fade-in ── */
 const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
   const pageCover = isDark ? '#0C0F0D' : '#F4F2EE';
+  const [bgLoaded, setBgLoaded] = useState(false);
   return (
     <div className="fixed inset-0 z-0" aria-hidden>
       <img
@@ -263,13 +264,19 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
         className="absolute inset-0 w-full h-full object-cover"
         loading="eager"
         decoding="async"
-        style={{ filter: 'blur(6px)', transform: 'scale(1.03)' }}
+        onLoad={() => setBgLoaded(true)}
+        style={{
+          filter: 'blur(6px)',
+          transform: 'scale(1.03)',
+          opacity: bgLoaded ? 1 : 0,
+          transition: 'opacity 700ms ease-out',
+        }}
       />
-      {/* cover the middle with a long, smooth gradient so only soft edge strips remain */}
+      {/* cover the middle with a long, smooth gradient so only narrow edge strips remain */}
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(to right, transparent 0%, transparent 2%, ${pageCover} 26%, ${pageCover} 74%, transparent 98%, transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, transparent 3%, ${pageCover} 12%, ${pageCover} 88%, transparent 97%, transparent 100%)`,
         }}
       />
       {/* soften the image behind the edge strips */}
