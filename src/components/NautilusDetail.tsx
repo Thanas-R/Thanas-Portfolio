@@ -33,11 +33,6 @@ interface FlowNode {
   height: number;
 }
 
-interface FlowEdge {
-  from: string;
-  to: string;
-}
-
 const FEATURES: FlowNode[] = [
   {
     id: 'canvas',
@@ -45,7 +40,7 @@ const FEATURES: FlowNode[] = [
     content: 'Every prompt becomes one independent card with a short title, a summary and an explanation. Cards never extend each other.',
     icon: Layout,
     iconColor: '#7E97C9',
-    x: 10, y: 8, width: 360, height: 170,
+    x: 24, y: 26, width: 348, height: 148,
   },
   {
     id: 'fields',
@@ -53,7 +48,7 @@ const FEATURES: FlowNode[] = [
     content: 'Each card is embedded on nine separate fields with all MiniLM L6 v2, and every field carries its own weight in the final score.',
     icon: Layers,
     iconColor: '#B5854F',
-    x: 390, y: 8, width: 360, height: 170,
+    x: 430, y: 48, width: 306, height: 152,
   },
   {
     id: 'scoring',
@@ -61,7 +56,7 @@ const FEATURES: FlowNode[] = [
     content: 'A pair of cards is scored as a weighted sum of per field cosine similarities. Pairs above 0.4 become links.',
     icon: GitBranch,
     iconColor: '#4E9A7C',
-    x: 10, y: 224, width: 360, height: 170,
+    x: 48, y: 248, width: 296, height: 140,
   },
   {
     id: 'explain',
@@ -69,7 +64,7 @@ const FEATURES: FlowNode[] = [
     content: 'Only linked pairs reach the LLM. It writes a short label plus a reason for why and how the two concepts connect.',
     icon: Brain,
     iconColor: '#C4704F',
-    x: 390, y: 224, width: 360, height: 170,
+    x: 420, y: 244, width: 316, height: 152,
   },
   {
     id: 'boundary',
@@ -77,7 +72,7 @@ const FEATURES: FlowNode[] = [
     content: 'Links scoring between 0.4 and 0.55 are flagged as boundary links and prompt you to rate the connection.',
     icon: MessageSquare,
     iconColor: '#8E7FD1',
-    x: 10, y: 440, width: 360, height: 170,
+    x: 32, y: 460, width: 302, height: 140,
   },
   {
     id: 'nnls',
@@ -85,38 +80,25 @@ const FEATURES: FlowNode[] = [
     content: 'Rate links out of 100 and non negative least squares refits the nine field weights to match your judgement.',
     icon: Network,
     iconColor: '#6FAE8C',
-    x: 390, y: 440, width: 360, height: 170,
+    x: 402, y: 478, width: 334, height: 132,
   },
 ];
 
-const EDGES: FlowEdge[] = [
-  { from: 'canvas', to: 'fields' },
-  { from: 'fields', to: 'scoring' },
-  { from: 'scoring', to: 'explain' },
-  { from: 'scoring', to: 'boundary' },
-  { from: 'boundary', to: 'nnls' },
-];
+/* ── Hand-drawn curvy connectors: each edge gets its own relaxed bezier, no two alike ── */
+const EDGE_PATHS: Record<string, string> = {
+  // canvas -> fields: dips low, then lifts into the side of the card
+  'canvas-fields': 'M 372 96 C 400 168, 396 58, 430 118',
+  // fields -> scoring: long sweeping droop across the canvas
+  'fields-scoring': 'M 462 200 C 492 262, 330 208, 214 248',
+  // scoring -> explain: lazy wave sideways
+  'scoring-explain': 'M 344 314 C 372 356, 386 280, 420 316',
+  // scoring -> boundary: gentle drop with a lean
+  'scoring-boundary': 'M 152 388 C 138 430, 176 428, 178 460',
+  // boundary -> nnls: rising swoop into the side
+  'boundary-nnls': 'M 334 528 C 362 574, 366 506, 402 540',
+};
 
-/* ── Smooth connector paths, like the reference: cards joined by one soft green curve ── */
-function getEdgePath(from: FlowNode, to: FlowNode): string {
-  const sameRow = Math.abs(from.y - to.y) < 5;
-
-  if (sameRow) {
-    const sy = from.y + from.height / 2;
-    const sx = from.x + from.width;
-    const ex = to.x;
-    return `M ${sx} ${sy} C ${sx + 48} ${sy}, ${ex - 48} ${sy}, ${ex} ${sy}`;
-  }
-
-  const sx = from.x + from.width / 2;
-  const sy = from.y + from.height;
-  const ex = to.x + to.width / 2;
-  const ey = to.y;
-  const dy = ey - sy;
-  return `M ${sx} ${sy} C ${sx} ${sy + dy * 0.5}, ${ex} ${ey - dy * 0.5}, ${ex} ${ey}`;
-}
-
-/* ── Key features graph: dotted grid on the page background, cards adapt to the theme ── */
+/* ── Key features graph: relaxed hand-drawn curves, cards adapt to the theme ── */
 const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -125,7 +107,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
     const handleResize = () => {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
-        setScale(Math.min(1, (w - 8) / 760));
+        setScale(Math.min(1, (w - 4) / 760));
       }
     };
     handleResize();
@@ -134,15 +116,18 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   }, []);
 
   const canvasW = 760;
-  const canvasH = 618;
-  const edgeColor = isDark ? 'rgba(150, 200, 175, 0.55)' : 'rgba(70, 90, 80, 0.45)';
-  const cardBg = isDark ? '#1D1D1D' : '#FFFFFF';
-  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.09)' : 'rgba(0, 0, 0, 0.09)';
+  const canvasH = 640;
+  const edgeColor = isDark ? 'rgba(126, 178, 152, 0.55)' : 'rgba(64, 104, 84, 0.5)';
+  const cardBg = isDark ? '#161A18' : '#FFFFFF';
+  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
   const titleColor = isDark ? '#EDEDED' : '#1A1A1A';
   const bodyColor = isDark ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 0, 0, 0.58)';
+  const cardShadow = isDark
+    ? '0 12px 30px -16px rgba(0, 0, 0, 0.75)'
+    : '0 12px 28px -16px rgba(0, 0, 0, 0.18)';
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden">
+    <div ref={containerRef} className="w-full">
       <div
         style={{
           width: canvasW,
@@ -154,13 +139,11 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
       >
         {/* edges first, cards sit on top */}
         <svg className="absolute inset-0 pointer-events-none" width={canvasW} height={canvasH}>
-          {EDGES.map((edge, edgeIdx) => {
-            const fromNode = FEATURES.find(n => n.id === edge.from)!;
-            const toNode = FEATURES.find(n => n.id === edge.to)!;
+          {Object.entries(EDGE_PATHS).map(([key, d], edgeIdx) => {
             return (
               <motion.path
-                key={`${edge.from}-${edge.to}`}
-                d={getEdgePath(fromNode, toNode)}
+                key={key}
+                d={d}
                 fill="none"
                 stroke={edgeColor}
                 strokeWidth="1.6"
@@ -190,6 +173,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 backgroundColor: cardBg,
                 border: `1px solid ${cardBorder}`,
                 borderRadius: '12px',
+                boxShadow: cardShadow,
               }}
             >
               <div className="flex items-center gap-2 mb-2">
@@ -410,30 +394,18 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
           </motion.div>
         </div>
 
-        {/* Key features graph: dotted grid sits on the page background, blending into the page */}
-        <div className="w-screen relative left-1/2 -translate-x-1/2" style={{ backgroundColor: isDark ? '#0C0F0D' : '#F4F2EE' }}>
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage: `radial-gradient(circle, ${isDark ? 'rgba(255,255,255,0.09)' : 'rgba(0,0,0,0.08)'} 1.2px, transparent 1.3px)`,
-              backgroundSize: '26px 26px',
-            }}
-            aria-hidden
-          />
-          <div className="relative max-w-4xl mx-auto px-6 py-14">
-            <motion.div {...fadeUp(0.2)}>
-              <h2
-                className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-6"
-                style={{ color: isDark ? 'rgba(255, 255, 255, 0.45)' : 'rgba(0, 0, 0, 0.5)', fontFamily: font }}
-              >
-                Key Features
-              </h2>
-              <FlowchartCanvas isDark={isDark} />
-            </motion.div>
-          </div>
-        </div>
-
         <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+          {/* Key features flowchart, inside the page column */}
+          <motion.div {...fadeUp(0.2)} className="mb-14">
+            <h2
+              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-6"
+              style={{ color: labelColor, fontFamily: font }}
+            >
+              Key Features
+            </h2>
+            <FlowchartCanvas isDark={isDark} />
+          </motion.div>
+
           {/* Neural Retrieval */}
           <motion.div {...fadeUp(0.24)}>
             <h2
