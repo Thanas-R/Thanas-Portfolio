@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Github, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useParams, Navigate, useNavigate } from 'react-router-dom';
 import GridBackground from '@/components/GridBackground';
 import Navbar from '@/components/Navbar';
@@ -8,6 +8,7 @@ import { projects, projectsPageList } from '@/components/ProjectsSection';
 import { Mac } from '@/components/Mac';
 import thanasOsMac from '@/assets/thanasos-mac.webp';
 import pesuForgeBg from '@/assets/pesuforge-bg.webp';
+import nautilusBg from '@/assets/nautilus_bg.webp';
 import { AppleHelloEffect } from '@/components/AppleHelloEffect';
 import { useTheme } from '@/hooks/use-theme';
 import ContourFlowBackground from '@/components/ContourFlowBackground';
@@ -49,9 +50,9 @@ const ProgressiveBgImg = ({ src }: {src: string;}) => {
       loading="eager"
       onLoad={handleLoad}
       style={{
-        filter: loaded ? 'blur(0px)' : 'blur(20px)',
-        transform: loaded ? 'scale(1)' : 'scale(1.02)',
-        transition: 'filter 700ms ease-out, transform 700ms ease-out'
+        opacity: loaded ? 1 : 0,
+        transform: loaded ? 'scale(1)' : 'scale(1.015)',
+        transition: 'opacity 700ms ease-out, transform 700ms ease-out'
       }} />);
 };
 
@@ -141,11 +142,26 @@ const ProjectDetailPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevProject, nextProject, navigate]);
 
+  // Dark-themed page scrollbar for backdrop pages (nautilus / pesu mc / pesu forge / contour)
+  useEffect(() => {
+    const darkScroll = isPesuForge || isPesuMC || isContourFlow || isNautilus;
+    if (darkScroll) {
+      document.documentElement.setAttribute('data-darkscroll', 'true');
+      return () => document.documentElement.removeAttribute('data-darkscroll');
+    }
+  }, [isPesuForge, isPesuMC, isContourFlow, isNautilus]);
+
   useEffect(() => {
     if (!project) return;
 
     const preload = (srcs: string[]) => {
       srcs.forEach((src) => {
+        // Link preload starts the download before JS even renders the backdrop
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
         const img = new Image();
         img.decoding = 'async';
         img.src = src;
@@ -156,6 +172,8 @@ const ProjectDetailPage = () => {
       preload([pesuForgeBg, project.imageSrc]);
     } else if (isPesuMC) {
       preload([pesuMcBackdrop, pesuMcNether, pesuMcEnd, pesuMcHero, pesuMcWordmark, project.imageSrc]);
+    } else if (isNautilus) {
+      preload([nautilusBg, project.imageSrc]);
     } else if (isSpheal) {
       preload([project.imageSrc]);
       void (window as any).__globeDataPromise?.catch?.(() => null);
@@ -201,85 +219,47 @@ const ProjectDetailPage = () => {
   // Smart Chef background removed per user request
   const smartChefBg = undefined;
 
-  const SideNav = () =>
-  <>
-      {prevProject &&
-    <Link
-      to={`/projects/${prevProject.id}`}
-      className="fixed left-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
-      style={{
-        backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
-        borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)'
-      }}
-      aria-label="Previous project">
-      
-          <ChevronLeft className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
-        </Link>
-    }
-      {nextProject &&
-    <Link
-      to={`/projects/${nextProject.id}`}
-      className="fixed right-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex items-center justify-center w-9 h-9 rounded-full border backdrop-blur-sm transition-all hover:scale-110 opacity-60 hover:opacity-100"
-      style={{
-        backgroundColor: isDark ? 'hsla(0,0%,8%,0.8)' : 'hsla(0,0%,98%,0.8)',
-        borderColor: isDark ? 'hsl(0,0%,20%)' : 'hsl(0,0%,85%)'
-      }}
-      aria-label="Next project">
-      
-          <ChevronRight className="w-4 h-4" style={{ color: isDark ? 'hsl(0,0%,70%)' : 'hsl(0,0%,35%)' }} />
-        </Link>
-    }
-    </>;
+
 
 
   if (isVirdis) {
-    return <><SideNav /><VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+    return <><VirdisDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   if (isNautilus) {
-    return <><SideNav /><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
+    return <><NautilusDetail project={project} prevProject={prevProject} nextProject={nextProject} /></>;
   }
 
   if (isSpheal) {
     return (
-      <>
-        <SideNav />
-        <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <SphealDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>);
 
   }
 
   if (isOdinTree) {
     return (
-      <>
-        <SideNav />
-        <OdinTreeDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <OdinTreeDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   if (isAskPesu) {
     return (
-      <>
-        <SideNav />
-        <AskPesuDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <AskPesuDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   if (isSlate) {
     return (
-      <>
-        <SideNav />
-        <SlateDetail project={project} prevProject={prevProject} nextProject={nextProject} />
+      <>        <SlateDetail project={project} prevProject={prevProject} nextProject={nextProject} />
       </>
     );
   }
 
   return (
-    <>
-      <SideNav />
-      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
+    <>      {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <GridBackground />}
       <div className="relative z-10 min-h-screen" style={smartChefBg ? { backgroundColor: smartChefBg } : undefined}>
         {!isAskBookie && !isPesuForge && !isContourFlow && !isPesuMC && <Navbar />}
 
@@ -664,11 +644,19 @@ const ProjectDetailPage = () => {
                 </div>
               </motion.div>
 
-              {/* Right: Mac mockup */}
+              {/* Right: Mac mockup — cropped-in reveal, layout unchanged */}
               <motion.div {...fadeUp(0.15)} className="md:w-[55%] flex items-start justify-center mt-8 md:mt-0">
-                <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer w-full max-w-[650px]">
-                  <Mac src={thanasOsMac} className="w-full h-auto text-background" />
-                </a>
+                <motion.div
+                  initial={{ clipPath: 'inset(6% 10% 26% 10% round 28px)', scale: 0.97 }}
+                  whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 28px)', scale: 1 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.9, ease: 'easeOut' }}
+                  className="w-full max-w-[650px]"
+                >
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="block cursor-pointer w-full">
+                    <Mac src={thanasOsMac} className="w-full h-auto text-background" />
+                  </a>
+                </motion.div>
               </motion.div>
             </div>
 

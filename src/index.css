@@ -143,6 +143,20 @@ html {
   border-radius: 3px;
 }
 
+/* Dark scrollbar for backdrop pages (PESU MC, PESU Forge, Nautilus, Contour) */
+html[data-darkscroll='true'] {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+  color-scheme: dark;
+}
+html[data-darkscroll='true']::-webkit-scrollbar-track {
+  background: transparent;
+}
+html[data-darkscroll='true']::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 3px;
+}
+
 /* Glow effect — black glow on border only */
 .glow-card {
   position: relative;
