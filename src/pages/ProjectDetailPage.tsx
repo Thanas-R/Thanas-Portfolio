@@ -151,6 +151,17 @@ const ProjectDetailPage = () => {
     }
   }, [isPesuForge, isPesuMC, isContourFlow, isNautilus, isVirdis]);
 
+  // Virdis is always dark green: force the dark class while on this page, restore on leave
+  useEffect(() => {
+    if (!isVirdis) return;
+    const root = document.documentElement;
+    const wasDark = root.classList.contains('dark');
+    root.classList.add('dark');
+    return () => {
+      if (!wasDark) root.classList.remove('dark');
+    };
+  }, [isVirdis]);
+
   useEffect(() => {
     if (!project) return;
 
