@@ -98,7 +98,7 @@ const EDGE_PATHS: Record<string, string> = {
   'boundary-nnls': 'M 334 528 C 362 574, 366 506, 402 540',
 };
 
-/* ── Key features graph: dotted grid on the page background, cards adapt to the theme ── */
+/* ── Key features graph: relaxed hand-drawn curves, cards adapt to the theme ── */
 const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -107,7 +107,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
     const handleResize = () => {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
-        setScale(Math.min(1, (w - 8) / 760));
+        setScale(Math.min(1, (w - 4) / 760));
       }
     };
     handleResize();
@@ -116,15 +116,18 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
   }, []);
 
   const canvasW = 760;
-  const canvasH = 618;
-  const edgeColor = isDark ? 'rgba(150, 200, 175, 0.55)' : 'rgba(70, 90, 80, 0.45)';
-  const cardBg = isDark ? '#1D1D1D' : '#FFFFFF';
-  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.09)' : 'rgba(0, 0, 0, 0.09)';
+  const canvasH = 640;
+  const edgeColor = isDark ? 'rgba(126, 178, 152, 0.55)' : 'rgba(64, 104, 84, 0.5)';
+  const cardBg = isDark ? '#161A18' : '#FFFFFF';
+  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
   const titleColor = isDark ? '#EDEDED' : '#1A1A1A';
   const bodyColor = isDark ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 0, 0, 0.58)';
+  const cardShadow = isDark
+    ? '0 12px 30px -16px rgba(0, 0, 0, 0.75)'
+    : '0 12px 28px -16px rgba(0, 0, 0, 0.18)';
 
   return (
-    <div ref={containerRef} className="w-full overflow-hidden">
+    <div ref={containerRef} className="w-full">
       <div
         style={{
           width: canvasW,
@@ -136,13 +139,11 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
       >
         {/* edges first, cards sit on top */}
         <svg className="absolute inset-0 pointer-events-none" width={canvasW} height={canvasH}>
-          {EDGES.map((edge, edgeIdx) => {
-            const fromNode = FEATURES.find(n => n.id === edge.from)!;
-            const toNode = FEATURES.find(n => n.id === edge.to)!;
+          {Object.entries(EDGE_PATHS).map(([key, d], edgeIdx) => {
             return (
               <motion.path
-                key={`${edge.from}-${edge.to}`}
-                d={getEdgePath(fromNode, toNode)}
+                key={key}
+                d={d}
                 fill="none"
                 stroke={edgeColor}
                 strokeWidth="1.6"
@@ -172,6 +173,7 @@ const FlowchartCanvas = ({ isDark }: { isDark: boolean }) => {
                 backgroundColor: cardBg,
                 border: `1px solid ${cardBorder}`,
                 borderRadius: '12px',
+                boxShadow: cardShadow,
               }}
             >
               <div className="flex items-center gap-2 mb-2">
