@@ -47,17 +47,23 @@ const ArchitectureDiagram = () => {
     const id = 'virdis-arch-' + Date.now();
     mermaid.initialize({
       startOnLoad: false,
-      theme: 'dark',
+      theme: 'base',
+      look: 'handDrawn',
       themeVariables: {
-        primaryColor: '#1D2A23',
-        primaryBorderColor: 'rgba(74, 140, 111, 0.65)',
+        darkMode: true,
+        background: 'transparent',
+        fontFamily: "'Caveat', cursive",
+        fontSize: '18px',
+        primaryColor: '#243830',
+        primaryBorderColor: '#6FBF97',
         primaryTextColor: '#FFFBEB',
-        lineColor: 'rgba(74, 140, 111, 0.6)',
-        secondaryColor: '#141F1A',
-        tertiaryColor: '#182420',
-        fontSize: '14px',
+        lineColor: '#6FBF97',
+        secondaryColor: '#1B2620',
+        tertiaryColor: '#1B2620',
+        clusterBkg: 'transparent',
+        edgeLabelBackground: '#1D2A23',
       },
-      flowchart: { curve: 'basis', padding: 16 },
+      flowchart: { curve: 'basis', padding: 14 },
     });
     mermaid.render(id, VIRDIS_CHART).then(({ svg: renderedSvg }) => {
       setSvg(renderedSvg);
@@ -146,6 +152,15 @@ const FieldSectionDiagram = () => {
 };
 
 const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) => {
+  /* Background fades in softly on mount, matching the backdrop pages */
+  const [bgIn, setBgIn] = useState(false);
+  useEffect(() => {
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => setBgIn(true))
+    );
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   /* The page is always dark green, no theme switching. */
   const pageBg = '#22392E';
   const outsideText = 'hsl(150 10% 65%)';
@@ -171,7 +186,12 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: pageBg }}>
-      <TopoLinesBackground stroke="rgba(74, 140, 111, 0.35)" className="z-0" />
+      <div
+        className="absolute inset-0 transition-opacity duration-[900ms] ease-out"
+        style={{ opacity: bgIn ? 1 : 0 }}
+      >
+        <TopoLinesBackground stroke="rgba(74, 140, 111, 0.35)" className="z-0" />
+      </div>
 
       <div className="relative z-10">
         <Navbar forceDark />
@@ -254,13 +274,13 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
 
               {/* Description */}
               <p
-                className="text-base md:text-lg leading-relaxed text-justify mb-8"
+                className="text-base md:text-lg leading-relaxed text-justify mb-4"
                 style={{ color: textMuted, fontFamily: font }}
               >
                 Satellite-powered land analytics platform. Draw regions on a map and get NDVI vegetation analysis, climate data, soil profiling, land use classification, suitability scoring, and AI crop recommendations, all in one dashboard.
               </p>
 
-              <div className="w-px mb-10" style={{ borderBottom: `1.5px dashed ${dashedGreen}` }} />
+              <div className="w-px mb-5" style={{ borderBottom: `1.5px dashed ${dashedGreen}` }} />
 
               {/* Key Features */}
               <h2 className="text-2xl md:text-3xl mb-5" style={{ fontFamily: "'Caesar Dressing', system-ui", color: heading }}>
@@ -289,7 +309,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                   >
                     <item.icon className="w-5 h-5 mt-0.5 shrink-0" style={{ color: green }} />
                     <div>
-                      <h3 className="text-[15px] leading-tight mb-1.5" style={{ color: heading, fontFamily: font, fontWeight: 600 }}>{item.title}</h3>
+                      <h3 className="text-[15px] leading-tight mb-1.5" style={{ color: heading, fontFamily: "'Chelsea Market', system-ui" }}>{item.title}</h3>
                       <p className="text-[13px] leading-relaxed" style={{ color: textMuted, fontFamily: font }}>{item.desc}</p>
                     </div>
                   </div>
@@ -346,7 +366,7 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                     }}
                   >
                     <p className="text-[10px] uppercase tracking-wider mb-1" style={{ color: label, fontFamily: font }}>{item.l}</p>
-                    <p className="text-[13px] font-medium leading-snug" style={{ color: heading, fontFamily: font }}>{item.v}</p>
+                    <p className="text-[13px] font-medium leading-snug" style={{ color: heading, fontFamily: "'Chelsea Market', system-ui" }}>{item.v}</p>
                   </div>
                 ))}
               </div>
