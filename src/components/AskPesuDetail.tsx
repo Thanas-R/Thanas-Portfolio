@@ -177,7 +177,7 @@ const AskPesuDetail = ({ project, prevProject, nextProject }: Props) => {
             aria-hidden
           />
 
-          <div className="relative z-10 py-12 md:py-20 px-6 text-center">
+          <div className="relative z-10 py-12 md:py-20 px-6 text-center crt-flicker">
             <h1
               className="leading-none tracking-tight select-none"
               style={{
