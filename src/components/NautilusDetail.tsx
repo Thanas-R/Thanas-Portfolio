@@ -48,15 +48,15 @@ const FEATURES: FlowNode[] = [
     content: 'Each card is embedded on 9 separate fields with all MiniLM L6, & every field carries its own weight in the final score.',
     icon: Layers,
     iconColor: '#B5854F',
-    x: 430, y: 48, width: 306, height: 132,
+    x: 430, y: 68, width: 306, height: 132,
   },
   {
     id: 'scoring',
     title: 'Weighted Cosine Scoring',
-    content: 'A pair of cards is scored as a weighted sum of per field cosine similarities. Pairs above 0.4 become links.',
+    content: 'A pair of cards is scored as a weighted sum of per field cosine similarities across all nine embeddings. Pairs above 0.4 automatically become links on the canvas.',
     icon: GitBranch,
     iconColor: '#4E9A7C',
-    x: 48, y: 248, width: 296, height: 130,
+    x: 48, y: 250, width: 296, height: 155,
   },
   {
     id: 'explain',
@@ -64,7 +64,7 @@ const FEATURES: FlowNode[] = [
     content: 'Only linked pairs reach the LLM. It writes a short label plus a reason for why and how the two concepts connect.',
     icon: Brain,
     iconColor: '#C4704F',
-    x: 420, y: 260, width: 316, height: 125,
+    x: 420, y: 270, width: 316, height: 125,
   },
   {
     id: 'boundary',
@@ -72,7 +72,7 @@ const FEATURES: FlowNode[] = [
     content: 'Links scoring between 0.4 and 0.55 are flagged as boundary links and prompt you to rate the connection.',
     icon: MessageSquare,
     iconColor: '#8E7FD1',
-    x: 32, y: 460, width: 302, height: 140,
+    x: 32, y: 460, width: 302, height: 125,
   },
   {
     id: 'nnls',
@@ -80,7 +80,7 @@ const FEATURES: FlowNode[] = [
     content: 'Rate links out of 100 and non negative least squares refits the nine field weights to match your judgement.',
     icon: Network,
     iconColor: '#6FAE8C',
-    x: 402, y: 478, width: 334, height: 132,
+    x: 402, y: 498, width: 334, height: 125,
   },
 ];
 
@@ -240,14 +240,14 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-/* ── Direct edge backdrop: crisp background at the sides, clean solid center ── */
+/* ── Edge backdrop: crisp background at far edges, wide pure-white center ── */
 const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
-  const pageCover = isDark ? '#0C0F0D' : '#F4F2EE';
+  // Pure crisp white instead of cream #F4F2EE
+  const pageCover = isDark ? '#0C0F0D' : '#FFFFFF';
   const [bgLoaded, setBgLoaded] = useState(false);
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
-      {/* Crisp unblurred image across the screen */}
       <img
         src={nautilusBg}
         alt=""
@@ -261,11 +261,11 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
         }}
       />
 
-      {/* Solid center block with direct sharp edges matching the max-w-4xl (56rem) content column */}
+      {/* Expanded center width by 60% (from 28rem each side up to 45rem / 90rem total) */}
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(to right, transparent 0%, transparent calc(50% - 28rem), ${pageCover} calc(50% - 28rem), ${pageCover} calc(50% + 28rem), transparent calc(50% + 28rem), transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, transparent calc(50% - 45rem), ${pageCover} calc(50% - 45rem), ${pageCover} calc(50% + 45rem), transparent calc(50% + 45rem), transparent 100%)`,
         }}
       />
     </div>
@@ -275,12 +275,15 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
 const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailProps) => {
   const { isDark } = useTheme();
 
-  const textColor = isDark ? 'hsl(0 0% 65%)' : 'hsl(0 0% 40%)';
+  const textColor = isDark ? 'hsl(0 0% 65%)' : 'hsl(0 0% 35%)';
   const headingColor = isDark ? 'hsl(0 0% 96%)' : 'hsl(0 0% 10%)';
-  const cardBg = isDark ? 'hsl(150 8% 7%)' : 'hsl(40 33% 97%)';
-  const cardBorder = isDark ? 'hsl(150 10% 16%)' : 'hsl(40 15% 85%)';
+  // Pure white card background (previously hsl(40 33% 97%) cream)
+  const cardBg = isDark ? 'hsl(150 8% 7%)' : '#FFFFFF';
+  // Neutral gray border (previously warm brown hsl(40 15% 85%))
+  const cardBorder = isDark ? 'hsl(150 10% 16%)' : 'hsl(0 0% 88%)';
   const dashedBorder = isDark ? 'rgba(120, 190, 155, 0.4)' : 'rgba(40, 80, 60, 0.45)';
-  const labelColor = isDark ? 'hsl(0 0% 45%)' : 'hsl(0 0% 55%)';
+  const labelColor = isDark ? 'hsl(0 0% 45%)' : 'hsl(0 0% 50%)';
+
 
   const font = "'Inter', sans-serif";
   const hand = "'Caveat', cursive";
