@@ -245,9 +245,8 @@ const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
   const [bgLoaded, setBgLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
-
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden>
+    <div className="hidden md:block fixed inset-0 z-0 pointer-events-none" aria-hidden>
       <img
         src={nautilusBg}
         alt=""

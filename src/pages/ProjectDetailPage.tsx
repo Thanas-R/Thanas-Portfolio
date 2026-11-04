@@ -577,43 +577,45 @@ const ProjectDetailPage = () => {
                 <h1 className="text-5xl md:text-7xl font-black text-foreground leading-none tracking-tight mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {project.title}
                 </h1>
-<div className="flex flex-col gap-3 mb-4 -ml-9">
-  <div className="flex items-center gap-6">
-    <div className="w-[140px] md:w-[180px] h-8 md:h-12 shrink-0 flex items-center overflow-visible">
+<div className="flex items-center justify-between gap-3 mb-6 ml-0 md:-ml-9 max-w-[420px] md:max-w-none">
+  {/* Left side: Hello effect on top, subtitle text right beneath it */}
+  <div className="flex flex-col justify-center gap-2">
+    <div className="w-[130px] sm:w-[150px] md:w-[180px] h-8 md:h-12 flex items-center overflow-visible">
       <AppleHelloEffect
         className="h-full w-full text-foreground"
         speed={0.7}
       />
     </div>
-    <div className="shrink-0">
-      {project.live &&
-        <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity shrink-0 min-w-[140px]">
-          <ExternalLink className="w-4 h-4" />
-          Live Site
-        </a>
-      }
-    </div>
-  </div>
-<div className="flex items-center gap-4">
-  <div className="w-[148px] md:w-[188px] flex items-center justify-end shrink-0">
-    <p className="text-xs text-muted-foreground whitespace-nowrap">
+    <p className="text-xs text-muted-foreground md:text-right md:w-[188px]">
       macOS-themed interactive website
     </p>
   </div>
-  <div className="shrink-0">
+
+  {/* Right side: Live Site and GitHub stacked on top of each other */}
+  <div className="flex flex-col gap-2.5 shrink-0">
+    {project.live && (
+      <a
+        href={project.live}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center justify-center gap-2 px-4 md:px-5 py-2 rounded-lg bg-foreground text-background text-sm font-semibold hover:opacity-85 transition-opacity min-w-[125px] sm:min-w-[135px] md:min-w-[140px]"
+      >
+        <ExternalLink className="w-4 h-4" />
+        Live Site
+      </a>
+    )}
     {project.github && (
       <a
         href={project.github}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-lg border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity shrink-0 min-w-[140px]"
+        className="inline-flex items-center justify-center gap-2 px-4 md:px-5 py-2 rounded-lg border border-foreground/20 text-foreground text-sm font-semibold hover:opacity-80 transition-opacity min-w-[125px] sm:min-w-[135px] md:min-w-[140px]"
       >
         <Github className="w-4 h-4" />
         GitHub
       </a>
     )}
   </div>
-</div>
 </div>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.map((tag) => <span key={tag} className="text-xs px-3 py-1.5 rounded-full border border-foreground/10 text-muted-foreground font-medium uppercase tracking-wider">{tag}</span>)}
