@@ -100,12 +100,33 @@ const ContactSection = () => {
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full px-5 py-4 rounded-xl 
-                bg-[#F8F8F8] dark:bg-secondary/30 
-                border border-[#F6F6F6] dark:border-border
+                bg-secondary/50 
+                border border-border
                 text-foreground text-lg font-medium dark:font-semibold 
                 placeholder:text-muted-foreground/70 placeholder:font-medium 
                 focus:outline-none focus:ring-1 focus:ring-ring"
                 required
+              />
+              {/* Honeypot fields — hidden from humans, bait for bots */}
+              <input
+                type="text"
+                name="username"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={form.username}
+                onChange={(e) => setForm({ ...form, username: e.target.value })}
+                className="absolute opacity-0 -z-10 pointer-events-none h-0 w-0 p-0 border-0"
+              />
+              <input
+                type="text"
+                name="location"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={form.location}
+                onChange={(e) => setForm({ ...form, location: e.target.value })}
+                className="absolute opacity-0 -z-10 pointer-events-none h-0 w-0 p-0 border-0"
               />
 
               <input
