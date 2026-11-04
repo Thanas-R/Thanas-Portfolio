@@ -241,7 +241,7 @@ const MermaidDiagram = ({ isDark }: { isDark: boolean }) => {
 };
 
 const NautilusSideBg = ({ isDark }: { isDark: boolean }) => {
-  const pageCover = isDark ? '#1A1A1A' : '#FFFFFF';
+  const pageCover = isDark ? '#1A1A1A' : '#F9F9F9';
   const [bgLoaded, setBgLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
