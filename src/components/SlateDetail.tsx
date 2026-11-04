@@ -81,6 +81,8 @@ const FACTS = [
 
 const SlateDetail = ({ project, prevProject, nextProject }: Props) => {
   const [tab, setTab] = useState(0);
+  const { isDark } = useTheme();
+  const C = isDark ? C_DARK : C_LIGHT;
   const mono = "'JetBrains Mono', monospace";
   const display = "'Space Grotesk', sans-serif";
 
@@ -108,7 +110,7 @@ const SlateDetail = ({ project, prevProject, nextProject }: Props) => {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(to right, rgba(240,234,220,0.035) 1px, transparent 1px), linear-gradient(to bottom, rgba(240,234,220,0.035) 1px, transparent 1px)',
+            `linear-gradient(to right, ${C.gridLine} 1px, transparent 1px), linear-gradient(to bottom, ${C.gridLine} 1px, transparent 1px)`,
           backgroundSize: '48px 48px',
         }}
       />
