@@ -215,14 +215,6 @@ const cardPositions = [
   { top: '66%', left: '50%', width: '52%', rotate: 1.8, zIndex: 3 },
 ];
 
-// Preload ALL project images at module load
-const preloadedImages: HTMLImageElement[] = projects.map((p) => {
-  const img = new Image();
-  img.src = p.imageSrc;
-  return img;
-});
-void preloadedImages;
-
 const ProjectsSection = () => {
   const { isDark } = useTheme();
   return (
@@ -285,7 +277,7 @@ const ProjectsSection = () => {
                         src={project.imageSrc}
                         alt={project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="eager"
+                        loading="lazy"
                         draggable={false}
                       />
                     </div>
@@ -332,7 +324,7 @@ const ProjectsSection = () => {
                             src={project.imageSrc}
                             alt={project.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            loading="eager"
+                            loading="lazy"
                             draggable={false}
                           />
                         </div>

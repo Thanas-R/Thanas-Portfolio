@@ -4,6 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.style.backgroundColor = '#0d0d0d';
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.style.backgroundColor = '#fafafa';
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+<link rel="preload" href="/loading-sprite.webp" as="image" type="image/webp" fetchpriority="high" />
+
+
   <!-- Primary Meta -->
   <title>Thanas R</title>
   <meta name="description" content="Developer, Freelancer & OSS contributer. Building cool stuff <3">
@@ -66,9 +86,9 @@
     "alternateName": ["Thanas", "Thanas Ramesh", "DarkSpacePirate", "thanas.dev", "Thanas-r", "dark-vecto", "thanas007", "Thanas-Ramesh","DSP","thanasr"],
     "url": "https://thanas.dev/",
     "image": "https://thanas.dev/profile.png",
-    "description": "Developer & creative problem-solver. Building thoughtful digital experiences with code.",
+    "description": "A curious developer & student who enjoys building things, solving problems and exploring new tech. Full stack, AI/ML, and open source."
     "jobTitle": ["Software Developer", "UI/UX Designer", "Web Developer", "Data Analyst"],
-    "knowsAbout": ["Software Development", "UI/UX Design", "Web Development", "Data Analysis", "Machine Learning", "Frontend Development", "Full-stack Development", "AI/ML"],
+    "knowsAbout": ["Software Development", "ML research", "UI/UX Designer", "Web Development", "Data Analysis", "Machine Learning", "Frontend Development", "Full-stack Development", "AI/ML"],
     "homeLocation": {
       "@type": "Place",
       "address": {

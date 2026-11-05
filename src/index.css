@@ -408,3 +408,9 @@ html[data-darkscroll='true']::-webkit-scrollbar-thumb {
   border-color: hsl(var(--foreground) / 0.25);
   background: hsl(var(--secondary));
 }
+
+/* A quiet paper-like dot field, scoped to the private turtle photo page. */
+.turtle-page {
+  background-image: radial-gradient(circle, hsl(var(--foreground) / 0.07) 0.75px, transparent 0.75px);
+  background-size: 14px 14px;
+}
