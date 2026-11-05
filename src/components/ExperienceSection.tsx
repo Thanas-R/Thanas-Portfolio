@@ -29,7 +29,7 @@ const EXPERIENCES: ExperienceItemType[] = [
       {
         id: "pil-intern",
         title: "Research Intern",
-        employmentPeriod: { start: "2027?????", end: " " },
+        employmentPeriod: { start: "2027", end: "????" },
         employmentType: "Internship",
         icon: <FlaskConical />,
         description: `I will add it soon from experience.`,

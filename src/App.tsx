@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Index from "./pages/Index";
@@ -15,6 +15,8 @@ import BlogsPage from "./pages/BlogsPage";
 import NotFound from "./pages/NotFound";
 import CommandPalette from "./components/CommandPalette";
 import CommandButton from "./components/CommandButton";
+
+const TurtlePage = lazy(() => import("./pages/TurtlePage"));
 
 const queryClient = new QueryClient();
 
@@ -94,6 +96,7 @@ const AnimatedRoutes = () => {
             <Route path="/projects/:slug" element={<ProjectDetailPage />} />
             <Route path="/resume" element={<ResumePage />} />
             <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/turtle" element={<Suspense fallback={<div className="min-h-screen bg-background" />}><TurtlePage /></Suspense>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
       </motion.div>

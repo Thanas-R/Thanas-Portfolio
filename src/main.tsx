@@ -2,30 +2,14 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "next-themes";
+import avatarSrc from "./assets/avatar.webp";
 
-// Eagerly preload all project images so they're cached before navigation
-const imageModules = import.meta.glob('./assets/project-*.webp', { eager: true, import: 'default' }) as Record<string, string>;
-Object.values(imageModules).forEach((src) => {
-  const img = new Image();
-  img.src = src;
-});
-
-// Preload other key assets including PESU MC and PESU Forge backgrounds
-const otherAssets = import.meta.glob('./assets/{avatar,thanasos-mac,contour-dark,contour-light,pesumc-hero,pesumc-backdrop,pesuforge-bg,nautilus_bg,resume-preview}.webp', { eager: true, import: 'default' }) as Record<string, string>;
-
-// Preload avatar with high priority so it's ready before loader finishes
-const avatarSrc = Object.entries(otherAssets).find(([k]) => k.includes('avatar'))?.[1];
-if (avatarSrc) {
-  const link = document.createElement('link');
-  link.rel = 'preload';
-  link.as = 'image';
-  link.href = avatarSrc;
-  document.head.appendChild(link);
-}
-Object.values(otherAssets).forEach((src) => {
-  const img = new Image();
-  img.src = src;
-});
+// Preload only the homepage portrait; route-specific imagery loads when needed.
+const avatarPreload = document.createElement('link');
+avatarPreload.rel = 'preload';
+avatarPreload.as = 'image';
+avatarPreload.href = avatarSrc;
+document.head.appendChild(avatarPreload);
 
 // Preload globe GeoJSON data for Spheal page and cache it globally
 const globeDataPromise = fetch('https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json')

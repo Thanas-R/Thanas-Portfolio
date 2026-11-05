@@ -28,6 +28,7 @@ import pesuMcEnd from '@/assets/end.webp';
 import pesuMcWordmark from '@/assets/pesumc-wordmark.png';
 
 import ProgressiveBgImg from '@/components/ProgressiveBgImg';
+import SmartChefMatchingNotebook from '@/components/SmartChefMatchingNotebook';
 
 /** Fixed backdrop that crossfades Overworld → Nether → End as you scroll down the page */
 const DIMENSION_LAYERS = [pesuMcBackdrop, pesuMcNether, pesuMcEnd];
@@ -749,24 +750,7 @@ const ProjectDetailPage = () => {
                     Works
                   </span>
                 </h2>
-                <div className="grid md:grid-cols-3 gap-6">
-                  {[
-                { num: '01', title: 'Enter Ingredients', desc: 'Input what you have on hand. The system normalizes and maps them using fuzzy matching.' },
-                { num: '02', title: 'Match Recipes', desc: 'TF-IDF vectorization and cosine similarity rank the best recipe matches instantly.' },
-                { num: '03', title: 'Get Instructions', desc: 'Google Gemini generates tailored cooking steps based on the matched recipe and your ingredients.' }].
-                map((step) =>
-                <div key={step.num} className="p-6 rounded-2xl border border-foreground/10 bg-card">
-                      <span
-                    className="text-3xl font-bold"
-                    style={{ fontFamily: "'Playfair Display', serif", color: '#FA8638' }}>
-                    
-                        {step.num}
-                      </span>
-                      <h3 className="font-bold text-foreground mt-3 mb-2 font-['Space_Grotesk']">{step.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-                    </div>
-                )}
-                </div>
+                <SmartChefMatchingNotebook />
               </div>
 
               <div>

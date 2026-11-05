@@ -6,6 +6,7 @@ import { TbBrandGithubFilled } from "react-icons/tb";
 import { SiMedium } from "react-icons/si";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ScrapNote } from '@/components/ScrapNote';
 
 const USER_ID = '677174403859087378';
 
@@ -97,6 +98,9 @@ const HeroSection = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0, 1] }}>
           
+          <ScrapNote className="mb-1.5 -ml-0.5 block" tilt={-3}>
+            hi, i'm
+          </ScrapNote>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-[0.9] tracking-tight font-['Space_Grotesk']">
             Thanas{' '}
             <span className="relative inline-block">
