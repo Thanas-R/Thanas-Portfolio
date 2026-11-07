@@ -272,21 +272,17 @@ const ProjectsSection = () => {
                   aria-label={`View ${project.title} project`}
                 >
                   <div className="rounded-2xl overflow-hidden bg-card border border-foreground/10 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div className="aspect-[16/10] overflow-hidden">
-                      <img
-                        src={project.imageSrc}
-                        alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                        draggable={false}
-                      />
-                    </div>
-                    <div className="p-4">
-                      <p className="text-sm font-medium text-foreground font-['Quicksand']">
-                        {project.title}
-                      </p>
-                    </div>
-                  </div>
+  <div className="aspect-[16/10] overflow-hidden">
+    <img
+      src={project.imageSrc}
+      alt={project.title}
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      loading="lazy"
+      draggable={false}
+    />
+  </div>
+</div>
+
                 </Link>
               ))}
             </div>

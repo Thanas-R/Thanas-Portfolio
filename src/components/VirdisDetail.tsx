@@ -277,7 +277,21 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
                 className="text-base md:text-lg leading-relaxed text-justify mb-4"
                 style={{ color: textMuted, fontFamily: font }}
               >
-                Satellite-powered land analytics platform. Draw regions on a map and get NDVI vegetation analysis, climate data, soil profiling, land use classification, suitability scoring, and AI crop recommendations, all in one dashboard.
+                Satellite-powered land analytics platform. Draw regions on a map and get NDVI vegetation analysis, climate data, soil profiling, land use classification, suitability scoring, and AI crop recommendations, all in one dashboard.{' '}
+                <br></br>
+                <strong className="font-semibold opacity-90" style={{ color: text }}>
+                  [Shared this project on{' '}
+                  <a
+                    href="https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4 hover:opacity-80 transition-opacity"
+                    style={{ color: accent }}
+                  >
+                    Reddit
+                  </a>{' '}
+                  and got a lot of love]
+                </strong>
               </p>
 
               <div className="w-px mb-5" style={{ borderBottom: `1.5px dashed ${dashedGreen}` }} />

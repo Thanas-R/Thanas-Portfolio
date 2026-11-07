@@ -9,7 +9,8 @@ import virdisLogo from "@/assets/exp-virdis.webp";
 const EXPERIENCES: ExperienceItemType[] = [
   {
     id: "pesu-innovation-lab",
-    companyName: "PESU Innovation Lab",
+    companyName: "PES Innovation Lab",
+      location: "PES University, Blr",
     companyLogo: pilLogo,
     companyWebsite: "https://www.theinnovationlab.in/",
     logoBordered: true,
@@ -23,8 +24,12 @@ const EXPERIENCES: ExperienceItemType[] = [
         employmentType: "Full-time",
         icon: <CodeXml />,
         isExpanded: false,
-        description: `- Selected as a member of the PESU Innovation Lab, where I collaborate with talented peers and work on research and software projects.`,
-        skills: ["Research", "Lab", "Technical", "Networking"],
+        description: `Part of the most prestigious lab in PESU which is sponsored by Akamai & also served as one of the organisers for Hashcode #14`,
+              skills: [
+        "Research",
+        "Logistics",
+        "Networking",
+      ],
       },
       {
         id: "pil-intern",
@@ -32,13 +37,14 @@ const EXPERIENCES: ExperienceItemType[] = [
         employmentPeriod: { start: "2027", end: "????" },
         employmentType: "Internship",
         icon: <FlaskConical />,
-        description: `I will add it soon from experience.`,
+        description: `Will update it later, when i do my internship in summer 2027 <3`,
       },
     ],
   },
  {
   id: "qsg-technologies",
   companyName: "QSG Technologies",
+  location: "World Trade Center, Blr",
   companyLogo: expQsg,
   logoBordered: true,
   logoBorderColor: "ring-black",
@@ -52,36 +58,16 @@ const EXPERIENCES: ExperienceItemType[] = [
       icon: <Briefcase />,
       isExpanded: true,
       description: `- Worked on two software projects involving full-stack web development and automation using Go (Golang), Angular, TypeScript, SQL, HTML, CSS, Git, AWS, Bitbucket, Oauth and REST APIs.
-- Collaborated on developing, testing, and optimizing scalable applications while gaining hands-on experience with modern software development practices.`,
+- Collaborated on developing, testing & optimizing scalable applications while gaining hands-on experience with modern software development practices.`,
       skills: [
         "Automation",
-        "ML",
-        "Web-dev", "Agentic Workflow",
+        "GO","Angular",
+        "Team-work", "Agentic Workflow",
         "Industry Experience",
       ],
     },
   ],
 },
-  {
-    id: "virdis",
-    companyName: "Virdis",
-    companyLogo: virdisLogo,
-    companyWebsite: "https://virdis.thanas.dev",
-    isCurrentEmployer: false,
-    positions: [
-      {
-        id: "virdis-founder",
-        title: "Creator",
-        employmentPeriod: { start: "February 2026" },
-        employmentType: "Building",
-        icon: <Lightbulb />,
-        isExpanded: false,
-        description: `- Started Virdis as a project to help farmers, an AI-assisted farm boundary mapping with crop-health analytics on Sentinel-2 satellite data.
-- I shared this project on [Reddit](https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/) and got lots on love on this project.`,
-        skills: ["Owner", "Data Analytics", "Satellite", "Sentinel-2"],
-      },
-    ],
-  },
 ];
 
 export default function ExperienceSection() {
