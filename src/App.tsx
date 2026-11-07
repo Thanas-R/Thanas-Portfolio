@@ -96,6 +96,7 @@ const AnimatedRoutes = () => {
             <Route path="/projects/:slug" element={<ProjectDetailPage />} />
             <Route path="/resume" element={<ResumePage />} />
             <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/blogs/:slug" element={<BlogsPage />} />
             <Route path="/turtle" element={<Suspense fallback={<div className="min-h-screen bg-background" />}><TurtlePage /></Suspense>} />
             <Route path="*" element={<NotFound />} />
           </Routes>

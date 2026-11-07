@@ -111,6 +111,8 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
 }, [mobileOpen]);
 
   const isDark = mounted && resolvedTheme === 'dark';
+
+  const toggleTheme = () => setTheme(isDark ? 'light' : 'dark');
   const hideThemeToggle = hideThemeToggleProp !== undefined ? hideThemeToggleProp : (forceDark || forceLight);
 
   const textPrimary = forceDark ? 'text-white' : forceLight ? 'text-[#2f2f2f]' : 'text-foreground';
@@ -151,8 +153,9 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
           )}
         >
           <Link to="/" className={`font-['Space_Grotesk'] text-xl font-semibold ${textPrimary} tracking-tight`}>
-            <TextRoll>thanas.</TextRoll>
-          </Link>
+  <TextRoll>thanas.</TextRoll>
+</Link>
+
 
           <div className="flex items-center gap-8 mr-10">
             <button
@@ -176,7 +179,7 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
           <div className="flex items-center gap-3">
             {!hideThemeToggle && (
               <button
-                onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                onClick={toggleTheme}
                 className={`w-8 h-8 flex items-center justify-center rounded-full border ${borderColor} ${mutedIcon} transition-colors`}
                 aria-label="Toggle theme"
               >
@@ -210,9 +213,14 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
             'flex items-center justify-between shrink-0',
             isScrolled ? 'px-4 h-[48px]' : 'px-6 h-14'
           )}>
-            <Link to="/" onClick={() => setMobileOpen(false)} className={`font-['Space_Grotesk'] text-lg font-semibold ${textPrimary} tracking-tight`}>
-              <TextRoll>thanas.</TextRoll>
-            </Link>
+<Link
+  to="/"
+  onClick={() => setMobileOpen(false)}
+  className={`font-['Space_Grotesk'] text-lg font-semibold ${textPrimary} tracking-tight`}
+  aria-label="thanas.dev — home"
+>
+  <TextRoll>thanas.</TextRoll>
+</Link>
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -292,7 +300,7 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
                     className="mt-2"
                   >
                     <button
-                      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                      onClick={toggleTheme}
                       className={cn(
                         'w-full flex items-center gap-3 py-4 px-4 rounded-xl text-lg font-semibold transition-colors font-[Inter,sans-serif]',
                         forceDark

@@ -11,6 +11,7 @@ import {
   Moon,
   ArrowRight,
   Newspaper,
+  Turtle,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { projects } from '@/components/ProjectsSection';
@@ -76,6 +77,7 @@ const CommandPalette = () => {
       { id: 'blogs', label: 'Blogs', section: 'Navigate', icon: Newspaper, shortcut: 'B', action: () => go('/blogs') },
       { id: 'resume', label: 'Resume', section: 'Navigate', icon: FileText, shortcut: 'R', action: () => go('/resume') },
       { id: 'contact', label: 'Contact', section: 'Navigate', icon: Mail, shortcut: 'C', action: () => go('/#contact') },
+      { id: 'turtle', label: 'Turtle', section: 'Navigate', icon: Turtle, shortcut: 'T', action: () => go('/turtle') },
       // Theme
       {
         id: 'theme',
@@ -202,7 +204,7 @@ const CommandPalette = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
-              className="w-[90vw] max-w-[560px] rounded-2xl border border-border bg-card/95 backdrop-blur-2xl shadow-2xl overflow-hidden pointer-events-auto"
+              className="w-[90vw] max-w-[560px] rounded-2xl border border-border/50 bg-card/75 backdrop-blur-2xl shadow-2xl overflow-hidden pointer-events-auto"
             >
             {/* Search input */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-border">

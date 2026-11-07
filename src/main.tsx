@@ -97,31 +97,22 @@ const buildSphealDots = (landFeatures: any) => {
   return dots;
 };
 
-const globeDotsPromise = globeDataPromise
-  .then((landFeatures) => {
-    if (!landFeatures?.features) return null;
-
-    return new Promise<Array<{ lng: number; lat: number }> | null>((resolve) => {
-      const run = () => {
+// In src/main.tsx
+// Delay heavy 1.2s dot generation until 3s after page load so intro never stutters
+const globeDotsPromise = new Promise<Array<{ lng: number; lat: number }> | null>((resolve) => {
+  setTimeout(() => {
+    globeDataPromise
+      .then((landFeatures) => {
+        if (!landFeatures?.features) return resolve(null);
         try {
           resolve(buildSphealDots(landFeatures));
         } catch {
           resolve(null);
         }
-      };
-
-      const idleCallback = (window as any).requestIdleCallback as
-        | ((cb: () => void, options?: { timeout?: number }) => void)
-        | undefined;
-
-      if (idleCallback) {
-        idleCallback(run, { timeout: 1400 });
-      } else {
-        setTimeout(run, 0);
-      }
-    });
-  })
-  .catch(() => null);
+      })
+      .catch(() => resolve(null));
+  }, 3000);
+});
 
 // Store globally so Spheal can use fully cached globe + dot data
 (window as any).__globeDataPromise = globeDataPromise;

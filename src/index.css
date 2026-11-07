@@ -1,4 +1,113 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=League+Gothic&family=Averia+Serif+Libre:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&family=Capriola&family=Caesar+Dressing&family=Chelsea+Market&display=swap');
+
+/* Local display fonts */
+@font-face {
+  font-family: 'Blocky';
+  src: url('/Blocky-nRx8M.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tanker';
+  src: url('/tanker_regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MightySouly';
+  src: url('/MightySouly-lxggD.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Newspaper article reader typography (colors follow currentColor) */
+.newspaper-md h1,
+.newspaper-md h2,
+.newspaper-md h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 1.4em 0 0.5em;
+}
+.newspaper-md h1 { font-size: 30px; }
+.newspaper-md h2 { font-size: 24px; }
+.newspaper-md h3 { font-size: 20px; }
+.newspaper-md h1:first-child,
+.newspaper-md h2:first-child { margin-top: 0; }
+.newspaper-md p {
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 1em 0;
+  text-align: justify;
+}
+.newspaper-md a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.newspaper-md ul,
+.newspaper-md ol {
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.75;
+  padding-left: 1.6em;
+  margin: 1em 0;
+}
+.newspaper-md ul { list-style: disc; }
+.newspaper-md ol { list-style: decimal; }
+.newspaper-md blockquote {
+  border-left: 3px solid currentColor;
+  padding-left: 1.1em;
+  margin: 1.4em 0;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 17px;
+  opacity: 0.85;
+}
+.newspaper-md code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88em;
+  background: rgba(128, 128, 128, 0.16);
+  padding: 0.12em 0.35em;
+  border-radius: 4px;
+}
+.newspaper-md pre {
+  background: rgba(128, 128, 128, 0.12);
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  padding: 1em;
+  overflow-x: auto;
+  margin: 1.4em 0;
+}
+.newspaper-md pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 13px;
+}
+.newspaper-md img { max-width: 100%; height: auto; }
+.newspaper-md hr {
+  border: none;
+  border-top: 1px solid currentColor;
+  margin: 2em 0;
+  opacity: 0.5;
+}
+.newspaper-md table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Droid Serif', Georgia, serif;
+  font-size: 14px;
+  margin: 1.4em 0;
+}
+.newspaper-md th,
+.newspaper-md td {
+  border: 1px solid currentColor;
+  padding: 0.5em 0.8em;
+  text-align: left;
+}
 /* Text selection: inverted colors */
 ::selection {
   background: hsl(var(--foreground));
@@ -127,32 +236,79 @@
   font-family: "Varela Round", sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
 
-/* Custom scrollbar */
+
+/* ========================================================
+   Ultra-thin (3px) Translucent Floating Scrollbar
+   ======================================================== */
+
+/* WebKit / Chromium (Chrome, Edge, Safari, Brave) */
+*::-webkit-scrollbar,
 ::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 3px;
+  width: 5px !important;
+  height: 5px !important;
+  background: transparent !important;
 }
 
-/* Dark scrollbar for backdrop pages (PESU MC, PESU Forge, Nautilus, Contour, Virdis) */
-/* Keep the site's own 6px scrollbar look, just flip its colors to dark */
-html[data-darkscroll='true'] {
-  color-scheme: dark;
+/* 1. Kill all arrow buttons and steppers across all states */
+*::-webkit-scrollbar-button,
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-button:single-button,
+::-webkit-scrollbar-button:vertical:decrement,
+::-webkit-scrollbar-button:vertical:increment,
+::-webkit-scrollbar-button:horizontal:decrement,
+::-webkit-scrollbar-button:horizontal:increment {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
-html[data-darkscroll='true']::-webkit-scrollbar-track {
-  background: rgba(10, 13, 11, 0.92);
+
+/* 2. Completely eliminate tracks, borders, and outlines */
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track-piece,
+*::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track-piece,
+::-webkit-scrollbar-corner {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
+
+/* 3. Light mode: subtle translucent tint, squarish with 2px slight rounded corner, no outline */
+*::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18) !important;
+  border-radius: 1px !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: background 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.38) !important;
+}
+
+/* 4. Dark mode & backdrop pages: luminous highlight, squarish with 2px corner */
+html.dark *::-webkit-scrollbar-thumb,
+html.dark::-webkit-scrollbar-thumb,
+html[data-darkscroll='true'] *::-webkit-scrollbar-thumb,
 html[data-darkscroll='true']::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-radius: 1px !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+html.dark *::-webkit-scrollbar-thumb:hover,
+html.dark::-webkit-scrollbar-thumb:hover,
+html[data-darkscroll='true'] *::-webkit-scrollbar-thumb:hover,
+html[data-darkscroll='true']::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.55) !important;
 }
 
 /* CRT flicker for the askPESU TV screen — dense, irregular bursts like a failing tube */

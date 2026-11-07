@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import GitHubActivityChart from '@/components/GitHubActivityChart';
 import GradientCard from '@/components/GradientCard';
@@ -127,15 +128,15 @@ const AboutSection = () => {
             </h3>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I am a passionate learner who believes in growing a little every day. I'm genuinely interested in coding and problem-solving, and I enjoy turning complex challenges into simple, effective solutions.
+              I am a curious developer and student who enjoys building things and solving problems. My interests lie in Machine Learning, Deep Learning, and Full-Stack development. I am always keen to learn, build cool stuff & contribute to OSS
             </p>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              While I take my work seriously, I also value creating a positive and cheerful environment. I believe a good laugh can go a long way in building strong, collaborative teams.
+               While I tend to keep my work professional, I always try to create a positive environment. I strive to be honest, supportive, & reliable while also stepping upto lead or take action when needed
             </p>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I strive to be honest, supportive, and reliable, taking responsibility or leading when needed while contributing and learning with the team.
+               I enjoy meeting new people, having conversations, and picking up something new every day. I also love spending my time playing with my pet turtle  <Link to="/turtle" className="text-emerald-500 hover:text-emerald-400 font-medium underline underline-offset-4 transition-colors">Siri</Link> alot
             </p>
           </BentoCard>
 

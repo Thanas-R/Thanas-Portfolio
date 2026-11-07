@@ -95,7 +95,7 @@ const ProjectsPage = () => {
               <h1 className="text-4xl font-black text-foreground uppercase font-['Space_Grotesk']">
                 Projects <span className="text-muted-foreground/30 font-mono text-2xl">{projects.length}</span>
               </h1>
-              <p className="sketch-note text-xl mt-1 -rotate-1 origin-left">all of them, in order</p>
+              <p className="sketch-note text-xl mt-1 -rotate-1 origin-left">alot of them are shown here</p>
             </div>
 
             <div

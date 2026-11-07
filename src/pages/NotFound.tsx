@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { AsciiWordmark } from "@/components/AsciiWordmark";
 import { 
   TbBrandGithubFilled, 
   TbBrandLinkedin, 
@@ -170,9 +171,7 @@ const NotFound = () => {
       </main>
 
       {/* Signature Wordmark */}
-      <span className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 font-mono text-xs sm:text-sm text-foreground/70 select-none">
-        thanas.
-      </span>
+      <AsciiWordmark className="absolute bottom-10 left-5 sm:bottom-6 sm:left-6 text-[9px] leading-[1.15] text-foreground/70" />
     </div>
   );
 };
