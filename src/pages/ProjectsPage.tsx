@@ -7,12 +7,16 @@ import Navbar from '@/components/Navbar';
 import { projectsPageList as projects } from '@/components/ProjectsSection';
 import defaultPreview from '@/assets/projects-default.webp';
 import SEOHead from '@/components/SEOHead';
+import { CurlyArrow, DownArrow} from 'trazo-stickers';
+import { useTheme } from '@/hooks/use-theme';
+
 
 const ProjectsPage = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const activeProject = hoveredId ? projects.find((p) => p.id === hoveredId) : null;
   const previewImage = activeProject ? activeProject.imageSrc : defaultPreview;
   const previewLabel = activeProject ? activeProject.title : '';
+const { isDark } = useTheme();
 
   const fadeMaskStyle: CSSProperties = {
     WebkitMaskImage:
@@ -44,18 +48,21 @@ const ProjectsPage = () => {
               transition={{ duration: 0.6 }}
               className="w-full"
             >
-              <div className="mb-6">
-                <p className="sketch-note text-xl mt-2 -rotate-1 origin-left">hover to peek →</p>
+               <div className="mb-6">
+                <p className="sketch-note text-xl mt-2 -rotate-1 origin-left">hover to peek </p>
                 <h1
                   className="text-5xl font-black text-foreground leading-none"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
-                  Projects
+                   My Projects <CurlyArrow
+                    size={59} 
+                    rotate={5} 
+                    color={isDark ? '#F5F5F5' : '#1f1e1b'} 
+                    className="inline-block align-middle" 
+                  /> 
                 </h1>
-                <p className="text-muted-foreground/40 font-mono text-sm mt-1">
-                  {projects.length} total
-                </p>
               </div>
+
 
               <div className="relative sketch-frame overflow-hidden aspect-[16/10] bg-muted">
                 <AnimatePresence mode="popLayout">

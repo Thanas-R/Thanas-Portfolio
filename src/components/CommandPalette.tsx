@@ -11,10 +11,11 @@ import {
   Moon,
   ArrowRight,
   Newspaper,
-  Turtle,
+  Heart,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { projects } from '@/components/ProjectsSection';
+import { Button } from '@/components/ui/button';
 
 interface CommandItem {
   id: string;
@@ -47,7 +48,9 @@ const CommandPalette = () => {
     } else {
       document.body.style.overflow = '';
     }
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [open]);
 
   const go = useCallback(
@@ -77,7 +80,7 @@ const CommandPalette = () => {
       { id: 'blogs', label: 'Blogs', section: 'Navigate', icon: Newspaper, shortcut: 'B', action: () => go('/blogs') },
       { id: 'resume', label: 'Resume', section: 'Navigate', icon: FileText, shortcut: 'R', action: () => go('/resume') },
       { id: 'contact', label: 'Contact', section: 'Navigate', icon: Mail, shortcut: 'C', action: () => go('/#contact') },
-      { id: 'turtle', label: 'Turtle', section: 'Navigate', icon: Turtle, shortcut: 'T', action: () => go('/turtle') },
+      { id: 'turtle', label: 'Siri (Turtle)', section: 'Navigate', icon: Heart, shortcut: 'T', action: () => go('/turtle') },
       // Theme
       {
         id: 'theme',
@@ -120,7 +123,7 @@ const CommandPalette = () => {
     return map;
   }, [filtered]);
 
-  // ⌘K / Ctrl+K toggle
+  // Command+K / Ctrl+K toggle
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -187,101 +190,115 @@ const CommandPalette = () => {
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-md"
-            onClick={close}
-          />
+{/* Backdrop */}
+<motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  exit={{ opacity: 0 }}
+  transition={{ duration: 0.15 }}
+className="fixed inset-0 z-[100] bg-black/25 backdrop-blur-[2px]"
+  onClick={close}
+/>
 
-          {/* Centering wrapper */}
-          <div className="fixed inset-0 z-[101] flex items-center justify-center pointer-events-none">
+
+          {/* Palette container */}
+          <div className="pointer-events-none fixed inset-0 z-[101] flex items-start justify-center overflow-y-auto px-2 pb-6 pt-[min(15vh,8rem)]">
             <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: 0.96, y: -12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: -12 }}
               transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
-              className="w-[90vw] max-w-[560px] rounded-2xl border border-border/50 bg-card/75 backdrop-blur-2xl shadow-2xl overflow-hidden pointer-events-auto"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Command palette"
+              className="relative isolate w-[min(580px,calc(100vw-1rem))] max-h-[min(76vh,640px)] overflow-hidden rounded-2xl border border-white/25 dark:border-white/[0.09] bg-[rgba(249,249,250,0.97)] dark:bg-[rgba(25,25,25,0.97)] shadow-[0_24px_50px_-12px_rgba(0,0,0,0.25),inset_0_1px_0_0_rgba(255,255,255,0.4)] dark:shadow-[0_28px_60px_-15px_rgba(0,0,0,0.7),inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-[20px] backdrop-saturate-[140%] pointer-events-auto"
             >
-            {/* Search input */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
-              <Search className="w-4 h-4 text-muted-foreground shrink-0" />
-              <input
-                ref={inputRef}
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search projects, pages, actions…"
-                className="flex-1 bg-transparent text-foreground text-sm placeholder:text-muted-foreground/60 outline-none"
-              />
-              <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-md bg-muted text-muted-foreground text-[11px] font-mono border border-border">
-                ESC
-              </kbd>
-            </div>
+              {/* Search input */}
+              <div className="relative z-10 flex items-center gap-3 border-b border-black/[0.08] dark:border-white/[0.08] px-4 py-4 sm:px-5">
+                <Search className="h-5 w-5 shrink-0 text-muted-foreground" />
+                <input
+                  ref={inputRef}
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search projects, pages, actions…"
+                  aria-label="Search projects, pages, and actions"
+                  className="min-w-0 flex-1 bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground/70"
+                />
+                <kbd className="hidden shrink-0 rounded-md border border-black/10 dark:border-white/10 bg-black/[0.04] dark:bg-white/[0.06] px-2 py-1 font-mono text-[10px] text-muted-foreground sm:inline-flex">
+                  ESC
+                </kbd>
+              </div>
 
-            {/* Results */}
-            <div ref={listRef} className="max-h-[340px] overflow-y-auto py-2">
-              {filtered.length === 0 && (
-                <p className="text-sm text-muted-foreground text-center py-8">
-                  No results found.
-                </p>
-              )}
-              {Array.from(sections.entries()).map(([section, items]) => (
-                <div key={section} className="mb-1">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground/60 px-5 pt-3 pb-1.5 font-mono">
-                    {section}
+              {/* Results list with invisible scrollbar */}
+              <div
+                ref={listRef}
+                className="relative z-10 max-h-[min(54vh,420px)] overflow-y-auto p-2 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {filtered.length === 0 && (
+                  <p className="py-10 text-center text-xl text-muted-foreground">
+                    No results found.
                   </p>
-                  {items.map((item) => {
-                    flatIndex++;
-                    const isActive = flatIndex === activeIndex;
-                    const idx = flatIndex;
-                    return (
-                      <button
-                        key={item.id}
-                        data-active={isActive}
-                        onClick={() => item.action()}
-                        onMouseEnter={() => setActiveIndex(idx)}
-                        className={`w-full flex items-center gap-3 px-4 mx-1 rounded-md py-2 text-left transition-colors duration-75 ${
-                          isActive ? 'bg-muted/80' : 'hover:bg-muted/40'
-                        }`}
-                        style={{ width: 'calc(100% - 8px)' }}
-                      >
-                        <item.icon className="w-4 h-4 text-muted-foreground shrink-0" />
-                        <span className="flex-1 text-sm font-medium text-foreground truncate">
-                          {item.label}
-                        </span>
-                        {item.shortcut && (
-                          <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-muted text-muted-foreground text-[10px] font-mono border border-border">
-                            {item.shortcut}
-                          </kbd>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
+                )}
+                {Array.from(sections.entries()).map(([section, items]) => (
+                  <div key={section} className="mb-1">
+                    <p className="px-3 pb-1 pt-2.5 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70">
+                      {section}
+                    </p>
+                    {items.map((item) => {
+                      flatIndex++;
+                      const isActive = flatIndex === activeIndex;
+                      const idx = flatIndex;
+                      return (
+                        <Button
+                          key={item.id}
+                          type="button"
+                          variant="ghost"
+                          data-active={isActive}
+                          aria-current={isActive ? 'true' : undefined}
+                          onClick={() => item.action()}
+                          onMouseEnter={() => setActiveIndex(idx)}
+                          className={`h-12 w-full justify-start gap-3 rounded-xl px-3 text-left transition-all duration-150 ${
+                            isActive
+                              ? 'bg-black/[0.07] dark:bg-white/[0.1] text-foreground shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)]'
+                              : 'text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.05]'
+                          }`}
+                        >
+                          <item.icon className="!h-5 !w-5 shrink-0 text-muted-foreground" />
+                          <span className="min-w-0 flex-1 truncate text-base font-medium">
+                            {item.label}
+                          </span>
+                          {isActive && (
+                            <ArrowRight className="!h-5 !w-5 shrink-0 text-muted-foreground" />
+                          )}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
 
-            {/* Footer */}
-            <div className="flex items-center justify-between px-5 py-2.5 border-t border-border text-[11px] text-muted-foreground">
-              <div className="flex items-center gap-4">
-                <span className="flex items-center gap-1.5">
-                  <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">↑↓</kbd>
-                  Navigate
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">↵</kbd>
-                  {filtered[activeIndex]?.section === 'Projects' ? 'Open project' : filtered[activeIndex]?.section === 'Actions' ? 'Run action' : 'Go to page'}
+              {/* Footer */}
+              <div className="relative z-10 flex items-center justify-between gap-3 border-t border-black/[0.08] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] px-4 py-2.5 text-[12px] text-muted-foreground sm:px-5">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <span className="flex items-center gap-1.5">
+                    <kbd className="inline-flex h-6 min-w-[24px] items-center justify-center rounded border border-black/10 dark:border-white/10 bg-black/[0.05] dark:bg-white/[0.08] px-1.5 font-mono text-[11px]">↑↓</kbd>
+                    <span className="hidden sm:inline">Navigate</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    {/* Extended width enter button icon */}
+                    <kbd className="inline-flex h-6 min-w-[32px] items-center justify-center rounded border border-black/10 dark:border-white/10 bg-black/[0.05] dark:bg-white/[0.08] px-1.5 font-mono text-[12px] tracking-wider">enter</kbd>
+                    <span className="hidden sm:inline">
+                      {filtered[activeIndex]?.section === 'Projects' ? 'Open project' : filtered[activeIndex]?.section === 'Actions' ? 'Run action' : 'Go to page'}
+                    </span>
+                  </span>
+                </div>
+                <span className="flex shrink-0 items-center gap-1">
+                  <kbd className="inline-flex h-6 min-w-[26px] items-center justify-center rounded border border-black/10 dark:border-white/10 bg-black/[0.05] dark:bg-white/[0.08] px-1.5 font-mono text-[11px]">⌘</kbd>
+                  <kbd className="inline-flex h-6 min-w-[22px] items-center justify-center rounded border border-black/10 dark:border-white/10 bg-black/[0.05] dark:bg-white/[0.08] px-1.5 font-mono text-[11px]">K</kbd>
+                  <span className="ml-1 hidden sm:inline">to open</span>
                 </span>
               </div>
-              <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">⌘</kbd>
-                <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">K</kbd>
-              </span>
-            </div>
-          </motion.div>
+            </motion.div>
           </div>
         </>
       )}

@@ -1,4 +1,5 @@
 import { ImagePlus } from 'lucide-react';
+import { SeaTurtle, Starfish, PuffyCloud } from 'trazo-stickers';
 
 const turtleImageModules = import.meta.glob(
   '@/assets/turtle/*.{avif,gif,heic,heif,jpeg,jpg,png,webp,AVIF,GIF,HEIC,HEIF,JPEG,JPG,PNG,WEBP}',
@@ -24,11 +25,12 @@ const TurtlePage = () => (
             (my pet turtle)
           </span>
         </div>
-        {turtlePhotos.length > 0 && (
-          <span className="font-mono text-xs text-muted-foreground">
-            {turtlePhotos.length} {turtlePhotos.length === 1 ? 'photo' : 'photos'}
-          </span>
-        )}
+        <div className="flex items-center gap-3">
+          <div aria-hidden="true" className="flex items-center gap-1">
+            <SeaTurtle size={44} rotate={7} />
+          </div>
+
+        </div>
       </header>
 
       {turtlePhotos.length > 0 ? (

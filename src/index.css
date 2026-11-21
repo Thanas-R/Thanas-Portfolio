@@ -124,9 +124,11 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98.8%;
+    /* Page background: #FCFCFD */
+    --background: 240 20% 99%;
     --foreground: 0 0% 5.5%;
 
+    /* Floating card surface: clean white on top of #FCFCFD */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 5.5%;
 
@@ -136,37 +138,41 @@
     --primary: 0 0% 5.5%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 93%;
+    /* Secondary & Muted surfaces: #F8F8F9 */
+    --secondary: 240 8% 97.5%;
     --secondary-foreground: 0 0% 5.5%;
 
-    --muted: 0 0% 93%;
+    --muted: 240 8% 97.5%;
     --muted-foreground: 0 0% 40%;
 
-    --accent: 0 0% 88%;
+    /* Accent hover & pills */
+    --accent: 240 8% 94.5%;
     --accent-foreground: 0 0% 5.5%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 85%;
-    --input: 0 0% 85%;
+    /* Crisp cool-gray borders: #E6E6EA */
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
     --ring: 0 0% 5.5%;
 
     --radius: 0.5rem;
 
     --glow-color: 153 46% 49%;
-    --gradient-card-bg: #f6f6f6;
-    --gradient-card-border: #e6e6e6;
+    --gradient-card-bg: #F8F8F9;
+    --gradient-card-border: #E6E6EA;
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 240 20% 99%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent: 240 8% 97.5%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 240 6% 90%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
 
   .dark {
     --background: 0 0% 5%;

@@ -7,6 +7,8 @@ import nautilusBg from '@/assets/nautilus_bg.webp';
 import { Project } from '@/components/ProjectsSection';
 import { useEffect, useRef, useState } from 'react';
 import mermaid from 'mermaid';
+import { Seahorse, SeaBubble, ConchShell, BlueMinnow, RedCrab, PuffyCloud, ExclamationMark, ScallopShell} from 'trazo-stickers';
+
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -320,7 +322,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               style={{ color: textColor, fontFamily: font }}
             >
               <ArrowLeft className="w-4 h-4" />
-              All Projects
+              All Projects 
             </Link>
 
             <span
@@ -331,12 +333,8 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                 backgroundColor: isDark ? 'rgba(255,241,119,0.12)' : 'rgba(255,241,119,0.22)',
                 fontFamily: font,
               }}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
-                <line x1="12" y1="9" x2="12" y2="13" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </svg>
+            ><ExclamationMark size={20} rotate={24} color="#eab308" className="inline-block align-middle" />
+
               Work in Progress
             </span>
           </motion.div>
@@ -347,8 +345,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               <h1
                 className="text-6xl md:text-8xl leading-none"
                 style={{ fontFamily: hand, fontWeight: 700, color: headingColor }}
-              >
-                Nautilus
+              >Nautilus 
               </h1>
 
               <div className="flex items-center gap-2.5">
@@ -392,7 +389,9 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               className="text-sm md:text-base leading-relaxed w-full"
               style={{ color: textColor, fontFamily: font }}
             >
-              Nautilus replaces the linear chat thread with a node based canvas. Every prompt becomes one independent card with a short title, a summary and an explanation, and the system continuously compares each new card against everything already on the canvas. Each card is embedded as nine separate field vectors with a MiniLM embedding model, and a weighted cosine score decides when two concepts are related. Above the threshold Nautilus draws a labelled link, and only then does the LLM explain why and how the ideas connect. Links can be rated out of 100, and non negative least squares refits the field weights so the graph slowly learns from your judgement. Built with FastAPI, PostgreSQL with pgvector and React Flow, and still very much a work in progress.
+              
+              Nautilus replaces the linear thread with a spatial knowledge workspace. Every prompt becomes a structured card or a typed graph, and related ideas are linked with a label and a written reason. Nine embedded fields decide what connects, and your ratings refit the weights over time
+              <BlueMinnow size={30} rotate={0} className="ml-1 inline-block align-middle" />
             </p>
           </motion.div>
         </div>
@@ -400,12 +399,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
         <div className="max-w-4xl mx-auto px-6 pt-2 pb-24">
           {/* Key features flowchart */}
           <motion.div {...fadeUp(0.2)} className="mb-14">
-            <h2
-              className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-6"
-              style={{ color: labelColor, fontFamily: font }}
-            >
-              Key Features
-            </h2>
+
             <FlowchartCanvas isDark={isDark} />
           </motion.div>
 
@@ -415,24 +409,24 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-5"
               style={{ color: labelColor, fontFamily: font }}
             >
-              Neural Retrieval
+              Some explanations
             </h2>
             <div className="grid md:grid-cols-3 gap-3 mb-3">
               {[
                 {
                   icon: Network,
-                  title: 'GNNs',
-                  desc: 'Graph neural networks pass messages along the edges of the knowledge graph, so every card\u2019s embedding is shaped by the ideas it connects to. The structure of the graph itself becomes part of the representation.',
+                  title: 'Flowchart mode',
+                  desc: 'A flowchart prompt becomes a typed graph instead of a paragraph. The planner chooses a chain, tree, branch or loop, the writer fills every node body, and the planner labels each edge with its relationship',
                 },
                 {
                   icon: GitFork,
-                  title: 'Sub-GNNs',
-                  desc: 'Sub graph neural networks reason over sampled neighbourhoods instead of the whole graph, so local clusters of ideas can be retrieved efficiently even as the canvas grows into thousands of nodes.',
+                  title: 'Converge Mode',
+                  desc: 'The knowledge mode and the core of the backend. Instead of asking a model whether A relates to B, Converge compares two cards across nine independent fields and explains only the links that survive',
                 },
                 {
                   icon: Waves,
-                  title: 'Spatio-Temporal GNNs',
-                  desc: 'Spatio temporal GNNs model both structure and time, tracking how the links between your concepts evolve across sessions, so retrieval can surface what you were actively building recently.',
+                  title: 'Why nine vectors?',
+                  desc: 'A single embedding blends everything. Two ideas that share a mechanism but differ in examples would look identical. Embedding each field on its own keeps every match explainable: the reason can name the field that carried',
                 },
               ].map((item) => (
                 <div
@@ -462,6 +456,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                 </div>
               ))}
             </div>
+            
             <div
               className="p-5 rounded-xl mb-12"
               style={{ backgroundColor: cardBg, border: `1px solid ${cardBorder}` }}
@@ -479,7 +474,7 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
                 className="text-[13px] leading-relaxed"
                 style={{ color: textColor, fontFamily: font }}
               >
-                Embeddings run locally in process with all MiniLM L6 v2, one normalised 384 dimension vector per field, so scoring never waits on an external API. A single embedding blends everything, so a shared example would look the same as a shared mechanism, and the nine per field vectors keep every match explainable. After enough link ratings, non negative least squares refits the field weights, and the learned weights are blended with the defaults so a field can matter more or less but never count negatively.
+                Embeddings run locally in process with all MiniLM L6 v2, one normalised 384 dimension vector per field, so scoring never waits on an external API. A single embedding blends everything, so a shared example would look the same as a shared mechanism, and the nine per field vectors keep every match explainable. After enough link ratings, non negative least squares refits the field weights, and the learned weights are blended with the defaults so a field can matter more or less but never count negatively <Seahorse size={31} rotate={0} className="inline-block align-middle" />
               </p>
             </div>
           </motion.div>
@@ -538,21 +533,20 @@ const NautilusDetail = ({ project, prevProject, nextProject }: NautilusDetailPro
               className="p-5 mb-12"
               style={{ backgroundColor: cardBg, border: `1.5px dashed ${dashedBorder}`, borderRadius: '14px 10px 15px 9px' }}
             >
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm" style={{ fontFamily: font }}>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base" style={{ fontFamily: font }}>
                 <p style={{ color: headingColor }}>
-                  <span className="font-medium" style={{ color: isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)' }}>Full-stack development and integration:</span>{' '}
+                  <span className="font-medium" style={{ color: isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)' }}>frontend, design & flowchart mode: </span>{' '}
                   <span className="font-semibold">Thanas R</span>
-                </p>
-                <span className="hidden sm:inline text-muted-foreground/40">•</span>
+                </p><ConchShell size={35} rotate={27} className="ml-1 inline-block align-middle" />
                 <p style={{ color: headingColor }}>
-                  <span className="font-medium" style={{ color: isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)' }}>Concept and Converge mode:</span>{' '}
+                  <span className="font-medium" style={{ color: isDark ? 'hsl(0 0% 55%)' : 'hsl(0 0% 50%)' }}>idea, backend & converge mode:</span>{' '}
                   <a
                     href="https://github.com/Tanay-s5"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-semibold hover:opacity-70 transition-opacity underline underline-offset-2"
                   >
-                    @tanay-s5
+                    @Tanay-s5
                   </a>
                 </p>
               </div>

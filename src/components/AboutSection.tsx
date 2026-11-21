@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import GitHubActivityChart from '@/components/GitHubActivityChart';
 import GradientCard from '@/components/GradientCard';
+import { SeaTurtle } from 'trazo-stickers';
 
 const BentoCard = ({ className, children }: { className?: string; children?: ReactNode }) => (
   <GradientCard className={className}>
@@ -128,15 +129,18 @@ const AboutSection = () => {
             </h3>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-              I am a curious developer and student who enjoys building things and solving problems. My interests lie in Machine Learning, Deep Learning, and Full-Stack development. I am always keen to learn, build cool stuff & contribute to OSS
+              I am a curious developer and student who enjoys building things and solving problems. My interests lie in Machine Learning, Deep Learning and FullStack development. I am always keen to learn, build something & contribute to OSS
             </p>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-               While I tend to keep my work professional, I always try to create a positive environment. I strive to be honest, supportive, & reliable while also stepping upto lead or take action when needed
+               While I tend to keep my work professional, I always try to create a positive environment. I strive to be honest, supportive, & dependable - while taking initiative and stepping up to lead whenever needed confidently
             </p>
 
             <p className="text-muted-foreground leading-relaxed mt-3 text-base font-['Inter']">
-               I enjoy meeting new people, having conversations, and picking up something new every day. I also love spending my time playing with my pet turtle  <Link to="/turtle" className="text-emerald-500 hover:text-emerald-400 font-medium underline underline-offset-4 transition-colors">Siri</Link> alot
+              Away from my laptop, I love exploring and spending time with my pet {' '}
+              <Link to="/turtle" className="text-[#828282] hover:text-[#5AB87C] font-bold transition-colors">
+                Turtle
+              </Link>
             </p>
           </BentoCard>
 
@@ -165,7 +169,7 @@ const AboutSection = () => {
             <div className="space-y-3">
               {educationData.map((edu, idx) => (
                 <div key={idx} className="space-y-1">
-                  <p className="font-['Averia_Serif_Libre'] font-bold text-foreground text-base tracking-tight">
+                  <p className="font-['Averia_Serif_Libre'] font-bold text-foreground text-lg tracking-tight">
                     {edu.institution}
                   </p>
 
@@ -174,7 +178,7 @@ const AboutSection = () => {
                       {edu.detail}
                     </p>
 
-                    <span className="inline-flex items-center rounded-md border border-border bg-muted/70 px-2 py-0.5 text-xs font-medium text-foreground/80 font-['JetBrains_Mono'] tabular-nums shrink-0">
+                    <span className="inline-flex items-center rounded-md border border-border bg-muted/70 px-2 py-0.5 text-sm font-bold text-foreground/80 font-['JetBrains_Mono'] tabular-nums shrink-0">
                       {edu.years}
                     </span>
                   </div>

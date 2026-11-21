@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from 'next-themes';
 import { Command } from 'lucide-react';
@@ -96,19 +96,19 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
-  if (mobileOpen) {
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
-  }
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
 
-  return () => {
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
-  };
-}, [mobileOpen]);
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [mobileOpen]);
 
   const isDark = mounted && resolvedTheme === 'dark';
 
@@ -120,19 +120,52 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
   const borderColor = forceDark ? 'border-white/20' : forceLight ? 'border-[#2f2f2f]/20' : 'border-border';
   const mutedIcon = forceDark ? 'text-white/60 hover:text-white' : forceLight ? 'text-[#2f2f2f]/60 hover:text-[#2f2f2f]' : 'text-muted-foreground hover:text-foreground';
 
-  const scrolledBg = forceDark
-    ? 'bg-black/70 backdrop-blur-2xl'
-    : forceLight
-      ? 'bg-[#f9f7f1]/70 backdrop-blur-2xl'
-      : 'bg-card/70 backdrop-blur-2xl';
+  const isDarkEffective = forceDark || isDark;
 
-  const scrolledBorder = forceDark
-    ? 'border-white/10'
-    : forceLight
-      ? 'border-[#2f2f2f]/10'
-      : 'border-border/50';
+// Liquid glass optics inspired by jorm.lol
+const liquidGlassStyle = useMemo(() => {
+  if (!isScrolled) return undefined;
+  return {
+    backgroundColor: isDarkEffective
+      ? 'rgba(13, 13, 13, 0.65)'
+      : forceLight
+        ? 'rgba(252, 252, 253, 0.75)'
+        : 'rgba(252, 252, 253, 0.75)',
+    backdropFilter: 'blur(16px) saturate(130%)',
+    WebkitBackdropFilter: 'blur(16px) saturate(130%)',
+    borderColor: isDarkEffective
+      ? 'rgba(255, 255, 255, 0.12)'
+      : forceLight
+        ? 'rgba(47, 47, 47, 0.12)'
+        : 'rgba(0, 0, 0, 0.08)',
+    boxShadow: isDarkEffective
+      ? '0 12px 30px rgba(0, 0, 0, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15)'
+      : '0 12px 30px rgba(0, 0, 0, 0.06), inset 0 1px 1px 0 rgba(255, 255, 255, 0.8)',
+  };
+}, [isScrolled, isDarkEffective, forceLight]);
 
-  const mobileBg = forceDark ? 'bg-black/95' : forceLight ? 'bg-[#f9f7f1]/95' : 'bg-background/95';
+  const mobileLiquidGlassStyle = useMemo(() => {
+    if (mobileOpen) {
+      return {
+        backgroundColor: isDarkEffective
+          ? 'rgba(13, 13, 13, 0.94)'
+          : forceLight
+            ? 'rgba(252, 252, 253, 0.95)'
+            : 'rgba(252, 252, 253, 0.95)',
+        backdropFilter: 'blur(24px) saturate(140%)',
+        WebkitBackdropFilter: 'blur(24px) saturate(140%)',
+        borderColor: isScrolled
+          ? (isDarkEffective ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)')
+          : 'transparent',
+        boxShadow: isScrolled
+          ? (isDarkEffective
+              ? '0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15)'
+              : '0 16px 40px rgba(0, 0, 0, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.8)')
+          : 'none',
+      };
+    }
+    return liquidGlassStyle;
+  }, [mobileOpen, isScrolled, isDarkEffective, forceLight, liquidGlassStyle]);
 
   return (
     <>
@@ -145,17 +178,17 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
       >
         {/* Desktop navbar */}
         <nav
+          style={liquidGlassStyle}
           className={cn(
             'hidden md:flex w-full max-w-5xl mx-auto items-center justify-between transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
             isScrolled
-              ? `${scrolledBg} border ${scrolledBorder} rounded-2xl shadow-lg shadow-black/5 px-5 h-[52px]`
+              ? 'border rounded-2xl px-5 h-[52px]'
               : 'bg-transparent border border-transparent rounded-none px-6 md:px-12 h-16'
           )}
         >
           <Link to="/" className={`font-['Space_Grotesk'] text-xl font-semibold ${textPrimary} tracking-tight`}>
-  <TextRoll>thanas.</TextRoll>
-</Link>
-
+            <TextRoll>thanas.</TextRoll>
+          </Link>
 
           <div className="flex items-center gap-8 mr-10">
             <button
@@ -191,14 +224,15 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
 
         {/* Mobile: single container that expands */}
         <motion.div
+          style={mobileLiquidGlassStyle}
           className={cn(
-            'md:hidden flex flex-col overflow-hidden backdrop-blur-3xl transition-[padding,border-radius,border-color,background-color,box-shadow] duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
+            'md:hidden flex flex-col overflow-hidden transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]',
             isScrolled && !mobileOpen
-              ? `${scrolledBg} border ${scrolledBorder} rounded-2xl shadow-lg shadow-black/5 mx-auto max-w-[95%]`
+              ? 'border rounded-2xl mx-auto max-w-[95%]'
               : isScrolled && mobileOpen
-                ? `${mobileBg} border ${scrolledBorder} rounded-2xl shadow-lg shadow-black/5 mx-auto max-w-[95%]`
+                ? 'border rounded-2xl mx-auto max-w-[95%]'
                 : !isScrolled && mobileOpen
-                  ? `${mobileBg} border border-transparent`
+                  ? 'border border-transparent'
                   : 'bg-transparent border border-transparent'
           )}
           animate={{
@@ -213,14 +247,14 @@ const Navbar = ({ forceDark = false, forceLight = false, hideThemeToggle: hideTh
             'flex items-center justify-between shrink-0',
             isScrolled ? 'px-4 h-[48px]' : 'px-6 h-14'
           )}>
-<Link
-  to="/"
-  onClick={() => setMobileOpen(false)}
-  className={`font-['Space_Grotesk'] text-lg font-semibold ${textPrimary} tracking-tight`}
-  aria-label="thanas.dev — home"
->
-  <TextRoll>thanas.</TextRoll>
-</Link>
+            <Link
+              to="/"
+              onClick={() => setMobileOpen(false)}
+              className={`font-['Space_Grotesk'] text-lg font-semibold ${textPrimary} tracking-tight`}
+              aria-label="thanas.dev — home"
+            >
+              <TextRoll>thanas.</TextRoll>
+            </Link>
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}

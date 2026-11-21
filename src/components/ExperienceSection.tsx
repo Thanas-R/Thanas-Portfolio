@@ -1,10 +1,13 @@
 import { CodeXml, Lightbulb, FlaskConical,  Briefcase } from "lucide-react";
 import type { ExperienceItemType } from "@/components/work-experience";
 import { WorkExperience } from "@/components/work-experience";
+import { FaCode } from "react-icons/fa6";
+
+
 
 import expQsg from "@/assets/exp-qsg.webp";
 import pilLogo from "@/assets/exp-pesu-il.webp";
-import virdisLogo from "@/assets/exp-virdis.webp";
+import gdglogo from "@/assets/exp-gdg.webp";
 
 const EXPERIENCES: ExperienceItemType[] = [
   {
@@ -22,14 +25,10 @@ const EXPERIENCES: ExperienceItemType[] = [
         title: "Member",
         employmentPeriod: { start: "May 2026" },
         employmentType: "Full-time",
-        icon: <CodeXml />,
+        icon: <FaCode />,
         isExpanded: false,
         description: `Part of the most prestigious lab in PESU which is sponsored by Akamai & also served as one of the organisers for Hashcode #14`,
-              skills: [
-        "Research",
-        "Logistics",
-        "Networking",
-      ],
+
       },
       {
         id: "pil-intern",
@@ -41,6 +40,31 @@ const EXPERIENCES: ExperienceItemType[] = [
       },
     ],
   },
+ {
+  id: "Gdg",
+  companyName: "Google Developer Group PESU",
+  location: "PES University, Blr",
+  companyLogo: gdglogo,
+  logoBordered: true,
+  logoBorderColor: "ring-black",
+  isCurrentEmployer: true,
+    positions: [
+      {
+        id: "pil-member",
+        title: "???? ????",
+        employmentPeriod: { start: "????", end: "????" },
+        employmentType: "????",
+        icon: <FaCode />,
+        isExpanded: false,
+        description: `WOAH IS THERE A GDG CHAPTER IN PESU???? maybe`,
+              skills: [
+        "????",
+        "????",
+        "????",
+      ],
+      },
+  ],
+},
  {
   id: "qsg-technologies",
   companyName: "QSG Technologies",

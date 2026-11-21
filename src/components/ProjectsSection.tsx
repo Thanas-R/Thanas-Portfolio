@@ -45,7 +45,7 @@ export const projects: Project[] = [
     imageSrc: projectNautilus,
     tags: ['React', 'Canvas', 'GNNs', 'Encoders', 'Vector Search', 'Graph'],
     detailTags: ['GNNs', 'Sub-GNNs', 'Encoders'],
-    live: 'https://nautilus-build.vercel.app',
+    live: 'http://nautilus.thanas.dev/',
     github: 'https://github.com/Thanas-R/Nautilus',
   },
   {
@@ -57,7 +57,7 @@ export const projects: Project[] = [
     imageSrc: projectVirdis,
     tags: ['Mapbox', 'Earth Engine', 'TypeScript', 'React', 'Supabase', 'Gemini AI', 'shadcn/ui'],
     detailTags: ['Satellite', 'Earth Engine'],
-    live: 'https://virdis.vercel.app',
+    live: 'https://virdis.thanas.dev/',
     github: 'https://github.com/Thanas-R/Virdis',
   },
   {
@@ -128,8 +128,8 @@ export const projects: Project[] = [
     imageSrc: projectThanasOS,
     tags: ['React', 'CSS', 'Framer Motion', 'ZustaYnd'],
     detailTags: ['macOS', 'Web'],
-    live: 'https://thanas-os.vercel.app/',
-    github: 'https://github.com/Thanas-R/thanas-OS',
+    live: 'https://thanasos.thanas.dev/',
+    github: 'https://github.com/Thanas-R/Thanas-OS',
   },
   {
     id: 'odin-tree',
@@ -140,7 +140,7 @@ export const projects: Project[] = [
     imageSrc: projectOdinTree,
     tags: ['React', 'TypeScript', 'AST', 'Graph', 'Tree-sitter', 'GitHub API'],
     detailTags: ['GitHub', 'Analysis'],
-    live: 'https://odintree.vercel.app/',
+    live: 'https://odintree.thanas.dev/',
     github: 'https://github.com/Thanas-R/OdinTree',
   },
   {

@@ -90,7 +90,7 @@ const ContactSection = () => {
           </p>
 
           <p className="text-lg md:text-xl font-semibold text-foreground/60 mb-8 md:whitespace-nowrap">
-            You can contact me using the form or via the links below.
+            You can contact me using the form or via the links below
           </p>
 
           <form onSubmit={handleSubmit} className="mb-7">

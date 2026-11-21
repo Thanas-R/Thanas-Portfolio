@@ -2,6 +2,7 @@
 
 import React, { useState, type ComponentProps, type ReactElement, type ReactNode } from "react";
 import { BriefcaseBusinessIcon, ChevronsUpDown } from "lucide-react";
+import { FaSuitcase } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import {
   Collapsible,
@@ -56,7 +57,7 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
     <div className="space-y-4 py-4">
       {/* 1. Logo & Title Line */}
       <div className="not-prose flex items-center gap-4 -ml-2 md:-ml-0">
-        <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border-2 border-border bg-background shadow-xs">
+        <div className="flex size-[40px] shrink-0 items-center justify-center overflow-hidden rounded-xl border-2 border-border bg-background shadow-xs">
           {experience.companyLogo ? (
             <img
               src={experience.companyLogo}
@@ -74,11 +75,10 @@ function ExperienceItem({ experience }: { experience: ExperienceItemType }) {
 
         <h3
           className={cn(
-            "text-xl md:text-3xl leading-snug text-foreground tracking-tight",
-            experience.id === "pesu-innovation-lab" &&
-  "font-['Oswald'] text-[1.65rem] md:text-[2.02rem] tracking-normal",
-
-            experience.id === "qsg-technologies" && "font-['Space_Grotesk'] font-bold",
+            "text-lg md:text-2xl leading-snug text-foreground tracking-tight",
+            experience.id === "pesu-innovation-lab" && "font-['Inter'] font-semibold",
+            experience.id === "qsg-technologies" && "font-['Space_Grotesk'] font-semibold",
+            experience.id === "Gdg" && "font-['Inter'] font-semibold",
           )}
         >
           {experience.companyWebsite ? (
@@ -163,7 +163,7 @@ function ExperiencePositionItem({
         >
           <div className="relative z-10 flex items-start gap-3">
             {/* Position Icon badge (relative z-10 + bg-background solid opaque fill prevents bleed) */}
-            <div className="relative z-10 flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground shadow-xs ring-1 ring-border/50 [&_svg]:h-4 [&_svg]:w-4">
+            <div className="relative z-10 flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground shadow-xs ring-1 ring-border/50 [&_svg]:h-5 [&_svg]:w-5">
               {ExperienceIcon}
             </div>
 

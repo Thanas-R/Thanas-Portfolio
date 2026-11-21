@@ -225,74 +225,86 @@ const VirdisDetail = ({ project, prevProject, nextProject }: VirdisDetailProps) 
               }}
             />
 
-            <div className="relative z-10">
-              {/* Header */}
-              <h1
-                className="text-5xl md:text-7xl leading-none tracking-tight mb-2"
-                style={{ fontFamily: "'Caesar Dressing', system-ui", fontWeight: 400, color: heading }}
-              >
-                ViRDIS
-              </h1>
+<div className="relative z-10">
+  {/* Header */}
+  <h1
+    className="text-5xl md:text-7xl leading-none tracking-tight mb-2"
+    style={{ fontFamily: "'Caesar Dressing', system-ui", fontWeight: 400, color: heading }}
+  >
+    ViRDIS
+  </h1>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-                <p
-                  className="text-sm uppercase tracking-[0.2em] font-medium"
-                  style={{ color: accent, fontFamily: font }}
-                >
-                  Satellite-Powered Land & Agriculture Analytics
-                </p>
+  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+    <p
+      className="text-sm uppercase tracking-[0.2em] font-medium"
+      style={{ color: accent, fontFamily: font }}
+    >
+      Satellite-Powered Land & Agriculture Analytics
+    </p>
 
-                <div className="flex items-center gap-3 shrink-0">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:scale-[1.03] active:scale-[0.98] transition-all"
-                    style={{ backgroundColor: 'rgba(255,251,235,0.08)', border: '1px solid rgba(255,251,235,0.15)' }}
-                  >
-                    <Github className="w-4 h-4" style={{ color: text }} />
-                  </a>
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
-                      style={{
-                        backgroundColor: text,
-                        color: panelBg,
-                        fontFamily: font,
-                        boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
-                      }}
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Live Demo
-                    </a>
-                  )}
-                </div>
-              </div>
+    {/* Action Buttons */}
+    <div className="flex items-center justify-end gap-3 shrink-0 self-end sm:self-auto">
+      {/* GitHub */}
+      <a
+        href={project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+        className="inline-flex items-center justify-center w-9 h-9 rounded-lg hover:scale-[1.03] active:scale-[0.98] transition-all"
+        style={{
+          backgroundColor: 'rgba(255,251,235,0.08)',
+          border: '1px solid rgba(255,251,235,0.15)',
+        }}
+      >
+        <Github className="w-4 h-4" style={{ color: text }} />
+      </a>
 
-              {/* Description */}
-              <p
-                className="text-base md:text-lg leading-relaxed text-justify mb-4"
-                style={{ color: textMuted, fontFamily: font }}
-              >
-                Satellite-powered land analytics platform. Draw regions on a map and get NDVI vegetation analysis, climate data, soil profiling, land use classification, suitability scoring, and AI crop recommendations, all in one dashboard.{' '}
-                <br></br>
-                <strong className="font-semibold opacity-90" style={{ color: text }}>
-                  [Shared this project on{' '}
-                  <a
-                    href="https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-4 hover:opacity-80 transition-opacity"
-                    style={{ color: accent }}
-                  >
-                    Reddit
-                  </a>{' '}
-                  and got a lot of love]
-                </strong>
-              </p>
+      {/* Reddit */}
+      <a
+        href="https://www.reddit.com/r/vibecoding/comments/1tg1lqy/i_vibecoded_something_that_really_might_help/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+        style={{
+          backgroundColor: 'rgba(255,251,235,0.08)',
+          border: '1px solid rgba(255,251,235,0.15)',
+          color: text,
+          fontFamily: font,
+        }}
+      >
+        <ExternalLink className="w-4 h-4" />
+        Reddit
+      </a>
+
+      {/* Live Demo */}
+      {project.live && (
+        <a
+          href={project.live}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold hover:scale-[1.03] active:scale-[0.98] transition-all shrink-0"
+          style={{
+            backgroundColor: text,
+            color: panelBg,
+            fontFamily: font,
+            boxShadow: '0 4px 20px -4px rgba(255,251,235,0.3), 0 2px 8px -2px rgba(255,251,235,0.15)',
+          }}
+        >
+          <ExternalLink className="w-4 h-4" />
+          Live Demo
+        </a>
+      )}
+    </div>
+  </div>
+
+  {/* Description */}
+  <p
+    className="text-base md:text-lg leading-relaxed text-justify mb-4"
+    style={{ color: textMuted, fontFamily: font }}
+  >
+    Satellite-powered land analytics platform. Draw regions on a map and get NDVI vegetation analysis, climate data, soil profiling, land use classification, suitability scoring, and AI crop recommendations, all in one dashboard.
+  </p>
+
 
               <div className="w-px mb-5" style={{ borderBottom: `1.5px dashed ${dashedGreen}` }} />
 
