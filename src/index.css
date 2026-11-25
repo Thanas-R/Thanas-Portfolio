@@ -227,6 +227,15 @@
     font-size: 81%;
   }
 
+  @media (min-width: 1024px) {
+    html {
+      zoom: clamp(
+        1,
+        calc(1 + (100vh - 700px) / 380px * 0.13),
+        1.13
+      );
+    }
+  }
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;

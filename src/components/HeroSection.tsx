@@ -4,7 +4,6 @@
   import avatar from '@/assets/avatar.webp';
   import { TbBrandGithubFilled } from "react-icons/tb";
   import { SiMedium } from "react-icons/si";
-  import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
   import { useIsMobile } from '@/hooks/use-mobile';
 
   const USER_ID = '677174403859087378';
@@ -120,30 +119,28 @@
               <span className="relative inline-block">
                 <span className="sr-only"> </span>
                 <span className="ml-[0.14em]">R</span>
-                <TooltipProvider delayDuration={isMobile ? 0 : 150} skipDelayDuration={200}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      {isMobile ? (
-                        <button
-                          className={`absolute top-[0.8em] right-[-0.03em] w-2 h-2 md:w-4 md:h-4 rounded-full ring-[2.5px] ring-background ${statusColor} cursor-pointer transition-colors duration-300 border-0 p-0`}
-                          aria-label={statusLabel}
-                        />
-                      ) : (
-                        <span
-                          className={`absolute top-[0.75em] right-[-0.07em] w-3 h-3 md:w-4 md:h-4 rounded-full ring-[3.25px] ring-background ${statusColor} cursor-pointer transition-colors duration-300`}
-                          aria-label={statusLabel}
-                        />
-                      )}
-                    </TooltipTrigger>
-                    <TooltipContent side="right" sideOffset={8} className="px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap shadow-md font-['Inter'] tracking-normal">
-                      {statusLabel}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <button
+  type="button"
+  className={`group absolute ${
+    isMobile
+      ? 'top-[0.8em] right-[-0.03em] w-2 h-2'
+      : 'top-[0.75em] right-[-0.07em] w-3 h-3'
+  } md:w-4 md:h-4 rounded-full ring-[2.5px] md:ring-[3.25px] ring-background ${statusColor} cursor-pointer transition-colors duration-300 border-0 p-0`}
+  aria-label={statusLabel}
+>
+  {!isMobile && (
+    <span
+      role="tooltip"
+      className="pointer-events-auto absolute left-full top-1/2 z-50 ml-2 -translate-y-1/2 px-3 py-1.5 rounded-md border border-border bg-background/80 backdrop-blur-md text-sm font-medium text-foreground whitespace-nowrap shadow-md font-['Inter'] tracking-normal opacity-0 invisible transition-[opacity,visibility] duration-100 group-hover:visible group-hover:opacity-100 group-focus-visible:visible group-focus-visible:opacity-100"
+    >
+      {statusLabel}
+    </span>
+  )}
+</button>
               </span>
             </h1>
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
-              Developer, Freelancer and OSS contributor
+              Developer, Freelancer and OSS contributor ツ
               <br />
               Building cool stuff and figuring things out as I go
             </p>

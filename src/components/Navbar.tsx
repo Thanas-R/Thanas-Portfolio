@@ -191,13 +191,19 @@ const liquidGlassStyle = useMemo(() => {
           </Link>
 
           <div className="flex items-center gap-8 mr-10">
-            <button
-              onClick={() => window.dispatchEvent(new Event('open-command-palette'))}
-              className={`text-base font-medium ${textMuted} transition-colors duration-200`}
-              aria-label="Search"
-            >
-              <Command className="w-4 h-4" />
-            </button>
+<button
+  onClick={() => window.dispatchEvent(new Event('open-command-palette'))}
+  className={cn(
+    'inline-flex h-5 w-5 shrink-0 items-center justify-center p-0 leading-none transition-colors',
+    textMuted
+  )}
+  aria-label="Search"
+>
+  <Command
+    className="w-[14px] h-[14px] shrink-0"
+    strokeWidth={2.5}
+  />
+</button>
             {navItems.map((item) => (
               <Link
                 key={item.label}
